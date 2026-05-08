@@ -2,8 +2,6 @@
 
 A minimalist, AI-friendly slide deck framework. One HTML file. No build step. Pair it with Claude Code (or your editor of choice) and write decks like prose.
 
-![cover](assets/cover.png)
-
 ```
 slides/
 ├── deck.html              The template. Edit this.
