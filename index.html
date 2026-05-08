@@ -669,6 +669,17 @@
     border-color: rgba(255, 255, 255, 0.25);
   }
 
+  /* --- Callout --- */
+  .callout {
+    margin-top: 2.5rem;
+    padding: 2rem 2.25rem;
+    background: #1a1a1a;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    color: #ccc;
+    line-height: 1.6;
+  }
+
   /* --- Mobile --- */
   @media (max-width: 720px) {
     .pitch-grid { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -718,7 +729,6 @@
   <div class="container">
     <div class="eyebrow">Start here</div>
     <h2>Paste your story. <span class="dim">Get an arc back.</span></h2>
-    <p class="section-lead">Got a rough idea, a written script, or a brain dump? Paste it in. The AI applies the storytelling framework and turns it into a structured deck.</p>
 
     <div class="chat chat-wide">
       <div class="chat-line user">I want to talk about how AI changed how I build. I've made 13 small tools in the last year. Each one solves something annoying about my own life. The big shift: the bottleneck moved. Used to be "can we build this?" Now it's "do you have an idea?" I want to end on something honest. Speed isn't wisdom.</div>
@@ -740,11 +750,9 @@
     <div class="eyebrow">Or take it slide by slide</div>
     <h2>One HTML file. <span class="dim">Pair with AI.</span></h2>
 
-    <div class="pitch-grid">
-      <div>
-        <h3 class="pitch-heading">No build. No framework. No canvas.</h3>
-        <p class="pitch-body">Just a file you edit and a browser you present from. Sixteen components ready to use — see all of them in <a href="https://github.com/noskillish/slides/blob/main/design-system.html" target="_blank" style="color: #1a1a1a;">design-system.html</a>.</p>
-
+    <div class="format-compare">
+      <div class="format-card format-faded">
+        <div class="format-eyebrow">16+ components</div>
         <div class="mini-slides">
           <div class="mini-slide">
             <div class="mini-eyebrow">Section label</div>
@@ -769,10 +777,9 @@
           </div>
         </div>
       </div>
-      <div>
-        <h3 class="pitch-heading">Open in your editor. Talk to Claude Code.</h3>
-        <p class="pitch-body">Tell it what you want. Iterate by feedback. The deck takes shape like a document.</p>
-        <div class="chat" style="margin-top: 1rem;">
+      <div class="format-card format-faded">
+        <div class="format-eyebrow">Pair and build with AI</div>
+        <div class="chat" style="margin-top: 0; border: none; background: transparent; padding: 0;">
           <div class="chat-line user">Add an opening quote slide that says "Coding is solved."</div>
           <div class="chat-line bot">Inserted slide 2 as a quote-slide.</div>
           <div class="chat-line user">Make it dark.</div>
@@ -793,7 +800,6 @@
   <div class="container">
     <div class="eyebrow">Open by design</div>
     <h2>Markdown in. <span class="dim">Slides out.</span></h2>
-    <p class="section-lead">Your script lives in markdown. The storytelling framework lives in markdown. The design rules live in markdown. Everything else is plain HTML and CSS — change the colors, swap the type, add your own components, fork the structure.</p>
 
     <div class="format-compare">
       <div class="format-card format-faded">
@@ -820,6 +826,11 @@
         </div>
         <div class="format-caption">Plain text in a git repo. Readable by humans and every AI agent that comes after. Forever.</div>
       </div>
+    </div>
+
+    <div class="callout">
+      <div class="format-eyebrow" style="color: #888;">Fully customizable</div>
+      Your script lives in .md files. The storytelling framework lives in .md files. The design rules live in .md files. Everything else is plain HTML and CSS. Change colors, swap the type, add your own components, fork the structure.
     </div>
   </div>
 </section>
