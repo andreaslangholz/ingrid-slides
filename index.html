@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>slides — A minimalist deck framework</title>
+<meta name="description" content="A minimalist, AI-friendly slide deck framework. One HTML file, no build step. Pair with Claude Code to write decks like prose.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f5f5f3;
+    color: #1a1a1a;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+
+  /* --- Layout --- */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  header {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #e0e0db;
+  }
+
+  header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .logo-mark {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+  }
+
+
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.85rem;
+  }
+
+  .nav-links a {
+    color: #6a6a66;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .nav-links a:hover { color: #1a1a1a; }
+
+  /* --- Hero --- */
+  .hero {
+    padding: 6rem 0 5rem;
+  }
+
+  .eyebrow {
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #a0a09a;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 4.8vw, 3.5rem);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    margin-bottom: 1.5rem;
+    max-width: 900px;
+  }
+
+  h1 span.dim { color: #b5b5b0; font-weight: 300; }
+
+  .lead {
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
+    color: #6a6a66;
+    max-width: 620px;
+    margin-bottom: 2.5rem;
+    line-height: 1.55;
+  }
+
+  /* --- Buttons --- */
+  .btn-row {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.25rem;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.15s;
+    font-family: inherit;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background: #1a1a1a;
+    color: #f5f5f3;
+  }
+
+  .btn-primary:hover { background: #000; }
+
+  .btn-ghost {
+    background: transparent;
+    color: #1a1a1a;
+    border: 1px solid #d5d5d0;
+  }
+
+  .btn-ghost:hover { border-color: #1a1a1a; }
+
+  /* --- Sections --- */
+  section {
+    padding: 5rem 0;
+    border-bottom: 1px solid #e0e0db;
+  }
+
+  section h2 {
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    margin-bottom: 1rem;
+    max-width: 800px;
+  }
+
+  section h2 span.dim { color: #b5b5b0; font-weight: 300; }
+
+  .section-lead {
+    font-size: 1rem;
+    color: #6a6a66;
+    max-width: 620px;
+    margin-bottom: 3rem;
+    line-height: 1.6;
+  }
+
+  /* --- Three column comparison --- */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .compare-col {
+    border: 1px solid #e0e0db;
+    border-radius: 10px;
+    padding: 1.5rem 1.4rem 1.75rem;
+    background: #fafaf8;
+  }
+
+  .compare-col.hero {
+    background: #1a1a1a;
+    color: #f5f5f3;
+    border-color: #1a1a1a;
+  }
+
+  .compare-label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #a0a09a;
+    margin-bottom: 0.5rem;
+  }
+
+  .compare-col.hero .compare-label { color: #888; }
+
+  .compare-title {
+    font-size: 1.15rem;
+    font-weight: 500;
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.01em;
+  }
+
+  .compare-col ul { list-style: none; }
+
+  .compare-col ul li {
+    font-size: 0.85rem;
+    padding: 0.45rem 0;
+    padding-left: 1.25rem;
+    position: relative;
+    color: #6a6a66;
+    line-height: 1.5;
+  }
+
+  .compare-col.hero ul li { color: #ccc; }
+
+  .compare-col ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: #b5b5b0;
+  }
+
+  .compare-col.hero ul li::before { color: #555; }
+
+  /* --- 3-step flow --- */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    margin-top: 2rem;
+  }
+
+  .step-card {
+    position: relative;
+    padding-top: 2rem;
+  }
+
+  .step-num {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #a0a09a;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.75rem;
+  }
+
+  .step-card h3 {
+    font-size: 1.15rem;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
+  }
+
+  .step-card p {
+    font-size: 0.85rem;
+    color: #6a6a66;
+    line-height: 1.55;
+  }
+
+  .step-card code {
+    display: inline-block;
+    background: #eeeee9;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: #1a1a1a;
+  }
+
+  /* --- Pitch grid (combined what-it-is + AI pairing) --- */
+  .pitch-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: stretch;
+    margin-top: 2.5rem;
+  }
+
+  .pitch-grid > div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pitch-grid .mini-slides {
+    flex: 1;
+  }
+
+  .pitch-grid .chat {
+    flex: 1;
+  }
+
+  .pitch-heading {
+    font-size: 1.05rem;
+    font-weight: 500;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.01em;
+  }
+
+  .pitch-body {
+    font-size: 0.9rem;
+    color: #6a6a66;
+    line-height: 1.6;
+  }
+
+  /* --- Format comparison (PowerPoint vs Slides) --- */
+  .format-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .format-card {
+    border-radius: 10px;
+    padding: 1.5rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .format-card.format-faded {
+    background: #fafaf8;
+    border: 1px dashed #d5d5d0;
+  }
+
+  .format-card.format-active {
+    background: #1a1a1a;
+    border: 1px solid #1a1a1a;
+    color: #f5f5f3;
+  }
+
+  .format-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+  }
+
+  .format-faded .format-eyebrow { color: #a0a09a; }
+  .format-active .format-eyebrow { color: #888; }
+
+  .format-files,
+  .format-tree {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    line-height: 1.7;
+    flex: 1;
+  }
+
+  .format-file {
+    padding: 0.05rem 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .format-faded .format-file {
+    color: #b5b5b0;
+    text-decoration: line-through;
+    text-decoration-color: rgba(0, 0, 0, 0.12);
+  }
+
+  .format-faded .format-file.format-more {
+    text-decoration: none;
+    color: #c5c5c0;
+  }
+
+  .format-active .format-file {
+    color: #f5f5f3;
+  }
+
+  .format-tree .tree {
+    color: #555;
+    font-weight: 400;
+  }
+
+  .format-caption {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    line-height: 1.55;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid;
+  }
+
+  .format-faded .format-caption {
+    color: #a0a09a;
+    border-top-color: #e0e0db;
+  }
+
+  .format-active .format-caption {
+    color: #ccc;
+    border-top-color: #2a2a2a;
+  }
+
+  /* --- Mini slide previews --- */
+  .mini-slides {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .mini-slide {
+    background: #fafaf8;
+    border: 1px solid #e0e0db;
+    border-radius: 8px;
+    padding: 1.1rem 1.25rem;
+    aspect-ratio: 16 / 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .mini-slide.mini-dark {
+    background: #1a1a1a;
+    color: #f5f5f3;
+    border-color: #1a1a1a;
+  }
+
+  .mini-eyebrow {
+    font-size: 0.55rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #a0a09a;
+    margin-bottom: 0.5rem;
+  }
+
+  .mini-slide.mini-dark .mini-eyebrow { color: #888; }
+
+  .mini-headline {
+    font-size: clamp(1rem, 1.6vw, 1.25rem);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .mini-headline span {
+    color: #b5b5b0;
+    font-weight: 300;
+  }
+
+  .mini-flow {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    align-items: center;
+    position: relative;
+    margin: 0.4rem 0 0.55rem;
+  }
+
+  .mini-flow::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 6%;
+    right: 6%;
+    height: 1px;
+    background: #d5d5d0;
+    transform: translateY(-50%);
+  }
+
+  .mini-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .mini-flow-labels {
+    font-size: 0.6rem;
+    color: #a0a09a;
+    letter-spacing: 0.02em;
+    text-align: center;
+  }
+
+  .mini-callout-text {
+    font-size: 0.78rem;
+    line-height: 1.45;
+    color: #ccc;
+  }
+
+  .mini-callout-text strong {
+    color: #f5f5f3;
+    font-weight: 500;
+  }
+
+  /* --- AI pairing demo --- */
+  .ai-demo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .chat {
+    background: #fafaf8;
+    border: 1px solid #e0e0db;
+    border-radius: 12px;
+    padding: 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    line-height: 1.6;
+  }
+
+  .chat-line {
+    padding: 0.4rem 0;
+  }
+
+  .chat-line.user {
+    color: #1a1a1a;
+  }
+
+  .chat-line.user::before {
+    content: '> ';
+    color: #b5b5b0;
+  }
+
+  .chat-line.bot {
+    color: #6a6a66;
+    padding-left: 1.25rem;
+    font-style: italic;
+  }
+
+  .chat-wide {
+    margin-top: 2.5rem;
+  }
+
+  .chat-wide .chat-line.user {
+    line-height: 1.7;
+    padding: 0.6rem 0;
+  }
+
+  /* --- Components grid --- */
+  .components-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.85rem;
+    margin-top: 2rem;
+  }
+
+  .component-card {
+    border: 1px solid #e0e0db;
+    border-radius: 10px;
+    padding: 1.1rem 1.2rem 1.25rem;
+    background: #fafaf8;
+  }
+
+  .component-card h4 {
+    font-size: 0.92rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+  }
+
+  .component-card p {
+    font-size: 0.78rem;
+    color: #6a6a66;
+    line-height: 1.5;
+  }
+
+  /* --- CTA section --- */
+  .cta-section {
+    text-align: center;
+    padding: 7rem 0;
+    border-bottom: none;
+  }
+
+  .cta-section h2 {
+    margin: 0 auto 1.5rem;
+  }
+
+  .cta-section .lead {
+    margin: 0 auto 2.5rem;
+  }
+
+  .cta-section pre {
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  .cta-section .btn-row {
+    justify-content: center;
+  }
+
+  /* --- Footer --- */
+  footer {
+    padding: 3rem 0 4rem;
+    border-top: 1px solid #e0e0db;
+  }
+
+  footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  footer p {
+    font-size: 0.8rem;
+    color: #a0a09a;
+  }
+
+  footer a {
+    color: #6a6a66;
+    text-decoration: none;
+  }
+
+  footer a:hover { color: #1a1a1a; }
+
+  /* --- Code block --- */
+  .code-block {
+    position: relative;
+    margin: 1.5rem 0 0;
+    width: 100%;
+    max-width: 600px;
+  }
+
+  pre {
+    background: #1a1a1a;
+    color: #f5f5f3;
+    padding: 1.25rem 1.5rem;
+    padding-right: 4.5rem;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    overflow-x: auto;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  pre code { color: inherit; background: none; padding: 0; }
+  pre .prompt { color: #6a6a66; user-select: none; margin-right: 0.5rem; }
+
+  .copy-btn {
+    position: absolute;
+    top: 0.65rem;
+    right: 0.65rem;
+    background: rgba(255, 255, 255, 0.06);
+    color: #999;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 0.3rem 0.65rem;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-family: inherit;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .copy-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #f5f5f3;
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .copy-btn.copied {
+    background: rgba(255, 255, 255, 0.18);
+    color: #f5f5f3;
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+
+  /* --- Mobile --- */
+  @media (max-width: 720px) {
+    .pitch-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    section { padding: 3.5rem 0; }
+    .hero { padding: 4rem 0 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="container">
+    <div class="logo">Slides™</div>
+    <nav class="nav-links">
+      <a href="https://github.com/noskillish/slides/blob/main/docs/USING.md" target="_blank">Docs</a>
+      <a href="https://github.com/noskillish/slides" target="_blank">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="container">
+    <div class="eyebrow">Open source · MIT</div>
+    <h1>Create slides. <span class="dim">Like prose.</span></h1>
+    <p class="lead">A minimalist HTML slide deck framework. Pair with Claude Code to create decks like documents instead of arranging text boxes.</p>
+<div class="code-block">
+      <button class="copy-btn" type="button" onclick="copyCode(this)">Copy</button>
+<pre><code><span class="prompt">$</span> git clone https://github.com/noskillish/slides.git
+<span class="prompt">$</span> cd slides
+<span class="prompt">$</span> open deck.html</code></pre>
+    </div>
+    <div class="btn-row" style="margin-top: 2rem;">
+      <a href="https://github.com/noskillish/slides" class="btn btn-primary" target="_blank">
+        View on GitHub →
+      </a>
+      <a href="https://github.com/noskillish/slides/blob/main/docs/USING.md" class="btn btn-ghost" target="_blank">
+        Read the docs
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Paste your story -->
+<section id="paste">
+  <div class="container">
+    <div class="eyebrow">Start here</div>
+    <h2>Paste your story. <span class="dim">Get an arc back.</span></h2>
+    <p class="section-lead">Got a rough idea, a written script, or a brain dump? Paste it in. The AI applies the storytelling framework and turns it into a structured deck.</p>
+
+    <div class="chat chat-wide">
+      <div class="chat-line user">I want to talk about how AI changed how I build. I've made 13 small tools in the last year. Each one solves something annoying about my own life. The big shift: the bottleneck moved. Used to be "can we build this?" Now it's "do you have an idea?" I want to end on something honest. Speed isn't wisdom.</div>
+      <div class="chat-line bot">Drafting a 4-act structure from docs/STORYTELLING.md:</div>
+      <div class="chat-line bot">1. Cover · Confession · Intro to the 13 tools</div>
+      <div class="chat-line bot">2. Act 1 — The gap (the old way of building)</div>
+      <div class="chat-line bot">3. Act 2 — The shift (the bottleneck moved)</div>
+      <div class="chat-line bot">4. Act 3 — Build stories (4–5 product + collage pairs)</div>
+      <div class="chat-line bot">5. Act 4 — Speed ≠ wisdom (the honest part)</div>
+      <div class="chat-line bot">6. Close — A mic-drop line</div>
+      <div class="chat-line bot">Generating 18 slides now. Start with the four highest-impact builds, or include all 13?</div>
+    </div>
+  </div>
+</section>
+
+<!-- The pitch (combined) -->
+<section id="pitch">
+  <div class="container">
+    <div class="eyebrow">Or take it slide by slide</div>
+    <h2>One HTML file. <span class="dim">Pair with AI.</span></h2>
+
+    <div class="pitch-grid">
+      <div>
+        <h3 class="pitch-heading">No build. No framework. No canvas.</h3>
+        <p class="pitch-body">Just a file you edit and a browser you present from. Sixteen components ready to use — see all of them in <a href="https://github.com/noskillish/slides/blob/main/design-system.html" target="_blank" style="color: #1a1a1a;">design-system.html</a>.</p>
+
+        <div class="mini-slides">
+          <div class="mini-slide">
+            <div class="mini-eyebrow">Section label</div>
+            <div class="mini-headline">Anchor. <span>Extension that fades.</span></div>
+          </div>
+
+          <div class="mini-slide">
+            <div class="mini-eyebrow">The flow</div>
+            <div class="mini-flow">
+              <span class="mini-dot"></span>
+              <span class="mini-dot"></span>
+              <span class="mini-dot"></span>
+              <span class="mini-dot"></span>
+              <span class="mini-dot"></span>
+            </div>
+            <div class="mini-flow-labels">Spec · Plan · Execute · Review · Deploy</div>
+          </div>
+
+          <div class="mini-slide mini-dark">
+            <div class="mini-eyebrow">Why now</div>
+            <div class="mini-callout-text">A bold statement. <strong>The key in white.</strong> Then context.</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 class="pitch-heading">Open in your editor. Talk to Claude Code.</h3>
+        <p class="pitch-body">Tell it what you want. Iterate by feedback. The deck takes shape like a document.</p>
+        <div class="chat" style="margin-top: 1rem;">
+          <div class="chat-line user">Add an opening quote slide that says "Coding is solved."</div>
+          <div class="chat-line bot">Inserted slide 2 as a quote-slide.</div>
+          <div class="chat-line user">Make it dark.</div>
+          <div class="chat-line bot">Added .dark class.</div>
+          <div class="chat-line user">Add a comparison slide. Old way vs new way.</div>
+          <div class="chat-line bot">Inserted a two-column. Want me to fill in the steps?</div>
+          <div class="chat-line user">Yes. Old way waterfall, new way spec-driven.</div>
+          <div class="chat-line bot">Done. Want media in the next slide?</div>
+          <div class="chat-line user">A collage with media/demo.mp4. Controls, not autoplay.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Open by design -->
+<section id="open">
+  <div class="container">
+    <div class="eyebrow">Open by design</div>
+    <h2>Markdown in. <span class="dim">Slides out.</span></h2>
+    <p class="section-lead">Your script lives in markdown. The storytelling framework lives in markdown. The design rules live in markdown. Everything else is plain HTML and CSS — change the colors, swap the type, add your own components, fork the structure.</p>
+
+    <div class="format-compare">
+      <div class="format-card format-faded">
+        <div class="format-eyebrow">Today · .pptx</div>
+        <div class="format-files">
+          <div class="format-file">Q3-strategy-FINAL.pptx</div>
+          <div class="format-file">townhall-v3.pptx</div>
+          <div class="format-file">investor-deck-v7.pptx</div>
+          <div class="format-file">roadmap-FINAL-v2.pptx</div>
+          <div class="format-file format-more">…</div>
+        </div>
+        <div class="format-caption">Binary blobs. Lost in inboxes and shared drives. AI agents can't read them.</div>
+      </div>
+
+      <div class="format-card format-active">
+        <div class="format-eyebrow">With Slides™</div>
+        <div class="format-tree">
+          <div class="format-file"><span class="tree">└─</span> your-deck/</div>
+          <div class="format-file"><span class="tree">&nbsp;&nbsp;&nbsp;├─</span> deck.html</div>
+          <div class="format-file"><span class="tree">&nbsp;&nbsp;&nbsp;├─</span> docs/</div>
+          <div class="format-file"><span class="tree">&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;├─</span> STORYTELLING.md</div>
+          <div class="format-file"><span class="tree">&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;└─</span> DESIGN.md</div>
+          <div class="format-file"><span class="tree">&nbsp;&nbsp;&nbsp;└─</span> media/</div>
+        </div>
+        <div class="format-caption">Plain text in a git repo. Readable by humans and every AI agent that comes after. Forever.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p>MIT License · Open source</p>
+    <p>
+      <a href="https://github.com/noskillish/slides" target="_blank">GitHub</a> ·
+      <a href="https://github.com/noskillish/slides/blob/main/docs/USING.md" target="_blank">Docs</a> ·
+      <a href="https://github.com/noskillish/slides/blob/main/docs/STORYTELLING.md" target="_blank">Storytelling</a> ·
+      <a href="https://github.com/noskillish/slides/blob/main/docs/DESIGN.md" target="_blank">Design</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+  function copyCode(btn) {
+    const code = btn.parentElement.querySelector('code');
+    const text = code.textContent
+      .split('\n')
+      .map(line => line.replace(/^\$\s*/, ''))
+      .filter(line => line.length > 0)
+      .join('\n');
+
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy';
+        btn.classList.remove('copied');
+      }, 1800);
+    }).catch(() => {
+      btn.textContent = 'Failed';
+      setTimeout(() => { btn.textContent = 'Copy'; }, 1800);
+    });
+  }
+</script>
+
+</body>
+</html>
