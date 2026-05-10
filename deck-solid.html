@@ -8,44 +8,37 @@
   ============================================================
   TEMPLATE: SOLID
 
-  An enterprise-leaning theme inspired by SAP's Solid Design System
-  (solid.design). Same components and slide structure as deck.html,
-  but a different visual language:
+  An editorial-tech theme inspired by solid.design — the agency
+  that builds brand systems for tech and AI companies.
 
-    - SAP blue accent (#0070F2)
-    - Sharper geometry (4px radius, square cards)
-    - Uppercase labels with thin underlines
-    - Heavier use of accent color over pure black
-    - System-leaning sans (IBM Plex Sans) for a closer "72" feel
+    - Pure black background, white text
+    - Geometric sans for headlines, mono for chrome and labels
+    - Numbered section markers in thin bordered boxes
+    - No accent color — pure monochrome
+    - Generous whitespace, subtle 1px borders
 
-  Same nav, same PDF export, same embed behavior as deck.html.
-  Same 21 components in the same order so you can A/B compare.
-
-  See deck.html for the editorial/minimalist variant.
-  See AGENTS.md for the component reference.
+  Same 21 components in the same order as deck.html so you can
+  A/B compare. Same nav, PDF export, embed mode.
   ============================================================
 -->
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
   :root {
-    --bg: #ffffff;
-    --surface: #f5f6f7;
-    --surface-2: #eaecee;
-    --border: #d5dae0;
-    --border-strong: #a9b4be;
-    --text: #1b1d21;
-    --text-muted: #5b738b;
-    --text-subtle: #8396a8;
-    --accent: #0070f2;
-    --accent-strong: #0040b0;
-    --accent-soft: #e8f1fe;
-    --ink: #00144a;
-    --success: #2b9d2b;
-    --critical: #bb0000;
-    --radius-sm: 2px;
+    --bg: #0a0a0a;
+    --surface: #141414;
+    --surface-2: #1a1a1a;
+    --border: #1f1f1f;
+    --border-strong: #2e2e2e;
+    --border-bright: #3a3a3a;
+    --text: #ededed;
+    --text-muted: #8a8a8a;
+    --text-subtle: #5a5a5a;
+    --invert-bg: #f5f5f3;
+    --invert-text: #0a0a0a;
     --radius: 4px;
-    --radius-lg: 6px;
+    --radius-pill: 100px;
+    --mono: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -54,7 +47,7 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-    font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: var(--bg);
     color: var(--text);
     -webkit-font-smoothing: antialiased;
@@ -84,81 +77,64 @@
 
   /* --- Typography --- */
   .eyebrow {
+    font-family: var(--mono);
     font-size: 0.7rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--accent);
-    margin-bottom: 1.25rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .eyebrow::before {
-    content: '';
-    width: 18px;
-    height: 2px;
-    background: var(--accent);
+    font-weight: 400;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
     display: inline-block;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    padding: 0.25rem 0.55rem;
+    letter-spacing: 0.02em;
   }
 
   h1 {
-    font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+    font-size: clamp(2.5rem, 5.5vw, 4.8rem);
     font-weight: 600;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    color: var(--ink);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    color: var(--text);
     margin-bottom: 1.5rem;
   }
 
   h1 span.dim, h2 span.dim, h3 span.dim {
-    color: var(--text-subtle);
-    font-weight: 400;
+    color: var(--text-muted);
+    font-weight: 600;
   }
 
   h2 {
-    font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+    font-size: clamp(1.7rem, 3.2vw, 2.5rem);
     font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: -0.015em;
-    color: var(--ink);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--text);
     margin-bottom: 1.25rem;
   }
 
   .subtitle {
-    font-size: clamp(1rem, 1.4vw, 1.2rem);
+    font-family: var(--mono);
+    font-size: clamp(0.85rem, 1.1vw, 0.95rem);
     color: var(--text-muted);
     font-weight: 400;
-    line-height: 1.55;
+    line-height: 1.65;
     max-width: 720px;
   }
 
   .meta {
-    font-size: 0.85rem;
+    font-family: var(--mono);
+    font-size: 0.78rem;
     color: var(--text-muted);
-    font-weight: 500;
+    font-weight: 400;
     margin-top: 3rem;
     letter-spacing: 0.02em;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-  }
-
-  .meta::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    background: var(--accent);
-    border-radius: 50%;
-    display: inline-block;
   }
 
   /* --- Quote slide --- */
   .quote-slide h1 {
-    font-size: clamp(2.8rem, 6.2vw, 5.5rem);
-    line-height: 1.08;
-    letter-spacing: -0.025em;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    line-height: 1.06;
+    letter-spacing: -0.03em;
   }
 
   /* --- Two col --- */
@@ -172,47 +148,36 @@
   .two-col h3 {
     font-size: 1rem;
     font-weight: 600;
-    color: var(--ink);
+    color: var(--text);
     margin-bottom: 0.5rem;
   }
 
   .two-col p {
-    font-size: 0.95rem;
+    font-family: var(--mono);
+    font-size: 0.85rem;
     color: var(--text-muted);
-    line-height: 1.6;
+    line-height: 1.65;
   }
 
   .col-stack > * + * { margin-top: 0; }
 
   .step {
-    font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+    font-family: var(--mono);
+    font-size: clamp(0.82rem, 1.05vw, 0.95rem);
     color: var(--text);
     font-weight: 400;
-    padding: 0.7rem 0.9rem;
-    border-left: 3px solid var(--border);
-    background: var(--surface);
+    padding: 0.75rem 0.9rem;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    background: transparent;
     margin-bottom: 0.4rem;
   }
 
-  .step.dim {
-    color: var(--text-subtle);
-    border-left-color: var(--border);
-    background: transparent;
-  }
-  .step.kill {
-    color: var(--critical);
-    font-weight: 500;
-    border-left-color: var(--critical);
-    background: #fdecec;
-  }
-  .step.kill::before { content: '✕'; margin-right: 0.55rem; font-weight: 600; }
-  .step.live {
-    color: var(--success);
-    font-weight: 500;
-    border-left-color: var(--success);
-    background: #eaf5ea;
-  }
-  .step.live::before { content: '✓'; margin-right: 0.55rem; font-weight: 600; }
+  .step.dim { color: var(--text-subtle); border-color: var(--border); }
+  .step.kill { color: var(--text); border-color: var(--border-bright); }
+  .step.kill::before { content: '×'; margin-right: 0.5rem; color: var(--text-muted); }
+  .step.live { color: var(--text); border-color: var(--border-bright); }
+  .step.live::before { content: '✓'; margin-right: 0.5rem; color: var(--text-muted); }
 
   /* --- Three col --- */
   .three-col {
@@ -222,24 +187,42 @@
   }
 
   .three-col > div {
-    background: var(--surface);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius);
     padding: 1.5rem 1.25rem;
-    border-top: 3px solid var(--accent);
+    background: transparent;
+    position: relative;
   }
+
+  .three-col > div::before {
+    content: counter(threecol, decimal-leading-zero);
+    counter-increment: threecol;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--text-subtle);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    padding: 0.15rem 0.4rem;
+  }
+
+  .three-col { counter-reset: threecol; }
 
   .three-col h3 {
     font-size: 1rem;
     font-weight: 600;
-    color: var(--ink);
+    color: var(--text);
     margin-bottom: 0.5rem;
+    margin-top: 1.5rem;
   }
 
   .three-col p {
-    font-size: 0.85rem;
+    font-family: var(--mono);
+    font-size: 0.78rem;
     color: var(--text-muted);
-    line-height: 1.6;
+    line-height: 1.65;
   }
 
   /* --- Capability list (Q&A) --- */
@@ -249,46 +232,43 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
-    padding: 1.1rem 0;
-    border-top: 1px solid var(--border);
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--border-strong);
     align-items: baseline;
   }
 
-  .cap-row:last-child { border-bottom: 1px solid var(--border); }
-  .cap-q { font-size: 1rem; font-weight: 600; color: var(--ink); }
-  .cap-q::before {
-    content: 'Q.';
-    color: var(--accent);
-    font-weight: 700;
-    margin-right: 0.5rem;
-  }
-  .cap-a { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+  .cap-row:last-child { border-bottom: 1px solid var(--border-strong); }
+  .cap-q { font-size: 1rem; font-weight: 600; color: var(--text); }
+  .cap-a { font-family: var(--mono); font-size: 0.82rem; color: var(--text-muted); line-height: 1.65; }
 
-  /* --- Callout (uses accent blue, not black) --- */
+  /* --- Callout --- */
   .callout {
-    background: var(--ink);
-    color: #ffffff;
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius);
     padding: 2rem 2.5rem;
-    border-left: 6px solid var(--accent);
+    background: var(--surface);
   }
 
   .callout h3 {
+    font-family: var(--mono);
     font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: #7fb3ff;
-    margin-bottom: 0.75rem;
-    font-weight: 600;
+    color: var(--text-subtle);
+    margin-bottom: 0.85rem;
+    font-weight: 400;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    padding: 0.2rem 0.5rem;
+    display: inline-block;
   }
 
   .callout p {
-    font-size: 1.05rem;
-    line-height: 1.55;
-    color: #cfd9e6;
+    font-family: var(--mono);
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--text-muted);
   }
 
-  .callout p strong { color: #ffffff; font-weight: 600; }
+  .callout p strong { color: var(--text); font-weight: 500; }
 
   /* --- Dot flow --- */
   .dot-flow {
@@ -301,35 +281,35 @@
   .dot-flow::before {
     content: '';
     position: absolute;
-    top: 11px;
+    top: 14px;
     left: 8%;
     right: 8%;
-    height: 2px;
-    background: var(--accent);
-    opacity: 0.25;
+    height: 1px;
+    background: var(--border-strong);
   }
 
   .dot-step { text-align: center; }
 
   .dot-step .dot {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius);
     background: var(--bg);
-    border: 2px solid var(--accent);
+    border: 1px solid var(--border-bright);
     margin: 0 auto 0.85rem;
     position: relative;
     z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--accent);
+    color: var(--text-muted);
+    font-family: var(--mono);
     font-size: 0.7rem;
-    font-weight: 600;
+    font-weight: 400;
   }
 
-  .dot-step h4 { font-size: 0.85rem; font-weight: 600; color: var(--ink); margin-bottom: 0.25rem; }
-  .dot-step p { font-size: 0.72rem; color: var(--text-muted); line-height: 1.45; padding: 0 0.5rem; }
+  .dot-step h4 { font-size: 0.85rem; font-weight: 600; color: var(--text); margin-bottom: 0.3rem; }
+  .dot-step p { font-family: var(--mono); font-size: 0.7rem; color: var(--text-muted); line-height: 1.5; padding: 0 0.5rem; }
 
   /* --- Stack grid --- */
   .stack-grid {
@@ -340,38 +320,44 @@
   }
 
   .stack-card {
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius);
     padding: 1.1rem 1.1rem 1.25rem;
-    background: var(--bg);
+    background: transparent;
   }
 
   .stack-card-label {
-    font-size: 0.6rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--text-subtle);
     margin-bottom: 0.85rem;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid var(--border);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    padding: 0.2rem 0.45rem;
+    display: inline-block;
+    font-weight: 400;
   }
 
   .stack-tool {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.92rem;
-    font-weight: 500;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 400;
     color: var(--text);
     padding: 0.3rem 0;
+    margin-top: 0.5rem;
   }
 
   .stack-tool .mark {
     width: 14px;
     height: 14px;
-    background: var(--accent);
-    border-radius: var(--radius-sm);
+    background: transparent;
+    border: 1px solid var(--border-bright);
+    border-radius: 2px;
     flex-shrink: 0;
   }
 
@@ -384,63 +370,61 @@
   }
 
   .spec-block {
-    background: var(--ink);
-    color: #ffffff;
+    background: var(--invert-bg);
+    color: var(--invert-text);
     border-radius: var(--radius);
     padding: 1.1rem 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-left: 4px solid var(--accent);
   }
 
   .spec-block h4 { font-size: 1rem; font-weight: 600; }
-  .spec-block p { font-size: 0.8rem; color: #8fa6c4; font-weight: 400; }
+  .spec-block p { font-family: var(--mono); font-size: 0.78rem; color: #555; font-weight: 400; }
 
   .ctx-row { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
 
   .ctx-label {
+    font-family: var(--mono);
     font-size: 0.7rem;
-    color: var(--text-muted);
+    color: var(--text-subtle);
     margin-right: 0.4rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
   }
 
   .ctx-pill {
-    font-size: 0.72rem;
-    color: var(--accent-strong);
-    background: var(--accent-soft);
-    border: 1px solid #c1ddfb;
-    border-radius: var(--radius-sm);
-    padding: 0.3rem 0.7rem;
-    font-weight: 500;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    padding: 0.3rem 0.6rem;
   }
 
   .ai-divider { display: flex; align-items: center; gap: 1rem; }
-  .ai-divider .line { flex: 1; height: 1px; background: var(--border); }
+  .ai-divider .line { flex: 1; height: 1px; background: var(--border-strong); }
 
   .ai-pill {
+    font-family: var(--mono);
     font-size: 0.65rem;
-    font-weight: 600;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    font-weight: 400;
+    color: var(--text-muted);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    padding: 0.2rem 0.55rem;
   }
 
   .outputs-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
 
   .output-card {
-    border: 1px solid var(--border);
-    border-top: 3px solid var(--accent);
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius);
     padding: 1rem 1.1rem;
-    background: var(--bg);
+    background: transparent;
   }
 
-  .output-card h5 { font-size: 0.9rem; font-weight: 600; color: var(--ink); margin-bottom: 0.25rem; }
-  .output-card p { font-size: 0.72rem; color: var(--text-muted); line-height: 1.5; }
+  .output-card h5 { font-size: 0.92rem; font-weight: 600; color: var(--text); margin-bottom: 0.3rem; }
+  .output-card p { font-family: var(--mono); font-size: 0.7rem; color: var(--text-muted); line-height: 1.55; }
 
   /* --- Product slide --- */
   .product-row {
@@ -452,69 +436,71 @@
 
   .product-meta { max-width: 460px; }
   .product-num {
+    font-family: var(--mono);
     font-size: 0.7rem;
-    color: var(--accent);
-    font-weight: 600;
+    color: var(--text-muted);
     margin-bottom: 1.25rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    padding: 0.2rem 0.5rem;
+    display: inline-block;
   }
-  .product-tag { font-size: 0.85rem; font-weight: 600; color: var(--ink); margin-bottom: 0.75rem; }
+  .product-tag { font-size: 0.85rem; font-weight: 600; color: var(--text); margin-bottom: 0.75rem; }
 
   .product-headline {
     font-size: clamp(1.4rem, 2.4vw, 2rem);
     font-weight: 600;
-    color: var(--ink);
+    color: var(--text);
     line-height: 1.25;
     letter-spacing: -0.015em;
     margin-bottom: 1rem;
   }
 
   .product-desc {
-    font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+    font-family: var(--mono);
+    font-size: clamp(0.85rem, 1.05vw, 0.95rem);
     color: var(--text-muted);
-    line-height: 1.6;
+    line-height: 1.65;
     margin-bottom: 1.5rem;
   }
 
   .product-stat {
-    font-size: 0.78rem;
-    color: var(--accent);
-    font-weight: 500;
-    background: var(--accent-soft);
-    padding: 0.4rem 0.7rem;
-    border-radius: var(--radius-sm);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    padding: 0.3rem 0.6rem;
     display: inline-block;
   }
 
   .product-name {
     font-size: clamp(4rem, 9vw, 8rem);
-    font-weight: 700;
-    color: var(--ink);
-    letter-spacing: -0.035em;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.04em;
     line-height: 0.95;
     text-align: right;
   }
 
   .product-name sup {
     font-size: 0.25em;
-    font-weight: 500;
-    color: var(--accent);
+    font-weight: 400;
+    color: var(--text-muted);
     vertical-align: super;
     margin-left: 0.1em;
   }
 
   /* --- Collage slide --- */
   .slide.collage-slide {
-    background: var(--surface);
+    background: var(--bg);
     padding: 4vh 4vw;
   }
 
   .collage {
     border-radius: var(--radius);
     overflow: hidden;
-    border: 1px solid var(--border);
-    box-shadow: 0 12px 32px rgba(27, 29, 33, 0.08);
+    border: 1px solid var(--border-strong);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -531,14 +517,13 @@
   }
 
   .collage .placeholder {
+    font-family: var(--mono);
     color: var(--text-subtle);
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
     padding: 4rem;
     text-align: center;
-    background: var(--bg);
+    background: var(--surface);
     aspect-ratio: 3 / 4;
     height: 92vh;
     display: flex;
@@ -555,62 +540,68 @@
   }
 
   .jeduf-col {
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius);
     padding: 1.25rem 1.1rem 1.5rem;
-    background: var(--bg);
+    background: transparent;
     display: flex;
     flex-direction: column;
   }
 
   .jeduf-col.hero {
-    background: var(--ink);
-    color: #ffffff;
-    border-color: var(--ink);
-    border-top: 4px solid var(--accent);
+    background: var(--invert-bg);
+    color: var(--invert-text);
+    border-color: var(--invert-bg);
   }
 
   .jeduf-label {
-    font-size: 0.6rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--text-muted);
-    margin-bottom: 0.4rem;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--text-subtle);
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    padding: 0.15rem 0.4rem;
+    display: inline-block;
+    align-self: flex-start;
   }
 
-  .jeduf-col.hero .jeduf-label { color: #7fb3ff; }
-  .jeduf-title { font-size: 1rem; font-weight: 600; color: var(--ink); margin-bottom: 0.35rem; }
-  .jeduf-col.hero .jeduf-title { color: #ffffff; }
+  .jeduf-col.hero .jeduf-label {
+    color: #555;
+    border-color: #d5d5d0;
+  }
+
+  .jeduf-title { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 0.35rem; }
+  .jeduf-col.hero .jeduf-title { color: var(--invert-text); }
 
   .jeduf-philosophy {
+    font-family: var(--mono);
     font-size: 0.72rem;
     color: var(--text-muted);
     margin-bottom: 1rem;
-    line-height: 1.5;
+    line-height: 1.55;
     min-height: 30pt;
-    border-left: 2px solid var(--accent);
-    padding-left: 0.6rem;
   }
 
-  .jeduf-col.hero .jeduf-philosophy { color: #cfd9e6; border-left-color: var(--accent); }
+  .jeduf-col.hero .jeduf-philosophy { color: #555; }
 
   .jeduf-step {
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
     padding: 0.45rem 0.7rem;
+    font-family: var(--mono);
     font-size: 0.72rem;
-    font-weight: 500;
+    font-weight: 400;
     text-align: left;
     color: var(--text);
-    background: var(--surface);
+    background: transparent;
     margin-bottom: 0.35rem;
   }
 
   .jeduf-col.hero .jeduf-step {
-    background: rgba(255,255,255,0.06);
-    border-color: rgba(255,255,255,0.12);
-    color: #ffffff;
+    background: transparent;
+    border-color: #d5d5d0;
+    color: var(--invert-text);
   }
 
   /* --- Timeline --- */
@@ -628,12 +619,13 @@
   }
 
   .timeline-year {
-    font-size: 0.85rem;
-    font-weight: 600;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 400;
     text-align: right;
-    padding-top: 1.05rem;
-    color: var(--accent);
-    letter-spacing: 0.04em;
+    padding-top: 1.1rem;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
   }
 
   .timeline-track {
@@ -649,18 +641,17 @@
     height: 11px;
     border-radius: 50%;
     background: var(--bg);
-    border: 2px solid var(--accent);
-    margin-top: 1.2rem;
+    border: 1px solid var(--border-bright);
+    margin-top: 1.25rem;
     flex-shrink: 0;
     position: relative;
     z-index: 1;
   }
 
   .timeline-line {
-    width: 2px;
+    width: 1px;
     flex: 1;
-    background: var(--accent);
-    opacity: 0.25;
+    background: var(--border-strong);
   }
 
   .timeline-row:last-child .timeline-line { display: none; }
@@ -672,12 +663,13 @@
   .timeline-content h4 {
     font-size: 0.95rem;
     font-weight: 600;
-    color: var(--ink);
-    margin-bottom: 0.25rem;
+    color: var(--text);
+    margin-bottom: 0.3rem;
   }
 
   .timeline-content p {
-    font-size: 0.82rem;
+    font-family: var(--mono);
+    font-size: 0.78rem;
     color: var(--text-muted);
     line-height: 1.6;
   }
@@ -686,82 +678,82 @@
   .stat-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    gap: 0.75rem;
     margin-top: 2rem;
   }
 
   .stat-card {
-    border: 1px solid var(--border);
-    border-top: 3px solid var(--accent);
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius);
     padding: 1.5rem 1.4rem;
-    background: var(--bg);
+    background: transparent;
+    position: relative;
   }
 
   .stat-card.stat-dark {
-    background: var(--ink);
-    border-color: var(--ink);
-    border-top: 3px solid var(--accent);
-    color: #ffffff;
+    background: var(--invert-bg);
+    border-color: var(--invert-bg);
+    color: var(--invert-text);
   }
 
   .stat-number {
     font-size: clamp(2.4rem, 4.5vw, 3.5rem);
-    font-weight: 700;
-    color: var(--accent);
-    letter-spacing: -0.025em;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.03em;
     line-height: 1;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
   }
 
-  .stat-card.stat-dark .stat-number { color: #7fb3ff; }
+  .stat-card.stat-dark .stat-number { color: var(--invert-text); }
 
   .stat-label {
-    font-size: 0.7rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--text-muted);
-    margin-bottom: 0.5rem;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--text-subtle);
+    margin-bottom: 0.7rem;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    padding: 0.2rem 0.45rem;
+    display: inline-block;
   }
 
-  .stat-card.stat-dark .stat-label { color: #7fb3ff; }
+  .stat-card.stat-dark .stat-label { color: #555; border-color: #d5d5d0; }
 
   .stat-desc {
-    font-size: 0.82rem;
+    font-family: var(--mono);
+    font-size: 0.78rem;
     color: var(--text-muted);
     line-height: 1.55;
   }
 
-  .stat-card.stat-dark .stat-desc { color: #cfd9e6; }
+  .stat-card.stat-dark .stat-desc { color: #555; }
 
   /* --- Quote pair --- */
   .quote-pair {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 0.75rem;
     margin-top: 2rem;
   }
 
   .quote-card {
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius);
     padding: 1.75rem 1.5rem;
-    background: var(--bg);
+    background: transparent;
     display: flex;
     flex-direction: column;
-    border-left: 4px solid var(--accent);
   }
 
   .quote-card.quote-dark {
-    background: var(--ink);
-    border-color: var(--ink);
-    border-left: 4px solid var(--accent);
-    color: #ffffff;
+    background: var(--invert-bg);
+    border-color: var(--invert-bg);
+    color: var(--invert-text);
   }
 
   .quote-text {
-    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    font-size: clamp(0.95rem, 1.25vw, 1.1rem);
     font-weight: 400;
     line-height: 1.55;
     flex: 1;
@@ -769,30 +761,20 @@
     margin-bottom: 1.25rem;
   }
 
-  .quote-text::before {
-    content: '"';
-    font-size: 2rem;
-    color: var(--accent);
-    line-height: 0;
-    vertical-align: -0.4em;
-    margin-right: 0.15em;
-  }
-
-  .quote-card.quote-dark .quote-text { color: #ffffff; }
+  .quote-card.quote-dark .quote-text { color: var(--invert-text); }
 
   .quote-attr {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: var(--text-muted);
     padding-top: 1rem;
-    border-top: 1px solid var(--border);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    border-top: 1px solid var(--border-strong);
   }
 
   .quote-card.quote-dark .quote-attr {
-    color: #7fb3ff;
-    border-top-color: rgba(255,255,255,0.12);
+    color: #555;
+    border-top-color: #d5d5d0;
   }
 
   /* --- Logo grid --- */
@@ -804,10 +786,10 @@
   }
 
   .logo-cell {
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius);
     padding: 1.5rem 1rem;
-    background: var(--bg);
+    background: transparent;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -821,37 +803,42 @@
     max-width: 80%;
     margin-bottom: 0.75rem;
     object-fit: contain;
+    filter: grayscale(1) brightness(1.2);
+    opacity: 0.7;
   }
 
   .logo-mark {
     width: 36px;
     height: 36px;
-    border-radius: var(--radius-sm);
-    background: var(--accent);
+    border-radius: var(--radius);
+    background: transparent;
+    border: 1px solid var(--border-bright);
     margin-bottom: 0.75rem;
     flex-shrink: 0;
   }
 
   .logo-name {
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: var(--text);
   }
 
   .logo-role {
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    margin-top: 0.2rem;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--text-subtle);
+    margin-top: 0.25rem;
   }
 
   /* --- Code slide --- */
   .code-frame {
-    background: var(--ink);
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius);
     padding: 1.5rem 1.75rem;
     margin-top: 2rem;
     overflow-x: auto;
-    border: 1px solid var(--ink);
+    background: var(--surface);
   }
 
   .code-frame-header {
@@ -860,71 +847,74 @@
     gap: 0.5rem;
     margin-bottom: 1rem;
     padding-bottom: 0.75rem;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid var(--border);
   }
 
   .code-frame-dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: var(--accent);
-    opacity: 0.6;
+    background: var(--border-bright);
   }
 
   .code-frame-title {
-    font-family: 'IBM Plex Mono', 'SF Mono', monospace;
+    font-family: var(--mono);
     font-size: 0.7rem;
-    color: #8fa6c4;
+    color: var(--text-subtle);
     margin-left: 0.5rem;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.02em;
   }
 
   .code-frame pre {
-    font-family: 'IBM Plex Mono', 'SF Mono', monospace;
+    font-family: var(--mono);
     font-size: 0.82rem;
     line-height: 1.7;
-    color: #e6edf5;
+    color: var(--text);
     margin: 0;
     background: none;
   }
 
-  .code-frame .code-comment { color: #6f8aae; }
-  .code-frame .code-keyword { color: #7fb3ff; font-weight: 500; }
-  .code-frame .code-string { color: #c0e0a4; }
-  .code-frame .code-dim { color: #8fa6c4; }
+  .code-frame .code-comment { color: var(--text-subtle); }
+  .code-frame .code-keyword { color: var(--text-muted); font-weight: 500; }
+  .code-frame .code-string { color: var(--text); }
+  .code-frame .code-dim { color: var(--text-subtle); }
 
-  /* --- Dark slide --- */
-  .slide.dark { background: var(--ink); color: #ffffff; }
-  .slide.dark h1 { color: #ffffff; }
-  .slide.dark h1 span.dim { color: #8fa6c4; }
-  .slide.dark .subtitle { color: #cfd9e6; }
-  .slide.dark .eyebrow { color: #7fb3ff; }
-  .slide.dark .eyebrow::before { background: #7fb3ff; }
-  .slide.dark .meta { color: #cfd9e6; }
-  .slide.dark .meta::before { background: #7fb3ff; }
+  /* --- "Dark" slide (in this theme: inverted = light) --- */
+  .slide.dark {
+    background: var(--invert-bg);
+    color: var(--invert-text);
+  }
+  .slide.dark h1 { color: var(--invert-text); }
+  .slide.dark h1 span.dim { color: #888; font-weight: 600; }
+  .slide.dark .subtitle { color: #555; }
+  .slide.dark .meta { color: #555; }
+  .slide.dark .eyebrow {
+    color: #555;
+    border-color: #d5d5d0;
+  }
 
   /* --- Nav --- */
   .nav {
     position: fixed;
     bottom: 1.5rem;
     right: 1.5rem;
+    font-family: var(--mono);
     font-size: 0.7rem;
     color: var(--text-muted);
     z-index: 100;
     display: flex;
     align-items: center;
-    gap: 1rem;
-    font-weight: 500;
+    gap: 0.75rem;
   }
 
-  .nav-buttons { display: flex; gap: 0.5rem; }
+  .nav-buttons { display: flex; gap: 0.4rem; }
 
   .nav-btn {
     width: 30px;
     height: 30px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-    background: var(--bg);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-strong);
+    background: transparent;
     color: var(--text-muted);
     cursor: pointer;
     display: flex;
@@ -932,20 +922,20 @@
     justify-content: center;
     font-size: 0.85rem;
     padding: 0;
-    font-weight: 600;
+    font-family: var(--mono);
   }
 
   .nav-btn:hover {
-    border-color: var(--accent);
-    color: var(--accent);
+    border-color: var(--text);
+    color: var(--text);
   }
 
   .progress {
     position: fixed;
     top: 0;
     left: 0;
-    height: 3px;
-    background: var(--accent);
+    height: 1px;
+    background: var(--text);
     transition: width 0.3s ease;
     z-index: 100;
   }
@@ -957,21 +947,19 @@
     left: 50%;
     transform: translateX(-50%);
     z-index: 200;
-    background: var(--accent);
-    color: #ffffff;
+    background: var(--invert-bg);
+    color: var(--invert-text);
     border: none;
-    padding: 0.6rem 1.4rem;
-    border-radius: var(--radius-sm);
-    font-size: 0.78rem;
-    font-weight: 600;
+    padding: 0.55rem 1.25rem;
+    border-radius: var(--radius);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 400;
     cursor: pointer;
-    font-family: inherit;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    box-shadow: 0 4px 12px rgba(0, 112, 242, 0.25);
+    letter-spacing: 0.02em;
   }
 
-  .pdf-btn:hover { background: var(--accent-strong); }
+  .pdf-btn:hover { background: #ffffff; }
 
   /* --- Print: each slide becomes one 16:9 PDF page --- */
   @page { size: 13.333in 7.5in; margin: 0; }
@@ -995,9 +983,10 @@
       page-break-after: always !important;
       break-after: page !important;
       -webkit-print-color-adjust: exact !important;
+      background: var(--bg) !important;
     }
     .slide:last-child { page-break-after: auto !important; }
-    .slide.dark { background: var(--ink) !important; }
+    .slide.dark { background: var(--invert-bg) !important; }
     .nav, .progress, .pdf-btn { display: none !important; }
   }
 </style>
@@ -1038,12 +1027,12 @@
     <div class="slide-inner">
       <div class="two-col">
         <div>
-          <div class="eyebrow">The problem</div>
+          <div class="eyebrow">01 / The problem</div>
           <h2>What's broken.</h2>
           <p>Describe the situation today. Be specific. Avoid abstractions. The reader should recognize their own pain.</p>
         </div>
         <div>
-          <div class="eyebrow">The fix</div>
+          <div class="eyebrow">02 / The fix</div>
           <h2>What we built.</h2>
           <p>Describe the solution. Same length and tone as the problem. Side-by-side comparison drives the point.</p>
         </div>
@@ -1116,7 +1105,7 @@
     </div>
   </section>
 
-  <!-- ========== 7. DARK CALLOUT ========== -->
+  <!-- ========== 7. CALLOUT ========== -->
   <section class="slide">
     <div class="slide-inner">
       <div class="callout">
@@ -1132,11 +1121,11 @@
       <div class="eyebrow">The flow</div>
       <h2>How it works. <span class="dim">Step by step.</span></h2>
       <div class="dot-flow">
-        <div class="dot-step"><div class="dot">1</div><h4>Step 1</h4><p>Short caption</p></div>
-        <div class="dot-step"><div class="dot">2</div><h4>Step 2</h4><p>Short caption</p></div>
-        <div class="dot-step"><div class="dot">3</div><h4>Step 3</h4><p>Short caption</p></div>
-        <div class="dot-step"><div class="dot">4</div><h4>Step 4</h4><p>Short caption</p></div>
-        <div class="dot-step"><div class="dot">5</div><h4>Step 5</h4><p>Short caption</p></div>
+        <div class="dot-step"><div class="dot">01</div><h4>Step 1</h4><p>Short caption</p></div>
+        <div class="dot-step"><div class="dot">02</div><h4>Step 2</h4><p>Short caption</p></div>
+        <div class="dot-step"><div class="dot">03</div><h4>Step 3</h4><p>Short caption</p></div>
+        <div class="dot-step"><div class="dot">04</div><h4>Step 4</h4><p>Short caption</p></div>
+        <div class="dot-step"><div class="dot">05</div><h4>Step 5</h4><p>Short caption</p></div>
       </div>
     </div>
   </section>
@@ -1148,23 +1137,23 @@
       <h2>Built on tools <span class="dim">you already know.</span></h2>
       <div class="stack-grid">
         <div class="stack-card">
-          <div class="stack-card-label">Category one</div>
+          <div class="stack-card-label">01 / Category one</div>
           <div class="stack-tool"><span class="mark"></span>Tool A</div>
           <div class="stack-tool"><span class="mark"></span>Tool B</div>
           <div class="stack-tool"><span class="mark"></span>Tool C</div>
         </div>
         <div class="stack-card">
-          <div class="stack-card-label">Category two</div>
+          <div class="stack-card-label">02 / Category two</div>
           <div class="stack-tool"><span class="mark"></span>Tool D</div>
           <div class="stack-tool"><span class="mark"></span>Tool E</div>
         </div>
         <div class="stack-card">
-          <div class="stack-card-label">Category three</div>
+          <div class="stack-card-label">03 / Category three</div>
           <div class="stack-tool"><span class="mark"></span>Tool F</div>
           <div class="stack-tool"><span class="mark"></span>Tool G</div>
         </div>
         <div class="stack-card">
-          <div class="stack-card-label">Category four</div>
+          <div class="stack-card-label">04 / Category four</div>
           <div class="stack-tool"><span class="mark"></span>Tool H</div>
           <div class="stack-tool"><span class="mark"></span>Tool I</div>
         </div>
@@ -1202,12 +1191,12 @@
     </div>
   </section>
 
-  <!-- ========== 11. PRODUCT SLIDE (SHOWCASE STYLE) ========== -->
+  <!-- ========== 11. PRODUCT SLIDE ========== -->
   <section class="slide">
     <div class="slide-inner">
       <div class="product-row">
         <div class="product-meta">
-          <div class="product-num">/01</div>
+          <div class="product-num">01</div>
           <div class="product-tag">A short, punchy quote or hook.</div>
           <h3 class="product-headline">One-line description of what this thing does.</h3>
           <p class="product-desc">Two or three sentences that explain it. Keep it concrete. Avoid abstract language. Tell the story behind it.</p>
@@ -1218,13 +1207,9 @@
     </div>
   </section>
 
-  <!-- ========== 12. COLLAGE SLIDE (FULL MEDIA) ========== -->
+  <!-- ========== 12. COLLAGE SLIDE ========== -->
   <section class="slide collage-slide">
     <div class="collage">
-      <!-- Drop your image or video here:
-           <img src="media/your-image.png" alt="">
-           <video src="media/your-video.mp4" controls loop playsinline></video>
-      -->
       <div class="placeholder">[ Replace with image or video from media/ ]</div>
     </div>
   </section>
@@ -1310,7 +1295,7 @@
         <div class="stat-card stat-dark">
           <div class="stat-label">Metric two</div>
           <div class="stat-number">00</div>
-          <div class="stat-desc">The hero number. Dark card draws attention here.</div>
+          <div class="stat-desc">The hero number. Light card draws attention here.</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Metric three</div>
@@ -1328,11 +1313,11 @@
       <h2>The debate. <span class="dim">Both sides, one slide.</span></h2>
       <div class="quote-pair">
         <div class="quote-card">
-          <div class="quote-text">The first perspective. A position or belief that one side holds.</div>
+          <div class="quote-text">"The first perspective. A position or belief that one side holds."</div>
           <div class="quote-attr">Perspective A</div>
         </div>
         <div class="quote-card quote-dark">
-          <div class="quote-text">The counterpoint. A contrasting view that creates tension with the first.</div>
+          <div class="quote-text">"The counterpoint. A contrasting view that creates tension with the first."</div>
           <div class="quote-attr">Perspective B</div>
         </div>
       </div>
@@ -1382,17 +1367,17 @@
     </div>
   </section>
 
-  <!-- ========== 19. DARK SLIDE (EMPHASIS) ========== -->
+  <!-- ========== 19. INVERTED SLIDE ========== -->
   <section class="slide dark">
     <div class="slide-inner">
       <div class="eyebrow">Section label</div>
-      <h1>The pivot moment. <span class="dim">Lands harder in dark.</span></h1>
-      <p class="subtitle">Use dark slides sparingly. They mark turning points. Two or three per deck max.</p>
+      <h1>The pivot moment. <span class="dim">Inverted to land harder.</span></h1>
+      <p class="subtitle">Use inverted slides sparingly. They mark turning points. Two or three per deck max.</p>
     </div>
   </section>
 
   <!-- ========== 20. CLOSING SLIDE ========== -->
-  <section class="slide dark quote-slide">
+  <section class="slide quote-slide">
     <div class="slide-inner">
       <h1>The closing line.<br><span class="dim">Slow down for it.</span></h1>
     </div>
@@ -1428,7 +1413,7 @@
   function show(i) {
     slides.forEach(s => s.classList.remove('active'));
     slides[i].classList.add('active');
-    counter.textContent = `${i + 1} / ${slides.length}`;
+    counter.textContent = `${String(i + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
     progress.style.width = `${((i + 1) / slides.length) * 100}%`;
     current = i;
   }
