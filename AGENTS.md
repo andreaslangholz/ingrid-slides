@@ -421,6 +421,98 @@ Dark code block with macOS-style header. Use `.code-comment`, `.code-keyword`, `
 </section>
 ```
 
+### 21. Testimonial grid
+
+3×2 grid of quote cards with avatar, name, and title. For social proof.
+
+```html
+<div class="testimonial-grid">
+  <div class="testimonial-card">
+    <div class="testimonial-quote">"Quote text here."</div>
+    <div class="testimonial-author">
+      <div class="testimonial-avatar"></div>
+      <div>
+        <div class="testimonial-name">Name</div>
+        <div class="testimonial-title">Role, Company</div>
+      </div>
+    </div>
+  </div>
+  <!-- repeat for each testimonial, up to 6 -->
+</div>
+```
+
+### 22. Logo bar
+
+Horizontal row of partner/client names between hairline borders. Compact social proof.
+
+```html
+<div class="logo-bar">
+  <div class="logo-bar-item">Partner A</div>
+  <div class="logo-bar-item">Partner B</div>
+  <div class="logo-bar-item">Partner C</div>
+</div>
+```
+
+### 23. Feature card row
+
+Three cards with title, description, and inner mock element. For feature breakdowns.
+
+```html
+<div class="feature-cards">
+  <div class="feature-card">
+    <div>
+      <div class="feature-card-title">Feature name</div>
+      <div class="feature-card-desc">Short description of what this feature does.</div>
+    </div>
+    <div class="feature-card-inner">
+      <!-- mock UI lines or content -->
+    </div>
+  </div>
+  <!-- repeat for 3 cards -->
+</div>
+```
+
+### 24. Update row (changelog)
+
+Four changelog cards with version badges and dates. For shipping cadence slides.
+
+```html
+<div class="update-row">
+  <div class="update-card">
+    <div class="update-header">
+      <span class="update-badge">3.3</span>
+      <span class="update-date">May 7, 2026</span>
+    </div>
+    <div class="update-title">Feature or fix description</div>
+  </div>
+  <!-- repeat for each update -->
+</div>
+```
+
+### 25. Art overlay
+
+Classical painting background with UI mockup floating on top. The "craft meets code" visual. Swap the gradient for a real painting via `background-image` on `.art-overlay-bg`.
+
+```html
+<div class="art-overlay">
+  <div class="art-overlay-bg"></div>
+  <div class="art-overlay-ui">
+    <div class="art-overlay-titlebar">
+      <div class="art-overlay-dot"></div>
+      <div class="art-overlay-dot"></div>
+      <div class="art-overlay-dot"></div>
+    </div>
+    <div class="art-overlay-content">
+      <!-- sidebar + main mock content -->
+    </div>
+  </div>
+  <div class="art-overlay-caption">
+    <h3>Caption title</h3>
+    <p>Caption description.</p>
+  </div>
+</div>
+```
+
 ---
 
 ## Storytelling structure
@@ -483,7 +575,7 @@ Adding `?embed` to the deck URL produces an embeddable version. The PDF button h
 
 ## Freestyle: creating new components
 
-The 15 components above are the standard library, not a ceiling. You are encouraged to invent new slide layouts when the content demands it. Follow these rules when freestyling:
+The 25 components above are the standard library, not a ceiling. You are encouraged to invent new slide layouts when the content demands it. Follow these rules when freestyling:
 
 1. **Stay on-token.** Use only the colors, fonts, weights, and spacing from the design tokens table. No new colors, no new fonts.
 2. **Use the headline pattern.** Any new layout with a headline should use bold-then-dim (`<span class="dim">`).
