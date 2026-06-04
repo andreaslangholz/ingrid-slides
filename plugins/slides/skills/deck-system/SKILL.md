@@ -550,6 +550,19 @@ Use the full component library. Do not default to the same five component types.
 
 ---
 
+## Images
+
+When the user attaches a photo or image:
+
+1. **Embed it as a base64 data URI** directly in the `<img>` tag. This keeps the deck self-contained in a single HTML file.
+2. Use the format: `<img src="data:image/jpeg;base64,..." alt="description">`
+3. Do NOT write placeholder text like "save the photo as X.jpg". The user cannot do that from this environment.
+4. If you cannot access the image data, use a CSS placeholder (a colored `div` with the same dimensions) and tell the user: "I could not embed the photo. Drop the image file next to deck.html and update the `src` attribute."
+
+For images the user provides as URLs, use the URL directly in the `src` attribute.
+
+---
+
 ## Constraints
 
 - **Max 1 dark callout** per deck.
