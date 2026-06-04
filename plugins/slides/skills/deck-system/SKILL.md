@@ -26,16 +26,18 @@ If you truly have zero context about what the deck is about, ask once in plain t
 
 Based on the user's description, select the right storytelling format. Read the corresponding file for full structure and guidance.
 
-| Signal in user's description | Format | File |
-|------------------------------|--------|------|
-| "talk", "conference", "keynote", "audience", "stage" | TED Talk (six-beat) | `docs/STORYTELLING.md` |
-| "pitch", "investors", "funding", "raise", "seed", "series" | Sequoia pitch deck | `docs/STORYTELLING-sequoia.md` |
-| "strategy", "board", "quarterly", "exec", "leadership" | McKinsey SCR | `docs/STORYTELLING-mbb.md` |
-| "launch", "product", "release", "announce", "unveil" | Product launch | `docs/STORYTELLING-product-launch.md` |
-| "board update", "status", "review", "KPIs", "OKRs" | Board update | `docs/STORYTELLING-board.md` |
-| "sales", "prospect", "customer", "close", "pipeline" | Sales deck | `docs/STORYTELLING-sales.md` |
+| Signal in user's description | Format | File (same folder as this skill) |
+|------------------------------|--------|-----------------------------------|
+| "talk", "conference", "keynote", "audience", "stage" | TED Talk (six-beat) | `STORYTELLING.md` |
+| "pitch", "investors", "funding", "raise", "seed", "series" | Sequoia pitch deck | `STORYTELLING-sequoia.md` |
+| "strategy", "board", "quarterly", "exec", "leadership" | McKinsey SCR | `STORYTELLING-mbb.md` |
+| "launch", "product", "release", "announce", "unveil" | Product launch | `STORYTELLING-product-launch.md` |
+| "board update", "status", "review", "KPIs", "OKRs" | Board update | `STORYTELLING-board.md` |
+| "sales", "prospect", "customer", "close", "pipeline" | Sales deck | `STORYTELLING-sales.md` |
 
-**Default:** If unclear, use the six-beat TED Talk structure from `docs/STORYTELLING.md`. It adapts to most formats.
+These files are in the same directory as this SKILL.md. Read them from here.
+
+**Default:** If unclear, use the six-beat TED Talk structure from `STORYTELLING.md`. It adapts to most formats.
 
 ## Step 2. Draft the outline
 
@@ -485,7 +487,7 @@ Four options are available. The first three are predefined templates. The fourth
 
 **CRITICAL: Do not invent your own theme CSS.** When using a predefined theme:
 
-1. **Read the actual template file** (`deck.html`, `deck-craft.html`, or `deck-solid.html`) from the repo.
+1. **Read the actual template file** from the repo root (two levels up from this skill: `../../deck.html`, `../../deck-craft.html`, or `../../deck-solid.html`). If those paths fail, search the repo for `deck.html`, `deck-craft.html`, or `deck-solid.html`.
 2. **Copy the entire `<style>` block verbatim.** Every CSS variable, every component style, every media query. Do not modify it. Do not improvise colors, gradients, or effects.
 3. **Copy the entire `<script>` block verbatim.** Navigation, progress bar, PDF export. Do not rewrite it.
 4. **Only write the slide content.** Replace the `<section class="slide">` elements with the new deck content. Keep the `<head>`, `<style>`, `<script>`, `.progress`, and `.deck` wrapper structure identical to the template.

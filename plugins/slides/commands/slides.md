@@ -19,7 +19,7 @@ Runs the `deck-system` skill end-to-end:
 1. **Use what the user already provided.** The user's message, form responses, and attachments are the brief. Do NOT re-ask for information already given. If topic, format, length, or theme were stated, use them directly. Proceed to the outline.
 2. If critical info is missing (you have no idea what the deck is about), ask once. One short question. Then move on.
 3. Detect the best storytelling format from context (or use the one the user specified)
-4. Load the corresponding storytelling guide from `docs/`
+4. Load the corresponding storytelling guide (bundled in the `deck-system` skill folder)
 5. Draft a slide-by-slide outline (titles, component types, beats)
 6. Present the outline for approval
 7. Generate the full HTML deck using the component reference and design tokens
@@ -29,14 +29,16 @@ Runs the `deck-system` skill end-to-end:
 
 The skill auto-detects format from context. Override with `--format`:
 
-| Flag | Format | Guide |
-|------|--------|-------|
-| `--format talk` | TED Talk / six-beat | `docs/STORYTELLING.md` |
-| `--format sequoia` | Sequoia pitch deck | `docs/STORYTELLING-sequoia.md` |
-| `--format mbb` | McKinsey SCR / pyramid | `docs/STORYTELLING-mbb.md` |
-| `--format launch` | Product launch (Apple-style) | `docs/STORYTELLING-product-launch.md` |
-| `--format board` | Board / strategy update | `docs/STORYTELLING-board.md` |
-| `--format sales` | Sales deck | `docs/STORYTELLING-sales.md` |
+| Flag | Format |
+|------|--------|
+| `--format talk` | TED Talk / six-beat |
+| `--format sequoia` | Sequoia pitch deck |
+| `--format mbb` | McKinsey SCR / pyramid |
+| `--format launch` | Product launch (Apple-style) |
+| `--format board` | Board / strategy update |
+| `--format sales` | Sales deck |
+
+The storytelling guides are bundled in the `deck-system` skill folder. The skill handles loading them.
 
 ## What you get back
 
