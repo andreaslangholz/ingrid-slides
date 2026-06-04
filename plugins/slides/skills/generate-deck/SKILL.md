@@ -469,15 +469,24 @@ The default text slide.
 
 ## Themes
 
-Three themes are available. Each is a complete HTML file with its own `<style>` block:
+Three themes are available. Each is a complete HTML file with its own `<style>` and `<script>` block.
 
-| Theme | File | Character |
-|-------|------|-----------|
+| Theme | Template file | Character |
+|-------|---------------|-----------|
 | Default | `deck.html` | Warm off-white, minimal, editorial |
 | Craft | `deck-craft.html` | Richer textures, art overlays, more visual weight |
-| Solid | `deck-solid.html` | Glass morphism, gradients, modern SaaS aesthetic |
+| Solid | `deck-solid.html` | Glass morphism, dark background, frosted surfaces |
 
-All themes share the same component HTML structure. The difference is in the CSS tokens. When generating a deck, default to the Default theme unless the user specifies otherwise.
+**CRITICAL: Do not invent your own theme CSS.** When generating a deck:
+
+1. **Read the actual template file** (`deck.html`, `deck-craft.html`, or `deck-solid.html`) from the repo.
+2. **Copy the entire `<style>` block verbatim.** Every CSS variable, every component style, every media query. Do not modify it. Do not improvise colors, gradients, or effects.
+3. **Copy the entire `<script>` block verbatim.** Navigation, progress bar, PDF export. Do not rewrite it.
+4. **Only write the slide content.** Replace the `<section class="slide">` elements with the new deck content. Keep the `<head>`, `<style>`, `<script>`, `.progress`, and `.deck` wrapper structure identical to the template.
+
+The template files are the source of truth. If you cannot read them, ask the user to provide the template file. Never generate CSS from memory or from the token table above. The token table is a reference for understanding the design system. The template file is what you copy.
+
+Default to the Default theme (`deck.html`) unless the user specifies otherwise.
 
 ---
 

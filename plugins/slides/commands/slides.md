@@ -39,12 +39,15 @@ The skill auto-detects format from context. Override with `--format`:
 ## What you get back
 
 - A complete, self-contained HTML file
-- Inline CSS with design tokens
-- Inline JS for navigation, progress bar, and PDF export
+- CSS and JS copied verbatim from the template file
 - Keyboard and touch navigation built in
+
+## How the template works
+
+The skill reads the actual template file (`deck.html`, `deck-craft.html`, or `deck-solid.html`) and copies its `<style>` and `<script>` blocks verbatim. Only the slide content (`<section>` elements) is generated. This ensures the deck uses the exact design system, with no improvised colors or effects.
 
 ## Tips
 
 - Be specific about your audience, duration, and goal
 - Mention the format if you have a preference: "pitch deck", "conference talk", "sales presentation"
-- The deck uses the Default theme. Use `/slides-theme` to switch after generation.
+- Mention the theme if you want one: "use the solid theme", "craft theme". Default is the Default theme.

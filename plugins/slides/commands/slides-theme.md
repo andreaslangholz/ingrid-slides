@@ -22,9 +22,9 @@ Convert a deck from one visual theme to another.
 
 ## What the command does
 
-1. Identify the current theme by reading the existing `<style>` block
-2. Replace the entire `<style>` block with the target theme's tokens
-3. Adjust any theme-specific CSS classes or inline styles
+1. Read the target template file (`deck.html`, `deck-craft.html`, or `deck-solid.html`) from the repo
+2. Copy the entire `<style>` block from the template file verbatim into the deck
+3. Copy the entire `<script>` block from the template file verbatim into the deck
 4. Preserve all slide content and structure unchanged
 
 ## Important
@@ -32,3 +32,4 @@ Convert a deck from one visual theme to another.
 - All three themes share the same HTML component structure
 - The difference is purely in CSS: colors, backgrounds, card styles, shadows
 - Content, slide order, and component types remain identical after switching
+- Always read the actual template file. Never generate theme CSS from memory or descriptions.
