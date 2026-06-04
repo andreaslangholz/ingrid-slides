@@ -4,7 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Slides™ · Write slides in HTML. Ship from a single file.</title>
-<meta name="description" content="PowerPoint was the friction. Slides™ is a minimalist HTML deck framework. Drop your storyline, let an AI agent handle the rest. One file. No build step. Open source.">
+<meta name="description" content="Slides™ is a minimalist HTML deck framework built for AI. Drop your storyline, the agent handles the rest. One file. No build step. Open source. Now a Claude marketplace plugin.">
+<meta property="og:title" content="Slides™ · Story in. Slides out.">
+<meta property="og:description" content="An open-source deck framework built for AI. One HTML file, 25+ components, six storytelling formats. Now a Claude marketplace plugin.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://noskillish.github.io/slides/">
+<meta property="og:image" content="https://noskillish.github.io/slides/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Slides™ · Story in. Slides out.">
+<meta name="twitter:description" content="An open-source deck framework built for AI. One HTML file, 25+ components, six storytelling formats.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◼</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -342,8 +351,8 @@
   }
   .theme-btn:hover { border-color: var(--border-strong); color: var(--ink); }
   .theme-btn.active { background: var(--ink); color: #f5f5f3; border-color: var(--ink); }
-  .demo-section { display: none; }
-  @media (min-width: 768px) { .demo-section { display: block; } }
+  .demo-section iframe { pointer-events: none; }
+  @media (min-width: 768px) { .demo-section iframe { pointer-events: auto; } }
 </style>
 </head>
 <body>
@@ -373,18 +382,20 @@
     <div class="clone-block">
       <button class="copy-btn" onclick="copyCode(this)">Copy</button>
       <pre><span class="line-dim">$</span>git clone https://github.com/noskillish/slides.git
-<span class="line-dim">$</span>cd slides
-<span class="line-dim">$</span>open deck.html</pre>
+<span class="line-dim">$</span>cd slides</pre>
     </div>
 
     <div class="cta-row">
       <a href="https://github.com/noskillish/slides" class="btn-primary" target="_blank">View on GitHub &rarr;</a>
       <a href="https://noskillish.github.io/slides/deck.html" class="btn-secondary" target="_blank">See the demo deck &rarr;</a>
+      <a href="https://github.com/noskillish/slides" target="_blank" style="display: inline-flex; align-items: center;">
+        <img src="https://img.shields.io/github/stars/noskillish/slides?style=social" alt="GitHub stars" style="height: 20px;">
+      </a>
     </div>
   </div>
 </div>
 
-<!-- How it works — 3-way split -->
+<!-- How it works -->
 <section>
   <div class="container">
     <div class="eyebrow">How it works</div>
@@ -412,19 +423,19 @@
           <div class="split-dot"></div><div class="split-dot"></div><div class="split-dot"></div>
           <span class="split-filename">deck.html</span>
         </div>
-        <div class="code-body"><span class="ck">&lt;!-- Open — hook --&gt;</span>
+        <div class="code-body"><span class="ck">&lt;!-- Open, hook --&gt;</span>
 <span class="ck">&lt;section</span> <span class="ca">class</span>=<span class="cs">"slide"</span><span class="ck">&gt;</span>
   <span class="ck">&lt;h1&gt;</span>I have a confession.
   <span class="ck">&lt;/h1&gt;</span>
 <span class="ck">&lt;/section&gt;</span>
 
-<span class="ck">&lt;!-- Act 1 — empathy --&gt;</span>
+<span class="ck">&lt;!-- Act 1, empathy --&gt;</span>
 <span class="ck">&lt;section</span> <span class="ca">class</span>=<span class="cs">"slide"</span><span class="ck">&gt;</span>
   <span class="ck">&lt;div</span> <span class="ca">class</span>=<span class="cs">"eyebrow"</span><span class="ck">&gt;</span>Act 1<span class="ck">&lt;/div&gt;</span>
   <span class="ck">&lt;h1&gt;</span>The old way.<span class="ck">&lt;/h1&gt;</span>
 <span class="ck">&lt;/section&gt;</span>
 
-<span class="ck">&lt;!-- Act 3 — evidence --&gt;</span>
+<span class="ck">&lt;!-- Act 3, evidence --&gt;</span>
 <span class="ck">&lt;section</span> <span class="ca">class</span>=<span class="cs">"slide product-slide"</span><span class="ck">&gt;</span>
   ...14 products
 <span class="ck">&lt;/section&gt;</span></div>
@@ -450,7 +461,7 @@
   <div class="container">
     <div class="eyebrow">What you get</div>
     <h2>One file. <span class="dim">Everything included.</span></h2>
-    <p class="section-subtitle">Design system, swipe navigation, keyboard shortcuts, embed mode, templates, .md files for agent instructions. Works with any AI agent.</p>
+    <p class="section-subtitle">25+ components, three themes, six storytelling formats, keyboard and touch navigation, embed mode. All in one repo.</p>
 
     <div class="features">
       <div class="feature-card">
@@ -478,6 +489,44 @@
         <p>MIT licensed. Fork it, theme it, ship it. Your slides live in a git repo. Version controlled forever.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- Plugin -->
+<section>
+  <div class="container">
+    <div class="eyebrow">Claude plugin</div>
+    <h2>Type /slides. <span class="dim">Get a deck.</span></h2>
+    <p class="section-subtitle">Slides is a Claude marketplace plugin. Add it in Cowork, get six commands. Storytelling formats, themes, and tone rules are built in.</p>
+
+    <div class="commands-grid">
+      <div class="command-card">
+        <code>/slides</code>
+        <p>Generate a full deck from a description. Picks the storytelling format, applies the theme, outputs one HTML file.</p>
+      </div>
+      <div class="command-card">
+        <code>/slides-outline</code>
+        <p>Draft the structure first. Review the beat-by-beat plan before any HTML is written.</p>
+      </div>
+      <div class="command-card">
+        <code>/slides-theme</code>
+        <p>Swap the visual style. Three built-in themes, or describe your own in plain language.</p>
+      </div>
+      <div class="command-card">
+        <code>/add-slide</code>
+        <p>Drop new slides into an existing deck. Matches the theme and component style automatically.</p>
+      </div>
+      <div class="command-card">
+        <code>/slides-new-component</code>
+        <p>Build a slide type that does not exist yet. Describe it, the agent builds it on-token.</p>
+      </div>
+      <div class="command-card">
+        <code>/slides-review</code>
+        <p>Check tone, component diversity, and structure against the design system rules.</p>
+      </div>
+    </div>
+
+    <p style="font-size: 0.85rem; color: var(--dim); font-weight: 300; margin-top: 2rem; line-height: 1.6;">Open Cowork. Go to Add Marketplace. Paste <code style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; background: rgba(0,0,0,0.04); padding: 0.15rem 0.4rem; border-radius: 4px;">https://github.com/noskillish/slides</code> and type <code style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; background: rgba(0,0,0,0.04); padding: 0.15rem 0.4rem; border-radius: 4px;">/slides</code> to get started.</p>
   </div>
 </section>
 
@@ -529,46 +578,8 @@
   </div>
 </section>
 
-<!-- Plugin -->
-<section>
-  <div class="container">
-    <div class="eyebrow">Claude plugin</div>
-    <h2>Type /slides. <span class="dim">Get a deck.</span></h2>
-    <p class="section-subtitle">Slides is a Claude marketplace plugin. Add it in Cowork, get six commands. Storytelling formats, themes, and tone rules are built in.</p>
-
-    <div class="commands-grid">
-      <div class="command-card">
-        <code>/slides</code>
-        <p>Generate a full deck from a description. Picks the storytelling format, applies the theme, outputs one HTML file.</p>
-      </div>
-      <div class="command-card">
-        <code>/slides-outline</code>
-        <p>Draft the structure first. Review the beat-by-beat plan before any HTML is written.</p>
-      </div>
-      <div class="command-card">
-        <code>/slides-theme</code>
-        <p>Swap the visual style. Three built-in themes, or describe your own in plain language.</p>
-      </div>
-      <div class="command-card">
-        <code>/add-slide</code>
-        <p>Drop new slides into an existing deck. Matches the theme and component style automatically.</p>
-      </div>
-      <div class="command-card">
-        <code>/slides-new-component</code>
-        <p>Build a slide type that does not exist yet. Describe it, the agent builds it on-token.</p>
-      </div>
-      <div class="command-card">
-        <code>/slides-review</code>
-        <p>Check tone, component diversity, and structure against the design system rules.</p>
-      </div>
-    </div>
-
-    <p style="font-size: 0.85rem; color: var(--dim); font-weight: 300; margin-top: 2rem; line-height: 1.6;">Open Cowork. Go to Add Marketplace. Paste <code style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; background: rgba(0,0,0,0.04); padding: 0.15rem 0.4rem; border-radius: 4px;">https://github.com/noskillish/slides</code> and type <code style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; background: rgba(0,0,0,0.04); padding: 0.15rem 0.4rem; border-radius: 4px;">/slides</code> to get started.</p>
-  </div>
-</section>
-
-<!-- Live demo (hidden on mobile) -->
-<section class="demo-section">
+<!-- Live demo -->
+<section class="demo-section" style="border-bottom: 1px solid var(--border);">
   <div class="container">
     <div class="eyebrow">Built with Slides™</div>
     <h2>A real deck. <span class="dim">Made like this.</span></h2>
@@ -577,6 +588,7 @@
       <button class="theme-btn active" onclick="switchTheme('', this)">Default</button>
       <button class="theme-btn" onclick="switchTheme('craft', this)">Craft</button>
       <button class="theme-btn" onclick="switchTheme('solid', this)">Solid</button>
+      <button class="theme-btn" style="border-style: dashed;" disabled title="Describe your own style in /slides-theme">Custom</button>
     </div>
     <div style="margin-top: 1rem; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); aspect-ratio: 16/9;">
       <iframe id="demo-frame" src="deck.html?embed" style="width: 100%; height: 100%; border: none;"></iframe>
