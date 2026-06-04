@@ -16,12 +16,14 @@ Generate a complete presentation deck from a description.
 
 Runs the `deck-system` skill end-to-end:
 
-1. Read the user's description and detect the best storytelling format
-2. Load the corresponding storytelling guide from `docs/`
-3. Draft a slide-by-slide outline (titles, component types, beats)
-4. Present the outline for approval
-5. Generate the full HTML deck using the component reference and design tokens
-6. Output a single `deck.html` file
+1. **Use what the user already provided.** The user's message, form responses, and attachments are the brief. Do NOT re-ask for information already given. If topic, format, length, or theme were stated, use them directly. Proceed to the outline.
+2. If critical info is missing (you have no idea what the deck is about), ask once. One short question. Then move on.
+3. Detect the best storytelling format from context (or use the one the user specified)
+4. Load the corresponding storytelling guide from `docs/`
+5. Draft a slide-by-slide outline (titles, component types, beats)
+6. Present the outline for approval
+7. Generate the full HTML deck using the component reference and design tokens
+8. Output a single `deck.html` file
 
 ## Format detection
 

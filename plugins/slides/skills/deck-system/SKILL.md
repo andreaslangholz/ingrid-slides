@@ -14,6 +14,14 @@ You are generating a slide deck using the Slides framework. This skill gives you
 
 A single self-contained HTML file (`deck.html`) with inline CSS and JS. No build step, no dependencies beyond Google Fonts (Inter). Navigate with arrow keys, space, swipe. Export to PDF with `P`.
 
+## Step 0. Use what the user already provided
+
+The user's message, form responses, and attachments are the brief. Extract every detail: topic, format, length, theme, audience, key points.
+
+**Never re-ask for information the user already gave.** If the user filled in a form or wrote a description, that is the brief. Use it. Proceed to Step 1 immediately.
+
+If you truly have zero context about what the deck is about, ask once in plain text. One short question. Then move on.
+
 ## Step 1. Choose the storytelling format
 
 Based on the user's description, select the right storytelling format. Read the corresponding file for full structure and guidance.
