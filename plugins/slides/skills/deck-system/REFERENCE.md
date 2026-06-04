@@ -476,8 +476,8 @@ The default text slide.
 
 Four options are available. The first three are predefined templates. The fourth is a custom theme the user describes.
 
-| Theme | Template (in this folder) | Character |
-|-------|---------------------------|-----------|
+| Theme | Source | Character |
+|-------|--------|-----------|
 | Default | `deck.html` | Warm off-white, minimal, editorial |
 | Craft | `deck-craft.html` | Richer textures, art overlays, more visual weight |
 | Solid | `deck-solid.html` | Glass morphism, dark background, frosted surfaces |
@@ -487,7 +487,7 @@ Four options are available. The first three are predefined templates. The fourth
 
 **CRITICAL: Do not invent your own theme CSS.** When using a predefined theme:
 
-1. **Read the template file from this skill folder** (`deck.html`, `deck-craft.html`, or `deck-solid.html`). They are in the same directory as this SKILL.md.
+1. **Read the actual template file** from the repo root (two levels up from this skill: `../../deck.html`, `../../deck-craft.html`, or `../../deck-solid.html`). If those paths fail, search the repo for `deck.html`, `deck-craft.html`, or `deck-solid.html`.
 2. **Copy the entire `<style>` block verbatim.** Every CSS variable, every component style, every media query. Do not modify it. Do not improvise colors, gradients, or effects.
 3. **Copy the entire `<script>` block verbatim.** Navigation, progress bar, PDF export. Do not rewrite it.
 4. **Only write the slide content.** Replace the `<section class="slide">` elements with the new deck content. Keep the `<head>`, `<style>`, `<script>`, `.progress`, and `.deck` wrapper structure identical to the template.
