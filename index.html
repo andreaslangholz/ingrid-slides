@@ -94,6 +94,11 @@
   }
   .copy-btn:hover { background: rgba(255,255,255,0.12); color: #f5f5f3; }
   .copy-btn.copied { background: rgba(255,255,255,0.18); color: #f5f5f3; }
+  .install-label {
+    font-size: 0.65rem; font-weight: 500; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.6rem;
+  }
+  .install-label.secondary { margin-top: 1.25rem; }
 
   /* Sections */
   section { padding: 4rem 0; border-bottom: 1px solid var(--border); }
@@ -209,6 +214,22 @@
     font-size: 0.8rem; color: var(--dim); font-weight: 300; line-height: 1.5;
   }
 
+  /* Storytelling formats */
+  .formats {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--border);
+  }
+  @media (min-width: 768px) { .formats { grid-template-columns: 1fr 1fr; column-gap: 2.5rem; } }
+  .format-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--border);
+  }
+  .format-name { font-size: 0.9rem; font-weight: 500; white-space: nowrap; }
+  .format-trigger { font-size: 0.8rem; color: var(--dim); font-weight: 300; text-align: right; }
+
   /* Comparison */
   .compare {
     display: grid;
@@ -289,11 +310,19 @@
     <h1>Story in. <span class="dim">Slides out.</span></h1>
     <p class="subtitle">An open-source deck framework built for AI. One HTML file, no build step. Describe what you want to say. An AI agent writes the deck.</p>
 
+    <div class="install-label">Clone the repo</div>
     <div class="clone-block">
       <button class="copy-btn" onclick="copyCode(this)">Copy</button>
       <pre><span class="line-dim">$</span>git clone https://github.com/noskillish/slides.git
 <span class="line-dim">$</span>cd slides
 <span class="line-dim">$</span>open deck.html</pre>
+    </div>
+
+    <div class="install-label secondary">Or install the Claude Code plugin</div>
+    <div class="clone-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      <pre>/plugin marketplace add noskillish/slides
+/plugin install slides@slides</pre>
     </div>
 
     <div class="cta-row">
@@ -308,7 +337,7 @@
   <div class="container">
     <div class="eyebrow">How it works</div>
     <h2>Describe it. <span class="dim">AI builds it.</span></h2>
-    <p class="section-subtitle">Clone the repo. Tell an AI agent what your talk is about. It creates your storyline, writes the HTML, and you get a finished deck.</p>
+    <p class="section-subtitle">Install the plugin or clone the repo. Tell Claude what your talk is about. It creates your storyline, writes the HTML, and you get a finished deck.</p>
 
     <div class="split-demo">
       <!-- Chat -->
@@ -360,6 +389,24 @@
           <div class="result-meta">Nils Smed<br>Partner at Heyra</div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- Storytelling formats -->
+<section>
+  <div class="container">
+    <div class="eyebrow">Storytelling built in</div>
+    <h2>It picks the <span class="dim">right structure.</span></h2>
+    <p class="section-subtitle">Describe your deck and Claude chooses a proven narrative format from your words. Six are built in.</p>
+
+    <div class="formats">
+      <div class="format-row"><span class="format-name">TED talk</span><span class="format-trigger">Conference talks and keynotes</span></div>
+      <div class="format-row"><span class="format-name">Sequoia pitch</span><span class="format-trigger">Raising a round</span></div>
+      <div class="format-row"><span class="format-name">McKinsey SCR</span><span class="format-trigger">Strategy and consulting</span></div>
+      <div class="format-row"><span class="format-name">Product launch</span><span class="format-trigger">Announcing something new</span></div>
+      <div class="format-row"><span class="format-name">Board update</span><span class="format-trigger">Quarterly reviews and KPIs</span></div>
+      <div class="format-row"><span class="format-name">Sales deck</span><span class="format-trigger">Prospects and pipeline</span></div>
     </div>
   </div>
 </section>
