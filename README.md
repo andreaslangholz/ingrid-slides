@@ -86,10 +86,48 @@ Works in blog posts, Notion, documentation sites, or anywhere that renders HTML.
 
 ---
 
+## Claude Plugin
+
+This repo is a Claude plugin marketplace. Install in Claude Code or Claude for Work:
+
+```
+/plugin marketplace add noskillish/slides
+/plugin install slides@slides
+```
+
+Then use the commands:
+
+| Command | What it does |
+|---------|-------------|
+| `/slides` | Generate a complete deck from a description |
+| `/slides-outline` | Draft the structure without writing HTML |
+| `/add-slide` | Add slides to an existing deck |
+| `/slides-theme` | Switch between themes (default, craft, solid) |
+| `/slides-review` | Review a deck for storytelling, design, and tone |
+| `/slides-new-component` | Build a custom component that follows the design system |
+
+The plugin auto-detects the best storytelling format from your description:
+
+| Format | Trigger |
+|--------|---------|
+| TED Talk (six-beat) | "conference talk", "keynote", "audience" |
+| Sequoia pitch deck | "pitch", "investors", "funding", "Series A" |
+| McKinsey SCR | "strategy", "board", "executive", "consulting" |
+| Product launch | "launch", "product", "release", "unveil" |
+| Board update | "board update", "quarterly", "KPIs", "status" |
+| Sales deck | "sales", "prospect", "customer", "pipeline" |
+
+---
+
 ## Documentation
 
 - **[docs/USING.md](docs/USING.md)** — How to use the template, components, keyboard shortcuts, PDF export, troubleshooting.
-- **[docs/STORYTELLING.md](docs/STORYTELLING.md)** — How to structure a presentation. The six-beat framework, the headline pattern, common mistakes. Works for talks, pitches, strategy decks, and more.
+- **[docs/STORYTELLING.md](docs/STORYTELLING.md)** — TED Talk / six-beat narrative structure.
+- **[docs/STORYTELLING-sequoia.md](docs/STORYTELLING-sequoia.md)** — Sequoia pitch deck format.
+- **[docs/STORYTELLING-mbb.md](docs/STORYTELLING-mbb.md)** — McKinsey SCR / pyramid principle.
+- **[docs/STORYTELLING-product-launch.md](docs/STORYTELLING-product-launch.md)** — Apple-style product launch.
+- **[docs/STORYTELLING-board.md](docs/STORYTELLING-board.md)** — Board and strategy updates.
+- **[docs/STORYTELLING-sales.md](docs/STORYTELLING-sales.md)** — Sales presentations.
 - **[docs/DESIGN.md](docs/DESIGN.md)** — Design tokens, components, tone & voice rules.
 - **[design-system.html](design-system.html)** — Visual showcase of every component, rendered.
 - **[AGENTS.md](AGENTS.md)** — AI agent context file. Everything an AI needs to produce correct, on-brand slides.

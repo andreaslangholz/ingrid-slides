@@ -1,0 +1,9 @@
+{
+  "name": "slides",
+  "version": "1.0.0",
+  "description": "Generate, extend, theme, and review HTML slide decks using a 25-component design system and multiple storytelling formats",
+  "author": {
+    "name": "Nils",
+    "githubHandle": "noskillish"
+  }
+}
