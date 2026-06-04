@@ -14,7 +14,7 @@ Generate a complete presentation deck from a description.
 
 ## What the command does
 
-Runs the `generate-deck` skill end-to-end:
+Runs the `deck-system` skill end-to-end:
 
 1. Read the user's description and detect the best storytelling format
 2. Load the corresponding storytelling guide from `docs/`
@@ -42,12 +42,14 @@ The skill auto-detects format from context. Override with `--format`:
 - CSS and JS copied verbatim from the template file
 - Keyboard and touch navigation built in
 
-## How the template works
+## How themes work
 
-The skill reads the actual template file (`deck.html`, `deck-craft.html`, or `deck-solid.html`) and copies its `<style>` and `<script>` blocks verbatim. Only the slide content (`<section>` elements) is generated. This ensures the deck uses the exact design system, with no improvised colors or effects.
+For predefined themes (default, craft, solid), the skill reads the actual template file and copies its `<style>` and `<script>` blocks verbatim. Only the slide content is generated.
+
+For custom themes, the user describes the visual style in plain language (e.g. "dark blue with orange accents", "brutalist black and white"). The skill starts from the Default template structure, rewrites the CSS to match the description, and shows the palette for approval before generating slides.
 
 ## Tips
 
 - Be specific about your audience, duration, and goal
 - Mention the format if you have a preference: "pitch deck", "conference talk", "sales presentation"
-- Mention the theme if you want one: "use the solid theme", "craft theme". Default is the Default theme.
+- Mention the theme if you want one: "use the solid theme", "craft theme", or describe your own: "warm earth tones with terracotta accents". Default is the Default theme.

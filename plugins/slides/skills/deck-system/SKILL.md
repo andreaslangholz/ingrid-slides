@@ -1,14 +1,9 @@
 ---
-name: generate-deck
+name: deck-system
 description: >
-  Generate, extend, and manage HTML slide decks using the Slides framework.
-  Use when the user wants to create a presentation, build a slide deck, make slides,
-  generate a pitch deck, prepare a talk, create a keynote, or produce any kind of
-  presentation from a description. Also triggers on: "build me a deck", "slide deck",
-  "presentation about", "pitch for investors", "conference talk", "sales deck",
-  "board presentation", "strategy deck", "product launch deck".
-  Produces a single self-contained HTML file with 25+ components, inline CSS/JS,
-  and a professional design system. No build step, no dependencies.
+  Reference skill for the Slides framework. Loaded by /slides and other commands.
+  Contains the full component library, design tokens, theme rules, storytelling routing,
+  tone rules, and diversity guidelines. Not a user-facing command on its own.
 ---
 
 # Slides: Deck Generation Skill
@@ -469,22 +464,39 @@ The default text slide.
 
 ## Themes
 
-Three themes are available. Each is a complete HTML file with its own `<style>` and `<script>` block.
+Four options are available. The first three are predefined templates. The fourth is a custom theme the user describes.
 
-| Theme | Template file | Character |
-|-------|---------------|-----------|
+| Theme | Source | Character |
+|-------|--------|-----------|
 | Default | `deck.html` | Warm off-white, minimal, editorial |
 | Craft | `deck-craft.html` | Richer textures, art overlays, more visual weight |
 | Solid | `deck-solid.html` | Glass morphism, dark background, frosted surfaces |
+| Custom | User description | User defines the visual identity |
 
-**CRITICAL: Do not invent your own theme CSS.** When generating a deck:
+### Predefined themes (Default, Craft, Solid)
+
+**CRITICAL: Do not invent your own theme CSS.** When using a predefined theme:
 
 1. **Read the actual template file** (`deck.html`, `deck-craft.html`, or `deck-solid.html`) from the repo.
 2. **Copy the entire `<style>` block verbatim.** Every CSS variable, every component style, every media query. Do not modify it. Do not improvise colors, gradients, or effects.
 3. **Copy the entire `<script>` block verbatim.** Navigation, progress bar, PDF export. Do not rewrite it.
 4. **Only write the slide content.** Replace the `<section class="slide">` elements with the new deck content. Keep the `<head>`, `<style>`, `<script>`, `.progress`, and `.deck` wrapper structure identical to the template.
 
-The template files are the source of truth. If you cannot read them, ask the user to provide the template file. Never generate CSS from memory or from the token table above. The token table is a reference for understanding the design system. The template file is what you copy.
+The template files are the source of truth. If you cannot read them, ask the user to provide the template file. Never generate CSS from memory or from the token table above.
+
+### Custom theme
+
+When the user describes a custom style (e.g. "dark blue with orange accents", "brutalist black and white", "pastel and playful"):
+
+1. **Start from `deck.html` as the structural base.** Read it, copy its `<script>` block verbatim.
+2. **Rewrite the `<style>` block** to match the user's description. Follow these rules:
+   - Keep every CSS selector and class name identical to the Default theme. Components must still work.
+   - Change only visual properties: colors, backgrounds, gradients, shadows, border styles, border-radius, font weights.
+   - Preserve all layout properties: padding, margin, grid, flexbox, clamp values, media queries.
+   - Define a cohesive palette: background, surface, ink, border, dim text, accent. At minimum 6 tokens.
+   - Keep the Inter font unless the user requests a different one.
+3. **Show the user the palette** before writing HTML. List the key colors and ask for approval.
+4. **Apply the same headline pattern** (bold + dim) and all component HTML structures.
 
 Default to the Default theme (`deck.html`) unless the user specifies otherwise.
 
