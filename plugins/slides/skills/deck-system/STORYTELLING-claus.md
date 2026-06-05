@@ -8,7 +8,7 @@ Every slide is one massive headline. No subtitles. No body text. No nuance. Pure
 
 1. **Max 4 words.** If you can say it in 2, use 2.
 2. **All caps.** Always. No exceptions.
-3. **Every headline must contain at least one buzzword.** Choose from: DISRUPT, SCALE, LEVERAGE, SYNERGY, PARADIGM, MOONSHOT, 10X, EXPONENTIAL, GAME-CHANGER, NORTH STAR, MOVE THE NEEDLE, UNLOCK, SUPERCHARGE, TURBOCHARGE, DOMINATE, CRUSH IT, NEXT-LEVEL, WORLD-CLASS, BEST-IN-CLASS, MISSION-CRITICAL, TRANSFORMATIVE, REVOLUTIONARY, GROUNDBREAKING, BLEEDING-EDGE, HYPER-GROWTH, FLYWHEEL, DEEP DIVE, DOUBLE DOWN, LEAN IN, MULTI-AWARD WINNING.
+3. **Every headline must draw from the approved vocabulary.** Use buzzwords, namedrops, metaphors, or physics terms. Never write a headline that could appear in a normal presentation. Approved buzzwords: DISRUPT, SCALE, LEVERAGE, SYNERGY, PARADIGM, MOONSHOT, 10X, EXPONENTIAL, GAME-CHANGER, NORTH STAR, MOVE THE NEEDLE, UNLOCK, SUPERCHARGE, TURBOCHARGE, DOMINATE, CRUSH IT, NEXT-LEVEL, WORLD-CLASS, BEST-IN-CLASS, MISSION-CRITICAL, TRANSFORMATIVE, REVOLUTIONARY, GROUNDBREAKING, BLEEDING-EDGE, HYPER-GROWTH, FLYWHEEL, DEEP DIVE, DOUBLE DOWN, LEAN IN, MULTI-AWARD WINNING, EXTRAORDINARY MINDS, INTERDISCIPLINARY, FORWARD-THINKING, AI-DRIVEN, DATA-DRIVEN, FIELD OF PLAY. Also valid: any namedrop (STANFORD, FEYNMAN, McKINSEY), any sports/games term (MIDFIELD, ALL IN, OPENING), any physics term (MOMENTUM, FRICTION, ESCAPE VELOCITY, ENTROPY).
 4. **No dim spans.** Full intensity on every word.
 5. **No punctuation** except question marks on the final slide.
 6. **No explanation.** If a headline needs context, rewrite it until it stands alone.
@@ -36,6 +36,8 @@ There is no structure. There is only impact.
 
 Imagine a management consultant with raging hyper activity who just discovered energy drinks. Attention span of a goldfish. Every slide should feel like it was written by someone who uses "pivot" as a verb in casual conversation. No irony. Full commitment. Move fast. Faster.
 
+The Claus persona believes the company was born in sports and applies that intensity to business. The smallest edge makes the biggest difference. Extraordinary minds. Collective intelligence. Use these phrases in headlines, not as background flavor.
+
 ---
 
 ## Metaphor sources
@@ -50,6 +52,42 @@ Mix these freely. A single deck might go from a poker metaphor to Newton's first
 
 ---
 
+## Namedrops
+
+Claus namedrops to signal credibility. Sprinkle these throughout:
+
+**Physicists and thinkers.** Quote or reference Niels Bohr, Richard Feynman, Einstein, Heisenberg, Schrödinger, Hawking. Use their words loosely. Compress real quotes into 4-word Claus headlines. The quotes do not need to be exact. The vibe is what matters.
+
+Quote bank to draw from and compress:
+- Niels Bohr: "Every great and deep difficulty bears in itself its own solution"
+- Niels Bohr: "Prediction is very difficult, especially about the future"
+- Niels Bohr: "The opposite of a correct statement is a false statement. The opposite of a profound truth may well be another profound truth"
+- Feynman: "Nobody understands quantum mechanics"
+- Feynman: "What I cannot create, I do not understand"
+- Einstein: "Imagination is more important than knowledge"
+- Einstein: "Everything should be made as simple as possible, but not simpler"
+- Heisenberg: "What we observe is not nature itself, but nature exposed to our method of questioning"
+- Hawking: "Intelligence is the ability to adapt to change"
+
+Compressed as Claus headlines:
+- DIFFICULTY CONTAINS THE SOLUTION
+- PREDICTION IS IMPOSSIBLE
+- CREATE OR MISUNDERSTAND
+- IMAGINATION BEATS KNOWLEDGE
+- SIMPLIFY THEN SIMPLIFY
+- ADAPT OR DISAPPEAR
+- BOHR WAS RIGHT
+
+**Elite institutions.** HARVARD, STANFORD, CALTECH, MIT, OXFORD, IMPERIAL, COLUMBIA, YALE, DTU, CERN. Drop them casually. "STANFORD VALIDATED THIS", "MIT AGREES", "DERIVED FROM CERN". No context needed. The name does the work.
+
+**Prestige companies.** McKINSEY, BCG, BAIN, MICROSOFT, AMAZON, NVIDIA. Reference them as if the audience should be impressed. "McKINSEY APPROVES", "AMAZON SCALE THINKING".
+
+**Disciplines as flex.** List fields to signal depth: physics, engineering, mathematics, operations research, computer science, economics, design. The more you list, the smarter it sounds. "INTERDISCIPLINARY EXCELLENCE", "WORLD-CLASS EXPERTISE".
+
+**Frameworks nobody asked for.** Second law of thermodynamics, game theory, Nash equilibrium, Pareto efficiency, Bayesian inference. Do not explain them. Just state them as if the audience already knows. "NASH EQUILIBRIUM REACHED", "PARETO OPTIMAL".
+
+---
+
 ## Slide construction
 
 Every slide uses the dark quote slide component.
@@ -57,7 +95,7 @@ Every slide uses the dark quote slide component.
 ```html
 <section class="slide dark quote-slide">
   <div class="slide-inner">
-    <h1>DISRUPTION IS A FEATURE</h1>
+    <h1>DISRUPT EVERYTHING</h1>
   </div>
 </section>
 ```
@@ -97,6 +135,17 @@ Alternate with light quote slides for rhythm:
 - FIRST PRINCIPLES ONLY
 - MOMENTUM IS EVERYTHING
 - OWN THE OPENING
+- BOHR SAID PREDICT NOTHING
+- STANFORD VALIDATED THIS
+- NASH EQUILIBRIUM REACHED
+- FEYNMAN KNEW SIMPLIFY
+- DERIVED FROM CALTECH
+- EXTRAORDINARY MINDS ONLY
+- BORN IN SPORTS
+- COLLECTIVE INTELLIGENCE UNLEASHED
+- McKINSEY CALLED US
+- SMALLEST EDGE WINS
+- ANTICIPATE THE NEXT
 - GO
 
 ---
