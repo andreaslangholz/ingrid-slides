@@ -1,134 +1,97 @@
-# Storytelling: Claus
+# Storytelling: Claus Mode
 
-The Claus format. Every slide is a full-bleed image with one massive headline. No subtitles. No body text. No nuance. Pure energy.
+The anti-deck. Maximum energy. Zero nuance. Every slide is a headline. Every headline is a statement that hits like a billboard on a highway.
+
+---
+
+## The rules
+
+1. **One headline per slide.** Nothing else. No subtitle, no body text, no eyebrow, no meta. Just the headline.
+2. **All caps or display weight.** Every word earns its space. If a word is small, cut it.
+3. **Extreme buzzwords.** Disruption. Paradigm shift. Moonshot. Exponential. 10x. Hyperscale. Inevitable. Use them without irony.
+4. **No explanation.** The audience fills in the gaps. If they need context, you lost them.
+5. **Short slides.** 2 to 5 words per headline. If you wrote 6, delete one.
+6. **Speed.** The deck should move fast. 30 slides in 10 minutes. Each slide lives for 20 seconds max.
+7. **Repetition is structure.** Repeat a word across three slides. That is your arc.
+8. **End on one word.** The last slide is a single word. Period. Mic drop.
 
 ---
 
 ## The structure
 
-There is no structure. There is only impact.
+There is no traditional narrative arc. There is a crescendo.
 
-Every slide follows the same pattern: image background, dark gradient scrim, one headline in all caps. The deck moves fast. The audience reads one line, absorbs the image, and you advance.
-
----
-
-## Slide format
-
-Every slide is an image slide. No exceptions.
-
-- Full-bleed image covering the entire slide
-- Dark gradient overlay from bottom to top for text readability
-- One headline, bottom-left, all caps, max 6 words
-- No eyebrows, no subtitles, no body text, no meta
-
-### HTML structure
-
-With color background:
-```html
-<section class="slide claus-slide" style="background: linear-gradient(135deg, #1a0a2e 0%, #16213e 100%);">
-  <h1>DISRUPT EVERYTHING</h1>
-</section>
+```
+Warm-up ──── Build ──── Peak ──── Drop ──── One word
 ```
 
-With image (if user provides one later):
-```html
-<section class="slide claus-slide">
-  <img src="image.jpg" alt="">
-  <h1>DISRUPT EVERYTHING</h1>
-</section>
-```
-
-### Required CSS (add to the style block)
-
-```css
-.claus-slide {
-  position: relative;
-  padding: 0 !important;
-}
-.claus-slide.active {
-  display: flex !important;
-  align-items: flex-end !important;
-  justify-content: flex-start !important;
-}
-.claus-slide img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.claus-slide::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
-}
-.claus-slide h1 {
-  position: relative;
-  z-index: 1;
-  font-size: clamp(3.5rem, 8vw, 7rem) !important;
-  font-weight: 700 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.03em !important;
-  line-height: 1.1 !important;
-  color: #fff !important;
-  padding: 3rem 4rem !important;
-  max-width: 80%;
-}
-```
-
----
-
-## Beats
-
-The Claus format has no formal beats. But a typical flow looks like this:
-
-| Slide | Purpose | Example |
+| Phase | ~Slides | Purpose |
 |-------|---------|---------|
-| 1 | Identity | WE ARE [COMPANY] |
-| 2-3 | Problem | THE MARKET IS BROKEN |
-| 4-6 | Vision | 10X EVERYTHING |
-| 7-10 | Proof points | HYPER-GROWTH UNLOCKED |
-| 11-13 | Ambition | DOMINATE THE CATEGORY |
-| 14 | Call to action | LEAN IN. NOW. |
-| 15 | Close | QUESTIONS? |
+| Warm-up | 3-5 | Set the energy. Short punchy observations. |
+| Build | 8-12 | Stack claims. Each one bigger than the last. |
+| Peak | 5-8 | The wildest statements. The future. The vision. |
+| Drop | 3-5 | Pull back. One honest or human moment. |
+| One word | 1 | The final slide. One word. Done. |
 
 ---
 
-## Headline rules
+## Slide construction
 
-1. **Max 4 words.** If you can say it in 2, use 2.
-2. **All caps.** Always.
-3. **Every headline must contain at least one buzzword.** Choose from: DISRUPT, SCALE, LEVERAGE, SYNERGY, PARADIGM, MOONSHOT, 10X, EXPONENTIAL, GAME-CHANGER, NORTH STAR, MOVE THE NEEDLE, UNLOCK, SUPERCHARGE, TURBOCHARGE, DOMINATE, CRUSH IT, NEXT-LEVEL, WORLD-CLASS, BEST-IN-CLASS, MISSION-CRITICAL, TRANSFORMATIVE, REVOLUTIONARY, GROUNDBREAKING, BLEEDING-EDGE, HYPER-GROWTH, FLYWHEEL, DEEP DIVE, DOUBLE DOWN, LEAN IN, MULTI-AWARD WINNING.
-4. **No dim spans.** Full intensity on every word.
-5. **No punctuation** except question marks on the final slide.
+Every slide uses the quote slide component (`class="slide quote-slide"`). Dark variant preferred (`class="slide dark quote-slide"`).
+
+```html
+<section class="slide dark quote-slide">
+  <div class="slide-inner">
+    <h1>DISRUPTION IS A FEATURE.</h1>
+  </div>
+</section>
+```
+
+Alternate between dark and light slides for rhythm. Use the dim span sparingly, only to soften one word:
+
+```html
+<h1>THE FUTURE IS <span class="dim">ALREADY HERE.</span></h1>
+```
 
 ---
 
-## Images
+## Example headlines
 
-Images cannot be uploaded in this environment. Use bold, full-bleed color backgrounds instead.
+- EVERYTHING IS A PLATFORM.
+- 10X OR GO HOME.
+- WE STOPPED PLANNING.
+- SPEED IS THE STRATEGY.
+- THE MOAT IS MOMENTUM.
+- TALENT WANTS CHAOS.
+- BUILD. SHIP. REPEAT.
+- ONE WORD: VELOCITY.
+- THIS IS INEVITABLE.
+- THANK YOU. (just kidding. last slide is one word.)
+- GO.
 
-- Each slide gets a solid or gradient background that matches the energy of the headline.
-- Use dark, saturated colors: deep blacks, midnight blues, blood reds, electric purples, burnt oranges.
-- Vary the backgrounds across slides. No two slides should look the same.
-- Use CSS gradients directly on the `.claus-slide` element instead of `<img>` tags.
-- If the user later provides image files, they can replace the backgrounds with `<img>` tags.
+---
+
+## What NOT to do
+
+- Do not add subtitles or body text. Ever.
+- Do not use stat grids, timelines, feature cards, or any complex component.
+- Do not explain. If a headline needs context, rewrite it until it stands alone.
+- Do not use more than 5 words per slide.
+- Do not be modest. This format is confidence turned up to 11.
 
 ---
 
 ## Tone
 
-Imagine a management consultant with raging ADHD who just discovered energy drinks. Attention span of a goldfish. Every slide hits in under 2 seconds or you lost the room. Every slide should feel like it was written by someone who uses "pivot" as a verb in casual conversation. No irony. Full commitment. Move fast. Faster.
+Write like a founder who just closed a $100M round and has 45 seconds on stage. Every sentence is a tweet. Every slide is a poster. The audience should feel like they just drank four espressos.
 
 ---
 
-## Minimum slides
+## Component usage
 
-15. More is more.
+Use ONLY these components:
+- **Quote slide** (dark and light variants): the primary and almost exclusive component
+- **Cover slide**: for the opening slide only
+- **Closing slide**: single word, centered
 
----
-
-## Component recommendations
-
-Only one component exists in a Claus deck: the `claus-slide`. Do not use any other component type. No two-columns. No stat grids. No timelines. No quote pairs. Just images and headlines.
+Do not use two-column, capability lists, stat grids, timelines, product slides, or any layout component. This format is pure text energy.

@@ -34,7 +34,7 @@ Based on the user's description, select the right storytelling format. Read the 
 | "launch", "product", "release", "announce", "unveil" | Product launch | `STORYTELLING-product-launch.md` |
 | "board update", "status", "review", "KPIs", "OKRs" | Board update | `STORYTELLING-board.md` |
 | "sales", "prospect", "customer", "close", "pipeline" | Sales deck | `STORYTELLING-sales.md` |
-| "claus", "buzzwords", "big headlines", "image deck", "hype" | Claus | `STORYTELLING-claus.md` |
+| "claus", "buzzwords", "hype", "bold headlines only" | Claus Mode | `STORYTELLING-claus.md` |
 
 These files are in the same directory as this SKILL.md. Read them from here.
 
