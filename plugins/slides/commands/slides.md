@@ -37,6 +37,7 @@ The skill auto-detects format from context. Override with `--format`:
 | `--format launch` | Product launch (Apple-style) |
 | `--format board` | Board / strategy update |
 | `--format sales` | Sales deck |
+| `--format claus` | Claus (image slides, big headlines, buzzwords) |
 
 The storytelling guides are bundled in the `deck-system` skill folder. The skill handles loading them.
 
