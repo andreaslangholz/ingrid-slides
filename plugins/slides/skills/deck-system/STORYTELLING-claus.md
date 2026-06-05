@@ -23,6 +23,14 @@ Every slide is an image slide. No exceptions.
 
 ### HTML structure
 
+With color background:
+```html
+<section class="slide claus-slide" style="background: linear-gradient(135deg, #1a0a2e 0%, #16213e 100%);">
+  <h1>DISRUPT EVERYTHING</h1>
+</section>
+```
+
+With image (if user provides one later):
 ```html
 <section class="slide claus-slide">
   <img src="image.jpg" alt="">
@@ -97,11 +105,13 @@ The Claus format has no formal beats. But a typical flow looks like this:
 
 ## Images
 
-Ask the user to paste or upload images before generating. You need at least 15.
+Images cannot be uploaded in this environment. Use bold, full-bleed color backgrounds instead.
 
-- If the user provides fewer, reuse them across slides.
-- If the user provides none, use solid color backgrounds with subtle gradients as placeholders.
-- Embed images as base64 data URIs to keep the deck self-contained.
+- Each slide gets a solid or gradient background that matches the energy of the headline.
+- Use dark, saturated colors: deep blacks, midnight blues, blood reds, electric purples, burnt oranges.
+- Vary the backgrounds across slides. No two slides should look the same.
+- Use CSS gradients directly on the `.claus-slide` element instead of `<img>` tags.
+- If the user later provides image files, they can replace the backgrounds with `<img>` tags.
 
 ---
 
