@@ -1671,6 +1671,129 @@
     </div>
   </section>
 
+  <!-- Split slide -->
+  <section class="demo-section">
+    <div class="section-label">31 · Component</div>
+    <h2 class="section-title">Split slide (text + image)</h2>
+    <p class="section-desc">50/50 layout: text on one side, full-bleed image on the other. Use .split-reverse to swap sides. The most common text+image pattern.</p>
+    <div class="frame">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0; height:300px; border-radius:8px; overflow:hidden; font-family:'Inter',sans-serif;">
+        <div style="padding:2rem; display:flex; flex-direction:column; justify-content:center; background:#fafaf8;">
+          <div style="font-size:0.6rem; text-transform:uppercase; letter-spacing:0.08em; color:#a0a09a; margin-bottom:0.75rem;">Feature highlight</div>
+          <div style="font-size:1.15rem; font-weight:500; letter-spacing:-0.02em; margin-bottom:0.5rem;">Text on one side. <span style="color:#b5b5b0; font-weight:300;">Image on the other.</span></div>
+          <div style="font-size:0.78rem; color:#a0a09a; line-height:1.55;">The most common layout for visual storytelling. Describe the feature, show the proof.</div>
+        </div>
+        <div style="overflow:hidden;">
+          <img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA520.jpg" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hero image slide -->
+  <section class="demo-section">
+    <div class="section-label">32 · Component</div>
+    <h2 class="section-title">Hero image slide</h2>
+    <p class="section-desc">Full-bleed background image with gradient overlay and text at the bottom. For dramatic visual moments that need a headline. The overlay ensures text stays readable.</p>
+    <div class="frame">
+      <div style="position:relative; border-radius:8px; overflow:hidden; aspect-ratio:16/9; font-family:'Inter',sans-serif;">
+        <img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA455.png" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+        <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(26,26,26,0.85) 0%, rgba(26,26,26,0.4) 40%, transparent 100%);"></div>
+        <div style="position:absolute; bottom:0; left:0; right:0; padding:1.5rem 2rem;">
+          <div style="font-size:0.55rem; text-transform:uppercase; letter-spacing:0.08em; color:#888; margin-bottom:0.5rem;">The moment</div>
+          <div style="font-size:1.3rem; font-weight:500; color:#f5f5f3; letter-spacing:-0.02em;">Full-bleed image. <span style="color:#888; font-weight:300;">Text on top.</span></div>
+          <div style="font-size:0.75rem; color:#ccc; margin-top:0.4rem;">A gradient overlay ensures readability over any image.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Image card row -->
+  <section class="demo-section">
+    <div class="section-label">33 · Component</div>
+    <h2 class="section-title">Image card row</h2>
+    <p class="section-desc">Three cards with 4:3 images and text below. For feature highlights, portfolio items, or category breakdowns. Keep descriptions parallel.</p>
+    <div class="frame">
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:0.75rem; font-family:'Inter',sans-serif;">
+        <div style="border:1px solid #e0e0db; border-radius:10px; overflow:hidden; background:#fafaf8;">
+          <div style="aspect-ratio:4/3; overflow:hidden;"><img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA621.jpeg" alt="" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+          <div style="padding:0.9rem 1rem;"><div style="font-size:0.82rem; font-weight:500; margin-bottom:0.2rem;">Card one</div><div style="font-size:0.72rem; color:#a0a09a; line-height:1.5;">Short description of this item.</div></div>
+        </div>
+        <div style="border:1px solid #e0e0db; border-radius:10px; overflow:hidden; background:#fafaf8;">
+          <div style="aspect-ratio:4/3; overflow:hidden;"><img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA585.jpeg" alt="" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+          <div style="padding:0.9rem 1rem;"><div style="font-size:0.82rem; font-weight:500; margin-bottom:0.2rem;">Card two</div><div style="font-size:0.72rem; color:#a0a09a; line-height:1.5;">Another item described clearly.</div></div>
+        </div>
+        <div style="border:1px solid #e0e0db; border-radius:10px; overflow:hidden; background:#fafaf8;">
+          <div style="aspect-ratio:4/3; overflow:hidden;"><img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA67.png" alt="" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+          <div style="padding:0.9rem 1rem;"><div style="font-size:0.82rem; font-weight:500; margin-bottom:0.2rem;">Card three</div><div style="font-size:0.72rem; color:#a0a09a; line-height:1.5;">Keep descriptions parallel in tone.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Caption slide -->
+  <section class="demo-section">
+    <div class="section-label">34 · Component</div>
+    <h2 class="section-title">Caption slide</h2>
+    <p class="section-desc">Large image with a slim annotation bar below. For showcasing a single image with context. The bar has a title and description side by side.</p>
+    <div class="frame">
+      <div style="font-family:'Inter',sans-serif;">
+        <div style="border-radius:8px; overflow:hidden; aspect-ratio:16/7; box-shadow:0 8px 30px rgba(0,0,0,0.08);">
+          <img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA407.png" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
+        </div>
+        <div style="display:flex; gap:1.5rem; align-items:baseline; padding:0.75rem 0 0;">
+          <div style="font-size:0.78rem; font-weight:500; white-space:nowrap;">Image title</div>
+          <div style="font-size:0.72rem; color:#a0a09a; line-height:1.45;">One line of context. What this image shows and why it matters.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Image + quote -->
+  <section class="demo-section">
+    <div class="section-label">35 · Component</div>
+    <h2 class="section-title">Image + quote</h2>
+    <p class="section-desc">Portrait image paired with a pull quote. For testimonials, interviews, or any moment where a face adds weight to words. Use .image-quote-reverse to swap sides.</p>
+    <div class="frame">
+      <div style="display:grid; grid-template-columns:1.2fr 1fr; gap:2rem; align-items:center; font-family:'Inter',sans-serif;">
+        <div style="border-radius:8px; overflow:hidden; aspect-ratio:3/4;">
+          <img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA580.jpeg" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
+        </div>
+        <div>
+          <div style="font-size:1rem; font-style:italic; line-height:1.55; margin-bottom:1rem;">"A powerful statement paired with a portrait. The image gives the quote a face and a place."</div>
+          <div style="font-size:0.72rem; font-weight:500; color:#a0a09a; padding-top:0.75rem; border-top:1px solid #e0e0db;">Speaker name, role</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Photo grid -->
+  <section class="demo-section">
+    <div class="section-label">36 · Component</div>
+    <h2 class="section-title">Photo grid</h2>
+    <p class="section-desc">2×2 image mosaic with optional labels. For portfolios, team photos, location shots, or any "show four things" moment. Labels use a gradient overlay for readability.</p>
+    <div class="frame">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; font-family:'Inter',sans-serif;">
+        <div style="border-radius:6px; overflow:hidden; position:relative; aspect-ratio:4/3;">
+          <img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA259.jpg" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
+          <div style="position:absolute; bottom:0; left:0; right:0; padding:1.5rem 0.65rem 0.5rem; background:linear-gradient(transparent, rgba(0,0,0,0.5)); font-size:0.62rem; font-weight:500; color:#fff;">First image</div>
+        </div>
+        <div style="border-radius:6px; overflow:hidden; position:relative; aspect-ratio:4/3;">
+          <img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA626.jpeg" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
+          <div style="position:absolute; bottom:0; left:0; right:0; padding:1.5rem 0.65rem 0.5rem; background:linear-gradient(transparent, rgba(0,0,0,0.5)); font-size:0.62rem; font-weight:500; color:#fff;">Second image</div>
+        </div>
+        <div style="border-radius:6px; overflow:hidden; position:relative; aspect-ratio:4/3;">
+          <img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA619.jpeg" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
+          <div style="position:absolute; bottom:0; left:0; right:0; padding:1.5rem 0.65rem 0.5rem; background:linear-gradient(transparent, rgba(0,0,0,0.5)); font-size:0.62rem; font-weight:500; color:#fff;">Third image</div>
+        </div>
+        <div style="border-radius:6px; overflow:hidden; position:relative; aspect-ratio:4/3;">
+          <img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA575.jpeg" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
+          <div style="position:absolute; bottom:0; left:0; right:0; padding:1.5rem 0.65rem 0.5rem; background:linear-gradient(transparent, rgba(0,0,0,0.5)); font-size:0.62rem; font-weight:500; color:#fff;">Fourth image</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer class="site-footer">
     <span>Slides — MIT License</span>
     <div class="site-footer-links">

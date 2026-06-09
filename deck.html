@@ -37,6 +37,12 @@
     19. Dark slide (emphasis / pivot moment)
     20. Closing slide
     21. Thanks slide
+    22. Split slide (text + image side by side)
+    23. Hero image slide (full-bleed bg image + text overlay)
+    24. Image card row (3 cards with images)
+    25. Caption slide (image + annotation bar)
+    26. Image + quote (portrait image + pull quote)
+    27. Photo grid (2×2 image mosaic)
 
   STORYTELLING STRUCTURE (six beats)
     Open → Act 1 (The World Before) → Act 2 (The Turn) →
@@ -795,6 +801,207 @@
   .slide.dark .subtitle { color: #888; }
   .slide.dark .eyebrow { color: #666; }
 
+  /* --- Split slide (text + image) --- */
+  .slide.split-slide { padding: 0; }
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+    width: 100%;
+  }
+  .split-text {
+    padding: 6vh 4vw 6vh 8vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 560px;
+    margin-left: auto;
+  }
+  .split-text .eyebrow { margin-bottom: 1.25rem; }
+  .split-text h2 { margin-bottom: 1rem; }
+  .split-text p {
+    font-size: 0.95rem;
+    color: #a0a09a;
+    line-height: 1.6;
+  }
+  .split-image {
+    overflow: hidden;
+  }
+  .split-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .split.split-reverse { direction: rtl; }
+  .split.split-reverse > * { direction: ltr; }
+
+  /* --- Hero image slide --- */
+  .slide.hero-slide { padding: 0; position: relative; }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(26,26,26,0.85) 0%, rgba(26,26,26,0.4) 40%, transparent 100%);
+    z-index: 1;
+  }
+  .hero-slide .slide-inner {
+    position: relative;
+    z-index: 2;
+    align-self: flex-end;
+    padding: 6vh 8vw;
+  }
+  .hero-slide h1 { color: #f5f5f3; }
+  .hero-slide h1 span.dim { color: #888; }
+  .hero-slide .subtitle { color: #ccc; }
+  .hero-slide .eyebrow { color: #888; }
+
+  /* --- Image card row --- */
+  .image-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .image-card {
+    border: 1px solid #e0e0db;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fafaf8;
+  }
+  .image-card-frame {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+  }
+  .image-card-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .image-card-body { padding: 1rem 1.1rem 1.25rem; }
+  .image-card-title { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.3rem; }
+  .image-card-desc { font-size: 0.82rem; color: #a0a09a; line-height: 1.55; }
+
+  /* --- Caption slide --- */
+  .slide.caption-slide {
+    padding: 4vh 8vw;
+    flex-direction: column;
+  }
+  .caption-frame {
+    flex: 1;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    min-height: 0;
+  }
+  .caption-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .caption-bar {
+    width: 100%;
+    padding: 1rem 0 0;
+    display: flex;
+    gap: 2rem;
+    align-items: baseline;
+  }
+  .caption-title {
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .caption-text {
+    font-size: 0.82rem;
+    color: #a0a09a;
+    line-height: 1.5;
+  }
+
+  /* --- Image + quote --- */
+  .image-quote {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    margin-top: 2rem;
+  }
+  .image-quote-frame {
+    border-radius: 10px;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+  }
+  .image-quote-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .image-quote-content {
+    display: flex;
+    flex-direction: column;
+  }
+  .image-quote-text {
+    font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+    font-weight: 400;
+    line-height: 1.5;
+    font-style: italic;
+    color: #1a1a1a;
+    margin-bottom: 1.5rem;
+  }
+  .image-quote-attr {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #a0a09a;
+    padding-top: 1rem;
+    border-top: 1px solid #e0e0db;
+  }
+  .image-quote.image-quote-reverse { direction: rtl; }
+  .image-quote.image-quote-reverse > * { direction: ltr; }
+
+  /* --- Photo grid --- */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+  .photo-grid-cell {
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 4/3;
+  }
+  .photo-grid-cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .photo-grid-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem 0.85rem 0.65rem;
+    background: linear-gradient(transparent, rgba(0,0,0,0.5));
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #fff;
+  }
+
   /* --- Nav --- */
   .nav {
     position: fixed;
@@ -1277,6 +1484,116 @@
   <section class="slide dark quote-slide">
     <div class="slide-inner">
       <h1>The closing line.<br><span class="dim">Slow down for it.</span></h1>
+    </div>
+  </section>
+
+  <!-- ========== 22. SPLIT SLIDE (TEXT + IMAGE) ========== -->
+  <section class="slide split-slide">
+    <div class="split">
+      <div class="split-text">
+        <div class="eyebrow">Feature highlight</div>
+        <h2>Text on one side. <span class="dim">Image on the other.</span></h2>
+        <p>The most common layout in professional presentations. Describe the feature, show the proof. Use .split-reverse to swap sides.</p>
+      </div>
+      <div class="split-image">
+        <img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA520.jpg" alt="">
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 23. HERO IMAGE SLIDE ========== -->
+  <section class="slide hero-slide">
+    <div class="hero-bg">
+      <img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA455.png" alt="">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="slide-inner">
+      <div class="eyebrow">The moment</div>
+      <h1>Full-bleed image. <span class="dim">Text on top.</span></h1>
+      <p class="subtitle">A gradient overlay ensures readability. Use for dramatic visual moments that need a headline.</p>
+    </div>
+  </section>
+
+  <!-- ========== 24. IMAGE CARD ROW ========== -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="eyebrow">Three highlights</div>
+      <h2>Image cards. <span class="dim">Visual-first content.</span></h2>
+      <div class="image-cards">
+        <div class="image-card">
+          <div class="image-card-frame"><img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA621.jpeg" alt=""></div>
+          <div class="image-card-body">
+            <div class="image-card-title">Card one</div>
+            <div class="image-card-desc">Short description of this item with context.</div>
+          </div>
+        </div>
+        <div class="image-card">
+          <div class="image-card-frame"><img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA585.jpeg" alt=""></div>
+          <div class="image-card-body">
+            <div class="image-card-title">Card two</div>
+            <div class="image-card-desc">Another item described clearly and concisely.</div>
+          </div>
+        </div>
+        <div class="image-card">
+          <div class="image-card-frame"><img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA67.png" alt=""></div>
+          <div class="image-card-body">
+            <div class="image-card-title">Card three</div>
+            <div class="image-card-desc">Keep descriptions parallel in structure and length.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 25. CAPTION SLIDE ========== -->
+  <section class="slide caption-slide">
+    <div class="caption-frame">
+      <img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA407.png" alt="">
+    </div>
+    <div class="caption-bar">
+      <div class="caption-title">Image title</div>
+      <div class="caption-text">One line of context. What this image shows and why it matters in the story.</div>
+    </div>
+  </section>
+
+  <!-- ========== 26. IMAGE + QUOTE ========== -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="image-quote">
+        <div class="image-quote-frame">
+          <img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA580.jpeg" alt="">
+        </div>
+        <div class="image-quote-content">
+          <div class="image-quote-text">"A powerful statement paired with a portrait. The image gives the quote a face and a place."</div>
+          <div class="image-quote-attr">Speaker name, role</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 27. PHOTO GRID ========== -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="eyebrow">The work</div>
+      <h2>Four images. <span class="dim">One story.</span></h2>
+      <div class="photo-grid">
+        <div class="photo-grid-cell">
+          <img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA259.jpg" alt="">
+          <div class="photo-grid-label">First image</div>
+        </div>
+        <div class="photo-grid-cell">
+          <img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA626.jpeg" alt="">
+          <div class="photo-grid-label">Second image</div>
+        </div>
+        <div class="photo-grid-cell">
+          <img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA619.jpeg" alt="">
+          <div class="photo-grid-label">Third image</div>
+        </div>
+        <div class="photo-grid-cell">
+          <img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA575.jpeg" alt="">
+          <div class="photo-grid-label">Fourth image</div>
+        </div>
+      </div>
     </div>
   </section>
 

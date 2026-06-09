@@ -1,8 +1,8 @@
 {
   "name": "slides",
   "metadata": {
-    "description": "Generate presentation decks from a description. One HTML file, no build step, multiple storytelling formats.",
-    "version": "1.0.0"
+    "description": "Generate presentation decks from a description. One HTML file, no build step, integrated image search, multiple storytelling formats.",
+    "version": "1.1.0"
   },
   "owner": {
     "name": "noskillish",
@@ -12,15 +12,17 @@
     {
       "name": "slides",
       "source": "./plugins/slides",
-      "description": "Generate, extend, theme, and review HTML slide decks using a 25-component design system and multiple storytelling formats",
-      "version": "1.0.0",
+      "description": "Generate, extend, theme, and review HTML slide decks using a 31-component design system with integrated image search and multiple storytelling formats",
+      "version": "1.1.0",
       "keywords": [
         "slides",
         "presentation",
         "deck",
         "pitch",
         "talk",
-        "keynote"
+        "keynote",
+        "images",
+        "visual"
       ],
       "category": "content"
     }

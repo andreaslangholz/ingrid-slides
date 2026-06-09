@@ -513,6 +513,119 @@ Classical painting background with UI mockup floating on top. The "craft meets c
 </div>
 ```
 
+### 26. Split slide (text + image)
+
+50/50 layout: text on one side, full-bleed image on the other. Add `.split-reverse` to swap sides. Works with both URL and base64 images.
+
+```html
+<section class="slide split-slide">
+  <div class="split">
+    <div class="split-text">
+      <div class="eyebrow">Feature highlight</div>
+      <h2>Text on one side. <span class="dim">Image on the other.</span></h2>
+      <p>Description of the feature or concept shown in the image.</p>
+    </div>
+    <div class="split-image">
+      <img src="your-image-url-or-base64" alt="">
+    </div>
+  </div>
+</section>
+```
+
+Add `.split-reverse` to the `.split` div to put the image on the left.
+
+### 27. Hero image slide
+
+Full-bleed background image with a gradient overlay and text at the bottom. For dramatic visual moments.
+
+```html
+<section class="slide hero-slide">
+  <div class="hero-bg">
+    <img src="your-image-url-or-base64" alt="">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="slide-inner">
+    <div class="eyebrow">Section label</div>
+    <h1>Headline over image. <span class="dim">Extension.</span></h1>
+    <p class="subtitle">One line of context below.</p>
+  </div>
+</section>
+```
+
+### 28. Image card row
+
+Three cards with 4:3 images and text descriptions below. For feature highlights, portfolios, or visual comparisons.
+
+```html
+<div class="image-cards">
+  <div class="image-card">
+    <div class="image-card-frame"><img src="image-url" alt=""></div>
+    <div class="image-card-body">
+      <div class="image-card-title">Card title</div>
+      <div class="image-card-desc">Short description of this item.</div>
+    </div>
+  </div>
+  <!-- repeat for 3 cards -->
+</div>
+```
+
+### 29. Caption slide
+
+Single large image with a slim annotation bar below. For showcasing one image with context.
+
+```html
+<section class="slide caption-slide">
+  <div class="caption-frame">
+    <img src="your-image-url-or-base64" alt="">
+  </div>
+  <div class="caption-bar">
+    <div class="caption-title">Image title</div>
+    <div class="caption-text">One line of context about the image.</div>
+  </div>
+</section>
+```
+
+### 30. Image + quote
+
+Portrait image paired with a pull quote. For testimonials, interviews, or moments where a face adds weight. Add `.image-quote-reverse` to swap sides.
+
+```html
+<div class="image-quote">
+  <div class="image-quote-frame">
+    <img src="portrait-image-url" alt="">
+  </div>
+  <div class="image-quote-content">
+    <div class="image-quote-text">"A powerful statement paired with a portrait."</div>
+    <div class="image-quote-attr">Speaker name, role</div>
+  </div>
+</div>
+```
+
+### 31. Photo grid
+
+2×2 image mosaic with optional gradient-overlay labels. For portfolios, team photos, or showing multiple visual items.
+
+```html
+<div class="photo-grid">
+  <div class="photo-grid-cell">
+    <img src="image-1-url" alt="">
+    <div class="photo-grid-label">Label text</div>
+  </div>
+  <div class="photo-grid-cell">
+    <img src="image-2-url" alt="">
+    <div class="photo-grid-label">Label text</div>
+  </div>
+  <div class="photo-grid-cell">
+    <img src="image-3-url" alt="">
+    <div class="photo-grid-label">Label text</div>
+  </div>
+  <div class="photo-grid-cell">
+    <img src="image-4-url" alt="">
+    <div class="photo-grid-label">Label text</div>
+  </div>
+</div>
+```
+
 ---
 
 ## Storytelling structure
@@ -550,6 +663,26 @@ Adding `?embed` to the deck URL produces an embeddable version. The PDF button h
 
 ---
 
+## Images
+
+Images can come from three sources:
+
+1. **User-provided files.** Embed as base64 data URI: `<img src="data:image/jpeg;base64,..." alt="description">`
+2. **User-provided URLs.** Use directly: `<img src="https://example.com/photo.jpg" alt="description">`
+3. **MCP image search.** If an `img` MCP server is configured (`.mcp.json`), use it to search for royalty-free images by description. The MCP server returns image URLs that can be used directly in `src` attributes.
+
+For images the user provides as files, always embed as base64 to keep the deck self-contained. For URLs and MCP results, use the URL directly.
+
+Use the new image components (26–31) to integrate images into slides. Choose the component based on the content:
+- **Split slide (26)**: Feature highlight with explanation text
+- **Hero image (27)**: Dramatic visual moment with headline overlay
+- **Image cards (28)**: Three visual items with descriptions
+- **Caption slide (29)**: Single showcase image with annotation
+- **Image + quote (30)**: Testimonial or interview with portrait
+- **Photo grid (31)**: Four related images in a mosaic
+
+---
+
 ## Tone rules (follow strictly)
 
 1. **Bold the keyword. Dim the rest.** Every headline.
@@ -570,7 +703,7 @@ Use the full component library. Do not default to the same five component types.
 - For decks over 10 slides: use at least 5 different component types.
 - For decks over 20 slides: use at least 8 different component types.
 - Every deck should have at least one visual-heavy slide (Collage, Art overlay, or Product slide).
-- Before finalizing, check: did you use any of these components? Timeline, Product slide, JEDUF, Quote pair, Spec block, Stack grid, Art overlay, Testimonial grid, Feature card row, Update row, Code slide, Logo bar, Logo grid, Step stack, Collage slide.
+- Before finalizing, check: did you use any of these components? Timeline, Product slide, JEDUF, Quote pair, Spec block, Stack grid, Art overlay, Testimonial grid, Feature card row, Update row, Code slide, Logo bar, Logo grid, Step stack, Collage slide, Split slide, Hero image, Image cards, Caption slide, Image + quote, Photo grid.
 - If a beat would benefit from a component that does not exist yet, suggest it. Describe what it would look like and ask the user: "This slide would work better with a [description]. Want me to build it?" If yes, create it on-token before continuing.
 
 ---
@@ -588,7 +721,7 @@ Use the full component library. Do not default to the same five component types.
 
 ## Freestyle: creating new components
 
-The 25 components above are the starting library. You are encouraged to invent new slide layouts when the content demands it. Follow these rules when freestyling:
+The 31 components above are the starting library. You are encouraged to invent new slide layouts when the content demands it. Follow these rules when freestyling:
 
 1. **Stay on-token.** Use only the colors, fonts, weights, and spacing from the design tokens table. No new colors, no new fonts.
 2. **Use the headline pattern.** Any new layout with a headline should use bold-then-dim (`<span class="dim">`).
@@ -621,5 +754,5 @@ When the human says things like:
 - "Make it dark" → add `.dark` to the `<section>`
 - "Add a comparison" → use component 4 (two-column) or 13 (JEDUF)
 - "Show the process" → use component 8 (dot flow) or 10 (spec block)
-- "Add an image" → use component 12 (collage slide), reference `media/`
+- "Add an image" → use component 12 (collage slide), 26 (split slide), 27 (hero image), 28 (image cards), 29 (caption slide), 30 (image + quote), or 31 (photo grid)
 - "Shorten the headline" → keep the bold-then-dim pattern, just use fewer words

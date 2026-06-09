@@ -471,6 +471,98 @@ The default text slide.
 </div>
 ```
 
+### 26. Split slide (text + image)
+
+50/50 text and image layout. Add `.split-reverse` to `<section>` to swap sides.
+
+```html
+<section class="slide split-slide">
+  <div class="split">
+    <div class="split-text">
+      <div class="eyebrow">Label</div>
+      <h2>Headline. <span class="dim">Extension.</span></h2>
+      <p>Description text.</p>
+    </div>
+    <div class="split-image">
+      <img src="image-url" alt="">
+    </div>
+  </div>
+</section>
+```
+
+### 27. Hero image slide
+
+Full-bleed background image with gradient overlay and text on top.
+
+```html
+<section class="slide hero-slide">
+  <div class="hero-bg"><img src="image-url" alt=""></div>
+  <div class="hero-overlay"></div>
+  <div class="slide-inner">
+    <div class="eyebrow">Label</div>
+    <h1>Headline. <span class="dim">Extension.</span></h1>
+    <p class="subtitle">One line of context.</p>
+  </div>
+</section>
+```
+
+### 28. Image card row
+
+Three 4:3 image cards with title and description below each.
+
+```html
+<div class="image-cards">
+  <div class="image-card">
+    <div class="image-card-frame"><img src="url" alt=""></div>
+    <div class="image-card-body">
+      <div class="image-card-title">Title</div>
+      <div class="image-card-desc">Description.</div>
+    </div>
+  </div>
+</div>
+```
+
+### 29. Caption slide
+
+Large image with an annotation bar below.
+
+```html
+<section class="slide caption-slide">
+  <div class="caption-frame"><img src="url" alt=""></div>
+  <div class="caption-bar">
+    <div class="caption-title">Title</div>
+    <div class="caption-text">Context text.</div>
+  </div>
+</section>
+```
+
+### 30. Image + quote
+
+Portrait image paired with a pull quote. Add `.image-quote-reverse` to swap sides.
+
+```html
+<div class="image-quote">
+  <div class="image-quote-frame"><img src="url" alt=""></div>
+  <div class="image-quote-content">
+    <div class="image-quote-text">"Quote text."</div>
+    <div class="image-quote-attr">Speaker, role</div>
+  </div>
+</div>
+```
+
+### 31. Photo grid
+
+2×2 mosaic with gradient-overlay labels on each cell.
+
+```html
+<div class="photo-grid">
+  <div class="photo-grid-cell">
+    <img src="url" alt="">
+    <div class="photo-grid-label">Label</div>
+  </div>
+</div>
+```
+
 ---
 
 ## Themes
@@ -578,22 +670,28 @@ Use the full component library. Do not default to the same five component types.
 
 - For decks over 10 slides: use at least 5 different component types.
 - For decks over 20 slides: use at least 8 different component types.
-- Every deck should have at least one visual-heavy slide (Collage, Art overlay, or Product slide).
-- Before finalizing, check: did you use any of these components? Timeline, Product slide, JEDUF, Quote pair, Spec block, Stack grid, Art overlay, Testimonial grid, Feature card row, Update row, Code slide, Logo bar, Logo grid, Step stack, Collage slide.
+- Every deck should have at least one visual-heavy slide (Collage, Art overlay, Product slide, Hero image, or Split slide).
+- Before finalizing, check: did you use any of these components? Timeline, Product slide, JEDUF, Quote pair, Spec block, Stack grid, Art overlay, Testimonial grid, Feature card row, Update row, Code slide, Logo bar, Logo grid, Step stack, Collage slide, Split slide, Hero image, Image card row, Caption slide, Image + quote, Photo grid.
 - If a beat would benefit from a component that does not exist yet, suggest it. Describe what it would look like and ask the user: "This slide would work better with a [description]. Want me to build it?" If yes, follow the freestyle rules to create it on-token before continuing.
 
 ---
 
 ## Images
 
-When the user attaches a photo or image:
+Images can come from three sources:
 
-1. **Embed it as a base64 data URI** directly in the `<img>` tag. This keeps the deck self-contained in a single HTML file.
-2. Use the format: `<img src="data:image/jpeg;base64,..." alt="description">`
-3. Do NOT write placeholder text like "save the photo as X.jpg". The user cannot do that from this environment.
-4. If you cannot access the image data, use a CSS placeholder (a colored `div` with the same dimensions) and tell the user: "I could not embed the photo. Drop the image file next to deck.html and update the `src` attribute."
+1. **User-provided files:** embed as a base64 data URI directly in the `<img>` tag. Use the format: `<img src="data:image/jpeg;base64,..." alt="description">`. This keeps the deck self-contained in a single HTML file. Do NOT write placeholder text like "save the photo as X.jpg". If you cannot access the image data, use a CSS placeholder (a colored `div` with the same dimensions) and tell the user: "I could not embed the photo. Drop the image file next to deck.html and update the `src` attribute."
+2. **User-provided URLs:** use the URL directly in the `src` attribute.
+3. **MCP image search:** if an `img` MCP server is configured, use it to search for royalty-free images by description.
 
-For images the user provides as URLs, use the URL directly in the `src` attribute.
+Use the image components (26–31) to integrate images into decks:
+
+- **Split slide (26):** Feature highlight with explanation alongside an image.
+- **Hero image (27):** Dramatic full-bleed visual moment.
+- **Image cards (28):** Three visual items with descriptions.
+- **Caption slide (29):** Single showcase image with annotation.
+- **Image + quote (30):** Testimonial with portrait.
+- **Photo grid (31):** Four related images in a 2×2 mosaic.
 
 ---
 
