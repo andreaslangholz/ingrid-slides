@@ -515,39 +515,43 @@ Classical painting background with UI mockup floating on top. The "craft meets c
 
 ### 26. Split slide (text + image)
 
-50/50 layout: text on one side, full-bleed image on the other. Add `.split-reverse` to swap sides. Works with both URL and base64 images.
+Two-column grid inside `.slide-inner`: text on one side, rounded image on the other. Eyebrow + headline sit above the grid. Add `.split-reverse` to the `.split` div to put the image on the left.
 
 ```html
-<section class="slide split-slide">
-  <div class="split">
-    <div class="split-text">
-      <div class="eyebrow">Feature highlight</div>
-      <h2>Text on one side. <span class="dim">Image on the other.</span></h2>
-      <p>Description of the feature or concept shown in the image.</p>
-    </div>
-    <div class="split-image">
-      <img src="your-image-url-or-base64" alt="">
+<section class="slide">
+  <div class="slide-inner">
+    <div class="eyebrow">Feature highlight</div>
+    <h2>Headline. <span class="dim">Extension.</span></h2>
+    <div class="split">
+      <div class="split-text">
+        <h3>Sub-headline</h3>
+        <p>Description of the feature or concept shown in the image.</p>
+      </div>
+      <div class="split-image">
+        <img src="your-image-url-or-base64" alt="">
+      </div>
     </div>
   </div>
 </section>
 ```
 
-Add `.split-reverse` to the `.split` div to put the image on the left.
-
 ### 27. Hero image slide
 
-Full-bleed background image with a gradient overlay and text at the bottom. For dramatic visual moments.
+Rounded 16:9 image frame with gradient overlay and caption at the bottom. Lives inside `.slide-inner` like every other component. For cinematic moments that need a short headline.
 
 ```html
-<section class="slide hero-slide">
-  <div class="hero-bg">
-    <img src="your-image-url-or-base64" alt="">
-  </div>
-  <div class="hero-overlay"></div>
+<section class="slide">
   <div class="slide-inner">
     <div class="eyebrow">Section label</div>
-    <h1>Headline over image. <span class="dim">Extension.</span></h1>
-    <p class="subtitle">One line of context below.</p>
+    <h2>Headline. <span class="dim">Extension.</span></h2>
+    <div class="hero-frame">
+      <img src="your-image-url-or-base64" alt="">
+      <div class="hero-frame-overlay"></div>
+      <div class="hero-frame-caption">
+        <h3>Caption headline</h3>
+        <p>One line of context below.</p>
+      </div>
+    </div>
   </div>
 </section>
 ```

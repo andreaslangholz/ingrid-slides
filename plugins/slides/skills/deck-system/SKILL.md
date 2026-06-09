@@ -473,18 +473,21 @@ The default text slide.
 
 ### 26. Split slide (text + image)
 
-50/50 text and image layout. Add `.split-reverse` to `<section>` to swap sides.
+Two-column grid inside `.slide-inner`. Eyebrow + headline above the grid. Add `.split-reverse` to the `.split` div to swap sides.
 
 ```html
-<section class="slide split-slide">
-  <div class="split">
-    <div class="split-text">
-      <div class="eyebrow">Label</div>
-      <h2>Headline. <span class="dim">Extension.</span></h2>
-      <p>Description text.</p>
-    </div>
-    <div class="split-image">
-      <img src="image-url" alt="">
+<section class="slide">
+  <div class="slide-inner">
+    <div class="eyebrow">Label</div>
+    <h2>Headline. <span class="dim">Extension.</span></h2>
+    <div class="split">
+      <div class="split-text">
+        <h3>Sub-headline</h3>
+        <p>Description text.</p>
+      </div>
+      <div class="split-image">
+        <img src="image-url" alt="">
+      </div>
     </div>
   </div>
 </section>
@@ -492,16 +495,21 @@ The default text slide.
 
 ### 27. Hero image slide
 
-Full-bleed background image with gradient overlay and text on top.
+Rounded 16:9 image frame with gradient overlay and caption. Lives inside `.slide-inner`.
 
 ```html
-<section class="slide hero-slide">
-  <div class="hero-bg"><img src="image-url" alt=""></div>
-  <div class="hero-overlay"></div>
+<section class="slide">
   <div class="slide-inner">
     <div class="eyebrow">Label</div>
-    <h1>Headline. <span class="dim">Extension.</span></h1>
-    <p class="subtitle">One line of context.</p>
+    <h2>Headline. <span class="dim">Extension.</span></h2>
+    <div class="hero-frame">
+      <img src="image-url" alt="">
+      <div class="hero-frame-overlay"></div>
+      <div class="hero-frame-caption">
+        <h3>Caption headline</h3>
+        <p>One line of context.</p>
+      </div>
+    </div>
   </div>
 </section>
 ```
