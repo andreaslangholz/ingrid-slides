@@ -86,6 +86,19 @@ Works in blog posts, Notion, documentation sites, or anywhere that renders HTML.
 
 ---
 
+## In-browser editing
+
+Click the **Edit** button next to **Download PDF** (or add `?edit` to the URL) and the deck becomes its own editor. No install, no build step:
+
+- **Click any text to edit it in place.** Plain text only — the markup stays intact.
+- **Reorder, duplicate, or delete slides** from a thumbnail rail.
+- **Save writes back to the HTML file.** Chromium browsers save in place after a one-time file pick (Cmd/Ctrl+S after that is silent); other browsers download an updated copy.
+- **Diffs stay clean.** Saving rewrites only the slides that changed; everything else passes through byte-for-byte.
+
+See [docs/USING.md](docs/USING.md) for details.
+
+---
+
 ## Claude Plugin
 
 This repo is a Claude plugin marketplace. Install in Claude Code or Claude for Work:

@@ -589,8 +589,8 @@ Four options are available. The first three are predefined templates. The fourth
 
 1. **Read the template file from this skill folder** (`deck.html`, `deck-craft.html`, or `deck-solid.html`). They are in the same directory as this SKILL.md.
 2. **Copy the entire `<style>` block verbatim.** Every CSS variable, every component style, every media query. Do not modify it. Do not improvise colors, gradients, or effects.
-3. **Copy the entire `<script>` block verbatim.** Navigation, progress bar, PDF export. Do not rewrite it.
-4. **Only write the slide content.** Replace the `<section class="slide">` elements with the new deck content. Keep the `<head>`, `<style>`, `<script>`, `.progress`, and `.deck` wrapper structure identical to the template.
+3. **Copy both `<script>` blocks verbatim.** Navigation, progress bar, PDF export, and the edit-mode script (`?edit`). Do not rewrite or drop either one.
+4. **Only write the slide content.** Replace the `<section class="slide">` elements with the new deck content. Keep the `<head>`, `<style>`, `<script>`, `.progress`, `.btn-row`, and `.deck` wrapper structure identical to the template. Keep one HTML comment line directly above each `<section>` (e.g. `<!-- ========== 3. QUOTE ========== -->`); edit mode uses these as anchors for in-place saving.
 
 The template files are the source of truth. If you cannot read them, ask the user to provide the template file. Never generate CSS from memory or from the token table above.
 
@@ -602,7 +602,7 @@ A custom theme can come from a text description, an attached image, or both.
 
 When the user describes a style (e.g. "dark blue with orange accents", "brutalist black and white"):
 
-1. **Start from `deck.html` as the structural base.** Read it, copy its `<script>` block verbatim.
+1. **Start from `deck.html` as the structural base.** Read it, copy both of its `<script>` blocks verbatim (navigation and edit mode).
 2. **Rewrite the `<style>` block** to match the description. Follow these rules:
    - Keep every CSS selector and class name identical to the Default theme. Components must still work.
    - Change only visual properties: colors, backgrounds, gradients, shadows, border styles, border-radius, font weights.
@@ -628,7 +628,7 @@ When the user attaches a screenshot, slide, website capture, or brand guideline 
    - **Shadows:** none, subtle, or elevated
    - **Typography weight:** light, regular, or bold
    - **Font:** identify the typeface if recognizable, otherwise keep Inter
-2. **Start from `deck.html` as the structural base.** Read it, copy its `<script>` block verbatim.
+2. **Start from `deck.html` as the structural base.** Read it, copy both of its `<script>` blocks verbatim (navigation and edit mode).
 3. **Rewrite the `<style>` block** using the extracted tokens. Same rules as text-based custom themes: keep all selectors, change only visual properties, preserve layout.
 4. **If the user also wrote text** ("like this but darker", "match this with rounder corners"), apply it as an override on top of what was extracted from the image.
 5. **Generate immediately.** No palette approval step needed when working from an image. The image is the approval.
