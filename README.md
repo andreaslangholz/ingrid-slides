@@ -4,15 +4,20 @@ A minimalist, AI-friendly slide deck framework. One HTML file. No build step. Pa
 
 ```
 slides/
-├── deck.html              The template deck. Edit this.
+├── deck.html              The default template deck. Edit this.
+├── deck-craft.html        Craft theme variant.
+├── deck-solid.html        Solid theme variant.
 ├── design-system.html     Visual showcase of every component.
 ├── index.html             Landing page (uses Tailwind CDN).
 ├── AGENTS.md              AI agent instructions. Design system + components + storytelling.
 ├── media/                 Drop your images and videos here.
+├── assets/                Screenshots and banners for the README.
 ├── docs/
 │   ├── USING.md           How to use the template.
-│   ├── STORYTELLING.md    How to structure any presentation.
+│   ├── STORYTELLING.md    How to structure any presentation (+ format variants).
 │   └── DESIGN.md          Design tokens, components, and tone rules.
+├── plugins/
+│   └── slides/            Claude plugin (commands + skills).
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml     Auto-deploy to GitHub Pages on push.
@@ -32,7 +37,7 @@ Slides are usually built in PowerPoint, Keynote, or Google Slides. Those tools a
 - Print to PDF without losing fidelity
 - Stop fighting auto-formatting
 
-This framework is a single HTML file with a library of 21 components. You edit it like a webpage. You present it in a browser. You pair with an AI assistant to write slides through conversation.
+This framework is a single HTML file with a library of 31 components, three themes, and in-browser editing. You edit it like a webpage. You present it in a browser. You pair with an AI assistant to write slides through conversation.
 
 ---
 
@@ -68,7 +73,7 @@ This template was made with AI assistance in mind. The workflow:
 4. Iterate by feedback: *"Make it dark."* *"Move it to slide 3."* *"Shorten the headline."*
 5. Drop in media as you go: *"Wire `media/demo.mp4` to the collage on slide 8 with controls."*
 
-The AI reads `AGENTS.md` to understand the design system, all 21 components, the storytelling framework, and the tone rules. It can also freestyle new components as long as they stay on-token.
+The AI reads `AGENTS.md` to understand the design system, all 31 components, the storytelling framework, and the tone rules. It can also freestyle new components as long as they stay on-token.
 
 See [docs/USING.md](docs/USING.md) for the full workflow.
 
@@ -118,6 +123,9 @@ Then use the commands:
 | `/slides-theme` | Switch between themes (default, craft, solid) |
 | `/slides-review` | Review a deck for storytelling, design, and tone |
 | `/slides-new-component` | Build a custom component that follows the design system |
+| `/slides-image` | Add an image slide sourced from the image library |
+| `/slides-visual` | Generate a visually-rich deck with auto-sourced images |
+| `/slides-gallery` | Browse and preview images from the image library |
 
 The plugin auto-detects the best storytelling format from your description:
 
@@ -149,6 +157,8 @@ The plugin auto-detects the best storytelling format from your description:
 
 ## Components
 
+31 components covering text, data, media, and layout patterns.
+
 | Component | Use it for |
 |---|---|
 | Cover | Title slide |
@@ -172,6 +182,16 @@ The plugin auto-detects the best storytelling format from your description:
 | Code slide | Syntax-highlighted code block |
 | Dark slide | Pivot moment |
 | Closing | Mic-drop line + thanks |
+| Testimonial grid | Social proof with avatars and quotes |
+| Logo bar | Compact row of partner/client names |
+| Feature card row | Three cards with title, description, and mock UI |
+| Update row | Changelog cards with version badges |
+| Art overlay | Classical painting with floating UI mockup |
+| Split slide | Text + image side by side |
+| Hero image | Cinematic image with gradient overlay and caption |
+| Image cards | Three images with descriptions |
+| Caption slide | Single showcase image with annotation bar |
+| Photo grid | 2×2 image mosaic with labels |
 
 ---
 
@@ -187,10 +207,26 @@ The plugin auto-detects the best storytelling format from your description:
 
 ---
 
+## Themes
+
+Three built-in themes. Each is a self-contained HTML file with the same 31 components styled differently.
+
+| Theme | File | Character |
+|-------|------|-----------|
+| Default | `deck.html` | Clean, warm neutrals, editorial feel |
+| Craft | `deck-craft.html` | Richer textures, more visual weight |
+| Solid | `deck-solid.html` | Bolder colors, higher contrast |
+
+Switch themes with the `/slides-theme` command, or start from whichever HTML file fits.
+
+---
+
 ## Tech
 
 - **One HTML file per deck.** No JavaScript framework. No build step. No npm install.
-- **Self-contained.** `deck.html` and `design-system.html` have zero external dependencies beyond Google Fonts (Inter).
+- **Self-contained.** Each deck file has zero external dependencies beyond Google Fonts (Inter).
+- **Three themes.** Default, Craft, and Solid. Same components, different visual tone.
+- **In-browser editing.** Add `?edit` to the URL for a full slide editor with in-place saving.
 - **`index.html` is the landing page.** It uses the Tailwind CDN for responsive layout. It's a marketing page for the project. The product files stay dependency-free.
 - **Works in any modern browser.** Present, share, embed.
 - **PDF export** via `window.print()` with print-optimized CSS (`@page` set to 16:9).

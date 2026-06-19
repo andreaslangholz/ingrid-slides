@@ -35,14 +35,18 @@
     17. Logo grid (partners / clients / team)
     18. Code slide (syntax-highlighted code block)
     19. Dark slide (emphasis / pivot moment)
-    20. Closing slide
-    21. Thanks slide
-    22. Split slide (text + image side by side)
-    23. Hero image slide (full-bleed bg image + text overlay)
-    24. Image card row (3 cards with images)
-    25. Caption slide (image + annotation bar)
-    26. Image + quote (portrait image + pull quote)
-    27. Photo grid (2×2 image mosaic)
+    20. Closing / Thanks slide
+    21. Testimonial grid (social proof with avatars)
+    22. Logo bar (compact partner row)
+    23. Feature card row (3 cards with mock UI)
+    24. Update row (changelog cards with version badges)
+    25. Art overlay (painting + floating UI mockup)
+    26. Split slide (text + image side by side)
+    27. Hero image slide (full-bleed bg image + text overlay)
+    28. Image card row (3 cards with images)
+    29. Caption slide (image + annotation bar)
+    30. Image + quote (portrait image + pull quote)
+    31. Photo grid (2×2 image mosaic)
 
   STORYTELLING STRUCTURE (six beats)
     Open → Act 1 (The World Before) → Act 2 (The Turn) →
@@ -1017,6 +1021,278 @@
     color: #fff;
   }
 
+  /* --- Testimonial grid --- */
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .testimonial-card {
+    background: #fafaf8;
+    border: 1px solid #e0e0db;
+    border-radius: 10px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .testimonial-quote {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: #1a1a1a;
+    font-weight: 400;
+    margin-bottom: 1.25rem;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .testimonial-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #d5d5d0;
+    flex-shrink: 0;
+  }
+
+  .testimonial-name {
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .testimonial-title {
+    font-size: 0.65rem;
+    color: #b5b5b0;
+    font-weight: 400;
+  }
+
+  /* --- Logo bar --- */
+  .logo-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 2rem;
+    padding: 1.5rem 2rem;
+    border-top: 1px solid #e0e0db;
+    border-bottom: 1px solid #e0e0db;
+    flex-wrap: wrap;
+  }
+
+  .logo-bar-item {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+
+  /* --- Art overlay --- */
+  .art-overlay {
+    position: relative;
+    margin-top: 2rem;
+    border-radius: 10px;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+  }
+
+  .art-overlay-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #8b7355 0%, #a0926e 25%, #6b7c5a 50%, #8a9470 75%, #c4b896 100%);
+    filter: brightness(0.85) saturate(0.8);
+  }
+
+  .art-overlay-ui {
+    position: absolute;
+    inset: 10%;
+    background: #fafaf8;
+    border-radius: 10px;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.3), 0 8px 20px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .art-overlay-titlebar {
+    display: flex;
+    align-items: center;
+    padding: 0.6rem 1rem;
+    background: #f8f8f6;
+    border-bottom: 1px solid #e0e0db;
+    gap: 0.4rem;
+  }
+
+  .art-overlay-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .art-overlay-dot:nth-child(1) { background: #ff605c; }
+  .art-overlay-dot:nth-child(2) { background: #ffbd44; }
+  .art-overlay-dot:nth-child(3) { background: #00ca4e; }
+
+  .art-overlay-content {
+    flex: 1;
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    font-size: 0.7rem;
+    color: #a0a09a;
+    overflow: hidden;
+  }
+
+  .art-overlay-sidebar {
+    width: 35%;
+    border-right: 1px solid #e0e0db;
+    padding-right: 1rem;
+  }
+
+  .art-overlay-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .art-overlay-line {
+    height: 6px;
+    background: #e0e0db;
+    border-radius: 3px;
+  }
+
+  .art-overlay-line.short { width: 60%; }
+  .art-overlay-line.accent { background: #1a1a1a; width: 40%; opacity: 0.3; }
+
+  .art-overlay-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem 2.5rem;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    color: #fff;
+  }
+
+  .art-overlay-caption h3 {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #fff;
+    margin-bottom: 0.25rem;
+  }
+
+  .art-overlay-caption p {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.7);
+    font-weight: 300;
+  }
+
+  /* --- Feature card row --- */
+  .feature-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .feature-card {
+    background: #fafaf8;
+    border: 1px solid #e0e0db;
+    border-radius: 10px;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 200px;
+  }
+
+  .feature-card-title {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-card-desc {
+    font-size: 0.85rem;
+    color: #a0a09a;
+    line-height: 1.55;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+  }
+
+  .feature-card-inner {
+    background: #f5f5f3;
+    border: 1px solid #e0e0db;
+    border-radius: 4px;
+    padding: 1rem;
+    flex: 1;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.4rem;
+  }
+
+  .feature-card-mock-line {
+    height: 5px;
+    background: #e0e0db;
+    border-radius: 3px;
+  }
+
+  .feature-card-mock-line.short { width: 50%; }
+  .feature-card-mock-line.accent { background: #1a1a1a; width: 35%; opacity: 0.2; }
+
+  /* --- Update row (changelog) --- */
+  .update-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .update-card {
+    background: #fafaf8;
+    border: 1px solid #e0e0db;
+    border-radius: 10px;
+    padding: 1.25rem;
+  }
+
+  .update-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .update-badge {
+    font-size: 0.6rem;
+    font-weight: 500;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid #d5d5d0;
+    border-radius: 999px;
+    color: #a0a09a;
+  }
+
+  .update-date {
+    font-size: 0.7rem;
+    color: #b5b5b0;
+    font-weight: 400;
+  }
+
+  .update-title {
+    font-size: 0.85rem;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
   /* --- Nav --- */
   .nav {
     position: fixed;
@@ -1524,7 +1800,7 @@
           <p>The most common layout in professional presentations. Describe the feature, show the proof. Use .split-reverse to swap sides.</p>
         </div>
         <div class="split-image">
-          <img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA520.jpg" alt="">
+          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80" alt="">
         </div>
       </div>
     </div>
@@ -1536,7 +1812,7 @@
       <div class="eyebrow">The moment</div>
       <h2>Full-bleed image. <span class="dim">Text overlay inside a frame.</span></h2>
       <div class="hero-frame">
-        <img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA455.png" alt="">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80" alt="">
         <div class="hero-frame-overlay"></div>
         <div class="hero-frame-caption">
           <h3>A dramatic visual moment</h3>
@@ -1553,21 +1829,21 @@
       <h2>Image cards. <span class="dim">Visual-first content.</span></h2>
       <div class="image-cards">
         <div class="image-card">
-          <div class="image-card-frame"><img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA621.jpeg" alt=""></div>
+          <div class="image-card-frame"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80" alt=""></div>
           <div class="image-card-body">
             <div class="image-card-title">Card one</div>
             <div class="image-card-desc">Short description of this item with context.</div>
           </div>
         </div>
         <div class="image-card">
-          <div class="image-card-frame"><img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA585.jpeg" alt=""></div>
+          <div class="image-card-frame"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&q=80" alt=""></div>
           <div class="image-card-body">
             <div class="image-card-title">Card two</div>
             <div class="image-card-desc">Another item described clearly and concisely.</div>
           </div>
         </div>
         <div class="image-card">
-          <div class="image-card-frame"><img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA67.png" alt=""></div>
+          <div class="image-card-frame"><img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&q=80" alt=""></div>
           <div class="image-card-body">
             <div class="image-card-title">Card three</div>
             <div class="image-card-desc">Keep descriptions parallel in structure and length.</div>
@@ -1580,7 +1856,7 @@
   <!-- ========== 25. CAPTION SLIDE ========== -->
   <section class="slide caption-slide">
     <div class="caption-frame">
-      <img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA407.png" alt="">
+      <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80" alt="">
     </div>
     <div class="caption-bar">
       <div class="caption-title">Image title</div>
@@ -1593,7 +1869,7 @@
     <div class="slide-inner">
       <div class="image-quote">
         <div class="image-quote-frame">
-          <img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA580.jpeg" alt="">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80" alt="">
         </div>
         <div class="image-quote-content">
           <div class="image-quote-text">"A powerful statement paired with a portrait. The image gives the quote a face and a place."</div>
@@ -1610,19 +1886,19 @@
       <h2>Four images. <span class="dim">One story.</span></h2>
       <div class="photo-grid">
         <div class="photo-grid-cell">
-          <img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA259.jpg" alt="">
+          <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=600&q=80" alt="">
           <div class="photo-grid-label">First image</div>
         </div>
         <div class="photo-grid-cell">
-          <img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA626.jpeg" alt="">
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&q=80" alt="">
           <div class="photo-grid-label">Second image</div>
         </div>
         <div class="photo-grid-cell">
-          <img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA619.jpeg" alt="">
+          <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&q=80" alt="">
           <div class="photo-grid-label">Third image</div>
         </div>
         <div class="photo-grid-cell">
-          <img src="https://pub-d84682b173804d50ab71dd0c0672b099.r2.dev/images/HEYRA575.jpeg" alt="">
+          <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&q=80" alt="">
           <div class="photo-grid-label">Fourth image</div>
         </div>
       </div>

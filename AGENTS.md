@@ -677,9 +677,9 @@ Images can come from three sources:
 
 1. **User-provided files.** Embed as base64 data URI: `<img src="data:image/jpeg;base64,..." alt="description">`
 2. **User-provided URLs.** Use directly: `<img src="https://example.com/photo.jpg" alt="description">`
-3. **MCP image search.** If an `img` MCP server is configured (`.mcp.json`), use it to search for royalty-free images by description. The MCP server returns image URLs that can be used directly in `src` attributes.
+3. **Image search.** If an `img` MCP server is configured (`.mcp.json`), use it to search for images by description. If no MCP server is configured, search the web for Unsplash images and use their URLs directly (`https://images.unsplash.com/photo-{id}?w=800&q=80`).
 
-For images the user provides as files, always embed as base64 to keep the deck self-contained. For URLs and MCP results, use the URL directly.
+For images the user provides as files, always embed as base64 to keep the deck self-contained. For URLs, MCP results, and Unsplash images, use the URL directly.
 
 Use the new image components (26–31) to integrate images into slides. Choose the component based on the content:
 - **Split slide (26)**: Feature highlight with explanation text

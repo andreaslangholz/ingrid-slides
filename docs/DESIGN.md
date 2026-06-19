@@ -82,44 +82,49 @@ This is the most consistent visual identity in the system. Use it.
 
 ## Components
 
-### Eyebrow + Headline + Subtitle
-The default opening of any slide. Eyebrow tags context. Headline carries the message. Subtitle gives one line of nuance.
+31 components. Full HTML reference in `AGENTS.md`.
 
-### Two-column
-Equal columns, gap 30–40pt. Each column has H3 + paragraph. Use for contrast: before/after, problem/solution, today/with-us.
+### Text & structure
+- **Cover slide.** Title + eyebrow + meta.
+- **Quote slide.** Single bold statement, no other elements. Openings, transitions, mic-drops.
+- **Eyebrow + Headline + Subtitle.** The default text slide. Eyebrow tags context, headline carries the message, subtitle adds nuance.
+- **Two-column.** Equal columns for contrast: before/after, problem/solution.
+- **Step stack.** Sequential steps with `.dim`, `.kill`, `.live` markers. Lives inside two-column.
+- **Three-column.** Structural breakdowns. Each column: 1-word title + 1–2 sentence body.
+- **Capability list (Q&A).** Rows with thin borders. Left = question, right = answer.
+- **Dark callout.** Black background, white text, rounded. One per deck max.
+- **Dark slide.** Light text on black. Pivot moments. Two or three per deck max.
+- **Closing.** Mic-drop line + thanks + meta.
 
-### Three-column
-Three equal columns. Used for structural breakdowns. Each column gets a 1-word title and a 1–2 sentence body.
+### Data & process
+- **Dot flow.** Horizontal steps connected by a thin line. Each step: dot + label + caption.
+- **Stack grid.** Four-column category cards. Uppercase label + list of items with marks.
+- **Spec block + outputs.** Vertical flow: dark spec block → context pills → divider → output cards.
+- **Timeline.** Vertical year-based progression with connecting dots and lines.
+- **Stat grid.** Big numbers with context. One `.stat-dark` card highlights the hero metric.
+- **Update row.** Changelog cards with version badges and dates. Four columns.
 
-### Capability list (Q&A)
-Rows separated by thin borders. Left column = question (medium weight). Right column = answer (regular, dim color).
+### Showcase & media
+- **Product slide.** Big product name on the right, story on the left with number, tag, headline, body, stat.
+- **Collage slide.** Full-bleed image or video. No text. The image is the slide.
+- **Split slide.** Text + image side by side. Add `.split-reverse` to swap.
+- **Hero image.** Rounded 16:9 frame with gradient overlay and caption.
+- **Image card row.** Three 4:3 images with titles and descriptions.
+- **Caption slide.** Single large image with annotation bar below.
+- **Image + quote.** Portrait paired with a pull quote. Add `.image-quote-reverse` to swap.
+- **Photo grid.** 2×2 mosaic with gradient-overlay labels.
+- **Art overlay.** Classical painting background with floating UI mockup.
 
-### Callout (dark block)
-Black background, white text, rounded 6pt. For "Why now" or other emphasized sections. One per deck max.
+### Comparison & social proof
+- **JEDUF three-column.** Two extremes flanking a dark hero (the middle path).
+- **Quote pair.** Two perspectives side by side. One light, one dark.
+- **Logo grid.** Four-column grid for partners, clients, team members.
+- **Logo bar.** Compact horizontal row of names between hairline borders.
+- **Testimonial grid.** 3×2 quote cards with avatars. Social proof.
+- **Feature card row.** Three cards with title, description, and inner mock UI.
 
-### Dot flow
-Five (or N) horizontal steps connected by a thin line. Each step: 9px black dot, label, dim caption. Used for process flows.
-
-### Stack grid
-Four-column grid of category cards. Each card has uppercase label + list of items with small monochrome marks.
-
-### Spec block + context + outputs
-A vertical flow: dark spec block at top → context pills → "Process" divider line → three output cards. Used for showing how a system processes input.
-
-### Product slide (showcase style)
-Big product name on the right. Description on the left with /0n number, tag, headline, body, stat line.
-
-### Collage slide
-Full-bleed image or video as its own slide. Used as a punch after a product slide. No text overlay. The image is the slide.
-
-### JEDUF three-column
-Three columns showing extremes vs middle path. Outer columns light, center column dark as the hero. Steps stacked vertically inside each column.
-
-### Quote slide
-A single bold statement, large type, no other elements. Used for openings, transitions, and mic-drops.
-
-### Dark slide
-Light text on black. Used for pivot moments. Two or three per deck max.
+### Code
+- **Code slide.** Dark code block with macOS-style header. Syntax highlighting via `.code-comment`, `.code-keyword`, `.code-string`, `.code-dim`.
 
 ---
 

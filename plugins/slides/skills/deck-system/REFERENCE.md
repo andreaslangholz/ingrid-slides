@@ -664,7 +664,7 @@ Images can come from three sources:
 
 1. **User-provided files:** embed as a base64 data URI directly in the `<img>` tag. Use the format: `<img src="data:image/jpeg;base64,..." alt="description">`. This keeps the deck self-contained in a single HTML file. Do NOT write placeholder text like "save the photo as X.jpg". If you cannot access the image data, use a CSS placeholder (a colored `div` with the same dimensions) and tell the user: "I could not embed the photo. Drop the image file next to deck.html and update the `src` attribute."
 2. **User-provided URLs:** use the URL directly in the `src` attribute.
-3. **MCP image search:** if an `img` MCP server is configured, use it to search for royalty-free images by description.
+3. **Image search:** if an `img` MCP server is configured (`.mcp.json`), use it to search for images by description. If no MCP server is configured, search the web for Unsplash images and use their URLs directly (`https://images.unsplash.com/photo-{id}?w=800&q=80`).
 
 Use the image components (26–31) to integrate images into decks:
 
