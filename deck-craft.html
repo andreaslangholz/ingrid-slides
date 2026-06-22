@@ -398,6 +398,10 @@
   .collage-slide { padding: 0; background: var(--bg-dark); }
   .collage { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
   .collage img, .collage video { width: 100%; height: 100%; object-fit: cover; }
+  .split-image video, .hero-frame video, .image-card-frame video,
+  .caption-frame video, .image-quote-frame video, .photo-grid-cell video {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
 
   /* --- JEDUF --- */
   .jeduf { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-top: 2rem; }
@@ -1508,21 +1512,50 @@
     .ed-status { color: var(--ed-dim); max-width: 240px; }
     .ed-rail { position: fixed; left: 0; top: 0; bottom: 0; width: ${RAIL_W}px; z-index: 999;
       overflow-y: auto; background: var(--ed-panel); backdrop-filter: blur(8px);
-      border-right: 1px solid var(--ed-line); padding: 12px; }
-    .ed-thumb { position: relative; margin-bottom: 8px; border: 2px solid transparent; border-radius: 9px;
-      cursor: grab; user-select: none; -webkit-user-select: none; touch-action: none; }
+      border-right: 1px solid var(--ed-line); padding: 14px 12px 80px;
+      display: flex; flex-direction: column; align-items: center; }
+    .ed-thumb { position: relative; width: fit-content; margin-bottom: 12px; border: 2px solid transparent; border-radius: 10px;
+      cursor: grab; user-select: none; -webkit-user-select: none; touch-action: none; transition: border-color 0.15s ease; }
     .ed-thumb.ed-current { border-color: var(--ed-ink); }
     .ed-thumb.ed-drop-before { box-shadow: 0 -3px 0 0 var(--ed-ink); }
     .ed-thumb.ed-dragging { opacity: .65; z-index: 10; }
-    .ed-thumb-view { position: relative; width: ${THUMB_W}px; overflow: hidden; border-radius: 6px;
+    .ed-thumb-view { position: relative; width: ${THUMB_W}px; overflow: hidden; border-radius: 8px;
       border: 1px solid var(--ed-line); pointer-events: none; background: var(--ed-view-bg); }
-    .ed-thumb-bar { display: flex; align-items: center; gap: 2px; padding: 3px 2px; }
-    .ed-thumb-bar .ed-n { font-family: inherit; font-size: 10px; font-weight: 500;
-      color: var(--ed-dim); flex: 1; padding-left: 2px; }
+    .ed-n { position: absolute; top: 6px; left: 6px; z-index: 2; font-family: inherit; font-size: 9px;
+      font-weight: 500; color: var(--ed-ink); background: var(--ed-panel); border: 1px solid var(--ed-line);
+      border-radius: 5px; padding: 1px 5px; line-height: 1.4; pointer-events: none; }
+    .ed-thumb-bar { position: absolute; right: 6px; bottom: 6px; display: flex; align-items: center; gap: 1px;
+      padding: 3px; border-radius: 9px; background: var(--ed-panel); border: 1px solid var(--ed-line);
+      box-shadow: 0 2px 8px rgba(0,0,0,.18); backdrop-filter: blur(6px);
+      opacity: 0; pointer-events: none; transition: opacity 0.12s ease; }
+    .ed-thumb:hover .ed-thumb-bar { opacity: 1; pointer-events: auto; }
     .ed-thumb-bar button { border: none; background: none; cursor: pointer; font-size: 11px;
-      color: var(--ed-dim); padding: 2px 5px; border-radius: 4px; line-height: 1; }
+      color: var(--ed-dim); padding: 3px 5px; border-radius: 6px; line-height: 1; }
     .ed-thumb-bar button:hover { color: var(--ed-ink);
       background: color-mix(in srgb, var(--ed-ink) 8%, transparent); }
+    body.ed-on .slide img, body.ed-on .slide video { transition: outline-color 0.12s ease; }
+    body.ed-on .slide img:hover, body.ed-on .slide video:hover { outline: 2px solid color-mix(in srgb, var(--ed-ink) 55%, transparent); outline-offset: -2px; }
+    .ed-img-drag { outline: 2px dashed var(--ed-ink) !important; outline-offset: -2px; }
+    .ed-imgbar { position: fixed; z-index: 1001; display: none; flex-direction: column; align-items: center; gap: 8px;
+      transform: translate(-50%, -50%); padding: 14px; border-radius: 12px; text-align: center;
+      background: var(--ed-panel); border: 1px solid var(--ed-line);
+      box-shadow: 0 6px 22px rgba(0,0,0,.22); backdrop-filter: blur(8px); font-family: inherit; }
+    .ed-imgbar-label { font-size: 9px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--ed-dim); }
+    .ed-imgbar-main { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .ed-imgbar-drop { display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer;
+      width: 210px; max-width: 60vw; padding: 16px 18px; border: 1.5px dashed var(--ed-line); border-radius: 10px;
+      background: transparent; color: var(--ed-dim); font-family: inherit; transition: border-color .12s ease, color .12s ease; }
+    .ed-imgbar-drop:hover, .ed-imgbar.ed-drag-active .ed-imgbar-drop { border-color: var(--ed-ink); color: var(--ed-ink); }
+    .ed-imgbar-drop svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .ed-imgbar-drop-title { font-size: 12px; font-weight: 500; color: var(--ed-ink); }
+    .ed-imgbar-drop-sub { font-size: 10px; }
+    .ed-imgbar-linkbtn { font-family: inherit; font-size: 11px; font-weight: 500; cursor: pointer; border: none;
+      background: none; color: var(--ed-dim); padding: 2px; text-decoration: underline; text-underline-offset: 2px; }
+    .ed-imgbar-linkbtn:hover { color: var(--ed-ink); }
+    .ed-imgbar-link { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .ed-imgbar-input { font-family: inherit; font-size: 12px; color: var(--ed-ink); width: 220px; max-width: 50vw;
+      padding: 7px 10px; border-radius: 7px; border: 1px solid var(--ed-line); background: var(--ed-view-bg); outline: none; }
+    .ed-imgbar-input:focus { border-color: var(--ed-ink); }
     @media print { .ed-rail, .ed-toolbar, [data-ed-ui] { display: none !important; }
       body.ed-on .deck { width: auto; margin-left: 0; } }
   `;
@@ -1651,9 +1684,10 @@
     c.style.cssText = 'display:flex; position:absolute; inset:auto; left:0; top:0; width:' + dw +
       'px; height:' + dh + 'px; transform:scale(' + sc + '); transform-origin:0 0;';
     view.appendChild(c);
+    const num = el('div', 'ed-n'); num.textContent = (i + 1);
+    view.appendChild(num);
     const bar = el('div', 'ed-thumb-bar');
-    bar.innerHTML = '<span class="ed-n">' + (i + 1) + '</span>' +
-      '<button data-act="up" title="Move up">&#8593;</button>' +
+    bar.innerHTML = '<button data-act="up" title="Move up">&#8593;</button>' +
       '<button data-act="down" title="Move down">&#8595;</button>' +
       '<button data-act="dup" title="Duplicate">&#10697;</button>' +
       '<button data-act="del" title="Delete">&#10005;</button>';
@@ -1751,6 +1785,201 @@
     const old = rail.querySelectorAll('.ed-thumb')[i];
     if (old) old.replaceWith(makeThumb(slide, i));
     highlightThumb();
+  });
+
+  /* ---------- image replace (file / drop / paste / link, one affordance) ---------- */
+  const MAX_IMG_DIM = 1600;
+  const imgBar = el('div', 'ed-imgbar'); imgBar.dataset.edUi = '';
+  imgBar.innerHTML =
+    '<div class="ed-imgbar-label">Replace image</div>' +
+    '<div class="ed-imgbar-main">' +
+      '<button type="button" class="ed-imgbar-drop" data-imgact="file">' +
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11"/><path d="M8 10l4 4 4-4"/><path d="M5 16v2a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-2"/></svg>' +
+        '<span class="ed-imgbar-drop-title">Drag &amp; drop image or video</span>' +
+        '<span class="ed-imgbar-drop-sub">or click to upload</span>' +
+      '</button>' +
+      '<button type="button" class="ed-imgbar-linkbtn" data-imgact="link">Paste a link instead</button>' +
+    '</div>' +
+    '<div class="ed-imgbar-link" style="display:none">' +
+      '<input type="text" class="ed-imgbar-input" placeholder="Paste image or video URL, press Enter">' +
+      '<button type="button" class="ed-imgbar-linkbtn ed-imgbar-cancel">Go back</button>' +
+    '</div>';
+  document.body.appendChild(imgBar);
+  const imgMain = imgBar.querySelector('.ed-imgbar-main');
+  const linkBox = imgBar.querySelector('.ed-imgbar-link');
+  const linkInput = imgBar.querySelector('.ed-imgbar-input');
+  const cancelBtn = imgBar.querySelector('.ed-imgbar-cancel');
+  let hoverImg = null, linkMode = false;
+
+  function placeImgBar(img) {
+    const r = img.getBoundingClientRect();
+    imgBar.style.left = (r.left + r.width / 2) + 'px';
+    imgBar.style.top = (r.top + r.height / 2) + 'px';
+    imgBar.style.display = 'flex';
+  }
+  function hideImgBar() { imgBar.style.display = 'none'; hoverImg = null; if (linkMode) exitLinkMode(); }
+
+  // inline URL entry (native prompt() is unreliable; Chrome can suppress it)
+  function enterLinkMode() {
+    linkMode = true;
+    imgMain.style.display = 'none';
+    linkBox.style.display = 'flex';
+    linkInput.value = '';
+    linkInput.focus();
+  }
+  function exitLinkMode() {
+    linkMode = false;
+    imgMain.style.display = '';
+    linkBox.style.display = 'none';
+  }
+  linkInput.addEventListener('keydown', e => {
+    e.stopPropagation();
+    if (e.key === 'Enter') { const img = hoverImg, url = linkInput.value; exitLinkMode(); if (img && url) setImageFromURL(img, url); }
+    else if (e.key === 'Escape') exitLinkMode();
+  });
+  linkInput.addEventListener('blur', exitLinkMode);
+  cancelBtn.addEventListener('mousedown', e => e.preventDefault());
+  cancelBtn.addEventListener('click', exitLinkMode);
+
+  function refreshThumbFor(img) {
+    const slide = img.closest('.slide');
+    if (slide) {
+      slide.dataset.edDirty = '1';
+      const i = liveSlides().indexOf(slide);
+      const old = rail.querySelectorAll('.ed-thumb')[i];
+      if (old) old.replaceWith(makeThumb(slide, i));
+      highlightThumb();
+    }
+    markDirty();
+  }
+
+  function readAsDataURL(file) {
+    return new Promise((res, rej) => {
+      const fr = new FileReader();
+      fr.onload = () => res(fr.result); fr.onerror = () => rej(fr.error);
+      fr.readAsDataURL(file);
+    });
+  }
+
+  // oversized images get downscaled so the embedded base64 stays reasonable
+  function shrinkDataURL(dataURL, type) {
+    return new Promise(res => {
+      const im = new Image();
+      im.onload = () => {
+        const max = Math.max(im.naturalWidth, im.naturalHeight);
+        if (max <= MAX_IMG_DIM) { res(dataURL); return; }
+        const k = MAX_IMG_DIM / max;
+        const cv = el('canvas');
+        cv.width = Math.round(im.naturalWidth * k);
+        cv.height = Math.round(im.naturalHeight * k);
+        cv.getContext('2d').drawImage(im, 0, 0, cv.width, cv.height);
+        res(cv.toDataURL(/png/i.test(type) ? 'image/png' : 'image/jpeg', 0.85));
+      };
+      im.onerror = () => res(dataURL);
+      im.src = dataURL;
+    });
+  }
+
+  const MAX_VIDEO_BYTES = 30 * 1024 * 1024;
+
+  // swap an <img> for a <video> (or back) in place, preserving class/style
+  function asVideo(node) {
+    if (node.tagName === 'VIDEO') return node;
+    const v = document.createElement('video');
+    ['autoplay', 'loop', 'muted', 'playsinline'].forEach(a => v.setAttribute(a, ''));
+    v.muted = true;
+    const st = node.getAttribute('style'); if (st) v.setAttribute('style', st);
+    if (node.className) v.className = node.className;
+    node.replaceWith(v);
+    return v;
+  }
+  function asImage(node) {
+    if (node.tagName === 'IMG') return node;
+    const im = document.createElement('img'); im.alt = '';
+    const st = node.getAttribute('style'); if (st) im.setAttribute('style', st);
+    if (node.className) im.className = node.className;
+    node.replaceWith(im);
+    return im;
+  }
+
+  // user files embed as base64 to keep the deck self-contained
+  async function setImageFromFile(node, file) {
+    if (!file) return;
+    const isVid = /^video\//.test(file.type);
+    if (!isVid && !/^image\//.test(file.type)) { status('That is not an image or video file'); return; }
+    if (isVid && file.size > MAX_VIDEO_BYTES) { status('Video is too large to embed (max 30MB). Use a link instead.'); return; }
+    status(isVid ? 'Embedding video...' : 'Embedding image...');
+    try {
+      const data = isVid ? await readAsDataURL(file) : await shrinkDataURL(await readAsDataURL(file), file.type);
+      const elx = isVid ? asVideo(node) : asImage(node);
+      elx.src = data;
+      if (hoverImg === node) hoverImg = elx;
+      refreshThumbFor(elx);
+      status(isVid ? 'Video added' : 'Image replaced'); setTimeout(() => status('Edit mode'), 1500);
+    } catch (err) { console.error(err); status('Could not add media'); }
+  }
+
+  // pasted or dropped links stay as URLs (matches the deck media convention)
+  function setImageFromURL(node, url) {
+    url = (url || '').trim();
+    if (!/^(https?:\/\/|data:(image|video)\/)/i.test(url)) { status('That is not a valid image or video URL'); return; }
+    const isVid = /^data:video\//i.test(url) || /\.(mp4|webm|ogg|ogv|mov|m4v)(\?|#|$)/i.test(url);
+    const elx = isVid ? asVideo(node) : asImage(node);
+    elx.src = url;
+    if (hoverImg === node) hoverImg = elx;
+    refreshThumbFor(elx);
+    status(isVid ? 'Video linked' : 'Image linked'); setTimeout(() => status('Edit mode'), 1500);
+  }
+
+  function pickImageFile(node) {
+    const inp = el('input'); inp.type = 'file'; inp.accept = 'image/*,video/*';
+    inp.addEventListener('change', () => { if (inp.files && inp.files[0]) setImageFromFile(node, inp.files[0]); });
+    inp.click();
+  }
+
+  document.addEventListener('pointermove', e => {
+    if (drag || linkMode) return;
+    if (e.target.closest && e.target.closest('.ed-imgbar')) return;
+    const img = e.target.closest && e.target.closest('.deck .slide img, .deck .slide video');
+    if (img) { hoverImg = img; placeImgBar(img); }
+    else if (imgBar.style.display !== 'none') hideImgBar();
+  }, true);
+
+  imgBar.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b || !hoverImg) return;
+    if (b.dataset.imgact === 'link') enterLinkMode();
+    else if (b.dataset.imgact === 'file') pickImageFile(hoverImg);
+  });
+
+  // drop works over the image and over the centered card (maps to the hovered image)
+  function dropTargetImg(e) {
+    if (!e.target.closest) return null;
+    if (e.target.closest('.ed-imgbar')) return hoverImg;
+    return e.target.closest('.deck .slide img, .deck .slide video');
+  }
+  document.addEventListener('dragover', e => {
+    const img = dropTargetImg(e); if (!img) return;
+    e.preventDefault(); img.classList.add('ed-img-drag');
+    imgBar.classList.toggle('ed-drag-active', !!(e.target.closest && e.target.closest('.ed-imgbar')));
+  });
+  document.addEventListener('dragleave', e => {
+    const img = dropTargetImg(e); if (img) img.classList.remove('ed-img-drag');
+  });
+  document.addEventListener('drop', e => {
+    const img = dropTargetImg(e); if (!img) return;
+    e.preventDefault(); img.classList.remove('ed-img-drag'); imgBar.classList.remove('ed-drag-active');
+    const dt = e.dataTransfer; if (!dt) return;
+    if (dt.files && dt.files.length) setImageFromFile(img, dt.files[0]);
+    else setImageFromURL(img, dt.getData('text/uri-list') || dt.getData('text/plain'));
+  });
+
+  document.addEventListener('paste', e => {
+    if (!hoverImg || linkMode) return;
+    if (document.activeElement && document.activeElement.isContentEditable) return;
+    const dt = e.clipboardData; if (!dt) return;
+    for (const f of dt.files) { if (/^image\//.test(f.type)) { e.preventDefault(); setImageFromFile(hoverImg, f); return; } }
+    const text = dt.getData('text');
+    if (text && /^(https?:\/\/|data:image\/)/i.test(text.trim())) { e.preventDefault(); setImageFromURL(hoverImg, text); }
   });
 
   /* ---------- toolbar ---------- */
@@ -1970,7 +2199,7 @@
   makeEditable(deck);
   watchMutations();
   const coreShow = window.show;
-  window.show = i => { coreShow(i); highlightThumb(); };
+  window.show = i => { coreShow(i); highlightThumb(); hideImgBar(); };
   renderRail();
   edShow(Math.max(0, curIdx()));
   markDirty();

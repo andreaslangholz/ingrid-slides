@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Slides™ · Write slides in HTML. Ship from a single file.</title>
-<meta name="description" content="Slides™ is a minimalist HTML deck framework built for AI. Drop your storyline, the agent handles the rest. One file. No build step. Open source. Now a Claude marketplace plugin.">
+<meta name="description" content="Slides™ is a minimalist HTML deck framework built for AI. Describe your talk, get a finished deck, then edit it live in the browser. One file. No build step. Open source. A Claude marketplace plugin.">
 <meta property="og:title" content="Slides™ · Story in. Slides out.">
-<meta property="og:description" content="An open-source deck framework built for AI. One HTML file, 25+ components, six storytelling formats. Now a Claude marketplace plugin.">
+<meta property="og:description" content="An open-source deck framework built for AI. One HTML file, 30+ components, six storytelling formats. Edit any deck live in the browser. A Claude marketplace plugin.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://noskillish.github.io/slides/">
 <meta property="og:image" content="https://noskillish.github.io/slides/assets/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Slides™ · Story in. Slides out.">
-<meta name="twitter:description" content="An open-source deck framework built for AI. One HTML file, 25+ components, six storytelling formats.">
+<meta name="twitter:description" content="An open-source deck framework built for AI. One HTML file, 30+ components, six storytelling formats. Edit any deck live in the browser.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◼</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -353,6 +353,37 @@
   .theme-btn.active { background: var(--ink); color: #f5f5f3; border-color: var(--ink); }
   .demo-section { display: none; }
   @media (min-width: 768px) { .demo-section { display: block; } }
+
+  /* Edit mode mock */
+  .editor-mock { margin-top: 2.5rem; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
+  .editor-chrome { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: var(--bg-card); border-bottom: 1px solid var(--border); }
+  .editor-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border-strong); }
+  .editor-url { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--muted); margin-left: 6px; }
+  .editor-body { display: flex; min-height: 340px; background: var(--bg); }
+  .editor-rail { width: 128px; flex-shrink: 0; border-right: 1px solid var(--border); background: var(--bg-card); padding: 14px 12px; display: flex; flex-direction: column; gap: 10px; }
+  .editor-thumb { position: relative; aspect-ratio: 16/10; border-radius: 8px; background: #fff; box-shadow: inset 0 0 0 1px var(--border); border: 2px solid transparent; }
+  .editor-thumb.active { border-color: var(--ink); }
+  .editor-tn { position: absolute; top: 5px; left: 5px; font-size: 8px; font-weight: 500; color: var(--dim); background: #fff; border: 1px solid var(--border); border-radius: 4px; padding: 0 4px; line-height: 1.6; }
+  .editor-stage { position: relative; flex: 1; display: flex; align-items: center; justify-content: center; padding: 2.5rem; }
+  .editor-slide { width: 100%; max-width: 360px; }
+  .editor-eyebrow { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); font-weight: 500; margin-bottom: 0.6rem; }
+  .editor-h1 { display: inline-block; font-size: clamp(1.1rem, 2vw, 1.6rem); font-weight: 400; letter-spacing: -0.03em; line-height: 1.2; box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 16%, transparent); border-radius: 4px; padding: 2px 5px; }
+  .editor-h1 .dim { color: var(--muted); }
+  .editor-caret { display: inline-block; width: 2px; height: 1em; background: var(--ink); margin-left: 1px; vertical-align: -2px; animation: editcaret 1s step-end infinite; }
+  @keyframes editcaret { 50% { opacity: 0; } }
+  .editor-card { position: absolute; right: 1.5rem; bottom: 1.5rem; width: 200px; background: rgba(255,255,255,0.95); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 22px rgba(0,0,0,0.12); backdrop-filter: blur(8px); padding: 14px; text-align: center; display: flex; flex-direction: column; gap: 8px; }
+  .editor-card-label { font-size: 8px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .editor-drop { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 16px 12px; border: 1.5px dashed var(--border-strong); border-radius: 10px; color: var(--dim); }
+  .editor-drop svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .editor-drop-title { font-size: 11px; font-weight: 500; color: var(--ink); }
+  .editor-drop-sub { font-size: 9px; }
+  .editor-card-link { font-size: 10px; color: var(--dim); text-decoration: underline; text-underline-offset: 2px; }
+  @media (max-width: 767px) { .editor-card { display: none; } .editor-rail { width: 92px; } }
+
+  .edit-features { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1.5rem; }
+  @media (min-width: 768px) { .edit-features { grid-template-columns: repeat(4, 1fr); } }
+  .edit-feature h4 { font-size: 0.8rem; font-weight: 500; margin-bottom: 0.35rem; }
+  .edit-feature p { font-size: 0.76rem; color: var(--dim); font-weight: 300; line-height: 1.5; }
 </style>
 </head>
 <body>
@@ -372,12 +403,12 @@
 <!-- Hero -->
 <div class="hero">
   <div class="container">
-    <a href="#plugin" style="display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem; padding: 0.3rem 0.75rem; border-radius: 999px; border: 1px solid var(--border); background: var(--bg-card); font-size: 0.75rem; color: var(--dim); font-weight: 400; text-decoration: none; transition: border-color 0.2s; cursor: pointer;">
+    <a href="#edit" style="display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem; padding: 0.3rem 0.75rem; border-radius: 999px; border: 1px solid var(--border); background: var(--bg-card); font-size: 0.75rem; color: var(--dim); font-weight: 400; text-decoration: none; transition: border-color 0.2s; cursor: pointer;">
       <span style="background: var(--accent); color: #fff; font-size: 0.55rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.15rem 0.45rem; border-radius: 999px;">New</span>
-      Now a Claude marketplace plugin <span style="font-size: 0.7rem;">→</span>
+      Edit any deck right in the browser <span style="font-size: 0.7rem;">→</span>
     </a>
     <h1>Story in. <span class="dim">Slides out.</span></h1>
-    <p class="subtitle">An open-source deck framework built for AI. One HTML file, no build step. Clone the repo, describe what you want to say, get a finished deck.</p>
+    <p class="subtitle">An open-source deck framework built for AI. One HTML file, no build step. Describe your talk, get a finished deck, then refine it live in the browser.</p>
 
     <div class="clone-block">
       <button class="copy-btn" onclick="copyCode(this)">Copy</button>
@@ -453,12 +484,69 @@
   </div>
 </section>
 
+<!-- Edit mode -->
+<section id="edit">
+  <div class="container">
+    <div class="eyebrow">New · Edit in the browser</div>
+    <h2>AI builds it. <span class="dim">You finish it.</span></h2>
+    <p class="section-subtitle">Add ?edit to any deck. Rewrite text inline, drag slides to reorder, drop in an image or video, then save straight back to the file. No code. No rebuild.</p>
+
+    <div class="editor-mock">
+      <div class="editor-chrome">
+        <div class="editor-dot"></div><div class="editor-dot"></div><div class="editor-dot"></div>
+        <span class="editor-url">deck.html?edit</span>
+      </div>
+      <div class="editor-body">
+        <div class="editor-rail">
+          <div class="editor-thumb active"><span class="editor-tn">1</span></div>
+          <div class="editor-thumb"><span class="editor-tn">2</span></div>
+          <div class="editor-thumb"><span class="editor-tn">3</span></div>
+        </div>
+        <div class="editor-stage">
+          <div class="editor-slide">
+            <div class="editor-eyebrow">Conference · 2026</div>
+            <div class="editor-h1">Story in. <span class="dim">Slides out.</span><span class="editor-caret"></span></div>
+          </div>
+          <div class="editor-card">
+            <div class="editor-card-label">Replace image</div>
+            <div class="editor-drop">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11"/><path d="M8 10l4 4 4-4"/><path d="M5 16v2a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-2"/></svg>
+              <span class="editor-drop-title">Drag &amp; drop image or video</span>
+              <span class="editor-drop-sub">or click to upload</span>
+            </div>
+            <span class="editor-card-link">Paste a link instead</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="edit-features">
+      <div class="edit-feature">
+        <h4>Inline text</h4>
+        <p>Click any headline or label and type. Plain text editing, no markup to learn.</p>
+      </div>
+      <div class="edit-feature">
+        <h4>Drag to reorder</h4>
+        <p>Grab a thumbnail in the rail and drop it where it belongs. Duplicate or delete in a click.</p>
+      </div>
+      <div class="edit-feature">
+        <h4>Swap media</h4>
+        <p>Drop an image or video onto any slot, paste a link, or upload a file. Pictures embed automatically.</p>
+      </div>
+      <div class="edit-feature">
+        <h4>Save in place</h4>
+        <p>Writes back to the same HTML file and auto-saves as you go. Export to PDF with P.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- What you get -->
 <section>
   <div class="container">
     <div class="eyebrow">What you get</div>
     <h2>One file. <span class="dim">Everything included.</span></h2>
-    <p class="section-subtitle">25+ components, three themes, six storytelling formats, keyboard and touch navigation, embed mode. All in one repo.</p>
+    <p class="section-subtitle">30+ components, three themes, six storytelling formats, a built-in browser editor, keyboard and touch navigation, embed mode. All in one repo.</p>
 
     <div class="features">
       <div class="feature-card">
