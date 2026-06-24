@@ -686,3 +686,17 @@ Use the image components (26–31) to integrate images into decks:
 - Every slide wraps content in `<div class="slide-inner">` inside `<section class="slide">`.
 - First slide gets class `active`: `<section class="slide active">`.
 - The JS handles navigation, counter, and progress bar automatically.
+
+## Version check
+
+Every deck carries a version tag in `<head>`:
+
+```html
+<meta name="slides-version" content="1.0.0">
+```
+
+The current Slides version is **1.0.0**.
+
+**When you open an existing deck**, check the `slides-version` meta tag. If it is missing or older than the current version, tell the user and offer to update. Updating means replacing the `<style>` block and both `<script>` blocks from the current template without touching the `<section>` slide content, then setting the meta tag to the current version.
+
+**When you create a new deck**, always include the `slides-version` meta tag with the current version.

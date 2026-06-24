@@ -749,6 +749,34 @@ If it looks like it belongs next to the existing components, it's a good freesty
 
 ---
 
+## Version check
+
+Every deck carries a version tag in `<head>`:
+
+```html
+<meta name="slides-version" content="1.0.0">
+```
+
+The current Slides version is **1.0.0**.
+
+**When you open an existing deck**, check the `slides-version` meta tag:
+
+1. **Missing tag.** The deck predates versioning. Tell the user: *"This deck was built with an older version of Slides. Want me to update it to the latest (1.0.0)? Your slide content stays the same."*
+2. **Older version.** The deck's version is lower than the current version. Tell the user: *"This deck uses Slides X.Y.Z. The latest is 1.0.0. Want me to update? Your slide content stays the same."*
+3. **Current version.** No action needed.
+
+**How to update a deck:**
+
+- Replace the `<style>` block with the one from the current template (`deck.html`).
+- Replace both `<script>` blocks (navigation + edit mode) with the ones from the current template.
+- Update the `slides-version` meta tag to the current version.
+- Refresh the HTML comment index at the top of `<head>` if it lists components.
+- Do **not** touch the `<section>` slide content.
+
+**When you create a new deck**, always include the `slides-version` meta tag with the current version.
+
+---
+
 ## When the human asks you to build a deck
 
 1. **Ask for the story first.** What's the talk about? What's the arc? What's the closing line?
