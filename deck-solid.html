@@ -1734,7 +1734,7 @@
 </div>
 
 <div class="btn-row">
-  <button class="pdf-btn edit-btn" title="Edit this deck in the browser" onclick="location.href = location.pathname + '?edit'">Edit</button>
+  <button class="pdf-btn edit-btn" title="Edit this deck in the browser" onclick="try{sessionStorage.setItem('edEnterIdx',[...document.querySelectorAll('.deck > .slide')].findIndex(s=>s.classList.contains('active')))}catch(e){}location.href = location.pathname + '?edit'">Edit</button>
   <button class="pdf-btn" onclick="downloadPDF()">Download PDF</button>
 </div>
 
@@ -1834,6 +1834,9 @@
   const undoStack = [];
   let autoSaveTimer = null;
   let saving = false;
+  let fullDocMode = false;   // true once a "Save as…" handle is adopted as the live target
+  let baseMtime = null;      // file.lastModified as of our last read/write, for staleness checks
+  const embedded = window.self !== window.top;  // running inside an iframe (e.g. a preview pane)
 
   function scheduleAutoSave() {
     if (!fileHandle || saving) return;
@@ -2370,10 +2373,24 @@
 
   // shown when in-place saving is not possible (Safari, or a restricted folder)
   function offerDownload(msg) {
+    const sa = window.showSaveFilePicker ? '<button class="ed-save" id="edSaveAs">Save as…</button>' : '';
+    bar.innerHTML = '<span class="ed-status" id="edStatus">' + msg + '</span>' +
+      sa + '<button id="edDl">Download copy</button>' +
+      '<button id="edBack">Back</button>';
+    if (window.showSaveFilePicker) $('edSaveAs').addEventListener('click', saveAs);
+    $('edDl').addEventListener('click', () => { downloadCopy(); setTimeout(restoreToolbar, 1200); });
+    $('edBack').addEventListener('click', restoreToolbar);
+  }
+
+  // shown when in-place saving is blocked (embedded preview, or denied by the browser).
+  // Download copy keeps the current edits; "Open in new tab" gives a context that can save in place.
+  function offerBlocked(msg) {
     bar.innerHTML = '<span class="ed-status" id="edStatus">' + msg + '</span>' +
       '<button class="ed-save" id="edDl">Download copy</button>' +
+      '<button id="edOpenTab">Open in new tab</button>' +
       '<button id="edBack">Back</button>';
     $('edDl').addEventListener('click', () => { downloadCopy(); setTimeout(restoreToolbar, 1200); });
+    $('edOpenTab').addEventListener('click', () => window.open(location.href, '_blank'));
     $('edBack').addEventListener('click', restoreToolbar);
   }
 
@@ -2393,11 +2410,24 @@
     saving = true;
     status('Saving...');
     try {
-      const src = await (await fileHandle.getFile()).text();
-      const out = splice(src);
+      if (fullDocMode) {
+        await writeFull(fileHandle);
+        reanchor();
+        status('Saved');
+        setTimeout(() => status('Edit mode'), 1500);
+        saving = false;
+        return;
+      }
+      const file = await fileHandle.getFile();
+      if (baseMtime !== null && file.lastModified !== baseMtime) {
+        status('Auto-save paused — file changed on disk. Click Save to resolve.');
+        saving = false; return;
+      }
+      const out = splice(await file.text());
       if (out == null) { status('Auto-save skipped (file changed externally)'); saving = false; return; }
       const w = await fileHandle.createWritable();
       await w.write(out); await w.close();
+      baseMtime = (await fileHandle.getFile()).lastModified;
       liveSlides().forEach((s, i) => { delete s.dataset.edDirty; s.dataset.srcIdx = i; });
       baseCount = liveSlides().length;
       structuralChanged = false;
@@ -2504,7 +2534,8 @@
     return out;
   }
 
-  function downloadCopy() {
+  // Build the cleaned, full deck document (editor UI stripped) as an HTML string.
+  function buildFullDoc() {
     const dc = document.documentElement.cloneNode(true);
     dc.querySelectorAll('[data-ed-ui]').forEach(n => n.remove());
     dc.querySelectorAll('[data-ed-wrap]').forEach(w => w.replaceWith(w.textContent));
@@ -2515,13 +2546,59 @@
       delete n.dataset.edDirty; delete n.dataset.srcIdx;
     });
     dc.querySelector('body').classList.remove('ed-on', 'ed-dark');
-    const html = '<!DOCTYPE html>\n' + dc.outerHTML;
+    return '<!DOCTYPE html>\n' + dc.outerHTML;
+  }
+
+  function downloadCopy() {
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+    a.href = URL.createObjectURL(new Blob([buildFullDoc()], { type: 'text/html' }));
     a.download = decodeURIComponent(location.pathname.split('/').pop() || 'deck.html');
     a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
     status('Downloaded updated copy');
+  }
+
+  async function writeFull(h) {
+    const w = await h.createWritable();
+    await w.write(buildFullDoc());
+    await w.close();
+    baseMtime = (await h.getFile()).lastModified;
+  }
+
+  // Re-anchor editor state against the document we just wrote in full.
+  function reanchor() {
+    liveSlides().forEach((s, i) => { delete s.dataset.edDirty; s.dataset.srcIdx = i; });
+    baseCount = liveSlides().length;
+    structuralChanged = false;
+    markDirty(); renderRail();
+  }
+
+  // "Save as…": write the full deck to a user-chosen file and adopt it as the
+  // live save target. Used as a fallback when in-place saving is blocked.
+  async function saveAs() {
+    if (saving) return;
+    saving = true;
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+    try {
+      const pageName = decodeURIComponent(location.pathname.split('/').pop() || 'deck.html');
+      const h = await showSaveFilePicker({
+        suggestedName: pageName,
+        types: [{ description: 'HTML deck', accept: { 'text/html': ['.html'] } }]
+      });
+      await writeFull(h);
+      fileHandle = h;
+      fullDocMode = true;
+      reanchor();
+      restoreToolbar();
+      status('Saved a copy. Edits now auto-save to that file.');
+      setTimeout(() => status('Edit mode'), 4000);
+    } catch (err) {
+      if (err && err.name === 'AbortError') return;
+      console.error(err);
+      status('Save as failed: ' + (err && err.message));
+    } finally {
+      saving = false;
+    }
   }
 
   async function doSave() {
@@ -2533,16 +2610,33 @@
         offerDownload('This browser saves a copy instead of writing in place. In-place saving needs Chrome or Edge.');
         return;
       }
+      if (embedded) {
+        offerBlocked('Embedded preview can\'t write to the file here. Download keeps your edits, or open the deck in its own tab to save in place.');
+        return;
+      }
+      if (fileHandle && fullDocMode) {
+        await writeFull(fileHandle);
+        reanchor();
+        status('Saved');
+        setTimeout(() => status('Edit mode'), 1500);
+        return;
+      }
       const h = await getHandle();
-      const src = await (await h.getFile()).text();
-      const out = splice(src);
+      const file = await h.getFile();
+      const out = splice(await file.text());
       if (out == null) {
         if (confirm('The file on disk has a different slide count than when this page loaded ' +
             '(someone else edited it?). In-place merge is unsafe. Download an updated copy instead?')) downloadCopy();
         return;
       }
+      if (baseMtime !== null && file.lastModified !== baseMtime &&
+          !confirm('The file changed on disk since you opened it (edited elsewhere?). ' +
+            'Click OK to overwrite with your version, or Cancel to download a copy instead.')) {
+        downloadCopy(); return;
+      }
       const w = await h.createWritable();
       await w.write(out); await w.close();
+      baseMtime = (await h.getFile()).lastModified;
       // re-anchor against the file we just wrote
       liveSlides().forEach((s, i) => { delete s.dataset.edDirty; s.dataset.srcIdx = i; });
       baseCount = liveSlides().length;
@@ -2553,8 +2647,12 @@
       justPicked = false;
     } catch (err) {
       if (err && err.name === 'AbortError') { offerDownload('Could not save in place here. Download an updated copy instead?'); return; }
-      if (err && err.name === 'SecurityError') { status('Timed out waiting — click Save again'); return; }
       if (err && /already active/i.test(err.message || '')) { status('A file dialog is already open. Finish it, then save again.'); return; }
+      if (err && err.name === 'SecurityError') { status('Took too long to confirm — click Save again.'); return; }
+      if (err && err.name === 'NotAllowedError') {
+        offerBlocked('Saving was blocked by the browser. Download keeps your edits, or open the deck in its own tab to save in place.');
+        return;
+      }
       console.error(err);
       offerDownload('Save failed: ' + (err && err.message) + '. Download an updated copy instead?');
     } finally {
@@ -2570,7 +2668,9 @@
   const coreShow = window.show;
   window.show = i => { coreShow(i); highlightThumb(); hideImgBar(); };
   renderRail();
-  edShow(Math.max(0, curIdx()));
+  let enterIdx = -1;
+  try { const v = sessionStorage.getItem('edEnterIdx'); if (v !== null) { sessionStorage.removeItem('edEnterIdx'); enterIdx = parseInt(v, 10); } } catch (e) {}
+  edShow(enterIdx >= 0 && enterIdx < liveSlides().length ? enterIdx : Math.max(0, curIdx()));
   markDirty();
 })();
 </script>
