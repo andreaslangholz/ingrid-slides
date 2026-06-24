@@ -97,7 +97,8 @@ Click the **Edit** button next to **Download PDF** (or add `?edit` to the URL) a
 
 - **Click any text to edit it in place.** Plain text only — the markup stays intact.
 - **Reorder, duplicate, or delete slides** from a thumbnail rail.
-- **Save writes back to the HTML file.** Chromium browsers save in place after a one-time file pick (Cmd/Ctrl+S after that is silent); other browsers download an updated copy.
+- **Replace images and video.** Hover any image to upload, drag-and-drop, or paste a link. Files embed (images downscaled); links stay as URLs; dropping a video swaps the slot to a `<video>`.
+- **Save writes back to the HTML file.** Chromium browsers save in place after a one-time file pick, then auto-save as you go; other browsers download an updated copy.
 - **Diffs stay clean.** Saving rewrites only the slides that changed; everything else passes through byte-for-byte.
 
 See [docs/USING.md](docs/USING.md) for details.

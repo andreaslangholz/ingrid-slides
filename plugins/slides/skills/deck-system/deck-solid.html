@@ -2288,6 +2288,7 @@
   }
 
   function pickImageFile(node) {
+    if (saving) return;
     const inp = el('input'); inp.type = 'file'; inp.accept = 'image/*,video/*';
     inp.addEventListener('change', () => { if (inp.files && inp.files[0]) setImageFromFile(node, inp.files[0]); });
     inp.click();
@@ -2365,6 +2366,15 @@
     $('edSave').addEventListener('click', doSave);
     $('edExit').addEventListener('click', handleExit);
     markDirty();
+  }
+
+  // shown when in-place saving is not possible (Safari, or a restricted folder)
+  function offerDownload(msg) {
+    bar.innerHTML = '<span class="ed-status" id="edStatus">' + msg + '</span>' +
+      '<button class="ed-save" id="edDl">Download copy</button>' +
+      '<button id="edBack">Back</button>';
+    $('edDl').addEventListener('click', () => { downloadCopy(); setTimeout(restoreToolbar, 1200); });
+    $('edBack').addEventListener('click', restoreToolbar);
   }
 
   function handleExit() {
@@ -2515,13 +2525,13 @@
   }
 
   async function doSave() {
+    if (saving) return;
+    saving = true;
     if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
     try {
       if (!window.showOpenFilePicker) {
-        alert('This browser cannot write files in place (Chromium browsers such as Chrome ' +
-          'and Edge support that). Downloading an updated copy instead — replace the ' +
-          'original file with it.');
-        downloadCopy(); return;
+        offerDownload('This browser saves a copy instead of writing in place. In-place saving needs Chrome or Edge.');
+        return;
       }
       const h = await getHandle();
       const src = await (await h.getFile()).text();
@@ -2542,10 +2552,13 @@
       setTimeout(() => status('Edit mode'), justPicked ? 4000 : 1500);
       justPicked = false;
     } catch (err) {
-      if (err && err.name === 'AbortError') { status('Edit mode'); return; }
+      if (err && err.name === 'AbortError') { offerDownload('Could not save in place here. Download an updated copy instead?'); return; }
       if (err && err.name === 'SecurityError') { status('Timed out waiting — click Save again'); return; }
+      if (err && /already active/i.test(err.message || '')) { status('A file dialog is already open. Finish it, then save again.'); return; }
       console.error(err);
-      status('Save failed: ' + (err && err.message));
+      offerDownload('Save failed: ' + (err && err.message) + '. Download an updated copy instead?');
+    } finally {
+      saving = false;
     }
   }
 
