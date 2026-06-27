@@ -14,7 +14,7 @@ slides/
 ├── deck.html              The default template deck. Edit this.
 ├── deck-craft.html        Craft theme variant.
 ├── deck-solid.html        Solid theme variant.
-├── design-system.html     Visual showcase of every component.
+├── design-system.html     Ingrid brand & design system (logo, color, type, gradient, photography, icons, visual system, tokens).
 ├── index.html             Deck launcher — lists the Ingrid decks (open / edit).
 ├── landing.html           Upstream framework marketing page (was index.html; Tailwind CDN).
 ├── AGENTS.md              AI agent instructions. Design system + components + storytelling.
@@ -176,7 +176,7 @@ The plugin auto-detects the best storytelling format from your description:
 - **[docs/STORYTELLING-board.md](docs/STORYTELLING-board.md):** Board and strategy updates.
 - **[docs/STORYTELLING-sales.md](docs/STORYTELLING-sales.md):** Sales presentations.
 - **[docs/DESIGN.md](docs/DESIGN.md):** Design tokens, components, tone & voice rules.
-- **[design-system.html](design-system.html):** Visual showcase of every component, rendered.
+- **[design-system.html](design-system.html):** Ingrid Capacity brand & design system — the full visual identity from the brand guidelines (logo system, color, typography, the signature gradient, photography, iconography, the Fluid Intelligence visual system, and design tokens), rendered.
 - **[AGENTS.md](AGENTS.md):** AI agent context file. Everything an AI needs to produce correct, on-brand slides.
 
 ---
