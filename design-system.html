@@ -3,1813 +3,517 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Design System · Slides™</title>
+<title>Ingrid Capacity — Brand & Design System</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: #f5f2ec;
-    color: #1a1a1a;
-    -webkit-font-smoothing: antialiased;
-    line-height: 1.5;
-  }
-
-  .container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem 6rem;
-  }
-  @media (min-width: 768px) { .container { padding: 2rem 2rem 6rem; } }
-
-  /* --- Site header --- */
-  .site-header {
-    border-bottom: 1px solid #e0ddd6;
-    padding: 1.5rem 0;
-  }
-
-  .site-header-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  @media (min-width: 768px) { .site-header-inner { padding: 0 2rem; } }
-
-  .site-header-brand {
-    font-size: 1rem;
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    color: #1a1a1a;
-    text-decoration: none;
-  }
-
-  .site-header-nav {
-    display: flex;
-    gap: 1.5rem;
-    font-size: 0.85rem;
-  }
-
-  .site-header-nav a {
-    color: #6a6a66;
-    text-decoration: none;
-    transition: color 0.15s;
-  }
-
-  .site-header-nav a:hover {
-    color: #1a1a1a;
-  }
-
-  .site-header-nav a.active {
-    color: #1a1a1a;
-    font-weight: 500;
-  }
-
-  /* --- Footer --- */
-  .site-footer {
-    margin-top: 4rem;
-    padding: 2rem 0;
-    border-top: 1px solid #e0ddd6;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 0.75rem;
-    color: #a0a09a;
-  }
-
-  .site-footer a {
-    color: #a0a09a;
-    text-decoration: none;
-    transition: color 0.15s;
-  }
-
-  .site-footer a:hover {
-    color: #1a1a1a;
-  }
-
-  .site-footer-links {
-    display: flex;
-    gap: 1.25rem;
-  }
-
-  @media (max-width: 720px) {
-    .site-header-inner { padding: 0 1.25rem; }
-    .site-header-nav { gap: 1rem; }
-    .site-footer {
-      flex-direction: column;
-      gap: 0.75rem;
-      text-align: center;
-    }
-  }
-
-  /* --- Top header --- */
-  .top-eyebrow {
-    font-size: 0.7rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #a0a09a;
-    margin-bottom: 1.25rem;
-  }
-
-  h1.page-title {
-    font-size: clamp(2rem, 4.5vw, 3.2rem);
-    font-weight: 500;
-    line-height: 1.2;
-    letter-spacing: -0.03em;
-    margin-bottom: 1rem;
-  }
-
-  h1.page-title span {
-    color: #b5b5b0;
-    font-weight: 300;
-  }
-
-  .page-intro {
-    font-size: 1rem;
-    color: #a0a09a;
-    max-width: 620px;
-    margin-bottom: 6rem;
-    line-height: 1.6;
-  }
-
-  /* --- Section --- */
-  section.demo-section {
-    margin-bottom: 5rem;
-    padding-bottom: 4rem;
-    border-bottom: 1px solid #e0e0db;
-  }
-
-  section.demo-section:last-of-type {
-    border-bottom: none;
-  }
-
-  .section-label {
-    font-size: 0.7rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #a0a09a;
-    margin-bottom: 0.6rem;
-  }
-
-  .section-title {
-    font-size: 1.5rem;
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    margin-bottom: 0.5rem;
-  }
-
-  .section-desc {
-    font-size: 0.85rem;
-    color: #a0a09a;
-    margin-bottom: 2rem;
-    max-width: 620px;
-    line-height: 1.6;
-  }
-
-  /* --- Demo frame --- */
-  .frame {
-    background: #fafaf8;
-    border: 1px dashed #d5d5d0;
-    border-radius: 10px;
-    padding: 2.5rem 2rem;
-    margin-bottom: 1rem;
-  }
-
-  /* --- Color palette --- */
-  .colors {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-    gap: 0.85rem;
-  }
-
-  .color {
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid #e0e0db;
-  }
-
-  .swatch {
-    height: 64px;
-  }
-
-  .color-meta {
-    padding: 0.55rem 0.75rem;
-    font-size: 0.72rem;
-    background: #fff;
-  }
-
-  .color-meta strong {
-    display: block;
-    font-weight: 500;
-    margin-bottom: 0.1rem;
-    color: #1a1a1a;
-  }
-
-  .color-meta span {
-    color: #a0a09a;
-  }
-
-  /* --- Typography table --- */
-  .type-row {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 2rem;
-    padding: 1.25rem 0;
-    border-top: 1px solid #e0e0db;
-    align-items: baseline;
-  }
-
-  .type-row:last-child { border-bottom: 1px solid #e0e0db; }
-
-  .type-label {
-    font-size: 0.72rem;
-    color: #a0a09a;
-    font-family: 'JetBrains Mono', 'SF Mono', monospace;
-  }
-
-  .type-sample-h1 { font-size: 2.4rem; font-weight: 500; letter-spacing: -0.03em; line-height: 1.2; }
-  .type-sample-h2 { font-size: 1.75rem; font-weight: 500; letter-spacing: -0.025em; line-height: 1.2; }
-  .type-sample-h3 { font-size: 1rem; font-weight: 500; letter-spacing: -0.01em; }
-  .type-sample-body { font-size: 0.88rem; color: #a0a09a; line-height: 1.6; }
-  .type-sample-eyebrow { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; color: #a0a09a; }
-  .type-sample-num { font-size: 3rem; font-weight: 600; letter-spacing: -0.035em; line-height: 1; }
-
-  /* --- Headline pattern demo --- */
-  .headline-demo {
-    margin-bottom: 0.85rem;
-  }
-
-  .headline-demo h2 {
-    font-size: clamp(1.4rem, 2.6vw, 2.2rem);
-    font-weight: 500;
-    letter-spacing: -0.025em;
-    line-height: 1.2;
-  }
-
-  .headline-demo span.dim {
-    color: #b5b5b0;
-    font-weight: 300;
-  }
-
-  /* === Component demos === */
-
-  /* Eyebrow + headline + subtitle */
-  .ehs-demo .eyebrow {
-    font-size: 0.7rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #a0a09a;
-    margin-bottom: 1rem;
-  }
-
-  .ehs-demo h3 {
-    font-size: clamp(1.5rem, 3vw, 2.2rem);
-    font-weight: 500;
-    letter-spacing: -0.025em;
-    line-height: 1.2;
-    margin-bottom: 0.6rem;
-  }
-
-  .ehs-demo h3 .dim { color: #b5b5b0; font-weight: 300; }
-
-  .ehs-demo p {
-    font-size: 0.9rem;
-    color: #a0a09a;
-    max-width: 540px;
-    line-height: 1.6;
-  }
-
-  /* Two-col */
-  .two-col-demo {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-  }
-
-  .two-col-demo h4 {
-    font-size: 1rem;
-    font-weight: 500;
-    margin-bottom: 0.3rem;
-  }
-
-  .two-col-demo p {
-    font-size: 0.85rem;
-    color: #a0a09a;
-    line-height: 1.6;
-  }
-
-  /* Three-col */
-  .three-col-demo {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-  }
-
-  .three-col-demo h4 {
-    font-size: 0.9rem;
-    font-weight: 500;
-    margin-bottom: 0.3rem;
-  }
-
-  .three-col-demo p {
-    font-size: 0.78rem;
-    color: #a0a09a;
-    line-height: 1.55;
-  }
-
-  /* Capability list */
-  .cap-demo {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .cap-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    padding: 0.9rem 0;
-    border-top: 1px solid #e0e0db;
-    align-items: baseline;
-  }
-
-  .cap-row:last-child { border-bottom: 1px solid #e0e0db; }
-
-  .cap-q { font-size: 0.88rem; font-weight: 500; }
-  .cap-a { font-size: 0.82rem; color: #a0a09a; line-height: 1.5; }
-
-  /* Callout */
-  .callout-demo {
-    background: #1a1a1a;
-    color: #f5f5f3;
-    border-radius: 10px;
-    padding: 1.5rem 2rem;
-  }
-
-  .callout-demo h4 {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #888;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-  }
-
-  .callout-demo p {
-    font-size: 0.9rem;
-    line-height: 1.55;
-    color: #ccc;
-  }
-
-  .callout-demo p strong {
-    color: #f5f5f3;
-    font-weight: 500;
-  }
-
-  /* Dot flow */
-  .dot-flow-demo {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    position: relative;
-  }
-
-  .dot-flow-demo::before {
-    content: '';
-    position: absolute;
-    top: 4px;
-    left: 8%;
-    right: 8%;
-    height: 1px;
-    background: #d5d5d0;
-  }
-
-  .dot-step-demo {
-    text-align: center;
-  }
-
-  .dot-step-demo .dot {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: #1a1a1a;
-    margin: 0 auto 0.85rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .dot-step-demo h5 {
-    font-size: 0.8rem;
-    font-weight: 500;
-    margin-bottom: 0.2rem;
-  }
-
-  .dot-step-demo p {
-    font-size: 0.68rem;
-    color: #a0a09a;
-    line-height: 1.4;
-  }
-
-  /* Stack grid */
-  .stack-grid-demo {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.85rem;
-  }
-
-  .stack-card {
-    border: 1px solid #e0e0db;
-    border-radius: 10px;
-    padding: 1rem 1rem 1.1rem;
-    background: #fafaf8;
-  }
-
-  .stack-card-label {
-    font-size: 0.6rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #a0a09a;
-    margin-bottom: 0.75rem;
-  }
-
-  .stack-tool-demo {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.85rem;
-    font-weight: 500;
-    padding: 0.25rem 0;
-  }
-
-  .stack-tool-demo .mark {
-    width: 14px;
-    height: 14px;
-    background: #1a1a1a;
-    border-radius: 2px;
-    flex-shrink: 0;
-  }
-
-  /* Spec flow demo */
-  .spec-flow-demo {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .spec-block-demo {
-    background: #1a1a1a;
-    color: #f5f5f3;
-    border-radius: 10px;
-    padding: 1.1rem 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .spec-block-demo h5 { font-size: 0.95rem; font-weight: 500; }
-  .spec-block-demo p { font-size: 0.78rem; color: #888; font-weight: 300; }
-
-  .ctx-row-demo {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-
-  .ctx-label-demo {
-    font-size: 0.7rem;
-    color: #c5c5c0;
-    margin-right: 0.4rem;
-    font-style: italic;
-  }
-
-  .ctx-pill-demo {
-    font-size: 0.72rem;
-    color: #a0a09a;
-    background: #eeeee9;
-    border-radius: 100px;
-    padding: 0.3rem 0.85rem;
-  }
-
-  .ai-divider-demo {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .ai-divider-demo .line {
-    flex: 1;
-    height: 1px;
-    background: #d5d5d0;
-  }
-
-  .ai-pill-demo {
-    font-size: 0.65rem;
-    font-weight: 500;
-    color: #a0a09a;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  .outputs-row-demo {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.85rem;
-  }
-
-  .output-card-demo {
-    border: 1px solid #e0e0db;
-    border-radius: 10px;
-    padding: 0.9rem 1rem;
-    background: #fff;
-  }
-
-  .output-card-demo h5 { font-size: 0.85rem; font-weight: 500; margin-bottom: 0.15rem; }
-  .output-card-demo p { font-size: 0.7rem; color: #a0a09a; line-height: 1.45; }
-
-  /* Product slide demo */
-  .product-demo {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 3rem;
-    align-items: center;
-  }
-
-  .product-meta-demo {
-    max-width: 360px;
-  }
-
-  .product-num-demo {
-    font-size: 0.7rem;
-    color: #a0a09a;
-    margin-bottom: 1rem;
-    letter-spacing: 0.04em;
-  }
-
-  .product-tag-demo {
-    font-size: 0.78rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-  }
-
-  .product-headline-demo {
-    font-size: 1.15rem;
-    font-weight: 500;
-    line-height: 1.3;
-    margin-bottom: 0.6rem;
-  }
-
-  .product-desc-demo {
-    font-size: 0.82rem;
-    color: #6a6a66;
-    line-height: 1.55;
-  }
-
-  .product-name-demo {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 500;
-    letter-spacing: -0.045em;
-    line-height: 0.95;
-    text-align: right;
-  }
-
-  /* JEDUF three columns */
-  .jeduf-demo {
-    display: grid;
-    grid-template-columns: 1fr 1.15fr 1fr;
-    gap: 0.85rem;
-  }
-
-  .jeduf-col-demo {
-    border: 1px solid #e0e0db;
-    border-radius: 10px;
-    padding: 1rem 0.9rem 1.2rem;
-    background: #fafaf8;
-  }
-
-  .jeduf-col-demo.hero {
-    background: #1a1a1a;
-    color: #f5f5f3;
-    border-color: #1a1a1a;
-  }
-
-  .jeduf-label-demo {
-    font-size: 0.55rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #a0a09a;
-    margin-bottom: 0.4rem;
-  }
-
-  .jeduf-col-demo.hero .jeduf-label-demo { color: #888; }
-
-  .jeduf-title-demo {
-    font-size: 0.95rem;
-    font-weight: 500;
-    margin-bottom: 0.3rem;
-  }
-
-  .jeduf-philosophy-demo {
-    font-size: 0.65rem;
-    color: #a0a09a;
-    font-style: italic;
-    margin-bottom: 0.8rem;
-    line-height: 1.4;
-    min-height: 30pt;
-  }
-
-  .jeduf-col-demo.hero .jeduf-philosophy-demo { color: #ccc; }
-
-  .jeduf-step-demo {
-    border: 1px solid #d5d5d0;
-    border-radius: 4px;
-    padding: 0.3rem 0.5rem;
-    font-size: 0.65rem;
-    font-weight: 500;
-    text-align: center;
-    background: #fff;
-    margin-bottom: 0.3rem;
-  }
-
-  .jeduf-col-demo.hero .jeduf-step-demo {
-    background: #2a2a2a;
-    border-color: #3a3a3a;
-    color: #f5f5f3;
-  }
-
-  /* Notes */
-  .note-list {
-    list-style: none;
-    margin-top: 0.5rem;
-  }
-
-  .note-list li {
-    font-size: 0.85rem;
-    padding: 0.45rem 0;
-    padding-left: 1.5rem;
-    position: relative;
-    line-height: 1.55;
-    color: #1a1a1a;
-  }
-
-  .note-list li::before {
-    content: '—';
-    position: absolute;
-    left: 0;
-    color: #b5b5b0;
-  }
-
-  /* --- Timeline demo --- */
-  .timeline-demo { display: flex; flex-direction: column; }
-
-  .timeline-row-demo {
-    display: grid;
-    grid-template-columns: 80px 24px 1fr;
-    gap: 0 1rem;
-    align-items: start;
-  }
-
-  .timeline-year-demo {
-    font-size: 0.78rem;
-    font-weight: 500;
-    text-align: right;
-    padding-top: 0.9rem;
-  }
-
-  .timeline-track-demo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
-  }
-
-  .timeline-dot-demo {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: #1a1a1a;
-    margin-top: 1rem;
-    flex-shrink: 0;
-    position: relative;
-    z-index: 1;
-  }
-
-  .timeline-line-demo {
-    width: 1px;
-    flex: 1;
-    background: #d5d5d0;
-  }
-
-  .timeline-row-demo:last-child .timeline-line-demo { display: none; }
-
-  .timeline-content-demo { padding: 0.75rem 0 1.5rem; }
-  .timeline-content-demo h5 { font-size: 0.85rem; font-weight: 500; margin-bottom: 0.15rem; }
-  .timeline-content-demo p { font-size: 0.75rem; color: #a0a09a; line-height: 1.5; }
-
-  /* --- Stat grid demo --- */
-  .stat-grid-demo {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.85rem;
-  }
-
-  .stat-card-demo {
-    border: 1px solid #e0e0db;
-    border-radius: 10px;
-    padding: 1.25rem 1.1rem;
-    background: #fafaf8;
-  }
-
-  .stat-card-demo.stat-dark {
-    background: #1a1a1a;
-    border-color: #1a1a1a;
-    color: #f5f5f3;
-  }
-
-  .stat-number-demo {
-    font-size: 2rem;
-    font-weight: 600;
-    letter-spacing: -0.035em;
-    line-height: 1;
-    margin-bottom: 0.4rem;
-  }
-
-  .stat-card-demo.stat-dark .stat-number-demo { color: #f5f5f3; }
-
-  .stat-label-demo {
-    font-size: 0.6rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #a0a09a;
-    margin-bottom: 0.3rem;
-  }
-
-  .stat-card-demo.stat-dark .stat-label-demo { color: #888; }
-
-  .stat-desc-demo {
-    font-size: 0.72rem;
-    color: #a0a09a;
-    line-height: 1.45;
-  }
-
-  .stat-card-demo.stat-dark .stat-desc-demo { color: #ccc; }
-
-  /* --- Quote pair demo --- */
-  .quote-pair-demo {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.85rem;
-  }
-
-  .quote-card-demo {
-    border: 1px solid #e0e0db;
-    border-radius: 10px;
-    padding: 1.25rem 1.1rem;
-    background: #fafaf8;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .quote-card-demo.quote-dark {
-    background: #1a1a1a;
-    border-color: #1a1a1a;
-    color: #f5f5f3;
-  }
-
-  .quote-text-demo {
-    font-size: 0.88rem;
-    font-style: italic;
-    line-height: 1.5;
-    flex: 1;
-    margin-bottom: 1rem;
-  }
-
-  .quote-card-demo.quote-dark .quote-text-demo { color: #f5f5f3; }
-
-  .quote-attr-demo {
-    font-size: 0.72rem;
-    font-weight: 500;
-    color: #a0a09a;
-    padding-top: 0.75rem;
-    border-top: 1px solid #e0e0db;
-  }
-
-  .quote-card-demo.quote-dark .quote-attr-demo {
-    color: #888;
-    border-top-color: #2a2a2a;
-  }
-
-  /* --- Logo grid demo --- */
-  .logo-grid-demo {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.85rem;
-  }
-
-  .logo-cell-demo {
-    border: 1px solid #e0e0db;
-    border-radius: 10px;
-    padding: 1.1rem 0.75rem;
-    background: #fafaf8;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .logo-mark-demo {
-    width: 28px;
-    height: 28px;
-    border-radius: 5px;
-    background: #1a1a1a;
-    margin-bottom: 0.6rem;
-  }
-
-  .logo-name-demo { font-size: 0.75rem; font-weight: 500; }
-  .logo-role-demo { font-size: 0.62rem; color: #a0a09a; margin-top: 0.1rem; }
-
-  /* --- Code frame demo --- */
-  .code-frame-demo {
-    background: #1a1a1a;
-    border-radius: 10px;
-    padding: 1.25rem 1.5rem;
-    overflow-x: auto;
-  }
-
-  .code-frame-header-demo {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    margin-bottom: 0.85rem;
-    padding-bottom: 0.6rem;
-    border-bottom: 1px solid #2a2a2a;
-  }
-
-  .code-frame-dot-demo {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #3a3a3a;
-  }
-
-  .code-frame-title-demo {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.62rem;
-    color: #555;
-    margin-left: 0.4rem;
-  }
-
-  .code-frame-demo pre {
-    font-family: 'JetBrains Mono', 'SF Mono', monospace;
-    font-size: 0.75rem;
-    line-height: 1.7;
-    color: #f5f5f3;
-    margin: 0;
-    background: none;
-  }
-
-  .code-frame-demo .c-comment { color: #555; }
-  .code-frame-demo .c-keyword { color: #b5b5b0; font-weight: 500; }
-  .code-frame-demo .c-string { color: #ccc; }
-  .code-frame-demo .c-dim { color: #888; }
-
-  /* --- Mobile --- */
-  @media (max-width: 720px) {
-    .container { padding: 3rem 1.5rem; }
-    .page-intro { margin-bottom: 3rem; }
-    section.demo-section { margin-bottom: 3rem; padding-bottom: 2.5rem; }
-    .frame { padding: 1.5rem 1.25rem; }
-
-    .colors { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
-    .type-row { grid-template-columns: 1fr; gap: 0.5rem; }
-    .two-col-demo { grid-template-columns: 1fr; gap: 1.5rem; }
-    .three-col-demo { grid-template-columns: 1fr; gap: 1.5rem; }
-    .cap-row { grid-template-columns: 1fr; gap: 0.5rem; }
-    .dot-flow-demo { grid-template-columns: repeat(3, 1fr); }
-    .stack-grid-demo { grid-template-columns: 1fr 1fr; }
-    .outputs-row-demo { grid-template-columns: 1fr; }
-    .product-demo { grid-template-columns: 1fr; gap: 1.5rem; }
-    .product-name-demo { text-align: left; }
-    .jeduf-demo { grid-template-columns: 1fr; }
-    .stat-grid-demo { grid-template-columns: 1fr; }
-    .quote-pair-demo { grid-template-columns: 1fr; }
-    .logo-grid-demo { grid-template-columns: 1fr 1fr; }
-    .timeline-row-demo { grid-template-columns: 60px 24px 1fr; }
-  }
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,700;0,800;1,400&family=Fira+Code:wght@300;400;500;600&display=swap');
+
+/* ── Brand tokens (source: brand/ingrid/BRAND.md, verified vs guidelines PDF) ── */
+:root{
+  --ink:#000000; --white:#ffffff;
+  --violet:#AA73FA; --blue:#5FA4FA; --orange:#F8898C; --yellow:#FFCD96;
+  --dblue:#4C92E9; --dorange:#EE686C; --dyellow:#E0790D;
+  --g4:#3F3F3F; --g3:#999999; --g2b:#BFBFBF; --g2:#D8D8D8; --g1:#F2F2F2;
+  --ff:'Plus Jakarta Sans',Aptos,system-ui,sans-serif;
+  --ffm:'Fira Code','Courier New',monospace;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:64px}
+body{font-family:var(--ff);color:var(--ink);background:var(--white);-webkit-font-smoothing:antialiased;line-height:1.6}
+img{display:block;max-width:100%}
+
+/* ── Sticky nav ── */
+.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:1.4rem;
+  padding:0 6vw;height:64px;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--g2)}
+.nav-brand{display:flex;align-items:center;height:100%}
+.nav-brand img{height:22px;width:auto}
+.nav-links{display:flex;gap:1.1rem;flex-wrap:wrap;margin-left:auto}
+.nav-links a{font-family:var(--ffm);font-size:.62rem;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--g3);text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:var(--ink)}
+
+/* ── Hero ── */
+.hero{position:relative;padding:7vw 6vw 6vw;color:var(--white);
+  background:url('brand/ingrid/gradients/dark.png') center/cover no-repeat}
+.hero-eyebrow{font-family:var(--ffm);font-size:.66rem;font-weight:600;letter-spacing:.18em;
+  text-transform:uppercase;color:rgba(255,255,255,.7)}
+.hero h1{font-weight:500;font-size:clamp(2.6rem,7vw,5.5rem);line-height:1;letter-spacing:-.02em;margin-top:1.2rem}
+.hero p{font-weight:300;font-size:clamp(1rem,1.5vw,1.25rem);max-width:52ch;margin-top:1.1rem;color:rgba(255,255,255,.85)}
+
+/* ── Section scaffolding ── */
+section{padding:clamp(3rem,6vw,5.5rem) 6vw;border-bottom:1px solid var(--g1)}
+.sec-label{font-family:var(--ffm);font-size:.64rem;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--violet);margin-bottom:.9rem}
+.sec-title{font-weight:500;font-size:clamp(1.8rem,3.6vw,2.9rem);line-height:1.05;letter-spacing:-.02em;margin-bottom:.7rem}
+.sec-intro{font-weight:300;font-size:clamp(.95rem,1.3vw,1.1rem);color:var(--g4);max-width:70ch;margin-bottom:2.2rem}
+.subhead{font-family:var(--ffm);font-size:.66rem;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--g3);margin:2.2rem 0 1rem}
+.note{font-size:.82rem;font-weight:300;color:var(--g3);line-height:1.6;margin-top:.6rem}
+.note b{color:var(--g4);font-weight:600}
+
+/* ── Logo ── */
+.logo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.2rem}
+.logo-cell{border:1px solid var(--g2);border-radius:8px;overflow:hidden}
+.logo-stage{height:150px;display:flex;align-items:center;justify-content:center;padding:1.5rem}
+.logo-stage.light{background:var(--white)}
+.logo-stage.gray{background:var(--g1)}
+.logo-stage.dark{background:var(--ink)}
+.logo-stage.grad{background:url('brand/ingrid/gradients/pastel.png') center/cover}
+.logo-stage img{max-height:54px;width:auto}
+.logo-meta{padding:.7rem .9rem;border-top:1px solid var(--g2)}
+.logo-meta .n{font-weight:600;font-size:.8rem}
+.logo-meta .u{font-family:var(--ffm);font-size:.58rem;color:var(--g3);text-transform:uppercase;letter-spacing:.06em;margin-top:.15rem}
+
+.arc-explain{display:grid;grid-template-columns:160px 1fr;gap:2.5rem;align-items:center;
+  margin-top:1.6rem;padding:2rem;border:1px solid var(--g2);border-radius:10px;background:var(--g1)}
+.arc{width:128px;height:128px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:10px}
+.arc span{background:var(--ink);border-radius:7px}
+.arc .dot{background:var(--violet);border-radius:50%}
+.arc-explain ol{margin:.4rem 0 0 1.1rem;font-size:.9rem;font-weight:300;color:var(--g4);line-height:1.7}
+.arc-explain li::marker{color:var(--violet)}
+
+.donots{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.5rem 2rem;
+  margin-top:1rem;list-style:none}
+.donots li{font-size:.85rem;font-weight:300;color:var(--g4);padding-left:1.4rem;position:relative}
+.donots li::before{content:'✕';position:absolute;left:0;color:var(--dorange);font-size:.8rem;font-weight:600}
+
+/* ── Color ── */
+.sw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem}
+.sw{border:1px solid var(--g2);border-radius:8px;overflow:hidden}
+.sw-chip{height:96px}
+.sw-body{padding:.7rem .85rem}
+.sw-name{font-weight:600;font-size:.84rem}
+.sw-hex{font-family:var(--ffm);font-size:.68rem;color:var(--g4);text-transform:uppercase;margin-top:.2rem}
+.sw-token{font-family:var(--ffm);font-size:.6rem;color:var(--violet);margin-top:.15rem}
+.sw-use{font-size:.72rem;font-weight:300;color:var(--g3);margin-top:.35rem;line-height:1.4}
+
+.scale{display:flex;border:1px solid var(--g2);border-radius:8px;overflow:hidden;margin-top:.2rem}
+.scale div{flex:1;height:64px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;
+  font-family:var(--ffm);font-size:.52rem;letter-spacing:.02em}
+
+.proportion{display:flex;height:60px;border-radius:8px;overflow:hidden;margin-top:.4rem;border:1px solid var(--g2)}
+.proportion div{display:flex;align-items:center;justify-content:center;font-family:var(--ffm);
+  font-size:.6rem;font-weight:500;text-transform:uppercase;letter-spacing:.06em}
+
+/* ── Typography ── */
+.type-row{display:grid;grid-template-columns:200px 1fr;gap:2rem;padding:1.4rem 0;border-top:1px solid var(--g1);align-items:baseline}
+.type-row:first-of-type{border-top:none}
+.type-spec{font-family:var(--ffm);font-size:.62rem;color:var(--g3);line-height:1.7;text-transform:uppercase;letter-spacing:.05em}
+.type-spec b{display:block;color:var(--ink);font-weight:600;font-size:.74rem;text-transform:none;letter-spacing:0;margin-bottom:.3rem}
+.weights{display:flex;flex-wrap:wrap;gap:1.6rem;margin-top:1rem}
+.weights span{font-size:1.7rem;line-height:1}
+.weights small{display:block;font-family:var(--ffm);font-size:.55rem;color:var(--g3);margin-top:.4rem;text-transform:uppercase;letter-spacing:.06em}
+
+/* ── Gradient ── */
+.grad-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem}
+.grad-cell{border:1px solid var(--g2);border-radius:8px;overflow:hidden}
+.grad-img{height:150px;background-size:cover;background-position:center}
+.grad-meta{padding:.7rem .9rem}
+.grad-meta .n{font-family:var(--ffm);font-size:.62rem;font-weight:600;color:var(--violet);text-transform:uppercase;letter-spacing:.06em}
+.grad-meta .d{font-size:.78rem;font-weight:300;color:var(--g4);margin-top:.25rem;line-height:1.45}
+.stops{margin-top:.4rem}
+.stop-row{display:flex;align-items:center;gap:.7rem;padding:.45rem 0;border-bottom:1px solid var(--g1);font-size:.82rem}
+.stop-sw{width:22px;height:22px;border-radius:5px;flex-shrink:0;border:1px solid var(--g2)}
+.stop-row .hex{font-family:var(--ffm);font-size:.7rem;color:var(--g4)}
+.stop-row .pos{font-size:.76rem;font-weight:300;color:var(--g3);margin-left:auto}
+
+.rules{list-style:none;margin-top:.4rem;display:flex;flex-direction:column;gap:.55rem}
+.rules li{font-size:.88rem;font-weight:300;color:var(--g4);padding-left:1.3rem;position:relative;line-height:1.5}
+.rules li::before{content:'—';position:absolute;left:0;color:var(--violet);font-family:var(--ffm)}
+
+/* ── Photography ── */
+.photo-cat{margin-top:2.2rem}
+.photo-cat h4{font-weight:600;font-size:1.05rem;margin-bottom:.2rem}
+.photo-cat .cat-sub{font-size:.85rem;font-weight:300;color:var(--g4);max-width:72ch;margin-bottom:1rem}
+.photo-strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.8rem}
+.photo-strip figure{border-radius:8px;overflow:hidden;background:var(--g1);position:relative;aspect-ratio:4/3}
+.photo-strip img{width:100%;height:100%;object-fit:cover}
+.photo-strip figcaption{position:absolute;left:0;right:0;bottom:0;padding:.4rem .6rem;
+  background:linear-gradient(to top,rgba(0,0,0,.6),transparent);color:#fff;
+  font-family:var(--ffm);font-size:.56rem;letter-spacing:.05em;text-transform:uppercase}
+
+/* ── Icons ── */
+.icon-modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem;margin-top:.5rem}
+.icon-card{border:1px solid var(--g2);border-radius:10px;padding:1.5rem}
+.icon-card h4{font-size:.95rem;font-weight:600;margin-bottom:.3rem}
+.icon-card .ic-use{font-size:.78rem;font-weight:300;color:var(--g3);margin-bottom:1.2rem}
+.icon-row{display:flex;gap:1.3rem;align-items:center}
+.icon-row svg{width:34px;height:34px}
+
+/* ── Visual system / grid ── */
+.fluid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:stretch}
+.fluid-card{border:1px solid var(--g2);border-radius:10px;padding:1.6rem;display:flex;flex-direction:column}
+.fluid-card h4{font-weight:600;font-size:1rem;margin-bottom:.4rem}
+.fluid-card p{font-size:.85rem;font-weight:300;color:var(--g4);line-height:1.55}
+.modgrid{display:grid;gap:5px;margin-top:1.2rem;flex:1;min-height:120px}
+.modgrid div{background:var(--g1);border:1px solid var(--g2);border-radius:3px}
+.gradblob{margin-top:1.2rem;flex:1;min-height:120px;border-radius:14px;
+  background:url('brand/ingrid/gradients/pastel.png') center/cover;
+  -webkit-mask:radial-gradient(circle at 30% 40%,#000 40%,transparent 72%);
+  mask:radial-gradient(circle at 30% 40%,#000 40%,transparent 72%)}
+.scale-steps{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem}
+.scale-steps span{font-family:var(--ffm);font-size:.66rem;color:var(--g4);padding:.3rem .6rem;border:1px solid var(--g2);border-radius:6px}
+.scale-steps span.on{border-color:var(--violet);color:var(--violet)}
+
+/* ── Tokens table ── */
+.tokens{width:100%;border-collapse:collapse;margin-top:.5rem;font-size:.82rem}
+.tokens th,.tokens td{text-align:left;padding:.6rem .8rem;border-bottom:1px solid var(--g1)}
+.tokens th{font-family:var(--ffm);font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;color:var(--g3);font-weight:600}
+.tokens td.tok{font-family:var(--ffm);color:var(--violet)}
+.tokens td.val{font-family:var(--ffm);color:var(--g4)}
+.tokens .chip{display:inline-block;width:14px;height:14px;border-radius:3px;border:1px solid var(--g2);vertical-align:-2px;margin-right:.5rem}
+
+footer{padding:3rem 6vw;background:var(--ink);color:rgba(255,255,255,.55)}
+footer .f-title{font-weight:500;font-size:1.1rem;color:#fff;margin-bottom:.4rem}
+footer .f-note{font-family:var(--ffm);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase}
+footer a{color:var(--violet);text-decoration:none}
 </style>
 </head>
 <body>
 
-<header class="site-header">
-  <div class="site-header-inner">
-    <a href="index.html" class="site-header-brand">Slides&#8482;</a>
-    <nav class="site-header-nav">
-      <a href="design-system.html" class="active">Design system</a>
-      <a href="https://github.com/noskillish/slides/blob/main/docs/USING.md" target="_blank">Docs</a>
-      <a href="https://github.com/noskillish/slides" target="_blank">GitHub</a>
-    </nav>
+<nav class="nav">
+  <a class="nav-brand" href="index.html"><img src="brand/ingrid/logos/color-on-light.png" alt="Ingrid"></a>
+  <div class="nav-links">
+    <a href="#logo">Logo</a>
+    <a href="#color">Color</a>
+    <a href="#type">Type</a>
+    <a href="#gradient">Gradient</a>
+    <a href="#photography">Photography</a>
+    <a href="#icons">Icons</a>
+    <a href="#system">Visual System</a>
+    <a href="#tokens">Tokens</a>
   </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-eyebrow">Brand &amp; Design System</div>
+  <h1>making the grid intelligent for an electrified future</h1>
+  <p>The complete visual identity for Ingrid Capacity — logo, color, type, the signature gradient, photography, iconography, and the Fluid Intelligence visual system.</p>
 </header>
 
-<div class="container">
+<!-- ───────── LOGO ───────── -->
+<section id="logo">
+  <div class="sec-label">01 · Logo</div>
+  <h2 class="sec-title">The Arc, and the wordmark.</h2>
+  <p class="sec-intro">The logo pairs <b>The Arc</b> symbol with the <b>ingrid</b> wordmark. Pick the variant by background — never recolor with CSS filters. The wordmark is never shown without the Arc.</p>
 
-  <a href="index.html" style="display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; color: #6a6a66; text-decoration: none; margin-bottom: 2rem; transition: color 0.15s;" onmouseover="this.style.color='#1a1a1a'" onmouseout="this.style.color='#6a6a66'">← Back to Slides™</a>
-  <div class="top-eyebrow">Visual reference · Open source</div>
-  <h1 class="page-title">Design system. <span>Components, tokens, rules.</span></h1>
-  <p class="page-intro">A visual system for one-pagers, decks, and presentation pages. Light, type-led, opinionated. Most pages are a headline, two columns, and breathing room. Anything more should earn its place.</p>
+  <div class="subhead">Full logo — Arc + wordmark</div>
+  <div class="logo-grid">
+    <div class="logo-cell"><div class="logo-stage light"><img src="brand/ingrid/logos/color-on-light.png" alt="Color on light"></div><div class="logo-meta"><div class="n">Color · on light</div><div class="u">color-on-light.png</div></div></div>
+    <div class="logo-cell"><div class="logo-stage grad"><img src="brand/ingrid/logos/color-on-dark.png" alt="Color on gradient"></div><div class="logo-meta"><div class="n">Color · on dark / gradient</div><div class="u">color-on-dark.png</div></div></div>
+    <div class="logo-cell"><div class="logo-stage gray"><img src="brand/ingrid/logos/mono-on-light.png" alt="Mono on light"></div><div class="logo-meta"><div class="n">Mono · on light</div><div class="u">mono-on-light.png</div></div></div>
+    <div class="logo-cell"><div class="logo-stage dark"><img src="brand/ingrid/logos/mono-on-dark.png" alt="Mono on dark"></div><div class="logo-meta"><div class="n">Mono · on dark</div><div class="u">mono-on-dark.png</div></div></div>
+  </div>
 
-  <!-- Colors -->
-  <section class="demo-section">
-    <div class="section-label">01 · Tokens</div>
-    <h2 class="section-title">Colors</h2>
-    <p class="section-desc">Two grays do most of the work. Use color for hierarchy, not decoration.</p>
+  <div class="subhead">Mark only — The Arc symbol</div>
+  <div class="logo-grid">
+    <div class="logo-cell"><div class="logo-stage light"><img src="brand/ingrid/logos/mark-on-light.png" alt="Mark on light"></div><div class="logo-meta"><div class="n">Mark · on light</div><div class="u">mark-on-light.png</div></div></div>
+    <div class="logo-cell"><div class="logo-stage dark"><img src="brand/ingrid/logos/mark-on-dark.png" alt="Mark on dark"></div><div class="logo-meta"><div class="n">Mark · on dark</div><div class="u">mark-on-dark.png</div></div></div>
+  </div>
 
-    <div class="colors">
-      <div class="color"><div class="swatch" style="background: #f5f5f3"></div><div class="color-meta"><strong>#f5f5f3</strong><span>Background</span></div></div>
-      <div class="color"><div class="swatch" style="background: #fafaf8"></div><div class="color-meta"><strong>#fafaf8</strong><span>Surface (subtle)</span></div></div>
-      <div class="color"><div class="swatch" style="background: #ffffff; border-bottom: 1px solid #e0e0db"></div><div class="color-meta"><strong>#ffffff</strong><span>Surface (white)</span></div></div>
-      <div class="color"><div class="swatch" style="background: #1a1a1a"></div><div class="color-meta"><strong>#1a1a1a</strong><span>Hero / dark slide / text primary</span></div></div>
-      <div class="color"><div class="swatch" style="background: #e0e0db"></div><div class="color-meta"><strong>#e0e0db</strong><span>Border (soft)</span></div></div>
-      <div class="color"><div class="swatch" style="background: #d5d5d0"></div><div class="color-meta"><strong>#d5d5d0</strong><span>Border (medium)</span></div></div>
-      <div class="color"><div class="swatch" style="background: #eeeee9"></div><div class="color-meta"><strong>#eeeee9</strong><span>Pill background</span></div></div>
-      <div class="color"><div class="swatch" style="background: #a0a09a"></div><div class="color-meta"><strong>#a0a09a</strong><span>Text dim</span></div></div>
-      <div class="color"><div class="swatch" style="background: #b5b5b0"></div><div class="color-meta"><strong>#b5b5b0</strong><span>Text very dim</span></div></div>
-      <div class="color"><div class="swatch" style="background: #c5c5c0"></div><div class="color-meta"><strong>#c5c5c0</strong><span>Text faint</span></div></div>
-    </div>
-  </section>
-
-  <!-- Typography -->
-  <section class="demo-section">
-    <div class="section-label">02 · Tokens</div>
-    <h2 class="section-title">Typography</h2>
-    <p class="section-desc">Inter only. Weights 300, 400, 500, 600. Print uses pt; web uses rem with clamp() for fluid scaling.</p>
-
+  <div class="arc-explain">
+    <div class="arc"><span></span><span></span><span class="dot"></span><span></span></div>
     <div>
-      <div class="type-row">
-        <div class="type-label">H1 / display</div>
-        <div class="type-sample-h1">Headline at display size.</div>
+      <div class="subhead" style="margin-top:0">Anatomy — structure + intelligence</div>
+      <ol>
+        <li><b>Three rounded squares</b> in an L/grid pattern — the modular grid, structure and order.</li>
+        <li><b>One Flux Violet circle</b> (<span style="font-family:var(--ffm)">#AA73FA</span>) — the intelligence node, the "thinking brain."</li>
+        <li>Together they form <b>The Arc</b>: structure and expression joined. Used as the app icon, uniform print, and social avatar.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="subhead">Do not</div>
+  <ul class="donots">
+    <li>Recolor (beyond approved mono/color variants)</li>
+    <li>Apply a gradient to the logo itself</li>
+    <li>Reconfigure the mark arrangement</li>
+    <li>Create new lockups</li>
+    <li>Distort or skew</li>
+    <li>Add shadows or effects</li>
+    <li>Show the wordmark without the Arc</li>
+    <li>Place on insufficient-contrast backgrounds</li>
+  </ul>
+</section>
+
+<!-- ───────── COLOR ───────── -->
+<section id="color">
+  <div class="sec-label">02 · Color</div>
+  <h2 class="sec-title">Core, neutrals, and natural energies.</h2>
+  <p class="sec-intro">Proportion rule: <b>50%</b> core &amp; neutrals, <b>30%</b> the Ingrid Gradient, <b>20%</b> the Natural Energies — used sparingly in data, icons, and fine detail.</p>
+
+  <div class="proportion">
+    <div style="flex:25;background:var(--ink);color:#fff">Core black 25%</div>
+    <div style="flex:25;background:var(--g1);color:var(--g4)">White 25%</div>
+    <div style="flex:30;background:url('brand/ingrid/gradients/pastel.png') center/cover;color:#fff">Gradient 30%</div>
+    <div style="flex:5;background:var(--violet)"></div>
+    <div style="flex:5;background:var(--blue)"></div>
+    <div style="flex:5;background:var(--orange)"></div>
+    <div style="flex:5;background:var(--yellow)"></div>
+  </div>
+
+  <div class="subhead">Core palette &amp; Natural Energies</div>
+  <div class="sw-grid" id="corePalette"></div>
+
+  <div class="subhead">Digital — gray scale (7 stops)</div>
+  <div class="scale" id="grayScale"></div>
+
+  <div class="subhead">Digital — Flux Violet tint scale (7 stops)</div>
+  <div class="scale" id="violetTints"></div>
+  <p class="note">Use tints for hover states, backgrounds, disabled states, and subtle brand-tinted surfaces.</p>
+
+  <div class="subhead">Alert colors — brand-adapted signals</div>
+  <div class="sw-grid" id="alerts"></div>
+</section>
+
+<!-- ───────── TYPOGRAPHY ───────── -->
+<section id="type">
+  <div class="sec-label">03 · Typography</div>
+  <h2 class="sec-title">Plus Jakarta Sans &amp; Fira Code.</h2>
+  <p class="sec-intro"><b>Plus Jakarta Sans</b> carries all display, headline, and body text. <b>Fira Code</b> is reserved for captions, eyebrows, footers, and technical highlights. <b>Aptos</b> is the system fallback only.</p>
+
+  <div class="weights">
+    <span style="font-weight:300">Aa<small>Light 300</small></span>
+    <span style="font-weight:400">Aa<small>Regular 400</small></span>
+    <span style="font-weight:500">Aa<small>Medium 500</small></span>
+    <span style="font-weight:600">Aa<small>SemiBold 600</small></span>
+    <span style="font-weight:700">Aa<small>Bold 700</small></span>
+    <span style="font-weight:800">Aa<small>ExtraBold 800</small></span>
+  </div>
+
+  <div class="subhead">Type hierarchy</div>
+
+  <div class="type-row">
+    <div class="type-spec"><b>Headline</b>Plus Jakarta · Medium 500 · ≥4× body · lowercase</div>
+    <div style="font-weight:500;font-size:clamp(1.8rem,4vw,3.2rem);line-height:1.05;letter-spacing:-.02em">we make the grid flex, not break.</div>
+  </div>
+  <div class="type-row">
+    <div class="type-spec"><b>Sub-header</b>Plus Jakarta · Bold 700 · 100% body · ALL CAPS</div>
+    <div style="font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:1.05rem">GRID-SCALE FLEXIBILITY</div>
+  </div>
+  <div class="type-row">
+    <div class="type-spec"><b>Body</b>Plus Jakarta · Light 300 · &lt;20pt · sentence case</div>
+    <div style="font-weight:300;font-size:1.05rem;max-width:60ch">Behind every connection point is software balancing supply, demand, and price in real time — making the grid intelligent enough to use what it already has.</div>
+  </div>
+  <div class="type-row">
+    <div class="type-spec"><b>Caption / eyebrow</b>Fira Code · 40% body · ALL CAPS</div>
+    <div style="font-family:var(--ffm);text-transform:uppercase;letter-spacing:.12em;font-size:.72rem;color:var(--g3)">INGRID CAPACITY · GRID-SCALE FLEXIBILITY</div>
+  </div>
+  <p class="note"><b>Key rules:</b> headlines are Medium (500), <b>not</b> ExtraBold — and intentionally lowercase. Body is always Light (300). Sub-headers are Bold (700) ALL CAPS.</p>
+</section>
+
+<!-- ───────── GRADIENT ───────── -->
+<section id="gradient">
+  <div class="sec-label">04 · The Ingrid Gradient</div>
+  <h2 class="sec-title">The signature expression.</h2>
+  <p class="sec-intro">The gradient is a real <b>PNG image</b>, not a CSS gradient. Reserve it for key communications — hero visuals, campaigns, covers — and let it interact with the grid for depth rather than sitting as a flat overlay.</p>
+
+  <div class="grad-grid">
+    <div class="grad-cell"><div class="grad-img" style="background-image:url('brand/ingrid/gradients/pastel.png')"></div><div class="grad-meta"><div class="n">pastel.png</div><div class="d">Bare gradient texture — slide background, panel fill.</div></div></div>
+    <div class="grad-cell"><div class="grad-img" style="background-image:url('brand/ingrid/gradients/dark.png')"></div><div class="grad-meta"><div class="n">dark.png</div><div class="d">Dark moody variant — black base with purple/orange glows.</div></div></div>
+    <div class="grad-cell"><div class="grad-img" style="background-image:url('brand/ingrid/gradients/cover-centered.png')"></div><div class="grad-meta"><div class="n">cover-centered.png</div><div class="d">Gradient + centered logo + tagline — official cover.</div></div></div>
+    <div class="grad-cell"><div class="grad-img" style="background-image:url('brand/ingrid/gradients/cover-topleft.png')"></div><div class="grad-meta"><div class="n">cover-topleft.png</div><div class="d">Flipped gradient + logo top-left — alternative cover.</div></div></div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;margin-top:2rem">
+    <div>
+      <div class="subhead" style="margin-top:0">Color stops — Freeform Gradient</div>
+      <div class="stops">
+        <div class="stop-row"><span class="stop-sw" style="background:#AA73FA"></span><span class="hex">#AA73FA</span> Flux Violet<span class="pos">Center-left · 40%</span></div>
+        <div class="stop-row"><span class="stop-sw" style="background:#4C92E9"></span><span class="hex">#4C92E9</span> Dark Current Blue<span class="pos">Upper right</span></div>
+        <div class="stop-row"><span class="stop-sw" style="background:#EE686C"></span><span class="hex">#EE686C</span> Dark Ember Orange<span class="pos">Lower left</span></div>
+        <div class="stop-row"><span class="stop-sw" style="background:#E0790D"></span><span class="hex">#E0790D</span> Dark Solar Yellow<span class="pos">Lower right</span></div>
       </div>
-      <div class="type-row">
-        <div class="type-label">H2 / section</div>
-        <div class="type-sample-h2">Same method. Whole organisations.</div>
-      </div>
-      <div class="type-row">
-        <div class="type-label">H3 / column</div>
-        <div class="type-sample-h3">The problem</div>
-      </div>
-      <div class="type-row">
-        <div class="type-label">Body / subtitle</div>
-        <div class="type-sample-body">A subtitle that adds nuance without saying everything. Two short sentences usually do the job. Don't try to fit the whole story in here.</div>
-      </div>
-      <div class="type-row">
-        <div class="type-label">Eyebrow / label</div>
-        <div class="type-sample-eyebrow">Why now</div>
-      </div>
-      <div class="type-row">
-        <div class="type-label">Big number</div>
-        <div class="type-sample-num">7×</div>
+      <p class="note">Violet–blue in the upper half, warm orange–gold below, violet dominating the center. The 2px progress bar is the only place a CSS approximation is used: <span style="font-family:var(--ffm);font-size:.72rem">linear-gradient(135deg,#6CA6F3,#AE76F2,#D981B7)</span>.</p>
+    </div>
+    <div>
+      <div class="subhead" style="margin-top:0">Application techniques</div>
+      <ul class="rules">
+        <li><b style="font-weight:600">Mask into shape</b> — apply the gradient to any form or container.</li>
+        <li><b style="font-weight:600">Soften &amp; blend</b> — feather edges; adjust with Freeform Gradient for seamless flow.</li>
+        <li><b style="font-weight:600">Morph organically</b> — let it evolve into soft shapes that interact with key visuals.</li>
+        <li>Keep everyday usage minimal and intentional.</li>
+        <li>Do <b style="font-weight:600">not</b> recreate it with CSS radial-gradients — use the PNG.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── PHOTOGRAPHY ───────── -->
+<section id="photography">
+  <div class="sec-label">05 · Photography</div>
+  <h2 class="sec-title">People, technology, natural energy.</h2>
+  <p class="sec-intro">Photography captures the dynamic relationship between people, technology, and the natural energy systems around them — using unexpected angles, full systems in context, and a balance of nature and precision.</p>
+
+  <div class="photo-cat">
+    <h4>Energy Landscape</h4>
+    <div class="cat-sub">Grid infrastructure, solar, wind, and Nordic landscapes — the broader system from generation to storage to distribution. Aerial and abstract angles; motion over static literalism.</div>
+    <div class="photo-strip">
+      <figure><img src="brand/ingrid/photos/wind-turbines-sunset.jpg" alt=""><figcaption>Hero · sunset turbines</figcaption></figure>
+      <figure><img src="brand/ingrid/photos/wind-and-solar.jpg" alt=""><figcaption>Wind + solar mix</figcaption></figure>
+      <figure><img src="brand/ingrid/photos/grid-tower.jpg" alt=""><figcaption>Grid tower</figcaption></figure>
+      <figure><img src="brand/ingrid/photos/container-snow.jpg" alt=""><figcaption>Storage · Nordic</figcaption></figure>
+      <figure><img src="brand/ingrid/photos/site-nivala.jpg" alt=""><figcaption>Site · Nivala FI</figcaption></figure>
+      <figure><img src="brand/ingrid/photos/wind-turbines-2.jpg" alt=""><figcaption>Turbines · alt angle</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="photo-cat">
+    <h4>People / Society / Business</h4>
+    <div class="cat-sub">The human side — authentic, diverse individuals captured mid-motion, in real environments shaped by Ingrid. People shown within the broader energy network.</div>
+    <div class="photo-strip">
+      <figure><img src="brand/ingrid/photos/team-kajsa-jessica.jpg" alt=""><figcaption>Team</figcaption></figure>
+      <figure><img src="brand/ingrid/photos/ingrid-container.jpg" alt=""><figcaption>On site</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="photo-cat">
+    <h4>Intelligent Expert</h4>
+    <div class="cat-sub">The precision and systems-thinking behind the solutions — experts immersed in interfaces and system controls, with organic data visualizations echoing the gradient. <b style="color:var(--g4)">Note:</b> this photo set is still being finalized (v2.1, Aug 2025).</div>
+  </div>
+</section>
+
+<!-- ───────── ICONOGRAPHY ───────── -->
+<section id="icons">
+  <div class="sec-label">06 · Iconography</div>
+  <h2 class="sec-title">Simple geometry, subtle rounding.</h2>
+  <p class="sec-intro">Clear and scalable across all contexts. Adapted from the <b>Google Material Design</b> open-source library — grids, stroke weights, and proportions aligned to the Ingrid brand.</p>
+
+  <div class="icon-modes">
+    <div class="icon-card">
+      <h4>Outlined</h4>
+      <div class="ic-use">Technical · UI · Product · tech diagrams. Consistent stroke weight.</div>
+      <div class="icon-row" style="color:var(--ink)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/><circle cx="6.5" cy="17.5" r="3.5"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-5 4 3 8-9"/><path d="M3 21h18"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
       </div>
     </div>
-  </section>
-
-  <!-- The headline pattern -->
-  <section class="demo-section">
-    <div class="section-label">03 · Identity</div>
-    <h2 class="section-title">The headline pattern</h2>
-    <p class="section-desc">Bold-then-dim. Anchor + extension. The most consistent visual identity in the system. Use it on every headline that has the room.</p>
-
-    <div class="frame">
-      <div class="headline-demo"><h2>Anchor. <span class="dim">Extension that fades.</span></h2></div>
-      <div class="headline-demo"><h2>One spec. <span class="dim">Full transparency.</span></h2></div>
-      <div class="headline-demo"><h2>The bottleneck <span class="dim">moved.</span></h2></div>
-      <div class="headline-demo"><h2>The tools changed. <span class="dim">The instinct is still yours.</span></h2></div>
-      <div class="headline-demo"><h2>Same method. <span class="dim">Whole organisations.</span></h2></div>
-    </div>
-  </section>
-
-  <!-- Eyebrow + Headline + Subtitle -->
-  <section class="demo-section">
-    <div class="section-label">04 · Component</div>
-    <h2 class="section-title">Eyebrow + Headline + Subtitle</h2>
-    <p class="section-desc">The default opening of any section. Eyebrow tags context. Headline carries the message. Subtitle gives one line of nuance.</p>
-
-    <div class="frame">
-      <div class="ehs-demo">
-        <div class="eyebrow">Why, how, what</div>
-        <h3>From spec <span class="dim">to production.</span></h3>
-        <p>One framework across four pillars. Agile ways of working, spec-driven development, tooling pipeline, and AI-enhanced code review.</p>
+    <div class="icon-card">
+      <h4>Filled</h4>
+      <div class="ic-use">Communications · Marketing · Social. Solid shapes; may use the gradient fill for emphasis.</div>
+      <svg width="0" height="0" style="position:absolute"><defs><linearGradient id="igrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#AA73FA"/><stop offset="0.5" stop-color="#5FA4FA"/><stop offset="1" stop-color="#E0790D"/></linearGradient></defs></svg>
+      <div class="icon-row">
+        <svg viewBox="0 0 24 24" fill="url(#igrad)"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg>
+        <svg viewBox="0 0 24 24" fill="var(--ink)"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/><circle cx="6.5" cy="17.5" r="3.5" fill="var(--violet)"/></svg>
+        <svg viewBox="0 0 24 24" fill="var(--violet)"><circle cx="12" cy="12" r="9"/></svg>
+        <svg viewBox="0 0 24 24" fill="url(#igrad)"><rect x="3" y="3" width="18" height="18" rx="5"/></svg>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Two-column -->
-  <section class="demo-section">
-    <div class="section-label">05 · Component</div>
-    <h2 class="section-title">Two-column (problem / fix)</h2>
-    <p class="section-desc">Equal columns, gap 30–40pt. Each column has H4 + paragraph. Use for contrast: before/after, problem/solution, today/with-us.</p>
+<!-- ───────── VISUAL SYSTEM ───────── -->
+<section id="system">
+  <div class="sec-label">07 · Visual System</div>
+  <h2 class="sec-title">Fluid Intelligence.</h2>
+  <p class="sec-intro">The system draws from The Arc — a union of <b>structure</b> (the grid squares) and <b>expression</b> (the organic circle). Precise, adaptive, alive.</p>
 
-    <div class="frame">
-      <div class="two-col-demo">
-        <div>
-          <h4>The problem</h4>
-          <p>The situation today. Be specific. Avoid abstractions. The reader should recognize their own pain in the description.</p>
-        </div>
-        <div>
-          <h4>The fix</h4>
-          <p>What you built. Two or three sentences that explain the solution. Match the tone and length of the problem column on the left.</p>
-        </div>
+  <div class="fluid">
+    <div class="fluid-card">
+      <h4>2× Modular Grid</h4>
+      <p>Structure, order, scalability. Start at 2 columns; scale by doubling. A guide, not a cage — add lines only when needed.</p>
+      <div class="scale-steps">
+        <span class="on">2</span><span class="on">4</span><span>8</span><span>16</span><span>32</span><span>64</span>
       </div>
+      <div class="modgrid" id="modgrid"></div>
     </div>
-  </section>
-
-  <!-- Three-column -->
-  <section class="demo-section">
-    <div class="section-label">06 · Component</div>
-    <h2 class="section-title">Three-column (why / how / what)</h2>
-    <p class="section-desc">Three equal columns. Used for structural breakdowns. Each column gets a 1-word title and 1–2 sentences of body.</p>
-
-    <div class="frame">
-      <div class="three-col-demo">
-        <div>
-          <h4>Why</h4>
-          <p>The bottleneck shifted. Writing code is easy now. Everything around it is where teams lose speed.</p>
-        </div>
-        <div>
-          <h4>How</h4>
-          <p>One framework across four pillars. Agile, spec-driven development, tooling pipeline, AI-enhanced review.</p>
-        </div>
-        <div>
-          <h4>What</h4>
-          <p>Your teams aligned on one pipeline, shipping with confidence. Foundation in place in 8 weeks.</p>
-        </div>
-      </div>
+    <div class="fluid-card">
+      <h4>The Ingrid Gradient</h4>
+      <p>Expression, adaptability, emotional depth — the organic counterpart to the grid. Masked into shape, feathered, morphed into soft organic blobs.</p>
+      <div class="gradblob"></div>
     </div>
-  </section>
+  </div>
+  <p class="note">Maintain rhythm and balance — spacing and negative space should guide the eye naturally. Let key visuals and typography interact with the grid when it enhances expression.</p>
+</section>
 
-  <!-- Capability list -->
-  <section class="demo-section">
-    <div class="section-label">07 · Component</div>
-    <h2 class="section-title">Capability list (Q&amp;A)</h2>
-    <p class="section-desc">Rows separated by thin borders. Question on the left (medium weight). Answer on the right (regular, dim). Used for "what it solves" sections.</p>
+<!-- ───────── TOKENS ───────── -->
+<section id="tokens">
+  <div class="sec-label">08 · Design Tokens</div>
+  <h2 class="sec-title">CSS variables.</h2>
+  <p class="sec-intro">The same tokens used across the decks (<span style="font-family:var(--ffm);font-size:.85em">engine/engine.css</span>). Source of truth: <span style="font-family:var(--ffm);font-size:.85em">brand/ingrid/BRAND.md</span>.</p>
+  <table class="tokens" id="tokenTable">
+    <thead><tr><th>Token</th><th>Value</th><th>Role</th></tr></thead>
+    <tbody></tbody>
+  </table>
+</section>
 
-    <div class="frame">
-      <div class="cap-demo">
-        <div class="cap-row">
-          <div class="cap-q">New project?</div>
-          <div class="cap-a">Push a button, get a repo with CI/CD, agents, and environments pre-configured.</div>
-        </div>
-        <div class="cap-row">
-          <div class="cap-q">Teams pulling in different directions?</div>
-          <div class="cap-a">One shared wiki, one set of standards, one pipeline.</div>
-        </div>
-        <div class="cap-row">
-          <div class="cap-q">PR review bottleneck?</div>
-          <div class="cap-a">Audit agents handle the groundwork. Humans review what matters.</div>
-        </div>
-      </div>
-    </div>
-  </section>
+<footer>
+  <div class="f-title">Ingrid Capacity</div>
+  <div class="f-note">Brand &amp; Design System · source: brand/ingrid/BRAND.md · <a href="index.html">← all decks</a></div>
+</footer>
 
-  <!-- Callout -->
-  <section class="demo-section">
-    <div class="section-label">08 · Component</div>
-    <h2 class="section-title">Callout (dark block)</h2>
-    <p class="section-desc">Black background, white text, rounded 6pt. For "Why now" or other emphasized sections. One per page max — too many and the emphasis stops working.</p>
+<script>
+  const core = [
+    ['Flux Violet','#AA73FA','--violet','Primary accent — buttons, dots, highlights'],
+    ['Current Blue','#5FA4FA','--blue','Secondary accent'],
+    ['Ember Orange','#F8898C','--orange','Warm accent'],
+    ['Solar Yellow','#FFCD96','--yellow','Warm accent'],
+    ['Dark Current Blue','#4C92E9','--dblue','Gradient stop, active states'],
+    ['Dark Ember Orange','#EE686C','--dorange','Gradient stop, active states'],
+    ['Dark Solar Yellow','#E0790D','--dyellow','Gradient stop, active states'],
+    ['Core Black','#000000','--ink','Body text, headings, dark bg'],
+    ['Balance White','#FFFFFF','--white','Default bg, reversed text'],
+  ];
+  const alertRows = [
+    ['Success','#4BE696','','Positive states'],
+    ['Error','#FF6464','','Errors, destructive'],
+    ['Warning','#FA9B4D','','Warnings'],
+    ['Caution','#FFE77D','','Caution, attention'],
+  ];
+  const grays = ['#000000','#3F3F3F','#999999','#BFBFBF','#D8D8D8','#F2F2F2','#FFFFFF'];
+  const tints = ['#AA73FA','#B88AFB','#C6A2FC','#D4B9FD','#E3D0FD','#F1E8FE','#FFFFFF'];
 
-    <div class="frame">
-      <div class="callout-demo">
-        <h4>Why now</h4>
-        <p>The moment lands here. <strong>The key insight in bold.</strong> Then the supporting context. One callout per deck max. More than that and the emphasis stops working.</p>
-      </div>
-    </div>
-  </section>
+  const lum = hex => { const n=parseInt(hex.slice(1),16); const r=n>>16,g=(n>>8)&255,b=n&255;
+    return (0.299*r+0.587*g+0.114*b); };
+  const inkOn = hex => lum(hex) > 150 ? '#1a1a1a' : '#ffffff';
 
-  <!-- Dot flow -->
-  <section class="demo-section">
-    <div class="section-label">09 · Component</div>
-    <h2 class="section-title">Dot flow</h2>
-    <p class="section-desc">N horizontal steps connected by a thin line. Each step: 9px black dot, label, dim caption. Used for process flows.</p>
+  function swatches(elId, rows){
+    document.getElementById(elId).innerHTML = rows.map(([n,hex,tok,use]) => `
+      <div class="sw">
+        <div class="sw-chip" style="background:${hex};${hex.toUpperCase()==='#FFFFFF'?'border-bottom:1px solid var(--g2)':''}"></div>
+        <div class="sw-body">
+          <div class="sw-name">${n}</div>
+          <div class="sw-hex">${hex}</div>
+          ${tok?`<div class="sw-token">${tok}</div>`:''}
+          <div class="sw-use">${use}</div>
+        </div>
+      </div>`).join('');
+  }
+  function scale(elId, arr){
+    document.getElementById(elId).innerHTML = arr.map(hex =>
+      `<div style="background:${hex};color:${inkOn(hex)}">${hex}</div>`).join('');
+  }
+  swatches('corePalette', core);
+  swatches('alerts', alertRows);
+  scale('grayScale', grays);
+  scale('violetTints', tints);
 
-    <div class="frame">
-      <div class="dot-flow-demo">
-        <div class="dot-step-demo"><div class="dot"></div><h5>Spec</h5><p>Intake & standards</p></div>
-        <div class="dot-step-demo"><div class="dot"></div><h5>Plan</h5><p>Agent drafts, human approves</p></div>
-        <div class="dot-step-demo"><div class="dot"></div><h5>Execute</h5><p>Sandboxed, spec-locked</p></div>
-        <div class="dot-step-demo"><div class="dot"></div><h5>Review</h5><p>AI first, human on substance</p></div>
-        <div class="dot-step-demo"><div class="dot"></div><h5>Deploy</h5><p>Gated to production</p></div>
-      </div>
-    </div>
-  </section>
+  // modular grid demo (4×2)
+  const mg = document.getElementById('modgrid');
+  mg.style.gridTemplateColumns = 'repeat(4,1fr)';
+  mg.style.gridTemplateRows = 'repeat(2,1fr)';
+  mg.innerHTML = Array.from({length:8}).map(()=>'<div></div>').join('');
 
-  <!-- Stack grid -->
-  <section class="demo-section">
-    <div class="section-label">10 · Component</div>
-    <h2 class="section-title">Stack grid</h2>
-    <p class="section-desc">Four-column grid of category cards. Each card has uppercase label + tools with small monochrome SVG marks. Used to show "the stack."</p>
-
-    <div class="frame">
-      <div class="stack-grid-demo">
-        <div class="stack-card">
-          <div class="stack-card-label">Coding agents</div>
-          <div class="stack-tool-demo"><span class="mark"></span>Claude Code</div>
-          <div class="stack-tool-demo"><span class="mark"></span>VS Code</div>
-          <div class="stack-tool-demo"><span class="mark"></span>Cursor</div>
-        </div>
-        <div class="stack-card">
-          <div class="stack-card-label">Specs &amp; tasks</div>
-          <div class="stack-tool-demo"><span class="mark"></span>Linear</div>
-          <div class="stack-tool-demo"><span class="mark"></span>Jira</div>
-          <div class="stack-tool-demo"><span class="mark"></span>Notion</div>
-        </div>
-        <div class="stack-card">
-          <div class="stack-card-label">Source &amp; CI/CD</div>
-          <div class="stack-tool-demo"><span class="mark"></span>GitHub</div>
-          <div class="stack-tool-demo"><span class="mark"></span>Actions</div>
-          <div class="stack-tool-demo"><span class="mark"></span>Sandbox → Prod</div>
-        </div>
-        <div class="stack-card">
-          <div class="stack-card-label">Infra &amp; models</div>
-          <div class="stack-tool-demo"><span class="mark"></span>Azure</div>
-          <div class="stack-tool-demo"><span class="mark"></span>Anthropic</div>
-          <div class="stack-tool-demo"><span class="mark"></span>OpenAI</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Spec flow -->
-  <section class="demo-section">
-    <div class="section-label">11 · Component</div>
-    <h2 class="section-title">Spec block + context + outputs</h2>
-    <p class="section-desc">Vertical flow: dark spec block at top → context pills with "draws from" prefix → "AI orchestrates" divider → three output cards. Shows how a system processes input.</p>
-
-    <div class="frame">
-      <div class="spec-flow-demo">
-        <div class="spec-block-demo">
-          <h5>The Spec</h5>
-          <p>Anyone writes it — everything else follows</p>
-        </div>
-        <div class="ctx-row-demo">
-          <span class="ctx-label-demo">draws from</span>
-          <span class="ctx-pill-demo">Codebase</span>
-          <span class="ctx-pill-demo">History</span>
-          <span class="ctx-pill-demo">Standards</span>
-          <span class="ctx-pill-demo">Dependencies</span>
-        </div>
-        <div class="ai-divider-demo">
-          <div class="line"></div>
-          <span class="ai-pill-demo">AI orchestrates</span>
-          <div class="line"></div>
-        </div>
-        <div class="outputs-row-demo">
-          <div class="output-card-demo"><h5>Tickets</h5><p>Auto-populated, synced in real time.</p></div>
-          <div class="output-card-demo"><h5>Execution</h5><p>Agents start building immediately.</p></div>
-          <div class="output-card-demo"><h5>Review &amp; deploy</h5><p>Pipeline gates every merge.</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Product slide -->
-  <section class="demo-section">
-    <div class="section-label">12 · Component</div>
-    <h2 class="section-title">Product slide (showcase style)</h2>
-    <p class="section-desc">Big product name on the right. Description on the left with /0n number, tag, headline, body. Used for product overviews and storytelling about builds.</p>
-
-    <div class="frame">
-      <div class="product-demo">
-        <div class="product-meta-demo">
-          <div class="product-num-demo">/01</div>
-          <div class="product-tag-demo">A short, punchy hook</div>
-          <div class="product-headline-demo">One-line description of what this thing does.</div>
-          <p class="product-desc-demo">Two or three sentences that explain the build. Keep it personal and concrete. Tell the story behind it.</p>
-        </div>
-        <div class="product-name-demo">Name<sup style="font-size: 0.25em; font-weight: 400; color: #b5b5b0">™</sup></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- JEDUF -->
-  <section class="demo-section">
-    <div class="section-label">13 · Component</div>
-    <h2 class="section-title">JEDUF three-column</h2>
-    <p class="section-desc">Three columns showing extremes vs middle path. Outer columns light. Center column dark as the hero. Steps stacked vertically inside each column. Optional impact line below steps summarizes the outcome.</p>
-
-    <div class="frame">
-      <div class="jeduf-demo">
-        <div class="jeduf-col-demo">
-          <div class="jeduf-label-demo">Too much</div>
-          <div class="jeduf-title-demo">Waterfall</div>
-          <div class="jeduf-philosophy-demo">"Plan enough and you won't get hurt."</div>
-          <div class="jeduf-step-demo">Full requirements</div>
-          <div class="jeduf-step-demo">Full design</div>
-          <div class="jeduf-step-demo">Full build</div>
-          <div class="jeduf-step-demo">Big release</div>
-          <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #e0ddd6; font-size: 0.6rem; color: #a0a09a; line-height: 1.4;">Slow or stuck. Quality if it ships.</div>
-        </div>
-        <div class="jeduf-col-demo hero">
-          <div class="jeduf-label-demo">Just right</div>
-          <div class="jeduf-title-demo">Spec-driven</div>
-          <div class="jeduf-philosophy-demo">"Think upfront about where you're heading, then find the path."</div>
-          <div class="jeduf-step-demo">Define must / should / could / won't</div>
-          <div class="jeduf-step-demo">Spec with the agent</div>
-          <div class="jeduf-step-demo">Build + iterate</div>
-          <div class="jeduf-step-demo">Refine + ship</div>
-          <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #3a3a3a; font-size: 0.6rem; color: rgba(255,255,255,0.5); line-height: 1.4;">Fast with focus. Quality stays.</div>
-        </div>
-        <div class="jeduf-col-demo">
-          <div class="jeduf-label-demo">Too little</div>
-          <div class="jeduf-title-demo">Vibe coding</div>
-          <div class="jeduf-philosophy-demo">"Dive in, YOLO mode. You'll figure it out."</div>
-          <div class="jeduf-step-demo">Prompt something</div>
-          <div class="jeduf-step-demo">Accept all</div>
-          <div class="jeduf-step-demo">Prompt again</div>
-          <div class="jeduf-step-demo">Hope for the best</div>
-          <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #e0ddd6; font-size: 0.6rem; color: #a0a09a; line-height: 1.4;">Fast but fragile. No direction.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Timeline -->
-  <section class="demo-section">
-    <div class="section-label">14 · Component</div>
-    <h2 class="section-title">Timeline</h2>
-    <p class="section-desc">Vertical timeline with year labels, connecting dots, and content. Used for journeys, histories, roadmaps. The connecting line hides on the last row automatically.</p>
-
-    <div class="frame">
-      <div class="timeline-demo">
-        <div class="timeline-row-demo">
-          <div class="timeline-year-demo">Year 1</div>
-          <div class="timeline-track-demo"><div class="timeline-dot-demo"></div><div class="timeline-line-demo"></div></div>
-          <div class="timeline-content-demo"><h5>The starting point</h5><p>Where things began. Initial conditions and constraints.</p></div>
-        </div>
-        <div class="timeline-row-demo">
-          <div class="timeline-year-demo">Year 2</div>
-          <div class="timeline-track-demo"><div class="timeline-dot-demo"></div><div class="timeline-line-demo"></div></div>
-          <div class="timeline-content-demo"><h5>Early progress</h5><p>First experiments. Initial wins. Lessons learned.</p></div>
-        </div>
-        <div class="timeline-row-demo">
-          <div class="timeline-year-demo">Now</div>
-          <div class="timeline-track-demo"><div class="timeline-dot-demo"></div><div class="timeline-line-demo"></div></div>
-          <div class="timeline-content-demo"><h5>Where we are</h5><p>Current state. What's been achieved. What's next.</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Stat grid -->
-  <section class="demo-section">
-    <div class="section-label">15 · Component</div>
-    <h2 class="section-title">Stat grid</h2>
-    <p class="section-desc">Big numbers with context. Three cards in a row. Use .stat-dark on one card to highlight the hero metric. Weight 600 on the number for emphasis.</p>
-
-    <div class="frame">
-      <div class="stat-grid-demo">
-        <div class="stat-card-demo">
-          <div class="stat-label-demo">Metric one</div>
-          <div class="stat-number-demo">7×</div>
-          <div class="stat-desc-demo">What this number means. Be specific.</div>
-        </div>
-        <div class="stat-card-demo stat-dark">
-          <div class="stat-label-demo">Metric two</div>
-          <div class="stat-number-demo">42</div>
-          <div class="stat-desc-demo">The hero number. Dark card draws attention.</div>
-        </div>
-        <div class="stat-card-demo">
-          <div class="stat-label-demo">Metric three</div>
-          <div class="stat-number-demo">91%</div>
-          <div class="stat-desc-demo">Another measurement with context.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Quote pair -->
-  <section class="demo-section">
-    <div class="section-label">16 · Component</div>
-    <h2 class="section-title">Quote pair</h2>
-    <p class="section-desc">Two perspectives side by side. One light, one dark. Used for debates, contrasts, or "what they said vs what we heard." Attribution below a border-top.</p>
-
-    <div class="frame">
-      <div class="quote-pair-demo">
-        <div class="quote-card-demo">
-          <div class="quote-text-demo">"The first perspective. A position or belief that one side holds."</div>
-          <div class="quote-attr-demo">Perspective A</div>
-        </div>
-        <div class="quote-card-demo quote-dark">
-          <div class="quote-text-demo">"The counterpoint. A contrasting view that creates tension."</div>
-          <div class="quote-attr-demo">Perspective B</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Logo grid -->
-  <section class="demo-section">
-    <div class="section-label">17 · Component</div>
-    <h2 class="section-title">Logo grid</h2>
-    <p class="section-desc">Four-column grid of partner/client cards. Each has a monochrome mark (swap for &lt;img&gt; with real logos), name, and role/team label. Used for "who uses this" slides.</p>
-
-    <div class="frame">
-      <div class="logo-grid-demo">
-        <div class="logo-cell-demo"><div class="logo-mark-demo"></div><div class="logo-name-demo">Partner A</div><div class="logo-role-demo">Role</div></div>
-        <div class="logo-cell-demo"><div class="logo-mark-demo"></div><div class="logo-name-demo">Partner B</div><div class="logo-role-demo">Role</div></div>
-        <div class="logo-cell-demo"><div class="logo-mark-demo"></div><div class="logo-name-demo">Partner C</div><div class="logo-role-demo">Role</div></div>
-        <div class="logo-cell-demo"><div class="logo-mark-demo"></div><div class="logo-name-demo">Partner D</div><div class="logo-role-demo">Role</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Code slide -->
-  <section class="demo-section">
-    <div class="section-label">18 · Component</div>
-    <h2 class="section-title">Code block</h2>
-    <p class="section-desc">Dark rounded frame with macOS-style header dots and a filename. Monochrome syntax highlighting via semantic classes: .c-keyword, .c-comment, .c-string, .c-dim.</p>
-
-    <div class="frame">
-      <div class="code-frame-demo">
-        <div class="code-frame-header-demo">
-          <div class="code-frame-dot-demo"></div>
-          <div class="code-frame-dot-demo"></div>
-          <div class="code-frame-dot-demo"></div>
-          <div class="code-frame-title-demo">example.html</div>
-        </div>
-<pre><span class="c-comment">&lt;!-- A slide is just a section --&gt;</span>
-<span class="c-keyword">&lt;section</span> <span class="c-dim">class=</span><span class="c-string">"slide"</span><span class="c-keyword">&gt;</span>
-  <span class="c-keyword">&lt;div</span> <span class="c-dim">class=</span><span class="c-string">"slide-inner"</span><span class="c-keyword">&gt;</span>
-    <span class="c-keyword">&lt;h1&gt;</span>Anchor. <span class="c-keyword">&lt;span</span> <span class="c-dim">class=</span><span class="c-string">"dim"</span><span class="c-keyword">&gt;</span>Extension.<span class="c-keyword">&lt;/span&gt;&lt;/h1&gt;</span>
-  <span class="c-keyword">&lt;/div&gt;</span>
-<span class="c-keyword">&lt;/section&gt;</span></pre>
-      </div>
-    </div>
-  </section>
-
-  <!-- Tone & Voice -->
-  <section class="demo-section">
-    <div class="section-label">19 · Rules</div>
-    <h2 class="section-title">Tone &amp; voice</h2>
-    <p class="section-desc">Opinions. Lean into them. The voice is part of the design.</p>
-
-    <ul class="note-list">
-      <li>Bold the keyword. Dim the rest. That's the rhythm of every headline.</li>
-      <li>No em-dashes in body copy. Use periods or split into shorter sentences.</li>
-      <li>If a sentence doesn't add information, delete it.</li>
-      <li>Use names, not pronouns. The product/feature/concept by name beats "it" or "this thing."</li>
-      <li>Pick one term and stick with it. Don't paraphrase your own product.</li>
-      <li>Numbers should be specific. <strong>7×</strong> beats "huge gains." <strong>35 use cases / week / engineer</strong> beats "much faster."</li>
-      <li>Headlines are statements, not questions. Q&amp;A rows are an exception — the question is the format.</li>
-    </ul>
-  </section>
-
-  <!-- Testimonial grid -->
-  <section class="demo-section">
-    <div class="section-label">20 · Component</div>
-    <h2 class="section-title">Testimonial grid</h2>
-    <p class="section-desc">3×2 quote cards with avatar, name, and title. For social proof and endorsement slides.</p>
-    <div class="frame">
-      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:0.75rem; font-family:'Inter',sans-serif;">
-        <div style="background:#fff; border:1px solid #e0e0db; border-radius:10px; padding:1.25rem; display:flex; flex-direction:column; justify-content:space-between;">
-          <div style="font-size:0.8rem; line-height:1.5; margin-bottom:1rem;">"It spread like wildfire, all the best builders were using it."</div>
-          <div style="display:flex; align-items:center; gap:0.6rem;">
-            <div style="width:28px; height:28px; border-radius:50%; background:#d5d5d0; flex-shrink:0;"></div>
-            <div><div style="font-size:0.7rem; font-weight:500;">Name One</div><div style="font-size:0.6rem; color:#a0a09a;">Role, Company</div></div>
-          </div>
-        </div>
-        <div style="background:#fff; border:1px solid #e0e0db; border-radius:10px; padding:1.25rem; display:flex; flex-direction:column; justify-content:space-between;">
-          <div style="font-size:0.8rem; line-height:1.5; margin-bottom:1rem;">"Productivity has gone up incredibly across 40,000 engineers."</div>
-          <div style="display:flex; align-items:center; gap:0.6rem;">
-            <div style="width:28px; height:28px; border-radius:50%; background:#d5d5d0; flex-shrink:0;"></div>
-            <div><div style="font-size:0.7rem; font-weight:500;">Name Two</div><div style="font-size:0.6rem; color:#a0a09a;">Role, Company</div></div>
-          </div>
-        </div>
-        <div style="background:#fff; border:1px solid #e0e0db; border-radius:10px; padding:1.25rem; display:flex; flex-direction:column; justify-content:space-between;">
-          <div style="font-size:0.8rem; line-height:1.5; margin-bottom:1rem;">"You control how much independence to give the AI."</div>
-          <div style="display:flex; align-items:center; gap:0.6rem;">
-            <div style="width:28px; height:28px; border-radius:50%; background:#d5d5d0; flex-shrink:0;"></div>
-            <div><div style="font-size:0.7rem; font-weight:500;">Name Three</div><div style="font-size:0.6rem; color:#a0a09a;">Role, Company</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Logo bar -->
-  <section class="demo-section">
-    <div class="section-label">21 · Component</div>
-    <h2 class="section-title">Logo bar</h2>
-    <p class="section-desc">Horizontal row of partner or client names between hairline borders. For social proof in a compact format.</p>
-    <div class="frame">
-      <div style="display:flex; align-items:center; justify-content:center; gap:2.5rem; padding:1.25rem 1.5rem; border-top:1px solid #e0e0db; border-bottom:1px solid #e0e0db; flex-wrap:wrap; font-family:'Inter',sans-serif;">
-        <div style="font-size:1rem; font-weight:600; color:#1a1a1a; letter-spacing:-0.02em;">Stripe</div>
-        <div style="font-size:1rem; font-weight:600; color:#1a1a1a; letter-spacing:-0.02em;">OpenAI</div>
-        <div style="font-size:1rem; font-weight:600; color:#1a1a1a; letter-spacing:-0.02em;">Linear</div>
-        <div style="font-size:1rem; font-weight:600; color:#1a1a1a; letter-spacing:-0.02em;">Figma</div>
-        <div style="font-size:1rem; font-weight:600; color:#1a1a1a; letter-spacing:-0.02em;">Adobe</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Feature card row -->
-  <section class="demo-section">
-    <div class="section-label">22 · Component</div>
-    <h2 class="section-title">Feature card row</h2>
-    <p class="section-desc">Three cards with title, description, and an inner mock element. For feature breakdowns and capability overviews.</p>
-    <div class="frame">
-      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:0.75rem; font-family:'Inter',sans-serif;">
-        <div style="background:#fff; border:1px solid #e0e0db; border-radius:10px; padding:1.25rem;">
-          <div style="font-size:0.85rem; font-weight:500; margin-bottom:0.4rem;">Feature one</div>
-          <div style="font-size:0.75rem; color:#a0a09a; line-height:1.5; margin-bottom:1rem;">A short description of this capability and what it enables for users.</div>
-          <div style="background:#fafaf8; border:1px solid #e0e0db; border-radius:6px; padding:0.75rem;">
-            <div style="height:4px; background:#e0e0db; border-radius:2px; margin-bottom:0.35rem;"></div>
-            <div style="height:4px; background:#e0e0db; border-radius:2px; width:50%; margin-bottom:0.35rem;"></div>
-            <div style="height:4px; background:#1a1a1a; border-radius:2px; width:35%; opacity:0.2;"></div>
-          </div>
-        </div>
-        <div style="background:#fff; border:1px solid #e0e0db; border-radius:10px; padding:1.25rem;">
-          <div style="font-size:0.85rem; font-weight:500; margin-bottom:0.4rem;">Feature two</div>
-          <div style="font-size:0.75rem; color:#a0a09a; line-height:1.5; margin-bottom:1rem;">Another capability described clearly and concisely in one or two sentences.</div>
-          <div style="background:#fafaf8; border:1px solid #e0e0db; border-radius:6px; padding:0.75rem;">
-            <div style="height:4px; background:#e0e0db; border-radius:2px; margin-bottom:0.35rem;"></div>
-            <div style="height:4px; background:#e0e0db; border-radius:2px; margin-bottom:0.35rem;"></div>
-            <div style="height:4px; background:#e0e0db; border-radius:2px; width:60%;"></div>
-          </div>
-        </div>
-        <div style="background:#fff; border:1px solid #e0e0db; border-radius:10px; padding:1.25rem;">
-          <div style="font-size:0.85rem; font-weight:500; margin-bottom:0.4rem;">Feature three</div>
-          <div style="font-size:0.75rem; color:#a0a09a; line-height:1.5; margin-bottom:1rem;">The third feature. Keep descriptions parallel in structure and length.</div>
-          <div style="background:#fafaf8; border:1px solid #e0e0db; border-radius:6px; padding:0.75rem;">
-            <div style="height:4px; background:#1a1a1a; border-radius:2px; width:30%; opacity:0.2; margin-bottom:0.35rem;"></div>
-            <div style="height:4px; background:#e0e0db; border-radius:2px; margin-bottom:0.35rem;"></div>
-            <div style="height:4px; background:#e0e0db; border-radius:2px; width:45%;"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Update row -->
-  <section class="demo-section">
-    <div class="section-label">23 · Component</div>
-    <h2 class="section-title">Update row</h2>
-    <p class="section-desc">Changelog-style cards with version badges and dates. For shipping cadence and release history slides.</p>
-    <div class="frame">
-      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:0.75rem; font-family:'Inter',sans-serif;">
-        <div style="background:#fff; border:1px solid #e0e0db; border-radius:10px; padding:1rem;">
-          <div style="display:flex; align-items:center; gap:0.4rem; margin-bottom:0.6rem;">
-            <span style="font-size:0.55rem; font-weight:500; padding:0.1rem 0.4rem; border:1px solid #d5d5d0; border-radius:999px; color:#6a6a66;">3.3</span>
-            <span style="font-size:0.6rem; color:#a0a09a;">May 7</span>
-          </div>
-          <div style="font-size:0.75rem; line-height:1.4;">PR Review and Split PRs</div>
-        </div>
-        <div style="background:#fff; border:1px solid #e0e0db; border-radius:10px; padding:1rem;">
-          <div style="display:flex; align-items:center; gap:0.4rem; margin-bottom:0.6rem;">
-            <span style="font-size:0.55rem; font-weight:500; padding:0.1rem 0.4rem; border:1px solid #d5d5d0; border-radius:999px; color:#6a6a66;">3.3</span>
-            <span style="font-size:0.6rem; color:#a0a09a;">May 6</span>
-          </div>
-          <div style="font-size:0.75rem; line-height:1.4;">Context Usage Breakdown</div>
-        </div>
-        <div style="background:#fff; border:1px solid #e0e0db; border-radius:10px; padding:1rem;">
-          <div style="display:flex; align-items:center; gap:0.4rem; margin-bottom:0.6rem;">
-            <span style="font-size:0.6rem; color:#a0a09a;">May 4</span>
-          </div>
-          <div style="font-size:0.75rem; line-height:1.4;">Model controls and analytics</div>
-        </div>
-        <div style="background:#fff; border:1px solid #e0e0db; border-radius:10px; padding:1rem;">
-          <div style="display:flex; align-items:center; gap:0.4rem; margin-bottom:0.6rem;">
-            <span style="font-size:0.6rem; color:#a0a09a;">May 1</span>
-          </div>
-          <div style="font-size:0.75rem; line-height:1.4;">Team Marketplace Updates</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Art overlay -->
-  <section class="demo-section">
-    <div class="section-label">24 · Component</div>
-    <h2 class="section-title">Art overlay</h2>
-    <p class="section-desc">Classical painting background with a UI mockup floating on top. The signature "craft meets code" visual. Swap the gradient for an actual painting via background-image.</p>
-    <div class="frame">
-      <div style="position:relative; border-radius:10px; overflow:hidden; aspect-ratio:16/9;">
-        <div style="position:absolute; inset:0; background:linear-gradient(135deg, #8b7355 0%, #a0926e 25%, #6b7c5a 50%, #8a9470 75%, #c4b896 100%); filter:brightness(0.85) saturate(0.8);"></div>
-        <div style="position:absolute; inset:12%; background:#fff; border-radius:8px; box-shadow:0 20px 60px rgba(0,0,0,0.3); display:flex; flex-direction:column; overflow:hidden;">
-          <div style="display:flex; align-items:center; padding:0.5rem 0.75rem; background:#f8f8f6; border-bottom:1px solid #e0e0db; gap:0.3rem;">
-            <div style="width:6px; height:6px; border-radius:50%; background:#ff605c;"></div>
-            <div style="width:6px; height:6px; border-radius:50%; background:#ffbd44;"></div>
-            <div style="width:6px; height:6px; border-radius:50%; background:#00ca4e;"></div>
-          </div>
-          <div style="flex:1; padding:1rem; display:flex; gap:0.75rem; font-size:0.6rem; color:#a0a09a;">
-            <div style="width:35%; border-right:1px solid #e0e0db; padding-right:0.75rem;">
-              <div style="height:4px; background:#e0e0db; border-radius:2px; margin-bottom:0.4rem;"></div>
-              <div style="height:4px; background:#e0e0db; border-radius:2px; width:60%; margin-bottom:0.6rem;"></div>
-              <div style="height:4px; background:#e0e0db; border-radius:2px; margin-bottom:0.3rem;"></div>
-              <div style="height:4px; background:#1a1a1a; border-radius:2px; width:40%; opacity:0.15;"></div>
-            </div>
-            <div style="flex:1;">
-              <div style="height:4px; background:#e0e0db; border-radius:2px; width:80%; margin-bottom:0.3rem;"></div>
-              <div style="height:4px; background:#e0e0db; border-radius:2px; width:50%; margin-bottom:0.5rem;"></div>
-              <div style="height:4px; background:#e0e0db; border-radius:2px; margin-bottom:0.3rem;"></div>
-              <div style="height:4px; background:#e0e0db; border-radius:2px; width:70%;"></div>
-            </div>
-          </div>
-        </div>
-        <div style="position:absolute; bottom:0; left:0; right:0; padding:1rem 1.5rem; background:linear-gradient(transparent, rgba(0,0,0,0.6));">
-          <div style="font-size:0.8rem; color:#fff; font-family:'Inter',sans-serif;">Your product, built with care.</div>
-          <div style="font-size:0.6rem; color:rgba(255,255,255,0.6); font-family:'Inter',sans-serif;">Classical craft. Modern tools.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Page formats -->
-  <section class="demo-section">
-    <div class="section-label">25 · Formats</div>
-    <h2 class="section-title">Page formats</h2>
-    <p class="section-desc">Three canonical formats. Each has its own conventions.</p>
-
-    <div class="three-col-demo">
-      <div>
-        <h4>Slide deck</h4>
-        <p>Single HTML, one slide per section. Arrow keys navigate. Light slides default; dark for emphasis. Progress bar top, counter bottom-right.</p>
-      </div>
-      <div>
-        <h4>A4 one-pager</h4>
-        <p>Fixed 210mm × 297mm. <code>@page { size: A4; margin: 0 }</code>. Sizing in pt for consistent print. <code>justify-content: space-evenly</code> distributes sections.</p>
-      </div>
-      <div>
-        <h4>Web overview</h4>
-        <p>Long-form layout, max-width 1100–1200px. Hero headline, then rows of products/sections. Used for landing-page style content.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Gap cascade -->
-  <section class="demo-section">
-    <div class="section-label">26 · Component</div>
-    <h2 class="section-title">Gap cascade</h2>
-    <p class="section-desc">Two-column layout: text left, cascade card right. Steps fade and drift to show decay or convergence. Use for "old way / new way" narratives or any sequential process with a punchline.</p>
-
-    <div class="frame">
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; padding: 2rem;">
-        <div>
-          <div style="font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: #a0a09a; margin-bottom: 0.75rem;">Act 1</div>
-          <div style="font-size: 1.3rem; font-weight: 400; letter-spacing: -0.03em; margin-bottom: 0.5rem;">The old way of building.</div>
-          <div style="font-size: 0.8rem; color: #6a6a66; font-weight: 300;">Most ideas died here. Not because they were bad — because the cost was too high.</div>
-        </div>
-        <div style="background: #faf8f4; border: 1px solid #e0ddd6; border-radius: 10px; padding: 1rem;">
-          <div style="padding: 0.4rem 0.7rem; font-size: 0.78rem; border-left: 1px solid #999; opacity: 1;">01 Idea</div>
-          <div style="padding: 0.4rem 0.7rem; font-size: 0.78rem; border-left: 1px solid #ccc; opacity: 0.8; margin-left: 0.3rem;">02 Sketch</div>
-          <div style="padding: 0.4rem 0.7rem; font-size: 0.78rem; border-left: 1px solid #ccc; opacity: 0.6; margin-left: 0.6rem;">03 Meeting</div>
-          <div style="padding: 0.4rem 0.7rem; font-size: 0.78rem; border-left: 1px solid #ccc; opacity: 0.4; margin-left: 0.9rem;">04 Budget</div>
-          <div style="padding: 0.4rem 0.7rem; font-size: 0.78rem; border-left: 1px solid #ccc; opacity: 0.2; margin-left: 1.2rem;">05 Timeline</div>
-          <div style="padding: 0.4rem 0.7rem; font-size: 0.78rem; border-left: 2px solid #c45a2d; margin-left: 1.5rem; color: #c45a2d; font-weight: 500;">× Idea dies</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Video slide -->
-  <section class="demo-section">
-    <div class="section-label">27 · Component</div>
-    <h2 class="section-title">Video slide</h2>
-    <p class="section-desc">Full-screen video in a rounded container. Dark or light background. The container adapts to the video's aspect ratio. Use for demos, walkthroughs, or product recordings.</p>
-
-    <div class="frame">
-      <div style="background: #f5f2ec; padding: 2rem; display: flex; align-items: center; justify-content: center; aspect-ratio: 16/9;">
-        <div style="width: 80%; height: 70%; background: #111; border-radius: 10px; border: 1px solid #e0ddd6; display: flex; align-items: center; justify-content: center; color: #666; font-size: 0.75rem; font-family: monospace;">
-          ▶ media/demo.mp4
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Scale proof card -->
-  <section class="demo-section">
-    <div class="section-label">28 · Component</div>
-    <h2 class="section-title">Scale proof card</h2>
-    <p class="section-desc">Case study card with client logo, explainer text, and impact stats in a 3-column grid. Use to back up claims with real numbers. Logo top-right, subtle.</p>
-
-    <div class="frame">
-      <div style="background: #faf8f4; border: 1px solid #e0ddd6; border-radius: 10px; padding: 1.5rem; position: relative;">
-        <div style="position: absolute; top: 1.25rem; right: 1.25rem; font-size: 0.6rem; color: #a0a09a; font-weight: 500; opacity: 0.5;">CLIENT LOGO</div>
-        <div style="font-size: 0.6rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: #a0a09a; margin-bottom: 1.25rem;">Proven at Client Name</div>
-        <div style="display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: start; gap: 1.25rem;">
-          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
-            <span style="font-size: 0.78rem; color: #6a6a66; font-weight: 300;">Short description of what was deployed and how it fits their stack.</span>
-          </div>
-          <div style="width: 1px; height: 40px; background: #e0ddd6;"></div>
-          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
-            <strong style="font-size: 2rem; font-weight: 300; letter-spacing: -0.035em;">7×</strong>
-            <span style="font-size: 0.78rem; color: #a0a09a;">output metric</span>
-          </div>
-          <div style="width: 1px; height: 40px; background: #e0ddd6;"></div>
-          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
-            <strong style="font-size: 2rem; font-weight: 300; letter-spacing: -0.035em;">35</strong>
-            <span style="font-size: 0.78rem; color: #a0a09a;">second metric</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Closing slide -->
-  <section class="demo-section">
-    <div class="section-label">29 · Component</div>
-    <h2 class="section-title">Closing slide (QR + CTA)</h2>
-    <p class="section-desc">End slide with headline, subtitle, and a large QR code for audience connection. Two-column: text left, QR right. Keep the QR large enough to scan from the back of the room.</p>
-
-    <div class="frame">
-      <div style="display: flex; align-items: center; justify-content: space-between; gap: 3rem; padding: 2.5rem;">
-        <div>
-          <div style="font-size: 1.8rem; font-weight: 400; letter-spacing: -0.03em;">Thanks.</div>
-          <div style="font-size: 0.85rem; color: #6a6a66; margin-top: 0.5rem;">Questions?</div>
-          <div style="font-size: 0.75rem; color: #a0a09a; margin-top: 0.5rem;">Name · Role at Company</div>
-        </div>
-        <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
-          <div style="width: 120px; height: 120px; background: #fff; border: 1px solid #e0ddd6; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; color: #a0a09a;">QR CODE</div>
-          <div style="font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; color: #a0a09a;">Connect with me</div>
-          <div style="font-size: 0.7rem; color: #6a6a66;">linkedin.com/in/you</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Code split (3-way) -->
-  <section class="demo-section">
-    <div class="section-label">30 · Component</div>
-    <h2 class="section-title">Code split (3-way)</h2>
-    <p class="section-desc">Three-panel grid: agent chat, source code, rendered result. Shows the full workflow from prompt to output. Dark panels for chat/code, light for result.</p>
-
-    <div class="frame">
-      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; height: 280px;">
-        <div style="background: #1a1a1a; border-radius: 8px; padding: 1rem; overflow: hidden;">
-          <div style="font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255,255,255,0.25); margin-bottom: 0.5rem;">You</div>
-          <div style="background: #2a2a2a; color: #e0e0e0; padding: 0.4rem 0.6rem; border-radius: 6px; font-size: 0.65rem; line-height: 1.4; margin-bottom: 0.5rem;">Make a deck about our Q3 results.</div>
-          <div style="font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255,255,255,0.25); margin-bottom: 0.3rem;">Agent</div>
-          <div style="background: rgba(255,255,255,0.08); color: #b0b0b0; padding: 0.4rem 0.6rem; border-radius: 6px; font-size: 0.65rem; line-height: 1.4;">Structuring with the six-beat framework...</div>
-        </div>
-        <div style="background: #1e1e1e; border-radius: 8px; padding: 1rem; font-family: monospace; font-size: 0.6rem; line-height: 1.7; color: #d4d4d4; overflow: hidden; white-space: pre;">&lt;section class="slide"&gt;
-  &lt;div class="eyebrow"&gt;
-    Q3 Results
-  &lt;/div&gt;
-  &lt;h1&gt;We grew.&lt;/h1&gt;
-&lt;/section&gt;</div>
-        <div style="background: #faf8f4; border: 1px solid #e0ddd6; border-radius: 8px; display: flex; flex-direction: column; justify-content: center; padding: 1.5rem;">
-          <div style="font-size: 0.5rem; text-transform: uppercase; letter-spacing: 0.12em; color: #c45a2d; margin-bottom: 0.4rem;">Q3 Results</div>
-          <div style="font-size: 1.1rem; font-weight: 400; letter-spacing: -0.03em;">We grew.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Split slide -->
-  <section class="demo-section">
-    <div class="section-label">31 · Component</div>
-    <h2 class="section-title">Split slide (text + image)</h2>
-    <p class="section-desc">Two-column grid inside .slide-inner: text on one side, rounded image on the other. Uses standard eyebrow + headline above the grid. Use .split-reverse to swap sides.</p>
-    <div class="frame">
-      <div style="font-family:'Inter',sans-serif; padding:1.5rem;">
-        <div style="font-size:0.6rem; text-transform:uppercase; letter-spacing:0.08em; color:#a0a09a; margin-bottom:0.5rem;">Feature highlight</div>
-        <div style="font-size:1.15rem; font-weight:500; letter-spacing:-0.02em; margin-bottom:1.25rem;">Text on one side. <span style="color:#b5b5b0; font-weight:300;">Image on the other.</span></div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; align-items:center;">
-          <div>
-            <div style="font-size:0.85rem; font-weight:500; margin-bottom:0.35rem;">Why this matters</div>
-            <div style="font-size:0.78rem; color:#a0a09a; line-height:1.55;">The most common layout for visual storytelling. Describe the feature, show the proof.</div>
-          </div>
-          <div style="border-radius:10px; overflow:hidden; aspect-ratio:4/3;">
-            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Hero image slide -->
-  <section class="demo-section">
-    <div class="section-label">32 · Component</div>
-    <h2 class="section-title">Hero image slide</h2>
-    <p class="section-desc">Rounded 16:9 image frame with gradient overlay and caption at the bottom. Lives inside .slide-inner like every other component. For cinematic moments that need a short headline.</p>
-    <div class="frame">
-      <div style="font-family:'Inter',sans-serif; padding:1.5rem;">
-        <div style="font-size:0.6rem; text-transform:uppercase; letter-spacing:0.08em; color:#a0a09a; margin-bottom:0.5rem;">The moment</div>
-        <div style="font-size:1.15rem; font-weight:500; letter-spacing:-0.02em; margin-bottom:1rem;">Full-bleed image. <span style="color:#b5b5b0; font-weight:300;">Text overlay inside a frame.</span></div>
-        <div style="position:relative; border-radius:10px; overflow:hidden; aspect-ratio:16/9;">
-          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
-          <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(26,26,26,0.75) 0%, rgba(26,26,26,0.2) 50%, transparent 100%);"></div>
-          <div style="position:absolute; bottom:0; left:0; right:0; padding:1.5rem 1.5rem 1.25rem;">
-            <div style="font-size:0.9rem; font-weight:500; color:#f5f5f3; margin-bottom:0.2rem;">A dramatic visual moment</div>
-            <div style="font-size:0.72rem; color:#ccc; line-height:1.5;">Use for cinematic images that need a short caption.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Image card row -->
-  <section class="demo-section">
-    <div class="section-label">33 · Component</div>
-    <h2 class="section-title">Image card row</h2>
-    <p class="section-desc">Three cards with 4:3 images and text below. For feature highlights, portfolio items, or category breakdowns. Keep descriptions parallel.</p>
-    <div class="frame">
-      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:0.75rem; font-family:'Inter',sans-serif;">
-        <div style="border:1px solid #e0e0db; border-radius:10px; overflow:hidden; background:#fafaf8;">
-          <div style="aspect-ratio:4/3; overflow:hidden;"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80" alt="" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
-          <div style="padding:0.9rem 1rem;"><div style="font-size:0.82rem; font-weight:500; margin-bottom:0.2rem;">Card one</div><div style="font-size:0.72rem; color:#a0a09a; line-height:1.5;">Short description of this item.</div></div>
-        </div>
-        <div style="border:1px solid #e0e0db; border-radius:10px; overflow:hidden; background:#fafaf8;">
-          <div style="aspect-ratio:4/3; overflow:hidden;"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&q=80" alt="" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
-          <div style="padding:0.9rem 1rem;"><div style="font-size:0.82rem; font-weight:500; margin-bottom:0.2rem;">Card two</div><div style="font-size:0.72rem; color:#a0a09a; line-height:1.5;">Another item described clearly.</div></div>
-        </div>
-        <div style="border:1px solid #e0e0db; border-radius:10px; overflow:hidden; background:#fafaf8;">
-          <div style="aspect-ratio:4/3; overflow:hidden;"><img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&q=80" alt="" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
-          <div style="padding:0.9rem 1rem;"><div style="font-size:0.82rem; font-weight:500; margin-bottom:0.2rem;">Card three</div><div style="font-size:0.72rem; color:#a0a09a; line-height:1.5;">Keep descriptions parallel in tone.</div></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Caption slide -->
-  <section class="demo-section">
-    <div class="section-label">34 · Component</div>
-    <h2 class="section-title">Caption slide</h2>
-    <p class="section-desc">Large image with a slim annotation bar below. For showcasing a single image with context. The bar has a title and description side by side.</p>
-    <div class="frame">
-      <div style="font-family:'Inter',sans-serif;">
-        <div style="border-radius:8px; overflow:hidden; aspect-ratio:16/7; box-shadow:0 8px 30px rgba(0,0,0,0.08);">
-          <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
-        </div>
-        <div style="display:flex; gap:1.5rem; align-items:baseline; padding:0.75rem 0 0;">
-          <div style="font-size:0.78rem; font-weight:500; white-space:nowrap;">Image title</div>
-          <div style="font-size:0.72rem; color:#a0a09a; line-height:1.45;">One line of context. What this image shows and why it matters.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Image + quote -->
-  <section class="demo-section">
-    <div class="section-label">35 · Component</div>
-    <h2 class="section-title">Image + quote</h2>
-    <p class="section-desc">Portrait image paired with a pull quote. For testimonials, interviews, or any moment where a face adds weight to words. Use .image-quote-reverse to swap sides.</p>
-    <div class="frame">
-      <div style="display:grid; grid-template-columns:1.2fr 1fr; gap:2rem; align-items:center; font-family:'Inter',sans-serif;">
-        <div style="border-radius:8px; overflow:hidden; aspect-ratio:3/4;">
-          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
-        </div>
-        <div>
-          <div style="font-size:1rem; font-style:italic; line-height:1.55; margin-bottom:1rem;">"A powerful statement paired with a portrait. The image gives the quote a face and a place."</div>
-          <div style="font-size:0.72rem; font-weight:500; color:#a0a09a; padding-top:0.75rem; border-top:1px solid #e0e0db;">Speaker name, role</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Photo grid -->
-  <section class="demo-section">
-    <div class="section-label">36 · Component</div>
-    <h2 class="section-title">Photo grid</h2>
-    <p class="section-desc">2×2 image mosaic with optional labels. For portfolios, team photos, location shots, or any "show four things" moment. Labels use a gradient overlay for readability.</p>
-    <div class="frame">
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; font-family:'Inter',sans-serif;">
-        <div style="border-radius:6px; overflow:hidden; position:relative; aspect-ratio:4/3;">
-          <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=600&q=80" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
-          <div style="position:absolute; bottom:0; left:0; right:0; padding:1.5rem 0.65rem 0.5rem; background:linear-gradient(transparent, rgba(0,0,0,0.5)); font-size:0.62rem; font-weight:500; color:#fff;">First image</div>
-        </div>
-        <div style="border-radius:6px; overflow:hidden; position:relative; aspect-ratio:4/3;">
-          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&q=80" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
-          <div style="position:absolute; bottom:0; left:0; right:0; padding:1.5rem 0.65rem 0.5rem; background:linear-gradient(transparent, rgba(0,0,0,0.5)); font-size:0.62rem; font-weight:500; color:#fff;">Second image</div>
-        </div>
-        <div style="border-radius:6px; overflow:hidden; position:relative; aspect-ratio:4/3;">
-          <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&q=80" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
-          <div style="position:absolute; bottom:0; left:0; right:0; padding:1.5rem 0.65rem 0.5rem; background:linear-gradient(transparent, rgba(0,0,0,0.5)); font-size:0.62rem; font-weight:500; color:#fff;">Third image</div>
-        </div>
-        <div style="border-radius:6px; overflow:hidden; position:relative; aspect-ratio:4/3;">
-          <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&q=80" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
-          <div style="position:absolute; bottom:0; left:0; right:0; padding:1.5rem 0.65rem 0.5rem; background:linear-gradient(transparent, rgba(0,0,0,0.5)); font-size:0.62rem; font-weight:500; color:#fff;">Fourth image</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer class="site-footer">
-    <span>Slides — MIT License</span>
-    <div class="site-footer-links">
-      <a href="index.html">Home</a>
-      <a href="deck.html">Open deck</a>
-      <a href="https://github.com/noskillish/slides" target="_blank">GitHub</a>
-    </div>
-  </footer>
-
-</div>
+  // tokens table
+  const tokenRows = [
+    ...core.map(([n,hex,tok])=>[tok,hex,n,true]),
+    ['--g4','#3F3F3F','Dark surface text',true],
+    ['--g3','#999999','Muted text',true],
+    ['--g2b','#BFBFBF','Light muted',true],
+    ['--g2','#D8D8D8','Borders',true],
+    ['--g1','#F2F2F2','Light surface',true],
+    ['--ff',"'Plus Jakarta Sans', Aptos, system-ui",'Primary typeface',false],
+    ['--ffm',"'Fira Code', monospace",'Secondary / mono typeface',false],
+  ];
+  document.querySelector('#tokenTable tbody').innerHTML = tokenRows.map(([tok,val,role,isColor])=>`
+    <tr>
+      <td class="tok">${tok}</td>
+      <td class="val">${isColor?`<span class="chip" style="background:${val}"></span>`:''}${val}</td>
+      <td>${role}</td>
+    </tr>`).join('');
+</script>
 
 </body>
 </html>
