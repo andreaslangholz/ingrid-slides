@@ -4,6 +4,12 @@ A minimalist, AI-friendly slide deck framework. One HTML file. No build step. Pa
 
 ```
 slides/
+├── ingrid.html            Ingrid Capacity deck. Thin shell — loads the shared engine.
+├── engine/                Shared, reusable deck engine (decoupled from any one deck).
+│   ├── engine.css         Brand tokens, layout/component styles, full-bleed cover toggles.
+│   ├── engine.js          Core navigation / show().
+│   ├── edit.js            In-browser edit mode.
+│   └── charts.js          Chart.js + Mermaid integration.
 ├── deck.html              The default template deck. Edit this.
 ├── deck-craft.html        Craft theme variant.
 ├── deck-solid.html        Solid theme variant.
@@ -102,6 +108,23 @@ Click the **Edit** button next to **Download PDF** (or add `?edit` to the URL) a
 - **Diffs stay clean.** Saving rewrites only the slides that changed; everything else passes through byte-for-byte.
 
 See [docs/USING.md](docs/USING.md) for details.
+
+---
+
+## Modular engine
+
+`ingrid.html` is being decoupled from the single-file model into a thin shell that loads a shared `engine/`, so one engine can power many decks. The split (no behavior change):
+
+- `engine/engine.css` — brand tokens, layout/component styles, full-bleed cover toggles
+- `engine/engine.js` — core navigation / `show()`
+- `engine/edit.js` — in-browser edit mode
+- `engine/charts.js` — Chart.js + Mermaid
+
+A deck file now just links the engine and holds its own `<section class="slide">` markup. Brand and behavior changes happen once in `engine/`; each deck stays a small, self-contained content file.
+
+**Path note:** CSS `url()` references resolve relative to the stylesheet, so gradient/image paths inside `engine/engine.css` are `../brand/...`. Image `src` in deck HTML still resolves relative to the deck file.
+
+Roadmap: multi-deck folders (`decks/<name>/`) + a launcher, a template gallery, and insert-template-in-editor. The on-disk format (a deck = a folder of HTML + media) is designed to migrate to a git-repo or hosted workflow without an engine rewrite.
 
 ---
 
