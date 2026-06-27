@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ingrid — Content Library</title>
+<link rel="stylesheet" href="engine/engine.css">
+</head>
+<body>
+
+<header class="ig-header">
+  <div class="ig-header-brand">INGRID</div>
+  <div class="ig-header-right"></div>
+</header>
+
+<div class="progress" id="progress"></div>
+
+<div class="deck">
+
+  <!-- ========== 1. COVER — full-bleed gradient, PPTX layout ========== -->
+  <section class="slide active ig-cover-ppt">
+    <div class="cppt-hline"></div>
+    <div class="cppt-vline-top"></div>
+    <div class="cppt-vline-right"></div>
+    <div class="cppt-logo">
+      <img src="brand/ingrid/logos/mono-on-dark.png" alt="Ingrid">
+    </div>
+    <h1 class="cppt-title">content library</h1>
+    <p class="cppt-subtitle">REUSABLE INGRID SLIDES</p>
+    <div class="cppt-date">JUNI 2026</div>
+  </section>
+
+  <!-- ========== 3. AGENDA ========== -->
+  <section class="slide ig-agenda">
+    <div class="agd-header">
+      <div class="agd-header-brand">INGRID</div>
+      <div class="agd-header-right"></div>
+    </div>
+    <div class="agd-body">
+      <div class="agd-title"><h1 contenteditable>Agenda</h1></div>
+      <div class="agd-items">
+        <div class="agd-item"><span class="agd-num">01</span><span class="agd-name" contenteditable>Business models</span></div>
+        <div class="agd-item"><span class="agd-num">02</span><span class="agd-name" contenteditable>Tech domains</span></div>
+        <div class="agd-item"><span class="agd-num">03</span><span class="agd-name" contenteditable>Ways of working</span></div>
+        <div class="agd-item"><span class="agd-num">04</span><span class="agd-name" contenteditable>Roadmap</span></div>
+      </div>
+    </div>
+    <div class="agd-footer">
+      <div class="agd-footer-mark"><img src="brand/ingrid/logos/mark-on-dark.png" alt="Ingrid"></div>
+      <div class="agd-footnote" contenteditable>JUNI 2026</div>
+      <div class="agd-page">3</div>
+    </div>
+  </section>
+
+  <!-- ========== BUSINESS MODELS — grid-debt maturity chart (pptx p.10) ========== -->
+  <section class="slide ig-business-models">
+    <div class="bm-eyebrow">1. INGRID</div>
+
+    <h1 class="bm-title" contenteditable>New business models required to meet current and future energy system needs</h1>
+
+    <div class="bm-legend">
+      <div class="bm-leg-row"><span class="bm-leg-line black"></span>RES generation (GWh)</div>
+      <div class="bm-leg-row"><span class="bm-leg-line orange"></span>Annual grid investments (bn EUR)</div>
+      <div class="bm-leg-idx">Indexed</div>
+    </div>
+
+    <!-- Phase 1 -->
+    <div class="bm-phase" style="top:27%;left:6.5%;width:19.5%">
+      <div class="bm-box" contenteditable>Legacy system</div>
+      <ul class="bm-bul">
+        <li contenteditable>Limited grid and generation investments</li>
+        <li contenteditable>Molecule dependence</li>
+      </ul>
+    </div>
+    <!-- Phase 2 -->
+    <div class="bm-phase" style="top:27%;left:27.5%;width:19.5%">
+      <div class="bm-box" contenteditable>RES build-out</div>
+      <ul class="bm-bul">
+        <li contenteditable>RES<sup>1</sup> investments exponential growth</li>
+        <li contenteditable>Grid investments lagging</li>
+      </ul>
+    </div>
+    <!-- Phase 3 -->
+    <div class="bm-phase" style="top:27%;left:49%;width:21%">
+      <div class="bm-box" contenteditable>Grid investments starts to catch up</div>
+      <ul class="bm-bul">
+        <li contenteditable>RES investments exponential growth continues</li>
+        <li contenteditable>Enter into grid investment super cycle</li>
+        <li contenteditable>Exponential BESS build out</li>
+      </ul>
+    </div>
+    <!-- Phase 4 -->
+    <div class="bm-phase" style="top:27%;left:71%;width:21%">
+      <div class="bm-box" contenteditable>Need for new operating system</div>
+      <ul class="bm-bul">
+        <li contenteditable>RES reaches &gt;30% of generation in most markets</li>
+      </ul>
+    </div>
+
+    <!-- Chart -->
+    <div class="bm-chart">
+      <svg viewBox="0 0 1000 209" preserveAspectRatio="none">
+        <!-- axis -->
+        <line x1="8" y1="175" x2="992" y2="175" stroke="#000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+        <!-- ticks -->
+        <g stroke="#000" stroke-width="1.5" vector-effect="non-scaling-stroke">
+          <line x1="50"  y1="168" x2="50"  y2="182"/>
+          <line x1="270" y1="168" x2="270" y2="182"/>
+          <line x1="500" y1="168" x2="500" y2="182"/>
+          <line x1="720" y1="168" x2="720" y2="182"/>
+          <line x1="950" y1="168" x2="950" y2="182"/>
+        </g>
+        <!-- orange: annual grid investments -->
+        <path d="M50,167 C160,165 200,162 270,161 C360,160 430,159 500,158" fill="none" stroke="#F0A23C" stroke-width="3" vector-effect="non-scaling-stroke"/>
+        <path d="M500,158 L950,156" fill="none" stroke="#F0A23C" stroke-width="3" stroke-dasharray="9 7" vector-effect="non-scaling-stroke"/>
+        <!-- black: RES generation -->
+        <path d="M50,160 C150,156 190,152 270,148 C360,143 430,131 500,118" fill="none" stroke="#000" stroke-width="3" vector-effect="non-scaling-stroke"/>
+        <path d="M500,118 C640,104 690,55 950,22" fill="none" stroke="#000" stroke-width="3" stroke-dasharray="11 8" vector-effect="non-scaling-stroke"/>
+        <!-- grid-debt gap arrow -->
+        <line x1="950" y1="32" x2="950" y2="148" stroke="#000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+        <polygon points="950,20 943,34 957,34" fill="#000"/>
+        <polygon points="950,160 943,146 957,146" fill="#000"/>
+      </svg>
+    </div>
+    <div class="bm-debt" contenteditable>Grid debt<br>1.2 tn EUR until 2040</div>
+
+    <!-- Year axis labels -->
+    <div class="bm-year" style="left:10.45%">2010</div>
+    <div class="bm-year" style="left:30.03%">2020</div>
+    <div class="bm-year" style="left:50.5%">2025</div>
+    <div class="bm-year" style="left:70.08%">2030F</div>
+    <div class="bm-year" style="left:90.55%">2040F</div>
+
+    <!-- Problems to solve -->
+    <div class="bm-rowlabel" style="top:72%">Problems to solve</div>
+    <div class="bm-cell" style="top:72%;left:8%;width:19%"><ul><li contenteditable>Investability of RES</li></ul></div>
+    <div class="bm-cell" style="top:72%;left:27.5%;width:19%"><ul><li contenteditable>Energy security</li></ul></div>
+    <div class="bm-cell" style="top:72%;left:48%;width:19%"><ul>
+      <li contenteditable>Grid constraints</li>
+      <li contenteditable>Curtailment cost</li>
+      <li contenteditable>Negative capture prices</li>
+      <li contenteditable>Missed electrification opportunities</li>
+    </ul></div>
+    <div class="bm-cell" style="top:72%;left:67.5%;width:19%"><ul><li contenteditable>A grid that needs autonomous steering</li></ul></div>
+
+    <!-- Business models -->
+    <div class="bm-rowlabel" style="top:88%">Business models</div>
+    <div class="bm-cell" style="top:88%;left:8%;width:19%"><ul><li contenteditable>Feed-in-tariff dependency</li></ul></div>
+    <div class="bm-cell" style="top:88%;left:27.5%;width:19%"><ul><li contenteditable>IPPs and Corporate PPAs</li></ul></div>
+    <div class="bm-cell" style="top:88%;left:48%;width:19%"><ul>
+      <li contenteditable>Flexibility</li>
+      <li contenteditable>Asset co-optimization</li>
+      <li contenteditable>Hybrid contracting</li>
+    </ul></div>
+    <div class="bm-cell" style="top:88%;left:67.5%;width:19%"><ul><li contenteditable>Grid intelligence</li></ul></div>
+
+    <div class="bm-foot-left">Leading Europe's intelligent grid revolution</div>
+    <div class="bm-foot-right">Sources: IEA; 1. Renewables</div>
+    <div class="bm-page">10</div>
+  </section>
+
+  <!-- ========== 8. DOMAIN MATRIX — tech team domains ========== -->
+  <section class="slide ig-domain-matrix">
+    <div class="dm-header">
+      <h2 class="dm-title">Ingrid trading platform and tech domains</h2>
+      <div class="dm-legend">
+        <span class="dm-legend-label">Teams</span>
+        <div class="dm-legend-items">
+          <div class="dm-legend-item"><span class="dm-color-sq opt"></span>Optimization</div>
+          <div class="dm-legend-item"><span class="dm-color-sq ml"></span>ML</div>
+          <div class="dm-legend-item"><span class="dm-color-sq plat"></span>Platform</div>
+          <div class="dm-legend-item"><span class="dm-color-sq prod"></span>Product</div>
+          <div class="dm-legend-item"><span class="dm-color-sq trad"></span>Trading</div>
+        </div>
+      </div>
+    </div>
+    <div class="dm-grid">
+      <!-- Row 1 -->
+      <div class="dm-row">
+        <div class="dm-row-label">Operations<br>and<br>Processes</div>
+        <div class="dm-cells">
+          <div class="dm-cell trad" style="flex:55">
+            <div class="dm-cell-title">Trading &amp; business</div>
+            <div class="dm-cell-desc">Day to day decision making, reporting and stakeholder mgmt. + business support</div>
+          </div>
+          <div class="dm-cell opt" style="flex:45">
+            <div class="dm-cell-title">Product &amp; ways of working</div>
+            <div class="dm-cell-desc">How we drive tech development and user onboarding</div>
+          </div>
+        </div>
+        <div class="dm-row-note">How we work</div>
+      </div>
+      <!-- Row 2 -->
+      <div class="dm-row">
+        <div class="dm-row-label">User<br>Interfaces<br>&amp; Tools</div>
+        <div class="dm-cells">
+          <div class="dm-cell trad" style="flex:55">
+            <div class="dm-cell-title">Internal</div>
+            <div class="dm-cell-desc">Everything that supports internal insights, reporting and development. Owns trading cockpit and controls</div>
+          </div>
+          <div class="dm-cell opt" style="flex:45">
+            <div class="dm-cell-title">External</div>
+            <div class="dm-cell-desc">All user interfaces and data sharing with Non-Ingrid stakeholders. Owns reporting API and investor portal</div>
+          </div>
+        </div>
+        <div class="dm-row-note">Used by people out­side of tech</div>
+      </div>
+      <!-- Row 3 -->
+      <div class="dm-row">
+        <div class="dm-row-label">Algorithm</div>
+        <div class="dm-cells">
+          <div class="dm-cell ml" style="flex:40">
+            <div class="dm-cell-title">Forecasts and scenarios</div>
+            <div class="dm-cell-desc">Prediction algorithms and scenario generations prior to optimization. Owns Rebase, Montel and other feature sources</div>
+          </div>
+          <div class="dm-cell opt" style="flex:30">
+            <div class="dm-cell-title">Day-ahead trading</div>
+            <div class="dm-cell-desc">Algorithmic engines for Day-ahead markets and schedules. Owns Gurobi</div>
+          </div>
+          <div class="dm-cell opt" style="flex:30">
+            <div class="dm-cell-title">Intraday trading</div>
+            <div class="dm-cell-desc">Live algorithms for intraday markets, including EAM and Imbalances</div>
+          </div>
+        </div>
+        <div class="dm-row-note">Deciding what to bid and when</div>
+      </div>
+      <!-- Row 4 -->
+      <div class="dm-row">
+        <div class="dm-row-label">Trading<br>platform</div>
+        <div class="dm-cells">
+          <div class="dm-cell plat" style="flex:28">
+            <div class="dm-cell-title">Asset Controls &amp; Delivery</div>
+            <div class="dm-cell-desc">Steering and controls of assets. Owns IETV and SCADA interfaces</div>
+          </div>
+          <div class="dm-cell trad" style="flex:40">
+            <div class="dm-cell-title">Governance, settlement and invoicing</div>
+            <div class="dm-cell-desc">Trading compliance checks, data storing and version controls, invoicing summary and generation</div>
+          </div>
+          <div class="dm-cell plat" style="flex:32">
+            <div class="dm-cell-title">Bidding and trading</div>
+            <div class="dm-cell-desc">Bidding, aggregation and validation of trading. Owns Interfaces to Hansen and PowerBot</div>
+          </div>
+        </div>
+        <div class="dm-row-note">Executing end-to-end trading</div>
+      </div>
+      <!-- Row 5 -->
+      <div class="dm-row">
+        <div class="dm-row-label">Foundation</div>
+        <div class="dm-cells">
+          <div class="dm-cell plat" style="flex:45">
+            <div class="dm-cell-title">Data</div>
+            <div class="dm-cell-desc">Data storage and platforms. Owns Airflow pipeline</div>
+          </div>
+          <div class="dm-cell plat" style="flex:55">
+            <div class="dm-cell-title">Cloud, infra and security</div>
+            <div class="dm-cell-desc">Infrastructure provisioning, application security, cloud scalability and cost. Owns Terraform, GCP and Keycloak</div>
+          </div>
+        </div>
+        <div class="dm-row-note">Enabling our use cases</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 30. CLOSING — gradient ========== -->
+  <section class="slide ig-grad-bg ig-closing">
+    <div class="cppt-hline"></div>
+    <div class="cppt-vline-top"></div>
+    <div class="cppt-vline-right"></div>
+    <div style="margin:auto 0;">
+      <div class="eyebrow">Thank you</div>
+      <h1 style="color:var(--white)">let's get<br>to work.</h1>
+      <p class="subtitle" style="color:rgba(255,255,255,.8);margin-top:1rem">contact@ingridcapacity.com</p>
+    </div>
+  </section>
+
+</div>
+
+<footer class="ig-footer">
+  <img src="brand/ingrid/logos/mark-on-light.png" alt="Ingrid" style="height:clamp(20px,4.5vh,40px);width:auto;flex-shrink:0;object-fit:contain;">
+  <div class="ig-footnote">FOOTNOTE</div>
+  <div class="ig-counter" id="counter">1 / 30</div>
+</footer>
+
+<div class="btn-row">
+  <button class="pdf-btn edit-btn" onclick="location.href = location.pathname + '?edit'">Edit</button>
+  <button class="pdf-btn" onclick="downloadPDF()">Download PDF</button>
+</div>
+<div class="nav" id="nav-hidden" style="display:none"><span></span><div class="nav-buttons"><button class="nav-btn" onclick="prev()">‹</button><button class="nav-btn" onclick="next()">›</button></div></div>
+
+<script src="engine/engine.js"></script>
+<script src="engine/edit.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script src="engine/charts.js"></script>
+
+</body>
+</html>
