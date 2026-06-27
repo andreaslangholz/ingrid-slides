@@ -64,13 +64,28 @@ section{padding:clamp(3rem,6vw,5.5rem) 6vw;border-bottom:1px solid var(--g1)}
 .logo-meta .n{font-weight:600;font-size:.8rem}
 .logo-meta .u{font-family:var(--ffm);font-size:.58rem;color:var(--g3);text-transform:uppercase;letter-spacing:.06em;margin-top:.15rem}
 
-.arc-explain{display:grid;grid-template-columns:160px 1fr;gap:2.5rem;align-items:center;
-  margin-top:1.6rem;padding:2rem;border:1px solid var(--g2);border-radius:10px;background:var(--g1)}
-.arc{width:128px;height:128px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:10px}
-.arc span{background:var(--ink);border-radius:7px}
-.arc .dot{background:var(--violet);border-radius:50%}
-.arc-explain ol{margin:.4rem 0 0 1.1rem;font-size:.9rem;font-weight:300;color:var(--g4);line-height:1.7}
-.arc-explain li::marker{color:var(--violet)}
+.logo-stage.lightcolor{background:#E3D0FD}
+.logo-stage.darkcolor{background:#4C92E9}
+.logo-stage.imagery{background:url('brand/ingrid/photos/wind-turbines-sunset.jpg') center/cover}
+/* Arc anatomy — Grid → Thinking Brain → Rearchitecture */
+.anatomy{margin-top:1.6rem;padding:2rem;border:1px solid var(--g2);border-radius:10px;background:var(--g1)}
+.ana-row{display:flex;align-items:center;gap:1.3rem;flex-wrap:wrap}
+.ana-step{display:flex;flex-direction:column;align-items:center;gap:.7rem}
+.ana-grid{width:116px;height:116px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:9px}
+.ana-grid span{background:var(--ink);border-radius:9px}
+.ana-grid .dot{background:var(--violet);border-radius:50%}
+.ana-final{width:116px;height:116px}
+.ana-final img{width:100%;height:100%;object-fit:contain}
+.ana-cap{font-family:var(--ffm);font-size:.58rem;text-transform:uppercase;letter-spacing:.08em;color:var(--g4)}
+.ana-arrow{color:var(--g3);font-size:1.3rem}
+.ana-note{margin-top:1.5rem}
+.ana-note ol{margin:.3rem 0 0 1.1rem;font-size:.88rem;font-weight:300;color:var(--g4);line-height:1.65;max-width:84ch}
+.ana-note li::marker{color:var(--violet)}
+.mark-uses{display:flex;gap:1.4rem;margin-top:1.2rem;flex-wrap:wrap}
+.mark-uses .mu{display:flex;flex-direction:column;align-items:center;gap:.5rem}
+.mark-uses .mu .stage{width:64px;height:64px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.mark-uses .mu .stage img{width:42px;height:42px}
+.mark-uses .mu .l{font-family:var(--ffm);font-size:.54rem;text-transform:uppercase;letter-spacing:.06em;color:var(--g3)}
 
 .donots{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.5rem 2rem;
   margin-top:1rem;list-style:none}
@@ -140,20 +155,41 @@ section{padding:clamp(3rem,6vw,5.5rem) 6vw;border-bottom:1px solid var(--g1)}
 .icon-row{display:flex;gap:1.3rem;align-items:center}
 .icon-row svg{width:34px;height:34px}
 
-/* ── Visual system / grid ── */
-.fluid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:stretch}
-.fluid-card{border:1px solid var(--g2);border-radius:10px;padding:1.6rem;display:flex;flex-direction:column}
-.fluid-card h4{font-weight:600;font-size:1rem;margin-bottom:.4rem}
-.fluid-card p{font-size:.85rem;font-weight:300;color:var(--g4);line-height:1.55}
-.modgrid{display:grid;gap:5px;margin-top:1.2rem;flex:1;min-height:120px}
-.modgrid div{background:var(--g1);border:1px solid var(--g2);border-radius:3px}
-.gradblob{margin-top:1.2rem;flex:1;min-height:120px;border-radius:14px;
-  background:url('brand/ingrid/gradients/pastel.png') center/cover;
-  -webkit-mask:radial-gradient(circle at 30% 40%,#000 40%,transparent 72%);
-  mask:radial-gradient(circle at 30% 40%,#000 40%,transparent 72%)}
-.scale-steps{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem}
-.scale-steps span{font-family:var(--ffm);font-size:.66rem;color:var(--g4);padding:.3rem .6rem;border:1px solid var(--g2);border-radius:6px}
-.scale-steps span.on{border-color:var(--violet);color:var(--violet)}
+/* ── Visual system: 2× modular grid ── */
+.vs{display:grid;grid-template-columns:minmax(200px,.8fr) 1.5fr;gap:3rem;align-items:start}
+.vs-title{font-weight:500;font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.1;letter-spacing:-.02em;color:var(--violet)}
+.vs-block{margin-top:1.6rem}
+.vs-block h4{font-family:var(--ffm);font-size:.64rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--g4);margin-bottom:.4rem}
+.vs-block p{font-size:.86rem;font-weight:300;color:var(--g4);line-height:1.55}
+.construct{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.cdiag{aspect-ratio:1;border:1px solid var(--g2);border-radius:6px;background:#fff;position:relative;overflow:hidden}
+.cdiag.g2{background:
+  linear-gradient(var(--blue),var(--blue)) 50% 0/1.5px 100% no-repeat,
+  linear-gradient(var(--blue),var(--blue)) 0 50%/100% 1.5px no-repeat}
+.cdiag.g8{background:
+  repeating-linear-gradient(to right,var(--blue) 0 1px,transparent 1px 25%),
+  repeating-linear-gradient(to bottom,var(--blue) 0 1px,transparent 1px 25%),
+  repeating-linear-gradient(to right,rgba(248,137,140,.5) 0 1px,transparent 1px 12.5%),
+  repeating-linear-gradient(to bottom,rgba(248,137,140,.5) 0 1px,transparent 1px 12.5%)}
+.cdiag.gmod{background:
+  linear-gradient(var(--ink),var(--ink)) 68% 0/1px 100% no-repeat,
+  linear-gradient(var(--ink),var(--ink)) 0 62%/100% 1px no-repeat}
+.cdiag.gmod .frame{position:absolute;inset:13%;border:1px solid var(--g3);border-radius:2px}
+.cstep{margin-top:.6rem}
+.cstep b{display:block;font-weight:600;font-size:.84rem;margin-bottom:.15rem}
+.cstep span{font-size:.78rem;font-weight:300;color:var(--g4);line-height:1.45}
+.usage{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:1.5rem}
+.ucell{aspect-ratio:1;border:1px solid var(--g2);border-radius:6px;overflow:hidden;position:relative;background:#fff}
+.ucell>img{width:100%;height:100%;object-fit:cover}
+.ucell .ovl{position:absolute;inset:0;pointer-events:none;background:
+  linear-gradient(rgba(255,255,255,.75),rgba(255,255,255,.75)) 33.33% 0/1px 100% no-repeat,
+  linear-gradient(rgba(255,255,255,.75),rgba(255,255,255,.75)) 66.66% 0/1px 100% no-repeat,
+  linear-gradient(rgba(255,255,255,.75),rgba(255,255,255,.75)) 0 50%/100% 1px no-repeat}
+.ucell.modcell{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1px;background:var(--g2)}
+.ucell.modcell>div{background:#fff;overflow:hidden}
+.ucell.modcell img{width:100%;height:100%;object-fit:cover}
+.ucell.gradcell{background:url('brand/ingrid/gradients/pastel.png') center/cover}
+.ucell.gradcell .bar{position:absolute;left:0;right:0;bottom:0;height:22%;background:var(--ink)}
 
 /* ── Tokens table ── */
 .tokens{width:100%;border-collapse:collapse;margin-top:.5rem;font-size:.82rem}
@@ -195,32 +231,41 @@ footer a{color:var(--violet);text-decoration:none}
 <section id="logo">
   <div class="sec-label">01 · Logo</div>
   <h2 class="sec-title">The Arc, and the wordmark.</h2>
-  <p class="sec-intro">The logo pairs <b>The Arc</b> symbol with the <b>ingrid</b> wordmark. Pick the variant by background — never recolor with CSS filters. The wordmark is never shown without the Arc.</p>
+  <p class="sec-intro">The logo pairs <b>The Arc</b> symbol with the <b>ingrid</b> wordmark. Six placements are approved — pick the variant by background, never recolor with CSS filters, and never show the wordmark without the Arc.</p>
 
-  <div class="subhead">Full logo — Arc + wordmark</div>
+  <div class="subhead">Six approved variants</div>
   <div class="logo-grid">
-    <div class="logo-cell"><div class="logo-stage light"><img src="brand/ingrid/logos/color-on-light.png" alt="Color on light"></div><div class="logo-meta"><div class="n">Color · on light</div><div class="u">color-on-light.png</div></div></div>
-    <div class="logo-cell"><div class="logo-stage grad"><img src="brand/ingrid/logos/color-on-dark.png" alt="Color on gradient"></div><div class="logo-meta"><div class="n">Color · on dark / gradient</div><div class="u">color-on-dark.png</div></div></div>
-    <div class="logo-cell"><div class="logo-stage gray"><img src="brand/ingrid/logos/mono-on-light.png" alt="Mono on light"></div><div class="logo-meta"><div class="n">Mono · on light</div><div class="u">mono-on-light.png</div></div></div>
-    <div class="logo-cell"><div class="logo-stage dark"><img src="brand/ingrid/logos/mono-on-dark.png" alt="Mono on dark"></div><div class="logo-meta"><div class="n">Mono · on dark</div><div class="u">mono-on-dark.png</div></div></div>
+    <div class="logo-cell"><div class="logo-stage light"><img src="brand/ingrid/logos/color-on-light.png" alt="Full color on white"></div><div class="logo-meta"><div class="n">1 · Full color · white background</div><div class="u">color-on-light.png</div></div></div>
+    <div class="logo-cell"><div class="logo-stage dark"><img src="brand/ingrid/logos/color-on-dark.png" alt="Full color on black"></div><div class="logo-meta"><div class="n">2 · Full color · black background</div><div class="u">color-on-dark.png</div></div></div>
+    <div class="logo-cell"><div class="logo-stage grad"><img src="brand/ingrid/logos/mono-on-dark.png" alt="White on gradient"></div><div class="logo-meta"><div class="n">3 · Single white · gradient background</div><div class="u">mono-on-dark.png</div></div></div>
+    <div class="logo-cell"><div class="logo-stage lightcolor"><img src="brand/ingrid/logos/mono-on-light.png" alt="Black on light color"></div><div class="logo-meta"><div class="n">4 · Single black · light color background</div><div class="u">mono-on-light.png</div></div></div>
+    <div class="logo-cell"><div class="logo-stage darkcolor"><img src="brand/ingrid/logos/mono-on-dark.png" alt="White on dark color"></div><div class="logo-meta"><div class="n">5 · Single white · dark color background</div><div class="u">mono-on-dark.png</div></div></div>
+    <div class="logo-cell"><div class="logo-stage imagery"><img src="brand/ingrid/logos/color-on-dark.png" alt="Full color on imagery"></div><div class="logo-meta"><div class="n">6 · Full color · imagery background</div><div class="u">color-on-dark.png</div></div></div>
   </div>
 
-  <div class="subhead">Mark only — The Arc symbol</div>
-  <div class="logo-grid">
-    <div class="logo-cell"><div class="logo-stage light"><img src="brand/ingrid/logos/mark-on-light.png" alt="Mark on light"></div><div class="logo-meta"><div class="n">Mark · on light</div><div class="u">mark-on-light.png</div></div></div>
-    <div class="logo-cell"><div class="logo-stage dark"><img src="brand/ingrid/logos/mark-on-dark.png" alt="Mark on dark"></div><div class="logo-meta"><div class="n">Mark · on dark</div><div class="u">mark-on-dark.png</div></div></div>
-  </div>
-
-  <div class="arc-explain">
-    <div class="arc"><span></span><span></span><span class="dot"></span><span></span></div>
-    <div>
-      <div class="subhead" style="margin-top:0">Anatomy — structure + intelligence</div>
+  <div class="subhead">The Arc — construction</div>
+  <div class="anatomy">
+    <div class="ana-row">
+      <div class="ana-step"><div class="ana-grid"><span></span><span></span><span></span><span></span></div><div class="ana-cap">The grid</div></div>
+      <div class="ana-arrow">&#8594;</div>
+      <div class="ana-step"><div class="ana-grid"><span></span><span></span><span class="dot"></span><span></span></div><div class="ana-cap">The thinking brain</div></div>
+      <div class="ana-arrow">&#8594;</div>
+      <div class="ana-step"><div class="ana-final"><img src="brand/ingrid/logos/mark-on-light.png" alt="The Arc"></div><div class="ana-cap">Rearchitecture</div></div>
+    </div>
+    <div class="ana-note">
       <ol>
-        <li><b>Three rounded squares</b> in an L/grid pattern — the modular grid, structure and order.</li>
-        <li><b>One Flux Violet circle</b> (<span style="font-family:var(--ffm)">#AA73FA</span>) — the intelligence node, the "thinking brain."</li>
-        <li>Together they form <b>The Arc</b>: structure and expression joined. Used as the app icon, uniform print, and social avatar.</li>
+        <li><b>The grid</b> — four rounded squares in a 2×2 grid: structure and order.</li>
+        <li><b>The thinking brain</b> — the bottom-left square becomes a Flux Violet circle (<span style="font-family:var(--ffm)">#AA73FA</span>), the intelligence node.</li>
+        <li><b>Rearchitecture</b> — the top-left and bottom-right squares flow together into a single curved channel, while the top-right square and violet circle remain. The result is <b>The Arc</b> — structure and intelligence joined.</li>
       </ol>
     </div>
+  </div>
+
+  <div class="subhead">The mark in use</div>
+  <div class="mark-uses">
+    <div class="mu"><div class="stage" style="background:var(--ink)"><img src="brand/ingrid/logos/mark-on-dark.png" alt=""></div><div class="l">App / digital icon</div></div>
+    <div class="mu"><div class="stage" style="background:#fff;border:1px solid var(--g2)"><img src="brand/ingrid/logos/mark-on-light.png" alt=""></div><div class="l">On light</div></div>
+    <div class="mu"><div class="stage" style="background:url('brand/ingrid/gradients/pastel.png') center/cover"><img src="brand/ingrid/logos/mark-on-dark.png" alt=""></div><div class="l">Avatar / social</div></div>
   </div>
 
   <div class="subhead">Do not</div>
@@ -408,24 +453,31 @@ footer a{color:var(--violet);text-decoration:none}
 <section id="system">
   <div class="sec-label">07 · Visual System</div>
   <h2 class="sec-title">Fluid Intelligence.</h2>
-  <p class="sec-intro">The system draws from The Arc — a union of <b>structure</b> (the grid squares) and <b>expression</b> (the organic circle). Precise, adaptive, alive.</p>
+  <p class="sec-intro">The system unites <b>structure</b> — the 2× Modular Grid — with <b>expression</b> — the Ingrid Gradient. The grid is the foundation for <b>all brand layouts and typography</b>, including every deck template.</p>
 
-  <div class="fluid">
-    <div class="fluid-card">
-      <h4>2× Modular Grid</h4>
-      <p>Structure, order, scalability. Start at 2 columns; scale by doubling. A guide, not a cage — add lines only when needed.</p>
-      <div class="scale-steps">
-        <span class="on">2</span><span class="on">4</span><span>8</span><span>16</span><span>32</span><span>64</span>
-      </div>
-      <div class="modgrid" id="modgrid"></div>
+  <div class="vs">
+    <div class="vs-left">
+      <div class="vs-title">Structure:<br>2× Modular Grid</div>
+      <div class="vs-block"><h4>Divisions of two</h4><p>Built on divisions of two (2, 4, 8, 16, 32, 64 columns), it creates a flexible, logical framework for organizing space and content — grounded intelligence.</p></div>
+      <div class="vs-block"><h4>A graphic device</h4><p>By exposing the underlying structure, the grid makes layout decisions intentional and transparent — reinforcing consistency and clarity.</p></div>
+      <div class="vs-block"><h4>Expression</h4><p>The Ingrid Gradient is the organic counterpart — masked into the grid to add depth and emotional warmth. <a href="#gradient" style="color:var(--violet);text-decoration:none">See gradient →</a></p></div>
     </div>
-    <div class="fluid-card">
-      <h4>The Ingrid Gradient</h4>
-      <p>Expression, adaptability, emotional depth — the organic counterpart to the grid. Masked into shape, feathered, morphed into soft organic blobs.</p>
-      <div class="gradblob"></div>
+    <div class="vs-right">
+      <div class="subhead" style="margin-top:0">Constructing the grid</div>
+      <div class="construct">
+        <div><div class="cdiag g2"></div><div class="cstep"><b>1 · Start at 2</b><span>Divide the layout into 2 columns as the base grid.</span></div></div>
+        <div><div class="cdiag g8"></div><div class="cstep"><b>2 · Scale by doubling</b><span>Extend to 4, 8, 16, 32, or 64 columns as the layout demands.</span></div></div>
+        <div><div class="cdiag gmod"><span class="frame"></span></div><div class="cstep"><b>3 · Modularize with intention</b><span>Style into a modular framework — margins, gutters, baselines.</span></div></div>
+      </div>
+      <div class="subhead">Usage example</div>
+      <div class="usage">
+        <div class="ucell"><img src="brand/ingrid/photos/team-kajsa-jessica.jpg" alt=""><div class="ovl"></div></div>
+        <div class="ucell modcell"><div></div><div><img src="brand/ingrid/photos/grid-tower.jpg" alt=""></div><div><img src="brand/ingrid/photos/ingrid-container.jpg" alt=""></div><div></div></div>
+        <div class="ucell gradcell"><div class="ovl"></div><div class="bar"></div></div>
+      </div>
     </div>
   </div>
-  <p class="note">Maintain rhythm and balance — spacing and negative space should guide the eye naturally. Let key visuals and typography interact with the grid when it enhances expression.</p>
+  <p class="note">A guide, not a cage — let key visuals and typography interact with the grid when it enhances expression. Maintain rhythm and balance through spacing and negative space.</p>
 </section>
 
 <!-- ───────── TOKENS ───────── -->
@@ -489,12 +541,6 @@ footer a{color:var(--violet);text-decoration:none}
   swatches('alerts', alertRows);
   scale('grayScale', grays);
   scale('violetTints', tints);
-
-  // modular grid demo (4×2)
-  const mg = document.getElementById('modgrid');
-  mg.style.gridTemplateColumns = 'repeat(4,1fr)';
-  mg.style.gridTemplateRows = 'repeat(2,1fr)';
-  mg.innerHTML = Array.from({length:8}).map(()=>'<div></div>').join('');
 
   // tokens table
   const tokenRows = [
