@@ -15,7 +15,8 @@ slides/
 ├── deck-craft.html        Craft theme variant.
 ├── deck-solid.html        Solid theme variant.
 ├── design-system.html     Visual showcase of every component.
-├── index.html             Landing page (uses Tailwind CDN).
+├── index.html             Deck launcher — lists the Ingrid decks (open / edit).
+├── landing.html           Upstream framework marketing page (was index.html; Tailwind CDN).
 ├── AGENTS.md              AI agent instructions. Design system + components + storytelling.
 ├── media/                 Drop your images and videos here.
 ├── assets/                Screenshots and banners for the README.
@@ -252,7 +253,7 @@ Switch themes with the `/slides-theme` command, or start from whichever HTML fil
 - **Self-contained.** Each deck file has zero external dependencies beyond Google Fonts (Inter).
 - **Three themes.** Default, Craft, and Solid. Same components, different visual tone.
 - **In-browser editing.** Add `?edit` to the URL for a full slide editor with in-place saving.
-- **`index.html` is the landing page.** It uses the Tailwind CDN for responsive layout. It's a marketing page for the project. The product files stay dependency-free.
+- **`index.html` is the deck launcher.** A lightweight, self-contained page that lists the Ingrid decks (open or edit in the browser); add a deck by adding one line to its `decks` array. The original upstream marketing page is preserved as `landing.html` (Tailwind CDN). The product files stay dependency-free.
 - **Works in any modern browser.** Present, share, embed.
 - **PDF export** via `window.print()` with print-optimized CSS (`@page` set to 16:9).
 - **Auto-deploy** to GitHub Pages on push to `main` via the included GitHub Action.
