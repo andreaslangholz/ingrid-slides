@@ -11,13 +11,54 @@ A minimalist HTML slide deck framework. One self-contained HTML file (`deck.html
 ```
 your-deck/
 ├── deck.html              ← the deck (edit this)
+├── ingrid.html            ← Ingrid-branded deck template
 ├── docs/
 │   ├── USING.md           ← usage guide
 │   ├── STORYTELLING.md    ← talk structure and tone
 │   └── DESIGN.md          ← visual tokens and rules
-├── media/                 ← images and videos
+├── brand/
+│   └── ingrid/
+│       ├── BRAND.md       ← Ingrid brand reference (READ THIS for Ingrid decks)
+│       ├── logos/         ← logo PNGs, named by background context
+│       ├── gradients/     ← gradient PNGs (pastel, dark, cover variants)
+│       ├── photos/        ← company photography
+│       └── video/         ← demo and brand video
+├── media/                 ← deck-specific images and videos
+│   └── art/               ← classical paintings for art-overlay component
+├── data/                  ← CSV and XLSX data files for charts
 └── AGENTS.md              ← this file
 ```
+
+---
+
+## Ingrid brand assets
+
+When building an Ingrid Capacity deck, read `brand/ingrid/BRAND.md` first. It contains exact hex colors, typography, logo usage rules, photography guidance, and a full index of every asset.
+
+**Quick reference:**
+
+| Asset type | Path pattern | Notes |
+|---|---|---|
+| Logo (light bg) | `brand/ingrid/logos/color-on-light.png` | Color logo, black wordmark + purple dot |
+| Logo (dark bg) | `brand/ingrid/logos/color-on-dark.png` | Color logo, white wordmark + purple dot |
+| Gradient bg | `brand/ingrid/gradients/pastel.png` | Bare texture, no text or logo |
+| Dark gradient | `brand/ingrid/gradients/dark.png` | Moody dark variant |
+| Cover slide | `brand/ingrid/gradients/cover-centered.png` | Pre-composed cover with logo+tagline |
+| Company photos | `brand/ingrid/photos/*.jpg` | See BRAND.md for subjects and categories |
+
+**Logo files are transparent PNGs.** Pick `*-on-light` for light backgrounds and `*-on-dark` for dark/gradient/photo backgrounds, and place them directly. Do NOT apply `filter:invert(1)` or `mix-blend-mode:screen` — those corrupt the current assets. Standalone Arc marks: `logos/mark-on-light.png` / `logos/mark-on-dark.png`.
+
+**Typography quick ref:**
+- Headlines: Plus Jakarta Sans **Medium (500)**, **lowercase** in marketing comms, 100% leading
+- Sub-headers: Plus Jakarta Sans **Bold (700)**, ALL CAPS, 110% leading
+- Body: Plus Jakarta Sans **Light (300)**, Sentence case, 120% leading
+- Captions/eyebrows: **Fira Code**, ALL CAPS, 40% body size, 140% leading
+
+**Key colors:** Flux Violet `#AA73FA` (primary), Current Blue `#5FA4FA`, Ember Orange `#F8898C`, Solar Yellow `#FFCD96`. Alert colors: success `#4BE696`, error `#FF6464`, warning `#FA9B4D`, caution `#FFE77D`.
+
+**Photography categories:** Energy Landscape (grid infrastructure, dramatic angles), People/Society/Business (authentic diverse individuals mid-task), Intelligent Expert (precision, data environments, experts in interfaces).
+
+**Classical paintings** (for art-overlay component, component #25): `media/art/heathland-landscape.jpg`, `media/art/forest-with-figures.jpg`, `media/art/rocky-waterfall.jpg`.
 
 ---
 
@@ -634,6 +675,96 @@ Portrait image paired with a pull quote. For testimonials, interviews, or moment
 </div>
 ```
 
+### 32. Chart slide (bar / line / pie / doughnut)
+
+Renders a Chart.js chart from inline CSV data or a fetched file. Supports bar, line, pie, doughnut, and scatter chart types.
+
+**Data format:** First row = column headers. First column = labels (x-axis or pie segments). Remaining columns = data series.
+
+**Pattern A — inline data (works when opening the file directly, no server needed):**
+
+Put the CSV in a `<script type="text/csv">` tag anywhere in the document, give it an `id`, and reference it with `data-src="#that-id"`. The script tag should sit right after the `</section>` it belongs to.
+
+```html
+<!-- ========== 32. CHART SLIDE ========== -->
+<section class="slide">
+  <div class="slide-inner">
+    <div class="eyebrow">Performance</div>
+    <h2>Revenue by quarter. <span class="dim">Four periods.</span></h2>
+    <div class="chart-wrap">
+      <canvas data-chart="bar" data-src="#chart-revenue"></canvas>
+    </div>
+  </div>
+</section>
+<script type="text/csv" id="chart-revenue">
+Quarter,Revenue,Costs
+Q1,120,80
+Q2,145,95
+Q3,160,100
+Q4,190,110
+</script>
+```
+
+**Pattern B — file path (works when serving over HTTP):**
+
+Drop a `.csv` or `.xlsx` file into `data/` and reference it directly.
+
+```html
+<canvas data-chart="line" data-src="data/monthly-users.csv"></canvas>
+```
+
+**Drag-and-drop:** Drop any `.csv` or `.xlsx` file directly onto a chart canvas to reload it with new data — no code change needed.
+
+**Chart types:**
+
+| `data-chart` value | Use for |
+|---|---|
+| `bar` | Comparisons across categories (default) |
+| `line` | Trends over time |
+| `pie` | Part-to-whole (≤5 segments) |
+| `doughnut` | Part-to-whole with a label in the hole |
+| `scatter` | X/Y correlation (data format: `Label,X,Y` per row) |
+
+**XLSX support:** The SheetJS library loads lazily the first time an `.xlsx` or `.xls` file is requested. First sheet is used; same row/column format as CSV.
+
+**Color palette:** Charts use the deck's monochrome palette automatically (`#1a1a1a`, `#6b6b65`, `#a0a09a`, `#4a4a44`, `#d5d5d0`). No extra styling needed.
+
+### 33. Diagram slide (Mermaid flowchart / sequence / architecture)
+
+Renders a Mermaid.js diagram from code written directly in the slide. Supports flowcharts, sequence diagrams, entity-relationship diagrams, Gantt charts, and all other Mermaid diagram types.
+
+Write the Mermaid syntax inside a `<pre class="mermaid">` block. The diagram renders as SVG when the slide first becomes visible (lazy, to avoid zero-dimension errors on hidden slides).
+
+```html
+<!-- ========== 33. DIAGRAM SLIDE ========== -->
+<section class="slide">
+  <div class="slide-inner">
+    <div class="eyebrow">Architecture</div>
+    <h2>How it connects. <span class="dim">End to end.</span></h2>
+    <div class="mermaid-wrap">
+      <pre class="mermaid">
+graph LR
+  A[Input] --> B{Decision}
+  B -->|Yes| C[Output A]
+  B -->|No| D[Output B]
+      </pre>
+    </div>
+  </div>
+</section>
+```
+
+**Common diagram types:**
+
+```
+graph LR          ← left-to-right flowchart
+graph TD          ← top-down flowchart
+sequenceDiagram   ← sequence/timing diagram
+erDiagram         ← entity-relationship
+gantt             ← project timeline
+```
+
+**Theme:** Automatically styled to match the deck: Inter font, `#1a1a1a` text, `#d5d5d0` borders, transparent background. No extra configuration needed.
+
 ---
 
 ## Storytelling structure
@@ -667,6 +798,50 @@ Adding `?embed` to the deck URL produces an embeddable version. The PDF button h
 
 ```html
 <iframe src="deck.html?embed" style="width:100%; aspect-ratio:16/9; border:none;"></iframe>
+```
+
+---
+
+## Ingrid data
+
+When the `ingrid` MCP server is configured (`.mcp.json` + `MCP_SERVER_URL` + `INGRID_JWT` env vars set), you can pull live Ingrid data directly into slides.
+
+### Tool namespaces
+
+| Prefix | What it covers |
+|---|---|
+| `site-config__list_*` / `get_*` / `search_*` | Sites, configuration, availability |
+| `analytics-mcp__get_*` | Telemetry, P&L, market prices |
+
+All read tools (`list_`, `get_`, `search_`) use the code-execution sandbox. Write tools are not needed for slides.
+
+### Workflow: pulling data into a chart slide
+
+1. Call the relevant read tool(s) to fetch the data (e.g. `analytics-mcp__get_market_prices`, `site-config__list_sites`).
+2. Shape the result into CSV format (first row = headers, first column = labels).
+3. Write the CSV to `data/ingrid-{topic}.csv`.
+4. Reference it in a chart slide with `<canvas data-chart="bar" data-src="data/ingrid-{topic}.csv">`.
+
+### Critical rules
+
+- **Never call `site-config__list_sites` if the user's site list is already in context** — it returns ~190 KB.
+- **Batch independent reads** together where possible — each extra tool call is a full model round-trip.
+- **Never fabricate site names or IDs.** Only use data the tools actually returned.
+- A 401/403 from a tool means the JWT expired — ask the user to refresh `INGRID_JWT`.
+
+### Example: market price chart
+
+```html
+<!-- ========== MARKET PRICES ========== -->
+<section class="slide">
+  <div class="slide-inner">
+    <div class="eyebrow">Market</div>
+    <h2>Price trends. <span class="dim">Last 30 days.</span></h2>
+    <div class="chart-wrap">
+      <canvas data-chart="line" data-src="data/ingrid-market-prices.csv"></canvas>
+    </div>
+  </div>
+</section>
 ```
 
 ---
@@ -711,7 +886,7 @@ Use the full component library. Do not default to the same five component types.
 - For decks over 10 slides: use at least 5 different component types.
 - For decks over 20 slides: use at least 8 different component types.
 - Every deck should have at least one visual-heavy slide (Collage, Art overlay, or Product slide).
-- Before finalizing, check: did you use any of these components? Timeline, Product slide, JEDUF, Quote pair, Spec block, Stack grid, Art overlay, Testimonial grid, Feature card row, Update row, Code slide, Logo bar, Logo grid, Step stack, Collage slide, Split slide, Hero image, Image cards, Caption slide, Image + quote, Photo grid.
+- Before finalizing, check: did you use any of these components? Timeline, Product slide, JEDUF, Quote pair, Spec block, Stack grid, Art overlay, Testimonial grid, Feature card row, Update row, Code slide, Logo bar, Logo grid, Step stack, Collage slide, Split slide, Hero image, Image cards, Caption slide, Image + quote, Photo grid, Chart slide, Diagram slide.
 - If a beat would benefit from a component that does not exist yet, suggest it. Describe what it would look like and ask the user: "This slide would work better with a [description]. Want me to build it?" If yes, create it on-token before continuing.
 
 ---
@@ -763,4 +938,6 @@ When the human says things like:
 - "Add a comparison" → use component 4 (two-column) or 13 (JEDUF)
 - "Show the process" → use component 8 (dot flow) or 10 (spec block)
 - "Add an image" → use component 12 (collage slide), 26 (split slide), 27 (hero image), 28 (image cards), 29 (caption slide), 30 (image + quote), or 31 (photo grid)
+- "Add a chart" / "visualize data" / "show the numbers" → use component 32 (chart slide). Ask the human for the data if not provided, or use a `<script type="text/csv">` block with placeholder numbers they can replace.
+- "Add a diagram" / "show the flow" / "system architecture" / "decision tree" → use component 33 (diagram slide). Write Mermaid syntax based on what the human describes.
 - "Shorten the headline" → keep the bold-then-dim pattern, just use fewer words

@@ -1,5 +1,18 @@
 .DS_Store
+.env.local
 *.log
 .vscode/
 .idea/
 node_modules/
+
+# Office temporary lock files
+~$*.pptx
+~$*.xlsx
+~$*.docx
+
+# Large binary brand assets — store locally, not in git
+brand/ingrid/templates/
+brand/ingrid/video/
+media/*.pptx
+media/*.pdf
+ingrid assets/

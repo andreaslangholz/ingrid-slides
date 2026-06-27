@@ -13,6 +13,9 @@
   - Navigate with arrow keys, space, swipe, or the on-screen buttons
   - Press P or click the button to download as PDF
   - Drop images and videos into media/ and reference with relative paths
+  - Charts: embed data inline with <script type="text/csv" id="my-data"> and data-src="#my-data"
+    or drop any CSV / XLSX file directly onto a chart canvas to reload it
+    (data-src="data/file.csv" also works when served over HTTP)
 
   COMPONENT INDEX
     1.  Cover slide
@@ -47,6 +50,8 @@
     29. Caption slide (image + annotation bar)
     30. Image + quote (portrait image + pull quote)
     31. Photo grid (2×2 image mosaic)
+    32. Chart slide (bar / line / pie / doughnut from CSV or XLSX)
+    33. Diagram slide (flowchart / sequence / architecture via Mermaid)
 
   STORYTELLING STRUCTURE (six beats)
     Open → Act 1 (The World Before) → Act 2 (The Turn) →
@@ -1401,6 +1406,26 @@
     gap: 0.5rem;
   }
   .btn-row .pdf-btn { position: static; transform: none; }
+
+  /* --- Chart slide --- */
+  .chart-wrap {
+    position: relative;
+    width: 100%;
+    height: clamp(180px, 44vh, 440px);
+    margin-top: 1.5rem;
+  }
+
+  /* --- Mermaid diagram --- */
+  .mermaid-wrap {
+    margin-top: 2rem;
+  }
+  .mermaid-wrap svg {
+    display: block;
+    max-width: 100%;
+    height: auto; /* preserve viewBox aspect ratio */
+    max-height: clamp(180px, 50vh, 480px);
+    margin: 0 auto;
+  }
 </style>
 </head>
 <body>
@@ -1410,11 +1435,12 @@
 <div class="deck">
 
   <!-- ========== 1. COVER ========== -->
-  <section class="slide active">
-    <div class="slide-inner">
-      <div class="eyebrow">Conference · Date</div>
-      <h1>Your headlines.<br><span class="dim">Continuation that fades.</span></h1>
-      <div class="meta">Speaker name · 20 minutes</div>
+  <section class="slide active" style="background-image: url('media/KMS1821.jpg'); background-size: cover; background-position: center;">
+    <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.2) 60%,transparent 100%);"></div>
+    <div class="slide-inner" style="position:relative;z-index:1;color:#f5f5f3;">
+      <div class="eyebrow" style="color:rgba(245,245,243,0.75);">Conference · Date</div>
+      <h1 style="color:#f5f5f3;">Your headlines.<br><span class="dim" style="color:rgba(245,245,243,0.55);">Continuation that fades.</span></h1>
+      <div class="meta" style="color:rgba(245,245,243,0.65);">Speaker name · 20 minutes</div>
     </div>
   </section>
 
@@ -1907,6 +1933,40 @@
           <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&q=80" alt="">
           <div class="photo-grid-label">Fourth image</div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 32. CHART SLIDE ========== -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="eyebrow">Performance</div>
+      <h2>Revenue by quarter. <span class="dim">Four periods.</span></h2>
+      <div class="chart-wrap">
+        <canvas data-chart="bar" data-src="#chart-32-data"></canvas>
+      </div>
+    </div>
+  </section>
+  <script type="text/csv" id="chart-32-data">
+Quarter,Revenue,Costs
+Q1,120,80
+Q2,145,95
+Q3,160,100
+Q4,190,110
+  </script>
+
+  <!-- ========== 33. DIAGRAM SLIDE ========== -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="eyebrow">Architecture</div>
+      <h2>How it connects. <span class="dim">End to end.</span></h2>
+      <div class="mermaid-wrap">
+        <pre class="mermaid">
+graph LR
+  A[Input] --> B{Decision}
+  B -->|Yes| C[Output A]
+  B -->|No| D[Output B]
+        </pre>
       </div>
     </div>
   </section>
@@ -2761,6 +2821,247 @@
   renderRail();
   edShow(Math.max(0, curIdx()));
   markDirty();
+})();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+
+<script>
+/* ============================================================
+   Charts  — canvas[data-chart][data-src]
+     data-chart : bar | line | pie | doughnut | scatter
+     data-src   : path to a CSV or XLSX file in data/
+   CSV format  : first row = headers, first col = labels
+   XLSX format : same convention, first sheet used
+   Diagrams — pre.mermaid
+     Write standard Mermaid syntax inside a <pre class="mermaid">
+     block. Theme is auto-synced to the deck's design system.
+   ============================================================ */
+(() => {
+
+  /* ---------- Mermaid ---------- */
+  if (window.mermaid) {
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#ffffff',
+        primaryTextColor: '#1a1a1a',
+        primaryBorderColor: '#d5d5d0',
+        lineColor: '#6b6b65',
+        secondaryColor: '#f5f5f3',
+        tertiaryColor: '#e0e0db',
+        background: 'transparent',
+        mainBkg: '#ffffff',
+        nodeBorder: '#d5d5d0',
+        clusterBkg: '#f5f5f3',
+        edgeLabelBackground: '#f5f5f3',
+        fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+        fontSize: '14px'
+      }
+    });
+    // Don't run eagerly — slides are display:none on load, giving Mermaid zero dimensions.
+    // Lazy render happens in the show() hook below on first activation.
+  }
+
+  /* ---------- Charts ---------- */
+  if (!window.Chart) return;
+
+  Chart.defaults.font.family = 'Inter, -apple-system, BlinkMacSystemFont, sans-serif';
+  Chart.defaults.color = '#6b6b65';
+
+  const PALETTE = ['#1a1a1a', '#6b6b65', '#a0a09a', '#4a4a44', '#d5d5d0'];
+
+  /* Lazy-load SheetJS only when an xlsx/xls file is requested */
+  let xlsxPromise = null;
+  function getXLSX() {
+    if (window.XLSX) return Promise.resolve(window.XLSX);
+    if (xlsxPromise) return xlsxPromise;
+    xlsxPromise = new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
+      s.onload = () => resolve(window.XLSX);
+      s.onerror = () => reject(new Error('Failed to load XLSX library'));
+      document.head.appendChild(s);
+    });
+    return xlsxPromise;
+  }
+
+  function parseCSV(text) {
+    const rows = [];
+    for (const line of text.trim().split('\n')) {
+      if (!line.trim()) continue;
+      const row = [];
+      let field = '', inQ = false;
+      for (let i = 0; i < line.length; i++) {
+        const c = line[i];
+        if (c === '"') { inQ = !inQ; continue; }
+        if (c === ',' && !inQ) { row.push(field.trim()); field = ''; continue; }
+        field += c;
+      }
+      row.push(field.trim());
+      rows.push(row);
+    }
+    return rows;
+  }
+
+  async function loadData(src) {
+    /* Inline data: data-src="#my-id" reads from <script type="text/csv" id="my-id"> */
+    if (src.startsWith('#')) {
+      const el = document.querySelector(src);
+      if (!el) throw new Error(`No element found for ${src}`);
+      return parseCSV(el.textContent);
+    }
+    /* Remote/local-server path: fetch() */
+    const ext = src.split('.').pop().toLowerCase();
+    const res = await fetch(src);
+    if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+    if (['xlsx', 'xls'].includes(ext)) {
+      const XLSX = await getXLSX();
+      const buf = await res.arrayBuffer();
+      const wb = XLSX.read(buf, { type: 'array' });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      return XLSX.utils.sheet_to_json(ws, { header: 1 });
+    }
+    return parseCSV(await res.text());
+  }
+
+  async function loadFromFile(file) {
+    const ext = file.name.split('.').pop().toLowerCase();
+    if (['xlsx', 'xls'].includes(ext)) {
+      const XLSX = await getXLSX();
+      const buf = await file.arrayBuffer();
+      const wb = XLSX.read(buf, { type: 'array' });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      return XLSX.utils.sheet_to_json(ws, { header: 1 });
+    }
+    return parseCSV(await file.text());
+  }
+
+  function toChartData(rows, type) {
+    const headers = rows[0];
+    const data = rows.slice(1);
+    const labels = data.map(r => r[0]);
+    const isRound = ['pie', 'doughnut'].includes(type);
+    if (isRound) {
+      return {
+        labels,
+        datasets: [{ data: data.map(r => +r[1]), backgroundColor: PALETTE, borderWidth: 0 }]
+      };
+    }
+    return {
+      labels,
+      datasets: headers.slice(1).map((label, i) => ({
+        label,
+        data: data.map(r => +r[i + 1]),
+        backgroundColor: PALETTE[i % PALETTE.length],
+        borderColor: PALETTE[i % PALETTE.length],
+        borderWidth: type === 'line' ? 2 : 0,
+        fill: false,
+        tension: 0.35,
+        pointRadius: type === 'line' ? 3 : 0,
+        barPercentage: 0.65
+      }))
+    };
+  }
+
+  function chartOptions(type, seriesCount) {
+    const isRound = ['pie', 'doughnut'].includes(type);
+    return {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: isRound || seriesCount > 1,
+          position: 'bottom',
+          labels: { padding: 20, boxWidth: 10, boxHeight: 10, font: { size: 12 } }
+        },
+        tooltip: {
+          backgroundColor: '#1a1a1a',
+          padding: 10,
+          cornerRadius: 6,
+          titleFont: { size: 12, weight: '500' },
+          bodyFont: { size: 12 }
+        }
+      },
+      scales: isRound ? {} : {
+        x: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 12 } } },
+        y: { grid: { color: '#e0e0db' }, border: { display: false }, ticks: { maxTicksLimit: 6, font: { size: 12 } } }
+      }
+    };
+  }
+
+  const instances = new Map();
+
+  async function initChart(canvas) {
+    const type = canvas.dataset.chart;
+    const src = canvas.dataset.src;
+    if (!src) return;
+    try {
+      const rows = await loadData(src);
+      const seriesCount = rows[0].length - 1;
+      const ch = new Chart(canvas, {
+        type,
+        data: toChartData(rows, type),
+        options: chartOptions(type, seriesCount)
+      });
+      instances.set(canvas, ch);
+    } catch (e) {
+      console.warn('[chart]', src, e.message);
+      canvas.closest('.chart-wrap')?.insertAdjacentHTML('afterend',
+        `<p style="color:#a0a09a;font-size:.8rem;margin-top:.5rem">Could not load ${src}: ${e.message}</p>`);
+    }
+  }
+
+  /* Hook show() to resize charts + lazy-render mermaid when a slide activates */
+  const _show = window.show;
+  window.show = (i) => {
+    _show(i);
+    // rAF lets display:flex apply before we measure canvas dimensions
+    requestAnimationFrame(() => {
+      const active = document.querySelector('.slide.active');
+      active?.querySelectorAll('canvas[data-chart]').forEach(c => instances.get(c)?.resize());
+      // Lazy mermaid: only render once, only when the slide is visible
+      const unrendered = [...(active?.querySelectorAll('.mermaid:not([data-processed])') ?? [])];
+      if (unrendered.length && window.mermaid) mermaid.run({ nodes: unrendered });
+    });
+  };
+
+  /* Pre-fetch all chart data; rendering/sizing happens when each slide is shown */
+  const canvases = [...document.querySelectorAll('canvas[data-chart]')];
+  if (canvases.length) Promise.all(canvases.map(initChart));
+
+  /* Drag-and-drop a CSV or XLSX file onto any chart canvas to reload it */
+  canvases.forEach(canvas => {
+    const wrap = canvas.closest('.chart-wrap') ?? canvas;
+    wrap.addEventListener('dragover', e => { e.preventDefault(); wrap.style.outline = '2px dashed #a0a09a'; wrap.style.outlineOffset = '-2px'; });
+    wrap.addEventListener('dragleave', () => { wrap.style.outline = ''; wrap.style.outlineOffset = ''; });
+    wrap.addEventListener('drop', async e => {
+      e.preventDefault();
+      wrap.style.outline = ''; wrap.style.outlineOffset = '';
+      const file = e.dataTransfer.files[0];
+      if (!file) return;
+      try {
+        const rows = await loadFromFile(file);
+        const ch = instances.get(canvas);
+        if (ch) {
+          const newData = toChartData(rows, ch.config.type);
+          ch.data = newData;
+          ch.update();
+        } else {
+          canvas.dataset.src = '';
+          const seriesCount = rows[0].length - 1;
+          const newCh = new Chart(canvas, { type: canvas.dataset.chart, data: toChartData(rows, canvas.dataset.chart), options: chartOptions(canvas.dataset.chart, seriesCount) });
+          instances.set(canvas, newCh);
+        }
+      } catch(e) {
+        console.warn('[chart drop]', e.message);
+      }
+    });
+  });
+
 })();
 </script>
 

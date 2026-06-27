@@ -10,9 +10,10 @@ A guide to making slides with this template.
 2. **Open `deck.html`** in any modern browser. That's it. No build step. No dependencies.
 3. **Edit the HTML** to add your content. Each slide is a `<section class="slide">`.
 4. **Drop your media** into `media/` and reference it with relative paths.
-5. **Present** in full-screen (F11 in Chrome, or Cmd+Ctrl+F on Mac).
+5. **Drop data files** into `data/` and reference them in chart slides (or embed data inline — see Charts below).
+6. **Present** in full-screen (F11 in Chrome, or Cmd+Ctrl+F on Mac).
 
-The file is fully self-contained except for fonts (Inter is loaded from Google Fonts). If you'll present somewhere without wifi, that one line at the top of `<style>` is the only thing that needs to change.
+The file is fully self-contained except for fonts (Inter from Google Fonts) and the Chart.js / Mermaid libraries (loaded from jsDelivr CDN when slides with charts or diagrams are used). If you'll present somewhere without wifi, download those libraries in advance — links are in the script tags at the bottom of `deck.html`.
 
 ---
 
@@ -85,6 +86,105 @@ Every component is in `deck.html` as a working example. Copy any `<section class
 | **JEDUF three-column** | Two extremes vs the middle path. Hero column is dark. |
 | **Dark slide** | A pivot moment. Marks the turn in the talk. |
 | **Closing** | Mic-drop line. Often dark. |
+| **Chart slide** | Bar, line, pie, or doughnut chart from CSV or XLSX data. |
+| **Diagram slide** | Flowchart, sequence, ER, or any Mermaid diagram type. |
+
+---
+
+## Charts
+
+Charts are powered by Chart.js. The library loads from CDN automatically when the deck has a `<canvas data-chart="...">` element.
+
+### Data format
+
+CSV and XLSX follow the same convention:
+
+- **First row:** column headers. First cell is the label name; remaining cells are series names.
+- **Remaining rows:** one row per data point. First cell is the label (x-axis value or pie segment name); remaining cells are numeric values.
+
+```csv
+Quarter,Revenue,Costs
+Q1,120,80
+Q2,145,95
+Q3,160,100
+Q4,190,110
+```
+
+### Three ways to load data
+
+**1. Inline (works everywhere, including double-clicking the file)**
+
+Embed the CSV directly in the HTML in a `<script type="text/csv">` tag and reference it with `data-src="#that-id"`. This is the recommended default — no server, no fetch, no CORS issue.
+
+```html
+<canvas data-chart="bar" data-src="#my-data"></canvas>
+
+<script type="text/csv" id="my-data">
+Quarter,Revenue,Costs
+Q1,120,80
+Q2,145,95
+</script>
+```
+
+Place the `<script>` tag right after the `</section>` that contains the chart.
+
+**2. Drag-and-drop**
+
+Drop any `.csv` or `.xlsx` file directly onto a chart canvas. The chart re-renders immediately with the new data. This is the ThinkCell-equivalent workflow — no code change needed.
+
+**3. File path (HTTP server only)**
+
+```html
+<canvas data-chart="bar" data-src="data/revenue.csv"></canvas>
+```
+
+Drop the file in `data/` and reference it. Works when the deck is served over HTTP (`python3 -m http.server`), not when opened as a local file. XLSX files use SheetJS, which loads lazily on first use.
+
+### Chart types
+
+| `data-chart` | Chart type |
+|---|---|
+| `bar` | Grouped bars — comparisons across categories |
+| `line` | Connected line — trends over time |
+| `pie` | Filled circle — part-to-whole (≤5 segments) |
+| `doughnut` | Ring — part-to-whole with visual breathing room |
+| `scatter` | X/Y dots — correlation (data format: `Label,X,Y`) |
+
+---
+
+## Diagrams
+
+Diagrams are powered by Mermaid.js (loaded from CDN). Write diagram syntax in a `<pre class="mermaid">` block inside a `.mermaid-wrap` div.
+
+```html
+<div class="mermaid-wrap">
+  <pre class="mermaid">
+graph LR
+  A[Start] --> B{Check}
+  B -->|Pass| C[Done]
+  B -->|Fail| D[Retry]
+  </pre>
+</div>
+```
+
+Diagrams render lazily when their slide first becomes visible — this avoids sizing errors that occur when Mermaid tries to render inside a hidden slide.
+
+### Common diagram types
+
+```
+graph TD          top-down flowchart
+graph LR          left-to-right flowchart
+sequenceDiagram   interaction/timing diagram
+erDiagram         entity-relationship
+gantt             project timeline
+classDiagram      UML class diagram
+```
+
+See [mermaid.js.org](https://mermaid.js.org) for full syntax reference.
+
+### Theme
+
+Diagrams automatically inherit the deck's visual style: Inter font, near-black text, light gray borders, transparent background.
 
 ---
 
@@ -166,6 +266,14 @@ The slide counter and progress bar update automatically. No JS changes needed.
 **PDF export looks wrong.** Make sure "Background graphics" is enabled in the print dialog. Use Chrome. It has the best print engine.
 
 **Fonts look wrong offline.** Inter is loaded from Google Fonts via the `@import` line. If you need offline support, download Inter and reference it locally instead.
+
+**Chart shows "Could not load …: Failed to fetch".** You're opening the file directly (`file://`) and using `data-src="data/file.csv"`. Switch to the inline pattern: put your CSV in a `<script type="text/csv" id="my-id">` block and use `data-src="#my-id"`. Or drag your CSV file directly onto the chart canvas.
+
+**Chart is blank when navigating to the slide.** This usually means the chart was initialized before the slide was visible. The deck resizes charts on every slide activation via `requestAnimationFrame` — if the chart is still blank, try pressing the left arrow and right arrow to re-trigger the resize.
+
+**Mermaid diagram does not appear.** Check that the `<pre>` has `class="mermaid"` and that it's wrapped in `<div class="mermaid-wrap">`. Diagrams render on first slide activation, not on page load. If the diagram syntax is invalid, Mermaid replaces it with an error message — check the browser console for details.
+
+**Charts or diagrams missing in PDF export.** Chart.js canvases export correctly via the browser print engine. Mermaid SVGs also print. Make sure "Background graphics" is enabled in the print dialog. If a diagram is on a slide you never navigated to before printing, do so once before exporting — diagrams render lazily on first visit.
 
 ---
 

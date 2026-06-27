@@ -1,6 +1,16 @@
 # media
 
-Drop your images and videos in this folder.
+Drop deck-specific images and videos in this folder.
+
+**Ingrid brand assets (logos, gradients, company photos) live in `brand/ingrid/` — not here.**  
+See `brand/ingrid/BRAND.md` for the full index and usage rules.
+
+## Subfolders
+
+- `art/` — classical paintings for the art-overlay component (#25):
+  - `art/heathland-landscape.jpg` — Danish heath landscape (KMS1821, SMK)
+  - `art/forest-with-figures.jpg` — Summer forest scene (KMS529, SMK)
+  - `art/rocky-waterfall.jpg` — Rocky landscape with waterfall (KMSsp437, SMK)
 
 ## Naming conventions
 

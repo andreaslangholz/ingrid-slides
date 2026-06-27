@@ -1,0 +1,2148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ingrid Capacity</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,700;0,800;1,300;1,400&family=Fira+Code:wght@300;400;500;600&display=swap');
+
+/* ─── Brand tokens ────────────────────────────────── */
+:root {
+  /* Core */
+  --ink:      #000000;
+  --white:    #ffffff;
+  /* Natural Energies */
+  --violet:   #AA73FA;   /* Flux Violet — primary accent  */
+  --blue:     #5FA4FA;   /* Current Blue                  */
+  --orange:   #F8898C;   /* Ember Orange                  */
+  --yellow:   #FFCD96;   /* Solar Yellow                  */
+  /* Dark accents */
+  --dblue:    #4C92E9;
+  --dorange:  #EE686C;
+  --dyellow:  #E0790D;
+  /* Ingrid Gradient — extracted from official PPTX, used as image background */
+  --grad: linear-gradient(135deg, #6CA6F3, #AE76F2, #D981B7);  /* progress bar only */
+  /* UI grays */
+  --g1: #F2F2F2;
+  --g2: #D8D8D8;
+  --g3: #999999;
+  --g4: #3F3F3F;
+  /* Layout */
+  --hdr: 8vh;
+  --ftr: 9vh;
+  --pad: 5vw;
+  --ff:  'Plus Jakarta Sans', Aptos, system-ui, sans-serif;
+  --ffm: 'Fira Code', 'Courier New', monospace;
+}
+
+/* ─── Reset ───────────────────────────────────────── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; height:100%; overflow:hidden; background:var(--white); font-family:var(--ff); -webkit-font-smoothing:antialiased; color:var(--ink); }
+
+/* ─── Fixed header ────────────────────────────────── */
+.ig-header {
+  position:fixed; top:0; left:0; right:0; height:var(--hdr);
+  border-bottom:1px solid var(--ink); display:flex; align-items:stretch;
+  background:var(--white); z-index:200;
+}
+.ig-header-brand {
+  width:38%; display:flex; align-items:center;
+  padding:0 3%; border-right:1px solid var(--ink);
+  font-family:var(--ffm); font-size:.65rem; font-weight:500;
+  letter-spacing:.15em; text-transform:uppercase;
+}
+.ig-header-right { flex:1; }
+
+/* ─── Fixed footer ────────────────────────────────── */
+.ig-footer {
+  position:fixed; bottom:0; left:0; right:0; height:var(--ftr);
+  border-top:1px solid var(--ink); display:flex; align-items:center;
+  padding:0 3%; gap:1.2rem; background:var(--white); z-index:200;
+}
+.ig-footnote { font-family:var(--ffm); font-size:.58rem; color:var(--g3); letter-spacing:.1em; text-transform:uppercase; flex:1; }
+.ig-counter { font-family:var(--ffm); font-size:.58rem; color:var(--g3); letter-spacing:.06em; white-space:nowrap; }
+
+/* ─── Progress bar ────────────────────────────────── */
+.progress { position:fixed; top:var(--hdr); left:0; height:2px; background:var(--grad); z-index:201; transition:width .3s ease; width:0%; }
+
+/* ─── Deck + slides ───────────────────────────────── */
+.deck { position:fixed; top:var(--hdr); bottom:var(--ftr); left:0; right:0; }
+.slide { position:absolute; inset:0; display:none; flex-direction:column; padding:4% 4.5%; background:var(--white); color:var(--ink); overflow:hidden; }
+/* Remove double-gap: pptc-subhead already provides bottom margin, kill the content container's top margin */
+.slide > .pptc-subhead + * { margin-top:0; }
+.slide.active { display:flex; }
+
+/* ─── Colour variants ─────────────────────────────── */
+.ig-dark    { background:var(--ink); color:var(--white); }
+.ig-grad-bg { background:url('brand/ingrid/gradients/pastel.png') center/cover no-repeat; color:var(--white); }
+
+/* ─── Core typography ─────────────────────────────── */
+/* Eyebrow: Fira Code, ALL CAPS, ~40% body size */
+.eyebrow { display:none; }
+.ig-dark .eyebrow, .ig-grad-bg .eyebrow { display:none; }
+
+/* Headlines: Plus Jakarta Sans Medium (500), lowercase by brand voice */
+h1 {
+  font-weight:500; font-size:clamp(2.4rem,6vw,5rem);
+  line-height:1.0; letter-spacing:-.02em;
+}
+h2 {
+  font-weight:500; font-size:clamp(1.8rem,3.8vw,3.5rem);
+  line-height:1.05; letter-spacing:-.02em; margin-bottom:.6rem;
+}
+h3 {
+  font-weight:700; font-size:clamp(.9rem,1.6vw,1.3rem);
+  line-height:1.2; letter-spacing:0em; text-transform:uppercase;
+}
+h4 {
+  font-weight:700; font-size:.85rem; letter-spacing:-.01em; margin-bottom:.25rem;
+}
+h5 { font-weight:600; font-size:.78rem; margin-bottom:.2rem; }
+
+/* Sub-headers: Fira Code, ALL CAPS — matches pptc-subhead */
+.subhead {
+  font-family:var(--ffm); font-size:clamp(.55rem,1vw,.72rem); font-weight:700;
+  text-transform:uppercase; letter-spacing:.12em; color:var(--g3);
+  margin:.9rem 0 .7rem;
+}
+.ig-dark .subhead { color:rgba(255,255,255,.45); }
+.ig-grad-bg .subhead { color:rgba(255,255,255,.6); }
+
+/* Body: Plus Jakarta Sans Light (300) */
+p { font-weight:300; font-size:clamp(.85rem,1.25vw,1.05rem); line-height:1.7; color:var(--g4); }
+.ig-dark p { color:rgba(255,255,255,.75); }
+.ig-grad-bg p { color:rgba(255,255,255,.85); }
+
+.dim { color:var(--g3); }
+.ig-dark .dim { color:rgba(255,255,255,.38); }
+
+.subtitle { font-weight:300; font-size:clamp(.85rem,1.3vw,1.1rem); color:var(--g4); line-height:1.65; max-width:68ch; margin-top:.6rem; }
+.ig-dark .subtitle { color:rgba(255,255,255,.7); }
+.ig-grad-bg .subtitle { color:rgba(255,255,255,.85); }
+
+.meta { font-family:var(--ffm); font-size:.6rem; color:var(--g3); letter-spacing:.08em; text-transform:uppercase; margin-top:1.5rem; }
+.ig-dark .meta { color:rgba(255,255,255,.4); }
+
+/* Violet accent line (used instead of red underline — used sparingly) */
+.accent-line { display:block; width:2.5rem; height:2px; background:var(--violet); margin:.5rem 0 1.2rem; }
+.ig-dark .accent-line { background:var(--violet); }
+.ig-grad-bg .accent-line { background:rgba(255,255,255,.6); }
+
+/* ─── Bullet list ─────────────────────────────────── */
+.ig-list { list-style:none; display:flex; flex-direction:column; gap:.5rem; margin-top:.8rem; }
+.ig-list li { display:flex; gap:.7rem; align-items:baseline; font-weight:300; font-size:clamp(.82rem,1.2vw,.98rem); color:var(--g4); line-height:1.55; }
+.ig-list li::before { content:'—'; font-family:var(--ffm); font-size:.7rem; color:var(--violet); flex-shrink:0; }
+.ig-dark .ig-list li { color:rgba(255,255,255,.75); }
+.ig-dark .ig-list li::before { color:var(--violet); }
+
+/* ─── 1. COVER ────────────────────────────────────── */
+.slide.ig-cover { padding:0; flex-direction:row; }
+.ig-cover-left { width:45%; display:flex; flex-direction:column; justify-content:flex-end; padding:5vh var(--pad) 5vh var(--pad); background:var(--white); }
+.ig-cover-left h1 { font-size:clamp(2rem,5.5vw,4.5rem); line-height:1.05; }
+.ig-cover-right { flex:1; overflow:hidden; background:var(--g1); position:relative; }
+.ig-cover-right img { width:100%; height:100%; object-fit:cover; display:block; }
+
+/* ─── GRADIENT COVER variant ──────────────────────── */
+.slide.ig-cover-grad { padding:0; flex-direction:row; }
+.ig-cover-grad-panel { width:45%; display:flex; flex-direction:column; justify-content:flex-end; padding:5vh var(--pad); background:url('brand/ingrid/gradients/pastel.png') left/cover no-repeat; color:var(--white); }
+.ig-cover-grad-panel h1 { color:var(--white); font-size:clamp(2rem,5.5vw,4.5rem); }
+.ig-cover-grad-panel .eyebrow { color:rgba(255,255,255,.5); }
+.ig-cover-grad-panel .meta { color:rgba(255,255,255,.5); }
+.ig-cover-img { flex:1; overflow:hidden; background:var(--g1); }
+.ig-cover-img img { width:100%; height:100%; object-fit:cover; display:block; }
+
+/* ─── 2. QUOTE ────────────────────────────────────── */
+.ig-quote-slide { justify-content:center; }
+.ig-quote-slide h1 { font-size:clamp(2.4rem,6vw,5.2rem); max-width:22ch; line-height:1.0; }
+.ig-grad-bg.ig-quote-slide h1 { color:var(--white); }
+.quote-attr { font-family:var(--ffm); font-size:.62rem; text-transform:uppercase; letter-spacing:.12em; color:var(--g3); margin-top:1.5rem; }
+.ig-grad-bg .quote-attr { color:rgba(255,255,255,.5); }
+
+/* ─── 4. TWO-COLUMN ───────────────────────────────── */
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:4vw; margin-top:1.5rem; }
+
+/* ─── 4b. STEP STACK ──────────────────────────────── */
+.col-stack { display:flex; flex-direction:column; gap:.4rem; margin-top:1rem; }
+.step { padding:.5rem .9rem; font-size:.82rem; font-weight:400; border-left:3px solid var(--violet); background:var(--g1); border-radius:0 3px 3px 0; }
+.step.dim { border-color:var(--g2); color:var(--g3); background:transparent; font-weight:300; }
+.step.kill { border-color:var(--dorange); background:rgba(238,104,108,.07); color:var(--dorange); text-decoration:line-through; }
+
+/* ─── 5. THREE-COLUMN ─────────────────────────────── */
+.three-col { display:grid; grid-template-columns:1fr 1fr 1fr; gap:3vw; margin-top:1.5rem; }
+.three-col > div { border-top:2px solid var(--violet); padding-top:1rem; }
+.three-col h3 { font-family:var(--ffm); font-size:.65rem; font-weight:600; text-transform:uppercase; letter-spacing:.1em; color:var(--violet); margin-bottom:.5rem; }
+.three-col p { font-size:.88rem; }
+
+/* ─── 6. CAPABILITY LIST ──────────────────────────── */
+.cap-list { display:flex; flex-direction:column; margin-top:1.5rem; }
+.cap-row { display:grid; grid-template-columns:1fr 2fr; gap:3vw; padding:.85rem 0; border-bottom:1px solid var(--g2); align-items:baseline; }
+.cap-row:first-child { border-top:1px solid var(--g2); }
+.cap-q { font-weight:500; font-size:.88rem; }
+.cap-a { font-weight:300; font-size:.88rem; color:var(--g4); }
+
+/* ─── 7. CALLOUT ──────────────────────────────────── */
+.callout { background:var(--ink); color:var(--white); border-left:3px solid var(--violet); padding:2rem 2.5rem; border-radius:3px; margin-top:1.5rem; max-width:72ch; }
+.callout h3 { font-family:var(--ffm); font-size:.62rem; text-transform:uppercase; letter-spacing:.12em; color:var(--violet); margin-bottom:.7rem; font-weight:500; }
+.callout p { color:rgba(255,255,255,.8); font-weight:300; font-size:clamp(.88rem,1.3vw,1.05rem); line-height:1.7; }
+.callout strong { color:var(--white); font-weight:600; }
+
+/* ─── 8. DOT FLOW ─────────────────────────────────── */
+.dot-flow { display:grid; grid-template-columns:repeat(5,1fr); margin-top:2.5rem; position:relative; }
+.dot-flow::before { content:''; position:absolute; top:5px; left:8%; right:8%; height:1px; background:var(--g2); }
+.dot-step { text-align:center; padding:0 .5rem; }
+.dot { width:11px; height:11px; border-radius:50%; background:var(--violet); margin:0 auto .8rem; position:relative; z-index:1; }
+.dot-step h4 { font-size:.82rem; font-weight:600; margin-bottom:.2rem; text-transform:none; }
+.dot-step p { font-family:var(--ffm); font-size:.6rem; color:var(--g3); line-height:1.4; }
+
+/* ─── 9. STACK GRID ───────────────────────────────── */
+.stack-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; margin-top:1.5rem; }
+.stack-card { border-top:2px solid var(--violet); padding-top:.75rem; }
+.stack-card-label { font-family:var(--ffm); font-size:.6rem; font-weight:600; text-transform:uppercase; letter-spacing:.1em; color:var(--violet); margin-bottom:.6rem; }
+.stack-tool { display:flex; align-items:center; gap:.5rem; font-size:.82rem; font-weight:300; color:var(--g4); padding:.28rem 0; border-bottom:1px solid var(--g2); }
+.mark { width:5px; height:5px; border-radius:50%; background:var(--violet); flex-shrink:0; }
+
+/* ─── 10. SPEC FLOW ───────────────────────────────── */
+.spec-flow { display:flex; flex-direction:column; gap:.75rem; margin-top:1.5rem; max-width:64ch; }
+.spec-block { background:var(--g1); border:1px solid var(--g2); border-radius:3px; padding:.9rem 1.2rem; }
+.spec-block h4 { font-family:var(--ffm); font-size:.6rem; text-transform:uppercase; letter-spacing:.1em; color:var(--violet); margin-bottom:.2rem; font-weight:500; }
+.spec-block p { font-size:.88rem; font-weight:300; }
+.ctx-row { display:flex; align-items:center; gap:.6rem; flex-wrap:wrap; }
+.ctx-label { font-family:var(--ffm); font-size:.6rem; color:var(--g3); text-transform:uppercase; letter-spacing:.08em; }
+.ctx-pill { font-family:var(--ffm); font-size:.65rem; padding:.18rem .55rem; border:1px solid var(--g2); border-radius:999px; color:var(--g4); }
+.ai-divider { display:flex; align-items:center; gap:.75rem; }
+.ai-divider .line { flex:1; height:1px; background:var(--violet); opacity:.3; }
+.ai-pill { font-family:var(--ffm); font-size:.6rem; font-weight:600; text-transform:uppercase; letter-spacing:.1em; color:var(--violet); border:1px solid var(--violet); padding:.18rem .65rem; border-radius:999px; white-space:nowrap; }
+.outputs-row { display:grid; grid-template-columns:repeat(3,1fr); gap:.75rem; }
+.output-card { background:var(--ink); border-radius:3px; padding:.9rem 1rem; }
+.output-card h5 { font-family:var(--ffm); font-size:.6rem; text-transform:uppercase; letter-spacing:.08em; color:rgba(255,255,255,.4); margin-bottom:.2rem; }
+.output-card p { font-size:.82rem; color:rgba(255,255,255,.82); font-weight:300; }
+
+/* ─── 11. PRODUCT SLIDE ───────────────────────────── */
+.product-row { display:flex; justify-content:space-between; align-items:flex-end; gap:4vw; flex:1; }
+.product-meta { display:flex; flex-direction:column; gap:.5rem; max-width:44ch; }
+.product-num { font-family:var(--ffm); font-size:.65rem; color:var(--violet); font-weight:600; }
+.product-tag { font-size:.82rem; color:var(--g3); font-style:italic; font-weight:300; }
+.product-headline { font-size:clamp(.88rem,1.4vw,1.05rem); font-weight:500; line-height:1.4; }
+.product-desc { font-size:.82rem; color:var(--g4); line-height:1.6; font-weight:300; }
+.product-stat { font-family:var(--ffm); font-size:.6rem; color:var(--g3); text-transform:uppercase; letter-spacing:.08em; margin-top:.25rem; }
+.product-name { font-weight:500; font-size:clamp(3rem,9vw,8rem); letter-spacing:-.04em; line-height:.9; color:var(--ink); flex-shrink:0; }
+.product-name sup { font-size:.4em; vertical-align:super; }
+
+/* ─── 12. FULL-BLEED IMAGE ────────────────────────── */
+.slide.ig-full { padding:0; overflow:hidden; position:relative; }
+.ig-full-img { width:100%; height:100%; object-fit:cover; display:block; background:var(--g1); }
+.ig-full-caption { position:absolute; bottom:0; left:0; right:0; padding:3vh var(--pad); background:linear-gradient(to top,rgba(0,0,0,.7),transparent); color:var(--white); }
+.ig-full-caption h2 { color:var(--white); font-size:clamp(1.3rem,2.8vw,2.2rem); }
+.ig-full-caption p { font-family:var(--ffm); font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.55); margin-top:.3rem; font-weight:400; }
+
+/* ─── 13. JEDUF ───────────────────────────────────── */
+.jeduf { display:grid; grid-template-columns:1fr 1.12fr 1fr; gap:0; margin-top:1.5rem; flex:1; }
+.jeduf-col { display:flex; flex-direction:column; gap:.5rem; padding:1.2rem 1.4rem; border:1px solid var(--g2); border-radius:3px; margin:0 .3rem; }
+.jeduf-col.hero { background:var(--ink); color:var(--white); border-color:var(--ink); }
+.jeduf-label { font-family:var(--ffm); font-size:.58rem; text-transform:uppercase; letter-spacing:.1em; color:var(--g3); }
+.jeduf-col.hero .jeduf-label { color:rgba(255,255,255,.4); }
+.jeduf-title { font-weight:500; font-size:1.05rem; letter-spacing:-.015em; }
+.jeduf-col.hero .jeduf-title { color:var(--white); }
+.jeduf-philosophy { font-size:.78rem; font-style:italic; font-weight:300; color:var(--g4); line-height:1.5; }
+.jeduf-col.hero .jeduf-philosophy { color:rgba(255,255,255,.62); }
+.jeduf-step { font-size:.78rem; font-weight:300; color:var(--g4); padding:.28rem 0; border-bottom:1px solid var(--g2); }
+.jeduf-col.hero .jeduf-step { color:rgba(255,255,255,.72); border-color:rgba(255,255,255,.1); }
+
+/* ─── 14. TIMELINE ────────────────────────────────── */
+.timeline { display:flex; flex-direction:column; margin-top:1.5rem; }
+.timeline-row { display:grid; grid-template-columns:4rem 2rem 1fr; gap:.75rem; align-items:start; padding:.6rem 0; }
+.timeline-year { font-family:var(--ffm); font-size:.65rem; font-weight:600; color:var(--violet); letter-spacing:.06em; padding-top:.1rem; }
+.timeline-track { display:flex; flex-direction:column; align-items:center; }
+.timeline-dot { width:9px; height:9px; border-radius:50%; background:var(--violet); flex-shrink:0; }
+.timeline-line { width:1px; flex:1; background:var(--g2); margin-top:4px; min-height:22px; }
+.timeline-content h4 { font-size:.88rem; font-weight:600; margin-bottom:.18rem; }
+.timeline-content p { font-size:.78rem; font-weight:300; line-height:1.5; }
+
+/* ─── 15. STAT GRID ───────────────────────────────── */
+.stat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:1.5rem; }
+.stat-card { border-top:2px solid var(--g2); padding-top:.9rem; }
+.stat-card.stat-hero { border-color:var(--violet); background:var(--ink); color:var(--white); padding:1.2rem; border-radius:3px; border-top-width:3px; }
+.stat-label { font-family:var(--ffm); font-size:.6rem; text-transform:uppercase; letter-spacing:.1em; color:var(--g3); margin-bottom:.35rem; }
+.stat-card.stat-hero .stat-label { color:rgba(255,255,255,.4); }
+.stat-number { font-weight:500; font-size:clamp(1.8rem,3.8vw,3rem); letter-spacing:-.04em; line-height:1; }
+.stat-card.stat-hero .stat-number { color:var(--white); }
+.stat-desc { font-size:.78rem; font-weight:300; color:var(--g4); margin-top:.4rem; line-height:1.45; }
+.stat-card.stat-hero .stat-desc { color:rgba(255,255,255,.62); }
+
+/* ─── 16. QUOTE PAIR ──────────────────────────────── */
+.quote-pair { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:1.5rem; }
+.quote-card { border-top:2px solid var(--g2); padding:1.2rem 0; }
+.quote-card.quote-hero { border-color:var(--violet); background:var(--ink); color:var(--white); padding:1.2rem; border-radius:3px; border-top-width:3px; }
+.quote-text { font-size:clamp(.88rem,1.35vw,1.02rem); font-style:italic; font-weight:300; line-height:1.65; color:var(--g4); }
+.quote-card.quote-hero .quote-text { color:rgba(255,255,255,.82); }
+.quote-attr { font-family:var(--ffm); font-size:.6rem; text-transform:uppercase; letter-spacing:.1em; color:var(--g3); margin-top:.75rem; }
+.quote-card.quote-hero .quote-attr { color:rgba(255,255,255,.4); }
+
+/* ─── 17. LOGO GRID ───────────────────────────────── */
+.logo-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--g2); border:1px solid var(--g2); border-radius:3px; overflow:hidden; margin-top:1.5rem; }
+.logo-cell { background:var(--white); padding:.9rem 1.2rem; display:flex; flex-direction:column; gap:.28rem; }
+.logo-mark { width:26px; height:26px; background:var(--g2); border-radius:3px; margin-bottom:.28rem; }
+.logo-name { font-weight:600; font-size:.82rem; }
+.logo-role { font-family:var(--ffm); font-size:.58rem; color:var(--g3); text-transform:uppercase; letter-spacing:.08em; }
+
+/* ─── 18. CODE SLIDE ──────────────────────────────── */
+.code-frame { background:var(--ink); border-radius:5px; overflow:hidden; margin-top:1.5rem; }
+.code-frame-header { display:flex; align-items:center; gap:.5rem; padding:.6rem 1rem; background:rgba(255,255,255,.04); border-bottom:1px solid rgba(255,255,255,.07); }
+.code-frame-dot { width:10px; height:10px; border-radius:50%; background:var(--g4); }
+.code-frame-dot:first-child { background:#e06c75; }
+.code-frame-dot:nth-child(2) { background:#e5c07b; }
+.code-frame-dot:nth-child(3) { background:#98c379; }
+.code-frame-title { font-family:var(--ffm); font-size:.6rem; color:rgba(255,255,255,.3); margin-left:.5rem; }
+.code-frame pre { padding:1.2rem 1.5rem; font-family:var(--ffm); font-size:clamp(.68rem,1.05vw,.82rem); line-height:1.75; color:rgba(255,255,255,.82); }
+.code-comment { color:rgba(255,255,255,.28); }
+.code-keyword { color:#C6A2FC; }
+.code-string { color:#98c379; }
+.code-dim { color:rgba(255,255,255,.38); }
+
+/* ─── 22. SPLIT ───────────────────────────────────── */
+.split { display:grid; grid-template-columns:1fr 1fr; gap:3vw; margin-top:1.5rem; flex:1; min-height:0; }
+.split-text { display:flex; flex-direction:column; gap:.55rem; }
+.split-image { overflow:hidden; border-radius:3px; background:var(--g1); }
+.split-image img { width:100%; height:100%; object-fit:cover; display:block; }
+
+/* ─── 23. HERO IMAGE ──────────────────────────────── */
+.hero-frame { position:relative; border-radius:3px; overflow:hidden; margin-top:1.2rem; flex:1; min-height:0; }
+.hero-frame img { width:100%; height:100%; object-fit:cover; display:block; background:var(--g1); }
+.hero-frame-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,.65),transparent 60%); }
+.hero-frame-caption { position:absolute; bottom:0; left:0; right:0; padding:1.5rem; color:var(--white); }
+.hero-frame-caption h3 { color:var(--white); font-size:1.05rem; text-transform:none; margin-bottom:.22rem; }
+.hero-frame-caption p { font-family:var(--ffm); font-size:.6rem; color:rgba(255,255,255,.55); text-transform:uppercase; letter-spacing:.1em; font-weight:400; }
+
+/* ─── 24. IMAGE CARDS ─────────────────────────────── */
+.image-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; margin-top:1.5rem; }
+.image-card { display:flex; flex-direction:column; }
+.image-card-frame { aspect-ratio:16/9; overflow:hidden; border-radius:3px; background:var(--g1); }
+.image-card-frame img { width:100%; height:100%; object-fit:cover; display:block; }
+.image-card-body { padding:.7rem 0 0; }
+.image-card-title { font-weight:600; font-size:.88rem; margin-bottom:.18rem; }
+.image-card-desc { font-size:.78rem; font-weight:300; color:var(--g4); line-height:1.45; }
+
+/* ─── 25. CAPTION SLIDE ───────────────────────────── */
+.slide.ig-caption { padding:0; flex-direction:column; }
+.caption-frame { flex:1; overflow:hidden; background:var(--g1); }
+.caption-frame img { width:100%; height:100%; object-fit:cover; display:block; }
+.caption-bar { padding:.85rem var(--pad); border-top:1px solid var(--g2); display:flex; align-items:baseline; gap:2rem; background:var(--white); flex-shrink:0; }
+.caption-title { font-weight:600; font-size:.88rem; white-space:nowrap; }
+.caption-text { font-size:.78rem; font-weight:300; color:var(--g4); line-height:1.4; }
+
+/* ─── 26. IMAGE + QUOTE ───────────────────────────── */
+.image-quote { display:grid; grid-template-columns:1fr 2fr; gap:4vw; align-items:center; margin-top:1.5rem; flex:1; }
+.image-quote-frame { border-radius:3px; overflow:hidden; aspect-ratio:3/4; background:var(--g1); }
+.image-quote-frame img { width:100%; height:100%; object-fit:cover; display:block; }
+.image-quote-text { font-size:clamp(.95rem,1.75vw,1.35rem); font-style:italic; font-weight:300; line-height:1.55; color:var(--g4); margin-bottom:1rem; }
+.image-quote-attr { font-family:var(--ffm); font-size:.6rem; text-transform:uppercase; letter-spacing:.1em; color:var(--g3); }
+
+/* ─── 27. PHOTO GRID ──────────────────────────────── */
+.photo-grid { display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:1px; background:var(--g2); flex:1; margin-top:1.2rem; border-radius:3px; overflow:hidden; }
+.photo-grid-cell { overflow:hidden; background:var(--g1); position:relative; }
+.photo-grid-cell img { width:100%; height:100%; object-fit:cover; display:block; }
+.photo-grid-label { position:absolute; bottom:0; left:0; right:0; padding:.45rem .7rem; background:linear-gradient(to top,rgba(0,0,0,.5),transparent); color:var(--white); font-family:var(--ffm); font-size:.58rem; letter-spacing:.08em; text-transform:uppercase; }
+
+/* ─── Chart + Mermaid ─────────────────────────────── */
+.chart-wrap { position:relative; width:100%; height:clamp(160px,44vh,420px); margin-top:1.5rem; }
+.mermaid-wrap { margin-top:2rem; }
+.mermaid-wrap svg { display:block; max-width:100%; height:auto; max-height:clamp(160px,50vh,460px); margin:0 auto; }
+
+/* ─── Buttons ─────────────────────────────────────── */
+.btn-row { position:fixed; bottom:calc(var(--ftr) + .9rem); left:50%; transform:translateX(-50%); z-index:210; display:flex; gap:.5rem; }
+.pdf-btn { font-family:var(--ffm); font-size:.6rem; font-weight:500; letter-spacing:.08em; text-transform:uppercase; border:1px solid var(--g2); background:var(--white); color:var(--g4); border-radius:3px; padding:5px 13px; cursor:pointer; }
+.pdf-btn:hover { border-color:var(--ink); color:var(--ink); }
+.nav { display:none; }
+
+/* ─── Edit mode ───────────────────────────────────── */
+body.ed-on .deck { width:calc(100vw - 200px); margin-left:200px; }
+body.ed-on .edit-btn { display:none; }
+body.ed-on .ig-header, body.ed-on .ig-footer { left:200px; }
+body.ed-on .btn-row { left:calc(200px + 50%); transform:none; }
+[contenteditable] { outline:none; cursor:text; border-radius:2px; }
+[contenteditable]:hover { box-shadow:0 0 0 1px color-mix(in srgb, currentColor 30%, transparent); }
+[contenteditable]:focus { box-shadow:0 0 0 2px color-mix(in srgb, currentColor 55%, transparent); }
+
+/* ─── Cover PPT (full-bleed, escapes header/footer) ── */
+.slide.ig-cover-ppt.active {
+  position: fixed;
+  inset: 0;
+  z-index: 202;
+}
+.slide.ig-cover-ppt {
+  background: url('brand/ingrid/gradients/pastel.png') center/cover no-repeat;
+  color: white;
+  padding: 0;
+  overflow: hidden;
+}
+/* Grid lines */
+.cppt-hline {
+  position: absolute; top: 17.5%; left: 0; right: 0;
+  height: 1.5px; background: rgba(255,255,255,1);
+}
+.cppt-vline-top {
+  position: absolute; top: 0; height: 17.5%; left: 21%;
+  width: 1.5px; background: rgba(255,255,255,1);
+}
+.cppt-vline-right {
+  position: absolute; top: 17.5%; bottom: 0; left: 91.5%;
+  width: 1.5px; background: rgba(255,255,255,1);
+}
+/* Logo cell */
+.cppt-logo {
+  position: absolute; top: 0; left: 0; width: 21%; height: 17.5%;
+  display: flex; align-items: center; justify-content: flex-start;
+  padding: 0; padding-left: 5%;
+}
+.cppt-logo img {
+  height: 5vh; width: auto;
+}
+/* Text elements */
+.cppt-title {
+  position: absolute; top: 35%; left: 3.5%; right: 10%;
+  font-size: clamp(2.8rem, 7.5vw, 7rem);
+  font-weight: 500; color: white; line-height: 1.05;
+  letter-spacing: -.02em; margin: 0;
+}
+.cppt-subtitle {
+  position: absolute; top: 73%; left: 3.5%;
+  font-family: var(--ffm); font-size: clamp(1rem, 1.8vw, 1.6rem);
+  font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+  color: rgba(255,255,255,.95); line-height: 1.4; margin: 0;
+}
+.cppt-date {
+  position: absolute; bottom: 5%; left: 3.5%;
+  font-family: var(--ffm); font-size: .62rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .12em;
+  color: rgba(255,255,255,.9);
+}
+
+/* ─── Content PPT ── */
+.slide.ig-ppt-content {
+  padding: 0;
+}
+.pptc-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 4% 4.5%;
+  min-height: 0;
+}
+.pptc-headline {
+  font-size: clamp(1.8rem, 3.8vw, 3.5rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  margin-bottom: .6rem;
+}
+.pptc-subhead {
+  font-family: var(--ffm);
+  font-size: clamp(.55rem, 1vw, .75rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  padding-bottom: .5rem;
+  margin-bottom: 1.2rem;
+}
+.pptc-list {
+  list-style: disc;
+  padding-left: 1.4em;
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+}
+.pptc-list li {
+  font-size: clamp(.78rem, 1.2vw, 1rem);
+  font-weight: 400;
+  line-height: 1.5;
+}
+.pptc-list li.l2 { margin-left: 1.4em; list-style: circle; }
+.pptc-list li.l3 { margin-left: 2.8em; list-style: square; }
+.pptc-list li.l4 { margin-left: 4.2em; }
+.pptc-list li.l5 { margin-left: 5.6em; }
+
+/* ─── Agenda slide (dark gradient, full-bleed) ── */
+.slide.ig-agenda.active { position:fixed; inset:0; z-index:202; }
+.slide.ig-agenda {
+  padding:0; overflow:hidden; flex-direction:column;
+  background:url('brand/ingrid/gradients/dark.png') center/cover no-repeat;
+  color:white;
+}
+.agd-header {
+  height:var(--hdr); flex-shrink:0; display:flex; align-items:stretch;
+  border-bottom:1px solid rgba(255,255,255,.7);
+}
+.agd-header-brand {
+  width:38%; display:flex; align-items:center; padding:0 3%;
+  border-right:1px solid rgba(255,255,255,.7);
+  font-family:var(--ffm); font-size:.65rem; font-weight:500;
+  letter-spacing:.15em; text-transform:uppercase; color:white;
+}
+.agd-header-right { flex:1; }
+.agd-body {
+  flex:1; display:flex; align-items:stretch;
+  padding:5% 5%; gap:2%; min-height:0;
+}
+.agd-title {
+  width:40%; display:flex; align-items:flex-start; padding-top:.5rem;
+}
+.agd-title h1 {
+  font-size:clamp(3rem,5.5vw,5rem); font-weight:700;
+  color:white; letter-spacing:-.03em; line-height:1;
+}
+.agd-items {
+  flex:1; display:flex; flex-direction:column; justify-content:space-evenly;
+}
+.agd-item { display:flex; align-items:center; gap:2.5rem; }
+.agd-num {
+  font-family:var(--ffm); font-size:.65rem; font-weight:500;
+  color:rgba(255,255,255,.45); letter-spacing:.05em; min-width:1.5rem;
+}
+.agd-name {
+  font-size:clamp(1.4rem,2.5vw,2.2rem); font-weight:500;
+  color:white; letter-spacing:-.01em;
+}
+.agd-footer {
+  height:var(--ftr); flex-shrink:0; display:flex; align-items:center;
+  border-top:1px solid rgba(255,255,255,.7); padding:0 3%; gap:1.2rem;
+}
+.agd-footer-mark img {
+  height:clamp(20px,4.5vh,40px); width:auto;
+}
+.agd-footnote {
+  flex:1; text-align:center; font-family:var(--ffm); font-size:.58rem;
+  color:rgba(255,255,255,.6); text-transform:uppercase; letter-spacing:.1em;
+}
+.agd-page { font-family:var(--ffm); font-size:.58rem; color:rgba(255,255,255,.6); letter-spacing:.06em; }
+
+/* ─── Dark Gradient Cover (full-bleed, escapes header/footer) ── */
+.slide.ig-dark-grad-cover.active {
+  position: fixed;
+  inset: 0;
+  z-index: 202;
+}
+.slide.ig-dark-grad-cover {
+  padding: 0;
+  overflow: hidden;
+  background: url('brand/ingrid/gradients/dark.png') center/cover no-repeat;
+  color: white;
+  position: relative;
+}
+.dgc-logo {
+  position: absolute;
+  top: 6%;
+  left: 4%;
+}
+.dgc-logo img {
+  height: clamp(22px, 3.5vh, 38px);
+  width: auto;
+}
+.dgc-headline {
+  position: absolute;
+  top: 48%;
+  transform: translateY(-50%);
+  width: 100%;
+  text-align: right;
+  padding-right: 18%;
+  line-height: 1.1;
+}
+.dgc-line1, .dgc-line2 {
+  display: block;
+  font-size: clamp(3rem, 7.5vw, 7rem);
+  font-weight: 400;
+  color: white;
+  letter-spacing: -0.02em;
+}
+.dgc-date {
+  position: absolute;
+  bottom: 6%;
+  left: 4%;
+  font-family: var(--ffm);
+  font-size: .6rem;
+  color: rgba(255,255,255,.55);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+/* ─── Print ───────────────────────────────────────── */
+@page { size:13.333in 7.5in; margin:0; }
+@media print {
+  .ig-header,.ig-footer,.btn-row,.nav,.progress { display:none !important; }
+  html,body { overflow:visible; }
+  .deck { position:static; top:auto; bottom:auto; }
+  .slide { position:relative; display:none !important; page-break-after:always; }
+  .slide.active { display:flex !important; }
+  .slide,html,body { width:100vw; height:100vh; }
+}
+</style>
+</head>
+<body>
+
+<header class="ig-header">
+  <div class="ig-header-brand">INGRID</div>
+  <div class="ig-header-right"></div>
+</header>
+
+<div class="progress" id="progress"></div>
+
+<div class="deck">
+
+  <!-- ========== 1. COVER — full-bleed gradient, PPTX layout ========== -->
+  <section class="slide active ig-cover-ppt">
+    <div class="cppt-hline"></div>
+    <div class="cppt-vline-top"></div>
+    <div class="cppt-vline-right"></div>
+    <div class="cppt-logo">
+      <img src="brand/ingrid/logos/mono-on-dark.png" alt="Ingrid">
+    </div>
+    <h1 class="cppt-title">presentation cover title</h1>
+    <p class="cppt-subtitle">SUB-HEADLINE</p>
+    <div class="cppt-date">JUNI 2026</div>
+  </section>
+
+  <!-- ========== 2. DARK GRADIENT COVER ========== -->
+  <section class="slide ig-dark-grad-cover">
+    <div class="dgc-logo">
+      <img src="brand/ingrid/logos/color-on-dark.png" alt="ingrid">
+    </div>
+    <div class="dgc-headline">
+      <span class="dgc-line1" contenteditable>making the grid</span>
+      <span class="dgc-line2" contenteditable>intelligent</span>
+    </div>
+    <div class="dgc-date" contenteditable>JUNI 2026</div>
+  </section>
+
+  <!-- ========== 3. AGENDA ========== -->
+  <section class="slide ig-agenda">
+    <div class="agd-header">
+      <div class="agd-header-brand">INGRID</div>
+      <div class="agd-header-right"></div>
+    </div>
+    <div class="agd-body">
+      <div class="agd-title"><h1 contenteditable>Agenda</h1></div>
+      <div class="agd-items">
+        <div class="agd-item"><span class="agd-num">01</span><span class="agd-name" contenteditable>Topic 1</span></div>
+        <div class="agd-item"><span class="agd-num">02</span><span class="agd-name" contenteditable>Topic 2</span></div>
+        <div class="agd-item"><span class="agd-num">03</span><span class="agd-name" contenteditable>Topic 3</span></div>
+        <div class="agd-item"><span class="agd-num">04</span><span class="agd-name" contenteditable>Topic 4</span></div>
+      </div>
+    </div>
+    <div class="agd-footer">
+      <div class="agd-footer-mark"><img src="brand/ingrid/logos/mark-on-dark.png" alt="Ingrid"></div>
+      <div class="agd-footnote" contenteditable>JUNI 2026</div>
+      <div class="agd-page">3</div>
+    </div>
+  </section>
+
+  <!-- ========== 4. QUOTE — gradient bg ========== -->
+  <section class="slide ig-grad-bg ig-quote-slide">
+    <div class="eyebrow"><br></div>
+    <h1>we make the grid flex, <span class="dim" style="color:rgba(255,255,255,.4)">not break.</span></h1>
+    <div class="quote-attr"><br></div>
+  </section>
+
+  <!-- ========== 3. CONTENT — PPT template layout ========== -->
+  <section class="slide ig-ppt-content">
+    <div class="pptc-body">
+      <h1 class="pptc-headline" contenteditable>insert headline here</h1>
+      <div class="pptc-subhead" contenteditable>INSERT SUBHEADLINE HERE</div>
+      <ul class="pptc-list">
+        <li contenteditable>Click here to edit text</li>
+        <li class="l2" contenteditable>Nivå två</li>
+        <li class="l3" contenteditable>Nivå tre</li>
+        <li class="l4" contenteditable>Nivå fyra</li>
+        <li class="l5" contenteditable>Nivå fem</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ========== 4. TWO-COLUMN ========== -->
+  <section class="slide">
+    <div class="eyebrow">The argument</div>
+    <h2>two ideas, one slide.</h2>
+    <div class="pptc-subhead" contenteditable>THE ARGUMENT</div>
+    <div class="two-col">
+      <div>
+        <div class="subhead">The problem</div>
+        <h3 style="text-transform:none;font-weight:500;font-size:1.05rem">What's broken.</h3>
+        <p style="margin-top:.5rem">Describe the situation today. Be specific. Avoid abstractions. The reader should recognise their own pain.</p>
+      </div>
+      <div>
+        <div class="subhead">The fix</div>
+        <h3 style="text-transform:none;font-weight:500;font-size:1.05rem">What we built.</h3>
+        <p style="margin-top:.5rem">Describe the solution. Same length and tone as the problem. Side-by-side comparison drives the point.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 4b. STEP STACK ========== -->
+  <section class="slide">
+    <div class="eyebrow">The old way</div>
+    <h2>how it breaks down.</h2>
+    <div class="pptc-subhead" contenteditable>THE OLD WAY</div>
+    <div class="two-col">
+      <div>
+        <div class="subhead">Section label</div>
+        <p>Brief explanation of what these steps represent and why they fail in sequence.</p>
+      </div>
+      <div class="col-stack">
+        <div class="step">First step</div>
+        <div class="step">Second step</div>
+        <div class="step">Third step</div>
+        <div class="step dim">Fourth step — blocked</div>
+        <div class="step dim">Fifth step — never reached</div>
+        <div class="step kill">Final outcome — failure</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 5. THREE-COLUMN ========== -->
+  <section class="slide">
+    <div class="eyebrow">The framework</div>
+    <h2>three dimensions.</h2>
+    <div class="pptc-subhead" contenteditable>THE FRAMEWORK</div>
+    <div class="three-col">
+      <div><h3>Why</h3><p>The motivation. Why this matters. Why now. The conditions that make it urgent.</p></div>
+      <div><h3>How</h3><p>The mechanism. The structure. The four levers you can actually pull.</p></div>
+      <div><h3>What</h3><p>The outcome. What you walk away with. What changes on the other side.</p></div>
+    </div>
+  </section>
+
+  <!-- ========== 6. CAPABILITY LIST ========== -->
+  <section class="slide">
+    <div class="eyebrow">What it solves</div>
+    <h2>the questions you have. <span class="dim">answered.</span></h2>
+    <div class="pptc-subhead" contenteditable>WHAT IT SOLVES</div>
+    <div class="cap-list">
+      <div class="cap-row"><div class="cap-q">Question one?</div><div class="cap-a">A clear, specific answer that addresses the question directly.</div></div>
+      <div class="cap-row"><div class="cap-q">Question two?</div><div class="cap-a">Another concrete answer. Avoid hedging. State the reality.</div></div>
+      <div class="cap-row"><div class="cap-q">Question three?</div><div class="cap-a">Keep answers parallel in length and tone. Short is better than comprehensive.</div></div>
+      <div class="cap-row"><div class="cap-q">Question four?</div><div class="cap-a">End on the strongest answer. The one that closes the loop.</div></div>
+    </div>
+  </section>
+
+  <!-- ========== 7. CALLOUT ========== -->
+  <section class="slide">
+    <div class="eyebrow">The insight</div>
+    <h2>why now.</h2>
+    <div class="pptc-subhead" contenteditable>THE INSIGHT</div>
+    <div class="callout">
+      <h3>The moment</h3>
+      <p>The moment lands here. <strong>The key insight in bold.</strong> Then the supporting context that explains why this is different from what came before. One callout per deck max — too many and the emphasis stops working.</p>
+    </div>
+  </section>
+
+  <!-- ========== 8. DOT FLOW ========== -->
+  <section class="slide">
+    <div class="eyebrow">The process</div>
+    <h2>how it works. <span class="dim">step by step.</span></h2>
+    <div class="pptc-subhead" contenteditable>THE PROCESS</div>
+    <div class="dot-flow">
+      <div class="dot-step"><div class="dot"></div><h4>Discover</h4><p>Map the landscape and identify gaps</p></div>
+      <div class="dot-step"><div class="dot"></div><h4>Define</h4><p>Frame the problem precisely</p></div>
+      <div class="dot-step"><div class="dot"></div><h4>Design</h4><p>Build the right solution</p></div>
+      <div class="dot-step"><div class="dot"></div><h4>Deliver</h4><p>Ship with confidence</p></div>
+      <div class="dot-step"><div class="dot"></div><h4>Iterate</h4><p>Learn and improve the cycle</p></div>
+    </div>
+  </section>
+
+  <!-- ========== 9. STACK GRID ========== -->
+  <section class="slide">
+    <div class="eyebrow">The stack</div>
+    <h2>built on what <span class="dim">you already know.</span></h2>
+    <div class="pptc-subhead" contenteditable>THE STACK</div>
+    <div class="stack-grid">
+      <div class="stack-card"><div class="stack-card-label">Data</div><div class="stack-tool"><span class="mark"></span>PostgreSQL</div><div class="stack-tool"><span class="mark"></span>BigQuery</div><div class="stack-tool"><span class="mark"></span>dbt</div></div>
+      <div class="stack-card"><div class="stack-card-label">AI</div><div class="stack-tool"><span class="mark"></span>Claude</div><div class="stack-tool"><span class="mark"></span>Embeddings</div></div>
+      <div class="stack-card"><div class="stack-card-label">Platform</div><div class="stack-tool"><span class="mark"></span>AWS</div><div class="stack-tool"><span class="mark"></span>Kubernetes</div></div>
+      <div class="stack-card"><div class="stack-card-label">Interface</div><div class="stack-tool"><span class="mark"></span>React</div><div class="stack-tool"><span class="mark"></span>API Gateway</div></div>
+    </div>
+  </section>
+
+  <!-- ========== 10. SPEC FLOW ========== -->
+  <section class="slide">
+    <div class="eyebrow">The mechanism</div>
+    <h2>one input. <span class="dim">three outputs.</span></h2>
+    <div class="pptc-subhead" contenteditable>THE MECHANISM</div>
+    <div class="spec-flow">
+      <div class="spec-block"><h4>The Input</h4><p>What goes in — the raw material the system works with</p></div>
+      <div class="ctx-row"><span class="ctx-label">draws from</span><span class="ctx-pill">Source A</span><span class="ctx-pill">Source B</span><span class="ctx-pill">Source C</span></div>
+      <div class="ai-divider"><div class="line"></div><span class="ai-pill">Process</span><div class="line"></div></div>
+      <div class="outputs-row">
+        <div class="output-card"><h5>Output A</h5><p>What it produces and why it matters.</p></div>
+        <div class="output-card"><h5>Output B</h5><p>The second stream of value created.</p></div>
+        <div class="output-card"><h5>Output C</h5><p>The downstream effect on the system.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 11. PRODUCT SLIDE ========== -->
+  <section class="slide">
+    <div class="eyebrow">The product</div>
+    <div class="product-row">
+      <div class="product-meta">
+        <div class="product-num">/01</div>
+        <div class="product-tag">"A short, punchy hook or position."</div>
+        <h3 class="product-headline" style="text-transform:none;font-weight:500">One-line description of what this thing does.</h3>
+        <p class="product-desc">Two or three sentences that explain it. Keep it concrete. Avoid abstract language. Tell the story behind it.</p>
+        <div class="product-stat">Launch date · Team size · Or whatever's true</div>
+      </div>
+      <div class="product-name">Name<sup>™</sup></div>
+    </div>
+  </section>
+
+  <!-- ========== 12. FULL-BLEED IMAGE ========== -->
+  <section class="slide ig-full">
+    <img class="ig-full-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt="">
+    <div class="ig-full-caption">
+      <h2>the image speaks first.</h2>
+      <p>Drop your image here via edit mode</p>
+    </div>
+  </section>
+
+  <!-- ========== 13. JEDUF THREE-COLUMN ========== -->
+  <section class="slide">
+    <div class="eyebrow">The middle path</div>
+    <h2>between two extremes.</h2>
+    <div class="pptc-subhead" contenteditable>THE MIDDLE PATH</div>
+    <div class="jeduf">
+      <div class="jeduf-col"><div class="jeduf-label">Too much</div><div class="jeduf-title">Extreme A</div><div class="jeduf-philosophy">"A philosophy quote that captures this extreme."</div><div class="jeduf-step">Step 1</div><div class="jeduf-step">Step 2</div><div class="jeduf-step">Step 3</div><div class="jeduf-step">Step 4</div></div>
+      <div class="jeduf-col hero"><div class="jeduf-label">Just right</div><div class="jeduf-title">The middle path</div><div class="jeduf-philosophy">"The philosophy of the balanced approach."</div><div class="jeduf-step">Step 1</div><div class="jeduf-step">Step 2</div><div class="jeduf-step">Step 3</div><div class="jeduf-step">Step 4</div></div>
+      <div class="jeduf-col"><div class="jeduf-label">Too little</div><div class="jeduf-title">Extreme B</div><div class="jeduf-philosophy">"A philosophy quote capturing the other extreme."</div><div class="jeduf-step">Step 1</div><div class="jeduf-step">Step 2</div><div class="jeduf-step">Step 3</div><div class="jeduf-step">Step 4</div></div>
+    </div>
+  </section>
+
+  <!-- ========== 14. TIMELINE ========== -->
+  <section class="slide">
+    <div class="eyebrow">The journey</div>
+    <h2>how we got here.</h2>
+    <div class="pptc-subhead" contenteditable>THE JOURNEY</div>
+    <div class="timeline">
+      <div class="timeline-row"><div class="timeline-year">2020</div><div class="timeline-track"><div class="timeline-dot"></div><div class="timeline-line"></div></div><div class="timeline-content"><h4>The starting point</h4><p>Where things began. The initial conditions and the first decision that shaped everything after.</p></div></div>
+      <div class="timeline-row"><div class="timeline-year">2022</div><div class="timeline-track"><div class="timeline-dot"></div><div class="timeline-line"></div></div><div class="timeline-content"><h4>Early progress</h4><p>First experiments. Initial wins. The lessons that shifted the direction.</p></div></div>
+      <div class="timeline-row"><div class="timeline-year">2024</div><div class="timeline-track"><div class="timeline-dot"></div><div class="timeline-line"></div></div><div class="timeline-content"><h4>The inflection</h4><p>The moment things accelerated. What changed and why the old model stopped working.</p></div></div>
+      <div class="timeline-row"><div class="timeline-year">Now</div><div class="timeline-track"><div class="timeline-dot"></div></div><div class="timeline-content"><h4>Where we are</h4><p>Current state. What has been achieved. What the next chapter looks like.</p></div></div>
+    </div>
+  </section>
+
+  <!-- ========== 15. STAT GRID ========== -->
+  <section class="slide">
+    <div class="eyebrow">The numbers</div>
+    <h2>impact you can measure.</h2>
+    <div class="pptc-subhead" contenteditable>THE NUMBERS</div>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-label">Metric one</div><div class="stat-number">N×</div><div class="stat-desc">What this number means in context. Be specific about the baseline.</div></div>
+      <div class="stat-card stat-hero"><div class="stat-label">Hero metric</div><div class="stat-number">00k</div><div class="stat-desc">The headline number. Dark card draws attention here.</div></div>
+      <div class="stat-card"><div class="stat-label">Metric three</div><div class="stat-number">00%</div><div class="stat-desc">Another concrete measurement that supports the story.</div></div>
+    </div>
+  </section>
+
+  <!-- ========== 16. QUOTE PAIR ========== -->
+  <section class="slide">
+    <div class="eyebrow">Two perspectives</div>
+    <h2>the debate. <span class="dim">both sides.</span></h2>
+    <div class="pptc-subhead" contenteditable>TWO PERSPECTIVES</div>
+    <div class="quote-pair">
+      <div class="quote-card"><div class="quote-text">"The first perspective. A position or belief that one side holds about how things should work."</div><div class="quote-attr">Perspective A</div></div>
+      <div class="quote-card quote-hero"><div class="quote-text">"The counterpoint. A contrasting view that creates tension with the first and reveals the real question."</div><div class="quote-attr">Perspective B</div></div>
+    </div>
+  </section>
+
+  <!-- ========== 17. PARTNER GRID ========== -->
+  <section class="slide">
+    <div class="eyebrow">Who we work with</div>
+    <h2>trusted by teams <span class="dim">who ship.</span></h2>
+    <div class="pptc-subhead" contenteditable>WHO WE WORK WITH</div>
+    <div class="logo-grid">
+      <div class="logo-cell"><div class="logo-mark"></div><div class="logo-name">Partner A</div><div class="logo-role">Role or sector</div></div>
+      <div class="logo-cell"><div class="logo-mark"></div><div class="logo-name">Partner B</div><div class="logo-role">Role or sector</div></div>
+      <div class="logo-cell"><div class="logo-mark"></div><div class="logo-name">Partner C</div><div class="logo-role">Role or sector</div></div>
+      <div class="logo-cell"><div class="logo-mark"></div><div class="logo-name">Partner D</div><div class="logo-role">Role or sector</div></div>
+      <div class="logo-cell"><div class="logo-mark"></div><div class="logo-name">Partner E</div><div class="logo-role">Role or sector</div></div>
+      <div class="logo-cell"><div class="logo-mark"></div><div class="logo-name">Partner F</div><div class="logo-role">Role or sector</div></div>
+      <div class="logo-cell"><div class="logo-mark"></div><div class="logo-name">Partner G</div><div class="logo-role">Role or sector</div></div>
+      <div class="logo-cell"><div class="logo-mark"></div><div class="logo-name">Partner H</div><div class="logo-role">Role or sector</div></div>
+    </div>
+  </section>
+
+  <!-- ========== 18. CODE SLIDE ========== -->
+  <section class="slide">
+    <div class="eyebrow">Under the hood</div>
+    <h2>how it works. <span class="dim">the code behind it.</span></h2>
+    <div class="pptc-subhead" contenteditable>UNDER THE HOOD</div>
+    <div class="code-frame">
+      <div class="code-frame-header"><div class="code-frame-dot"></div><div class="code-frame-dot"></div><div class="code-frame-dot"></div><div class="code-frame-title">ingrid.html</div></div>
+<pre><span class="code-comment">&lt;!-- a slide is just a section --&gt;</span>
+<span class="code-keyword">&lt;section</span> <span class="code-dim">class=</span><span class="code-string">"slide ig-dark"</span><span class="code-keyword">&gt;</span>
+  <span class="code-keyword">&lt;div</span> <span class="code-dim">class=</span><span class="code-string">"eyebrow"</span><span class="code-keyword">&gt;</span>The shift<span class="code-keyword">&lt;/div&gt;</span>
+  <span class="code-keyword">&lt;h2&gt;</span>the bottleneck moved.
+    <span class="code-keyword">&lt;span</span> <span class="code-dim">class=</span><span class="code-string">"dim"</span><span class="code-keyword">&gt;</span>ideas are the new blocker.<span class="code-keyword">&lt;/span&gt;</span>
+  <span class="code-keyword">&lt;/h2&gt;</span>
+<span class="code-keyword">&lt;/section&gt;</span></pre>
+    </div>
+  </section>
+
+  <!-- ========== 19. DARK SLIDE ========== -->
+  <section class="slide ig-dark">
+    <div class="eyebrow">The pivot</div>
+    <h2>the moment things changed.</h2>
+    <div class="pptc-subhead" contenteditable style="color:rgba(255,255,255,.5)">THE PIVOT</div>
+    <span class="accent-line" style="background:var(--violet)"></span>
+    <p class="subtitle">Use dark slides sparingly. They mark turning points. Two or three per deck max.</p>
+  </section>
+
+  <!-- ========== 20. GRADIENT QUOTE ========== -->
+  <section class="slide ig-grad-bg ig-quote-slide">
+    <div class="eyebrow">The point</div>
+    <h1>we make the grid flex, not break.</h1>
+    <div class="quote-attr">Name · Role · Organisation</div>
+  </section>
+
+  <!-- ========== 22. SPLIT (TEXT + IMAGE) ========== -->
+  <section class="slide">
+    <div class="eyebrow">Feature highlight</div>
+    <h2>text on one side. <span class="dim">image on the other.</span></h2>
+    <div class="pptc-subhead" contenteditable>FEATURE HIGHLIGHT</div>
+    <div class="split">
+      <div class="split-text">
+        <h3 style="text-transform:none;font-weight:500;font-size:1.05rem">Why this matters</h3>
+        <p>The most common layout in professional presentations. Describe the feature, show the proof.</p>
+        <ul class="ig-list" style="margin-top:.75rem"><li>First supporting point</li><li>Second supporting point</li><li>Third supporting point</li></ul>
+      </div>
+      <div class="split-image"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt=""></div>
+    </div>
+  </section>
+
+  <!-- ========== 23. HERO IMAGE ========== -->
+  <section class="slide">
+    <div class="eyebrow">The moment</div>
+    <h2>full-bleed image. <span class="dim">text overlay.</span></h2>
+    <div class="pptc-subhead" contenteditable>THE MOMENT</div>
+    <div class="hero-frame">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt="">
+      <div class="hero-frame-overlay"></div>
+      <div class="hero-frame-caption"><h3>A dramatic visual moment</h3><p>Drop your image · Edit mode</p></div>
+    </div>
+  </section>
+
+  <!-- ========== 24. IMAGE CARD ROW ========== -->
+  <section class="slide">
+    <div class="eyebrow">Three highlights</div>
+    <h2>visual-first content.</h2>
+    <div class="pptc-subhead" contenteditable>THREE HIGHLIGHTS</div>
+    <div class="image-cards">
+      <div class="image-card"><div class="image-card-frame"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt=""></div><div class="image-card-body"><div class="image-card-title">Card one</div><div class="image-card-desc">Short description with just enough context.</div></div></div>
+      <div class="image-card"><div class="image-card-frame"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt=""></div><div class="image-card-body"><div class="image-card-title">Card two</div><div class="image-card-desc">Another item described clearly and concisely.</div></div></div>
+      <div class="image-card"><div class="image-card-frame"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt=""></div><div class="image-card-body"><div class="image-card-title">Card three</div><div class="image-card-desc">Keep descriptions parallel in structure and length.</div></div></div>
+    </div>
+  </section>
+
+  <!-- ========== 25. CAPTION SLIDE ========== -->
+  <section class="slide ig-caption">
+    <div class="caption-frame"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt="" style="width:100%;height:100%;object-fit:cover;display:block;background:var(--g1);"></div>
+    <div class="caption-bar"><div class="caption-title">Image title</div><div class="caption-text">One line of context. What this image shows and why it matters in the story.</div></div>
+  </section>
+
+  <!-- ========== 26. IMAGE + QUOTE ========== -->
+  <section class="slide">
+    <div class="eyebrow">Testimony</div>
+    <h2>a face behind the words.</h2>
+    <div class="pptc-subhead" contenteditable>TESTIMONY</div>
+    <div class="image-quote">
+      <div class="image-quote-frame"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt=""></div>
+      <div class="image-quote-content">
+        <div class="image-quote-text">"A powerful statement paired with a portrait. The image gives the quote a face and a place — making it land differently than text alone."</div>
+        <div class="image-quote-attr">Speaker name · Role, Organisation</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 27. PHOTO GRID ========== -->
+  <section class="slide">
+    <div class="eyebrow">The work</div>
+    <h2>four images. <span class="dim">one story.</span></h2>
+    <div class="pptc-subhead" contenteditable>THE WORK</div>
+    <div class="photo-grid">
+      <div class="photo-grid-cell"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt=""><div class="photo-grid-label">First image</div></div>
+      <div class="photo-grid-cell"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt=""><div class="photo-grid-label">Second image</div></div>
+      <div class="photo-grid-cell"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt=""><div class="photo-grid-label">Third image</div></div>
+      <div class="photo-grid-cell"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt=""><div class="photo-grid-label">Fourth image</div></div>
+    </div>
+  </section>
+
+  <!-- ========== 28. CHART ========== -->
+  <section class="slide">
+    <div class="eyebrow">Performance</div>
+    <h2>growth over time.</h2>
+    <div class="pptc-subhead">PERFORMANCE</div>
+    <div class="chart-wrap"><canvas data-chart="bar" data-src="#ig-chart-data"></canvas></div><p style="color:#a0a09a;font-size:.8rem;margin-top:.5rem">Could not load #ig-chart-data: No element found for #ig-chart-data</p><p style="color:#a0a09a;font-size:.8rem;margin-top:.5rem">Could not load #ig-chart-data: No element found for #ig-chart-data</p>
+  </section>
+
+  <!-- ========== 29. DIAGRAM ========== -->
+  <section class="slide">
+    <div class="eyebrow">Architecture</div>
+    <h2>how it connects. <span class="dim">end to end.</span></h2>
+    <div class="pptc-subhead" contenteditable>ARCHITECTURE</div>
+    <div class="mermaid-wrap">
+      <pre class="mermaid">
+graph LR
+  A[Input] --> B{Decision}
+  B -->|Yes| C[Output A]
+  B -->|No| D[Output B]
+      </pre>
+    </div>
+  </section>
+
+  <!-- ========== 30. CLOSING — gradient ========== -->
+  <section class="slide ig-grad-bg ig-closing">
+    <div class="cppt-hline"></div>
+    <div class="cppt-vline-top"></div>
+    <div class="cppt-vline-right"></div>
+    <div style="margin:auto 0;">
+      <div class="eyebrow">Thank you</div>
+      <h1 style="color:var(--white)">let's get<br>to work.</h1>
+      <p class="subtitle" style="color:rgba(255,255,255,.8);margin-top:1rem">contact@ingridcapacity.com</p>
+    </div>
+  </section>
+
+</div>
+
+<footer class="ig-footer">
+  <img src="brand/ingrid/logos/mark-on-light.png" alt="Ingrid" style="height:clamp(20px,4.5vh,40px);width:auto;flex-shrink:0;object-fit:contain;">
+  <div class="ig-footnote">FOOTNOTE</div>
+  <div class="ig-counter" id="counter">1 / 30</div>
+</footer>
+
+<div class="btn-row">
+  <button class="pdf-btn edit-btn" onclick="location.href = location.pathname + '?edit'">Edit</button>
+  <button class="pdf-btn" onclick="downloadPDF()">Download PDF</button>
+</div>
+<div class="nav" id="nav-hidden" style="display:none"><span></span><div class="nav-buttons"><button class="nav-btn" onclick="prev()">‹</button><button class="nav-btn" onclick="next()">›</button></div></div>
+
+<script>
+  let slides = document.querySelectorAll('.slide');
+  const counter = document.getElementById('counter');
+  const progress = document.getElementById('progress');
+  let current = 0;
+
+  window.refreshSlides = () => {
+    slides = document.querySelectorAll('.deck > .slide');
+    if (current >= slides.length) current = slides.length - 1;
+  };
+
+
+  function show(i) {
+    slides.forEach(s => s.classList.remove('active'));
+    slides[i].classList.add('active');
+    counter.textContent = `${i + 1} / ${slides.length}`;
+    progress.style.width = `${((i + 1) / slides.length) * 100}%`;
+    current = i;
+  }
+
+  function next() { if (current < slides.length - 1) show(current + 1); }
+  function prev() { if (current > 0) show(current - 1); }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+    if (e.key === 'Home') { show(0); }
+    if (e.key === 'End') { show(slides.length - 1); }
+    if (e.key === 'p' || e.key === 'P') { e.preventDefault(); downloadPDF(); }
+  });
+
+  function downloadPDF() {
+    const originalTitle = document.title;
+    document.title = 'deck';
+    window.print();
+    setTimeout(() => { document.title = originalTitle; }, 1000);
+  }
+
+  let touchStartX = 0;
+  let touchStartY = 0;
+  const SWIPE_THRESHOLD = 50;
+
+  document.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].screenX - touchStartX;
+    const dy = e.changedTouches[0].screenY - touchStartY;
+    if (Math.abs(dx) < SWIPE_THRESHOLD || Math.abs(dy) > Math.abs(dx)) return;
+    if (dx < 0) next();
+    else prev();
+  }, { passive: true });
+
+  const isEmbed = new URLSearchParams(window.location.search).has('embed');
+
+  show(0);
+
+  // Hide header/footer/progress on full-bleed cover slide
+  const _coverSlide = document.querySelector('.ig-cover-ppt');
+  if (_coverSlide) {
+    const _toggleCover = () =>
+      document.body.classList.toggle('ig-cover-active', _coverSlide.classList.contains('active'));
+    new MutationObserver(_toggleCover).observe(_coverSlide, { attributes: true, attributeFilter: ['class'] });
+    _toggleCover();
+  }
+
+  // Hide header/footer/progress on agenda slide
+  const _agendaSlide = document.querySelector('.ig-agenda');
+  if (_agendaSlide) {
+    const _toggleAgenda = () =>
+      document.body.classList.toggle('ig-agenda-active', _agendaSlide.classList.contains('active'));
+    new MutationObserver(_toggleAgenda).observe(_agendaSlide, { attributes: true, attributeFilter: ['class'] });
+    _toggleAgenda();
+  }
+
+  // Hide header/footer/progress on dark gradient cover slide
+  const _darkGradSlide = document.querySelector('.ig-dark-grad-cover');
+  if (_darkGradSlide) {
+    const _toggleDarkGrad = () =>
+      document.body.classList.toggle('ig-dark-grad-active', _darkGradSlide.classList.contains('active'));
+    new MutationObserver(_toggleDarkGrad).observe(_darkGradSlide, { attributes: true, attributeFilter: ['class'] });
+    _toggleDarkGrad();
+  }
+
+  // Hide header/footer/progress on closing slide
+  const _closingSlide = document.querySelector('.ig-closing');
+  if (_closingSlide) {
+    const _toggleClosing = () =>
+      document.body.classList.toggle('ig-closing-active', _closingSlide.classList.contains('active'));
+    new MutationObserver(_toggleClosing).observe(_closingSlide, { attributes: true, attributeFilter: ['class'] });
+    _toggleClosing();
+  }
+</script>
+<style>
+  body.ig-cover-active .ig-header,
+  body.ig-cover-active .ig-footer,
+  body.ig-cover-active .progress { opacity:0; pointer-events:none; }
+  body.ig-agenda-active .ig-header,
+  body.ig-agenda-active .ig-footer,
+  body.ig-agenda-active .progress { opacity:0; pointer-events:none; }
+  body.ed-on .slide.ig-agenda.active { left:200px; }
+  body.ig-dark-grad-active .ig-header,
+  body.ig-dark-grad-active .ig-footer,
+  body.ig-dark-grad-active .progress { opacity:0; pointer-events:none; }
+  body.ig-closing-active .ig-header,
+  body.ig-closing-active .ig-footer,
+  body.ig-closing-active .progress { opacity:0; pointer-events:none; }
+  .slide.ig-closing.active { position:fixed; inset:0; z-index:202; }
+  body.ed-on .slide.ig-closing.active { left:200px; }
+  body.ed-on .slide.ig-cover-ppt.active { left: 200px; }
+  body.ed-on .slide.ig-dark-grad-cover.active { left: 200px; }
+</style>
+
+<script>
+/* ============================================================
+   Edit mode (?edit)
+   Open the deck with ?edit appended to the URL, or click the
+   Edit button. Text: click to edit in place (plain text only).
+   Slides: reorder, duplicate, delete via the left rail.
+   Save: Cmd/Ctrl+S or the Save button writes back to this file
+   in place (Chromium browsers; the first save asks you to pick
+   this file once). Other browsers download an updated copy.
+   Saving rewrites only the slides that changed; everything else
+   passes through byte-for-byte, so diffs stay clean.
+   ============================================================ */
+(() => {
+  if (!new URLSearchParams(location.search).has('edit')) return;
+
+  const RAIL_W = 200, THUMB_W = 164;
+  const deck = document.querySelector('.deck');
+  const liveSlides = () => [...deck.querySelectorAll(':scope > .slide')];
+  const el = (tag, cls) => { const n = document.createElement(tag); if (cls) n.className = cls; return n; };
+  const $ = id => document.getElementById(id);
+
+  let baseCount = 0;          // slide count in the on-disk file we mapped against
+  let structuralChanged = false;
+  let fileHandle = null;
+  let justPicked = false;     // true when this save triggered the one-time file pick
+  const undoStack = [];
+  let autoSaveTimer = null;
+  let saving = false;
+
+  function scheduleAutoSave() {
+    if (!fileHandle || saving) return;
+    clearTimeout(autoSaveTimer);
+    autoSaveTimer = setTimeout(() => { if (typeof autoSave === 'function') autoSave(); }, 2000);
+  }
+
+  /* ---------- editor styles (theme-adaptive via --ed-* tokens) ---------- */
+  const css = document.createElement('style');
+  css.dataset.edUi = '';
+  css.textContent = `
+    body.ed-on { --ed-panel: rgba(255,255,255,.93); --ed-ink: #1a1a1a; --ed-inv: #ffffff;
+      --ed-line: rgba(0,0,0,.14); --ed-dim: rgba(0,0,0,.45); --ed-view-bg: #ffffff; }
+    body.ed-on.ed-dark { --ed-panel: rgba(28,28,32,.93); --ed-ink: #f5f5f3; --ed-inv: #1a1a1a;
+      --ed-line: rgba(255,255,255,.18); --ed-dim: rgba(255,255,255,.5); --ed-view-bg: #131316; }
+    body.ed-on .deck { width: calc(100vw - ${RAIL_W}px); margin-left: ${RAIL_W}px; }
+    body.ed-on .edit-btn { display: none; }
+    [contenteditable] { outline: none; cursor: text; border-radius: 3px; }
+    [contenteditable]:hover { box-shadow: 0 0 0 1px color-mix(in srgb, currentColor 35%, transparent); }
+    [contenteditable]:focus { box-shadow: 0 0 0 2px color-mix(in srgb, currentColor 60%, transparent); }
+    [contenteditable]:empty::before { content: '\\2026'; opacity: .35; }
+    .ed-toolbar { position: fixed; top: 14px; right: 16px; z-index: 1000; display: flex; gap: 8px;
+      align-items: center; font-family: inherit; font-size: 12px; font-weight: 500; line-height: 1.3;
+      background: var(--ed-panel); color: var(--ed-ink); backdrop-filter: blur(8px);
+      border: 1px solid var(--ed-line); border-radius: 10px; padding: 8px 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.12); }
+    .ed-toolbar button { font-family: inherit; font-size: 12px; font-weight: 500;
+      border: 1px solid var(--ed-line); background: transparent; color: var(--ed-ink);
+      border-radius: 6px; padding: 6px 12px; cursor: pointer; }
+    .ed-toolbar button:hover { border-color: var(--ed-ink); }
+    .ed-toolbar .ed-save.ed-dirty { background: var(--ed-ink); border-color: var(--ed-ink); color: var(--ed-inv); }
+    .ed-status { color: var(--ed-dim); max-width: 240px; }
+    .ed-rail { position: fixed; left: 0; top: 0; bottom: 0; width: ${RAIL_W}px; z-index: 999;
+      overflow-y: auto; background: var(--ed-panel); backdrop-filter: blur(8px);
+      border-right: 1px solid var(--ed-line); padding: 14px 12px 80px;
+      display: flex; flex-direction: column; align-items: center; }
+    .ed-thumb { position: relative; width: fit-content; margin-bottom: 12px; border: 2px solid transparent; border-radius: 10px;
+      cursor: grab; user-select: none; -webkit-user-select: none; touch-action: none; transition: border-color 0.15s ease; }
+    .ed-thumb.ed-current { border-color: var(--ed-ink); }
+    .ed-thumb.ed-drop-before { box-shadow: 0 -3px 0 0 var(--ed-ink); }
+    .ed-thumb.ed-dragging { opacity: .65; z-index: 10; }
+    .ed-thumb-view { position: relative; width: ${THUMB_W}px; overflow: hidden; border-radius: 8px;
+      border: 1px solid var(--ed-line); pointer-events: none; background: var(--ed-view-bg); }
+    .ed-n { position: absolute; top: 6px; left: 6px; z-index: 2; font-family: inherit; font-size: 9px;
+      font-weight: 500; color: var(--ed-ink); background: var(--ed-panel); border: 1px solid var(--ed-line);
+      border-radius: 5px; padding: 1px 5px; line-height: 1.4; pointer-events: none; }
+    .ed-thumb-bar { position: absolute; right: 6px; bottom: 6px; display: flex; align-items: center; gap: 1px;
+      padding: 3px; border-radius: 9px; background: var(--ed-panel); border: 1px solid var(--ed-line);
+      box-shadow: 0 2px 8px rgba(0,0,0,.18); backdrop-filter: blur(6px);
+      opacity: 0; pointer-events: none; transition: opacity 0.12s ease; }
+    .ed-thumb:hover .ed-thumb-bar { opacity: 1; pointer-events: auto; }
+    .ed-thumb-bar button { border: none; background: none; cursor: pointer; font-size: 11px;
+      color: var(--ed-dim); padding: 3px 5px; border-radius: 6px; line-height: 1; }
+    .ed-thumb-bar button:hover { color: var(--ed-ink);
+      background: color-mix(in srgb, var(--ed-ink) 8%, transparent); }
+    body.ed-on .slide img, body.ed-on .slide video { transition: outline-color 0.12s ease; }
+    body.ed-on .slide img:hover, body.ed-on .slide video:hover { outline: 2px solid color-mix(in srgb, var(--ed-ink) 55%, transparent); outline-offset: -2px; }
+    .ed-img-drag { outline: 2px dashed var(--ed-ink) !important; outline-offset: -2px; }
+    .ed-imgbar { position: fixed; z-index: 1001; display: none; flex-direction: column; align-items: center; gap: 8px;
+      transform: translate(-50%, -50%); padding: 14px; border-radius: 12px; text-align: center;
+      background: var(--ed-panel); border: 1px solid var(--ed-line);
+      box-shadow: 0 6px 22px rgba(0,0,0,.22); backdrop-filter: blur(8px); font-family: inherit; }
+    .ed-imgbar-label { font-size: 9px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--ed-dim); }
+    .ed-imgbar-main { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .ed-imgbar-drop { display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer;
+      width: 210px; max-width: 60vw; padding: 16px 18px; border: 1.5px dashed var(--ed-line); border-radius: 10px;
+      background: transparent; color: var(--ed-dim); font-family: inherit; transition: border-color .12s ease, color .12s ease; }
+    .ed-imgbar-drop:hover, .ed-imgbar.ed-drag-active .ed-imgbar-drop { border-color: var(--ed-ink); color: var(--ed-ink); }
+    .ed-imgbar-drop svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .ed-imgbar-drop-title { font-size: 12px; font-weight: 500; color: var(--ed-ink); }
+    .ed-imgbar-drop-sub { font-size: 10px; }
+    .ed-imgbar-linkbtn { font-family: inherit; font-size: 11px; font-weight: 500; cursor: pointer; border: none;
+      background: none; color: var(--ed-dim); padding: 2px; text-decoration: underline; text-underline-offset: 2px; }
+    .ed-imgbar-linkbtn:hover { color: var(--ed-ink); }
+    .ed-imgbar-link { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .ed-imgbar-input { font-family: inherit; font-size: 12px; color: var(--ed-ink); width: 220px; max-width: 50vw;
+      padding: 7px 10px; border-radius: 7px; border: 1px solid var(--ed-line); background: var(--ed-view-bg); outline: none; }
+    .ed-imgbar-input:focus { border-color: var(--ed-ink); }
+    @media print { .ed-rail, .ed-toolbar, [data-ed-ui] { display: none !important; }
+      body.ed-on .deck { width: auto; margin-left: 0; } }
+  `;
+  document.head.appendChild(css);
+  document.body.classList.add('ed-on');
+
+  /* match the editor chrome to the theme */
+  (function detectDark() {
+    for (const probe of [document.body, document.querySelector('.slide')]) {
+      if (!probe) continue;
+      const m = getComputedStyle(probe).backgroundColor.match(/[\d.]+/g);
+      if (!m || m.length < 3 || (m.length > 3 && +m[3] === 0)) continue;
+      if (0.299 * m[0] + 0.587 * m[1] + 0.114 * m[2] < 128) document.body.classList.add('ed-dark');
+      return;
+    }
+  })();
+
+  /* ---------- inline text editing (leaf-level, plaintext only) ---------- */
+  const INLINE = new Set(['SPAN', 'SUP', 'SUB', 'STRONG', 'EM', 'B', 'I', 'A', 'BR']);
+
+  function isTextLeaf(node) {
+    if (!node.childNodes.length) return false;
+    for (const n of node.childNodes) {
+      if (n.nodeType === 3) continue;
+      if (n.nodeType !== 1 || !INLINE.has(n.tagName)) return false;
+      if (n.tagName !== 'BR' && n.childNodes.length && !isTextLeaf(n)) return false;
+    }
+    return node.textContent.trim().length > 0;
+  }
+
+  function setEd(n) {
+    n.setAttribute('contenteditable', 'plaintext-only');
+    n.setAttribute('spellcheck', 'false');
+  }
+
+  function makeEditable(root) {
+    const leaves = [];
+    (function walk(node) {
+      for (const c of node.children) (isTextLeaf(c) ? leaves.push(c) : walk(c));
+    })(root);
+    for (const leaf of leaves) {
+      const hasEls = [...leaf.children].some(c => c.tagName !== 'BR');
+      if (!hasEls) { setEd(leaf); continue; }
+      // mixed content: protected inline spans + bare text runs each become their own field
+      for (const c of leaf.children) {
+        if (c.tagName !== 'BR' && c.textContent.length) setEd(c);
+      }
+      for (const n of [...leaf.childNodes]) {
+        if (n.nodeType === 3 && n.textContent.trim()) {
+          const w = document.createElement('span');
+          w.dataset.edWrap = '';
+          n.replaceWith(w); w.appendChild(n); setEd(w);
+        }
+      }
+    }
+  }
+
+  /* ---------- dirty tracking ---------- */
+  const hasChanges = () => structuralChanged || !!deck.querySelector('[data-ed-dirty]');
+  function markDirty() {
+    const btn = $('edSave');
+    if (btn) btn.classList.toggle('ed-dirty', hasChanges());
+    if (hasChanges()) scheduleAutoSave();
+  }
+
+  function watchMutations() {
+    new MutationObserver(muts => {
+      let hit = false;
+      for (const m of muts) {
+        const elx = m.target.nodeType === 1 ? m.target : m.target.parentElement;
+        const slide = elx && elx.closest('.slide');
+        if (slide && deck.contains(slide)) { slide.dataset.edDirty = '1'; hit = true; }
+      }
+      if (hit) markDirty();
+    }).observe(deck, { childList: true, characterData: true, subtree: true });
+  }
+
+  /* ---------- navigation: reuse the deck's own show()/next()/prev() ----------
+     The core script exposes window.refreshSlides() so its slide list follows
+     structural edits. We wrap show() to keep the rail highlight in sync. */
+  const curIdx = () => liveSlides().findIndex(s => s.classList.contains('active'));
+  function edShow(i) {
+    window.refreshSlides();
+    window.show(Math.max(0, Math.min(i, liveSlides().length - 1)));
+  }
+
+  document.addEventListener('keydown', e => {
+    const meta = e.metaKey || e.ctrlKey;
+    if (meta && e.key.toLowerCase() === 's') { e.preventDefault(); e.stopPropagation(); doSave(); return; }
+    if (e.target.isContentEditable) {
+      if (e.key === 'Enter') { e.preventDefault(); e.target.blur(); }
+      if (e.key === 'Escape') e.target.blur();
+      e.stopPropagation();          // keep deck navigation away from typing
+      return;
+    }
+    if (meta && e.key.toLowerCase() === 'z' && undoStack.length) {
+      e.preventDefault(); e.stopPropagation(); popUndo();
+    }
+  }, true);
+
+  /* ---------- structural undo (snapshots) ---------- */
+  function pushUndo() {
+    undoStack.push({ html: deck.innerHTML, cur: curIdx() });
+    if (undoStack.length > 50) undoStack.shift();
+  }
+  function popUndo() {
+    const s = undoStack.pop();
+    deck.innerHTML = s.html;
+    structuralChanged = true;
+    renderRail(); edShow(s.cur); markDirty();
+  }
+
+  /* ---------- thumbnail rail ---------- */
+  const rail = el('div', 'ed-rail'); rail.dataset.edUi = '';
+  document.body.appendChild(rail);
+
+  function makeThumb(slide, i) {
+    const t = el('div', 'ed-thumb'); t.dataset.idx = i;
+    const view = el('div', 'ed-thumb-view');
+    const dw = deck.clientWidth || innerWidth, dh = deck.clientHeight || innerHeight;
+    const sc = THUMB_W / dw;
+    view.style.height = (dh * sc) + 'px';
+    const c = slide.cloneNode(true);
+    c.classList.remove('active');
+    c.querySelectorAll('[contenteditable]').forEach(n => n.removeAttribute('contenteditable'));
+    c.style.cssText = 'display:flex; position:absolute; inset:auto; left:0; top:0; width:' + dw +
+      'px; height:' + dh + 'px; transform:scale(' + sc + '); transform-origin:0 0;';
+    view.appendChild(c);
+    const num = el('div', 'ed-n'); num.textContent = (i + 1);
+    view.appendChild(num);
+    const bar = el('div', 'ed-thumb-bar');
+    bar.innerHTML = '<button data-act="up" title="Move up">&#8593;</button>' +
+      '<button data-act="down" title="Move down">&#8595;</button>' +
+      '<button data-act="dup" title="Duplicate">&#10697;</button>' +
+      '<button data-act="del" title="Delete">&#10005;</button>';
+    t.append(view, bar);
+    return t;
+  }
+
+  function renderRail() {
+    rail.textContent = '';
+    liveSlides().forEach((s, i) => rail.appendChild(makeThumb(s, i)));
+    highlightThumb();
+  }
+
+  function highlightThumb() {
+    const cur = curIdx();
+    const thumbs = rail.querySelectorAll('.ed-thumb');
+    thumbs.forEach((t, j) => t.classList.toggle('ed-current', j === cur));
+    if (thumbs[cur]) thumbs[cur].scrollIntoView({ block: 'nearest' });
+  }
+
+  function structural() { structuralChanged = true; renderRail(); markDirty(); }
+
+  let suppressClick = false;
+  rail.addEventListener('click', e => {
+    if (suppressClick) { suppressClick = false; return; }
+    const t = e.target.closest('.ed-thumb'); if (!t) return;
+    const i = +t.dataset.idx;
+    const btn = e.target.closest('button');
+    const s = liveSlides();
+    if (!btn) { edShow(i); return; }
+    const act = btn.dataset.act;
+    if (act === 'up' && i > 0) { pushUndo(); s[i - 1].before(s[i]); structural(); edShow(i - 1); }
+    else if (act === 'down' && i < s.length - 1) { pushUndo(); s[i + 1].after(s[i]); structural(); edShow(i + 1); }
+    else if (act === 'dup') {
+      pushUndo();
+      const c = s[i].cloneNode(true);
+      c.classList.remove('active');
+      delete c.dataset.srcIdx;
+      c.dataset.edDirty = '1';
+      s[i].after(c); structural(); edShow(i + 1);
+    } else if (act === 'del') {
+      if (s.length === 1) return;
+      if (!confirm('Delete slide ' + (i + 1) + '?')) return;
+      pushUndo(); s[i].remove(); structural(); edShow(Math.min(i, s.length - 2));
+    }
+  });
+
+  /* drag to reorder */
+  let drag = null;
+  rail.addEventListener('pointerdown', e => {
+    if (e.target.closest('button')) return;
+    const t = e.target.closest('.ed-thumb'); if (!t) return;
+    drag = { t, startY: e.clientY, idx: +t.dataset.idx, moved: false, drop: -1 };
+    t.setPointerCapture(e.pointerId);
+  });
+  rail.addEventListener('pointermove', e => {
+    if (!drag) return;
+    const dy = e.clientY - drag.startY;
+    if (!drag.moved && Math.abs(dy) < 6) return;
+    drag.moved = true;
+    drag.t.classList.add('ed-dragging');
+    drag.t.style.transform = 'translateY(' + dy + 'px)';
+    const thumbs = [...rail.querySelectorAll('.ed-thumb')];
+    let drop = thumbs.length;
+    for (let j = 0; j < thumbs.length; j++) {
+      if (thumbs[j] === drag.t) continue;
+      const r = thumbs[j].getBoundingClientRect();
+      if (e.clientY < r.top + r.height / 2) { drop = j; break; }
+    }
+    drag.drop = drop;
+    thumbs.forEach((x, j) => x.classList.toggle('ed-drop-before', j === drop && x !== drag.t));
+  });
+  function endDrag(commit) {
+    if (!drag) return;
+    const { t, idx, moved, drop } = drag; drag = null;
+    t.classList.remove('ed-dragging'); t.style.transform = '';
+    rail.querySelectorAll('.ed-drop-before').forEach(x => x.classList.remove('ed-drop-before'));
+    if (!moved) return;
+    suppressClick = true;
+    if (!commit || drop < 0 || drop === idx || drop === idx + 1) return;
+    pushUndo();
+    const s = liveSlides();
+    deck.insertBefore(s[idx], s[drop] || null);
+    structural();
+    edShow(liveSlides().indexOf(s[idx]));
+  }
+  rail.addEventListener('pointerup', () => endDrag(true));
+  rail.addEventListener('pointercancel', () => endDrag(false));
+
+  /* re-render a slide's thumbnail after editing its text */
+  deck.addEventListener('focusout', e => {
+    if (!e.target.isContentEditable) return;
+    const slide = e.target.closest('.slide'); if (!slide) return;
+    const i = liveSlides().indexOf(slide);
+    const old = rail.querySelectorAll('.ed-thumb')[i];
+    if (old) old.replaceWith(makeThumb(slide, i));
+    highlightThumb();
+  });
+
+  /* ---------- image replace (file / drop / paste / link, one affordance) ---------- */
+  const MAX_IMG_DIM = 1600;
+  const imgBar = el('div', 'ed-imgbar'); imgBar.dataset.edUi = '';
+  imgBar.innerHTML =
+    '<div class="ed-imgbar-label">Replace image</div>' +
+    '<div class="ed-imgbar-main">' +
+      '<button type="button" class="ed-imgbar-drop" data-imgact="file">' +
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11"/><path d="M8 10l4 4 4-4"/><path d="M5 16v2a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-2"/></svg>' +
+        '<span class="ed-imgbar-drop-title">Drag &amp; drop image or video</span>' +
+        '<span class="ed-imgbar-drop-sub">or click to upload</span>' +
+      '</button>' +
+      '<button type="button" class="ed-imgbar-linkbtn" data-imgact="link">Paste a link instead</button>' +
+    '</div>' +
+    '<div class="ed-imgbar-link" style="display:none">' +
+      '<input type="text" class="ed-imgbar-input" placeholder="Paste image or video URL, press Enter">' +
+      '<button type="button" class="ed-imgbar-linkbtn ed-imgbar-cancel">Go back</button>' +
+    '</div>';
+  document.body.appendChild(imgBar);
+  const imgMain = imgBar.querySelector('.ed-imgbar-main');
+  const linkBox = imgBar.querySelector('.ed-imgbar-link');
+  const linkInput = imgBar.querySelector('.ed-imgbar-input');
+  const cancelBtn = imgBar.querySelector('.ed-imgbar-cancel');
+  let hoverImg = null, linkMode = false;
+
+  function placeImgBar(img) {
+    const r = img.getBoundingClientRect();
+    imgBar.style.left = (r.left + r.width / 2) + 'px';
+    imgBar.style.top = (r.top + r.height / 2) + 'px';
+    imgBar.style.display = 'flex';
+  }
+  function hideImgBar() { imgBar.style.display = 'none'; hoverImg = null; if (linkMode) exitLinkMode(); }
+
+  // inline URL entry (native prompt() is unreliable; Chrome can suppress it)
+  function enterLinkMode() {
+    linkMode = true;
+    imgMain.style.display = 'none';
+    linkBox.style.display = 'flex';
+    linkInput.value = '';
+    linkInput.focus();
+  }
+  function exitLinkMode() {
+    linkMode = false;
+    imgMain.style.display = '';
+    linkBox.style.display = 'none';
+  }
+  linkInput.addEventListener('keydown', e => {
+    e.stopPropagation();
+    if (e.key === 'Enter') { const img = hoverImg, url = linkInput.value; exitLinkMode(); if (img && url) setImageFromURL(img, url); }
+    else if (e.key === 'Escape') exitLinkMode();
+  });
+  linkInput.addEventListener('blur', exitLinkMode);
+  cancelBtn.addEventListener('mousedown', e => e.preventDefault());
+  cancelBtn.addEventListener('click', exitLinkMode);
+
+  function refreshThumbFor(img) {
+    const slide = img.closest('.slide');
+    if (slide) {
+      slide.dataset.edDirty = '1';
+      const i = liveSlides().indexOf(slide);
+      const old = rail.querySelectorAll('.ed-thumb')[i];
+      if (old) old.replaceWith(makeThumb(slide, i));
+      highlightThumb();
+    }
+    markDirty();
+  }
+
+  function readAsDataURL(file) {
+    return new Promise((res, rej) => {
+      const fr = new FileReader();
+      fr.onload = () => res(fr.result); fr.onerror = () => rej(fr.error);
+      fr.readAsDataURL(file);
+    });
+  }
+
+  // oversized images get downscaled so the embedded base64 stays reasonable
+  function shrinkDataURL(dataURL, type) {
+    return new Promise(res => {
+      const im = new Image();
+      im.onload = () => {
+        const max = Math.max(im.naturalWidth, im.naturalHeight);
+        if (max <= MAX_IMG_DIM) { res(dataURL); return; }
+        const k = MAX_IMG_DIM / max;
+        const cv = el('canvas');
+        cv.width = Math.round(im.naturalWidth * k);
+        cv.height = Math.round(im.naturalHeight * k);
+        cv.getContext('2d').drawImage(im, 0, 0, cv.width, cv.height);
+        res(cv.toDataURL(/png/i.test(type) ? 'image/png' : 'image/jpeg', 0.85));
+      };
+      im.onerror = () => res(dataURL);
+      im.src = dataURL;
+    });
+  }
+
+  const MAX_VIDEO_BYTES = 30 * 1024 * 1024;
+
+  // swap an <img> for a <video> (or back) in place, preserving class/style
+  function asVideo(node) {
+    if (node.tagName === 'VIDEO') return node;
+    const v = document.createElement('video');
+    ['autoplay', 'loop', 'muted', 'playsinline'].forEach(a => v.setAttribute(a, ''));
+    v.muted = true;
+    const st = node.getAttribute('style'); if (st) v.setAttribute('style', st);
+    if (node.className) v.className = node.className;
+    node.replaceWith(v);
+    return v;
+  }
+  function asImage(node) {
+    if (node.tagName === 'IMG') return node;
+    const im = document.createElement('img'); im.alt = '';
+    const st = node.getAttribute('style'); if (st) im.setAttribute('style', st);
+    if (node.className) im.className = node.className;
+    node.replaceWith(im);
+    return im;
+  }
+
+  // user files embed as base64 to keep the deck self-contained
+  async function setImageFromFile(node, file) {
+    if (!file) return;
+    const isVid = /^video\//.test(file.type);
+    if (!isVid && !/^image\//.test(file.type)) { status('That is not an image or video file'); return; }
+    if (isVid && file.size > MAX_VIDEO_BYTES) { status('Video is too large to embed (max 30MB). Use a link instead.'); return; }
+    status(isVid ? 'Embedding video...' : 'Embedding image...');
+    try {
+      const data = isVid ? await readAsDataURL(file) : await shrinkDataURL(await readAsDataURL(file), file.type);
+      const elx = isVid ? asVideo(node) : asImage(node);
+      elx.src = data;
+      if (hoverImg === node) hoverImg = elx;
+      refreshThumbFor(elx);
+      status(isVid ? 'Video added' : 'Image replaced'); setTimeout(() => status('Edit mode'), 1500);
+    } catch (err) { console.error(err); status('Could not add media'); }
+  }
+
+  // pasted or dropped links stay as URLs (matches the deck media convention)
+  function setImageFromURL(node, url) {
+    url = (url || '').trim();
+    if (!/^(https?:\/\/|data:(image|video)\/)/i.test(url)) { status('That is not a valid image or video URL'); return; }
+    const isVid = /^data:video\//i.test(url) || /\.(mp4|webm|ogg|ogv|mov|m4v)(\?|#|$)/i.test(url);
+    const elx = isVid ? asVideo(node) : asImage(node);
+    elx.src = url;
+    if (hoverImg === node) hoverImg = elx;
+    refreshThumbFor(elx);
+    status(isVid ? 'Video linked' : 'Image linked'); setTimeout(() => status('Edit mode'), 1500);
+  }
+
+  function pickImageFile(node) {
+    if (saving) return;
+    const inp = el('input'); inp.type = 'file'; inp.accept = 'image/*,video/*';
+    inp.addEventListener('change', () => { if (inp.files && inp.files[0]) setImageFromFile(node, inp.files[0]); });
+    inp.click();
+  }
+
+  document.addEventListener('pointermove', e => {
+    if (drag || linkMode) return;
+    if (e.target.closest && e.target.closest('.ed-imgbar')) return;
+    const img = e.target.closest && e.target.closest('.deck .slide img, .deck .slide video');
+    if (img) { hoverImg = img; placeImgBar(img); }
+    else if (imgBar.style.display !== 'none') hideImgBar();
+  }, true);
+
+  imgBar.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b || !hoverImg) return;
+    if (b.dataset.imgact === 'link') enterLinkMode();
+    else if (b.dataset.imgact === 'file') pickImageFile(hoverImg);
+  });
+
+  // drop works over the image and over the centered card (maps to the hovered image)
+  function dropTargetImg(e) {
+    if (!e.target.closest) return null;
+    if (e.target.closest('.ed-imgbar')) return hoverImg;
+    return e.target.closest('.deck .slide img, .deck .slide video');
+  }
+  document.addEventListener('dragover', e => {
+    const img = dropTargetImg(e); if (!img) return;
+    e.preventDefault(); img.classList.add('ed-img-drag');
+    imgBar.classList.toggle('ed-drag-active', !!(e.target.closest && e.target.closest('.ed-imgbar')));
+  });
+  document.addEventListener('dragleave', e => {
+    const img = dropTargetImg(e); if (img) img.classList.remove('ed-img-drag');
+  });
+  document.addEventListener('drop', e => {
+    const img = dropTargetImg(e); if (!img) return;
+    e.preventDefault(); img.classList.remove('ed-img-drag'); imgBar.classList.remove('ed-drag-active');
+    const dt = e.dataTransfer; if (!dt) return;
+    if (dt.files && dt.files.length) setImageFromFile(img, dt.files[0]);
+    else setImageFromURL(img, dt.getData('text/uri-list') || dt.getData('text/plain'));
+  });
+
+  document.addEventListener('paste', e => {
+    if (!hoverImg || linkMode) return;
+    if (document.activeElement && document.activeElement.isContentEditable) return;
+    const dt = e.clipboardData; if (!dt) return;
+    for (const f of dt.files) { if (/^image\//.test(f.type)) { e.preventDefault(); setImageFromFile(hoverImg, f); return; } }
+    const text = dt.getData('text');
+    if (text && /^(https?:\/\/|data:image\/)/i.test(text.trim())) { e.preventDefault(); setImageFromURL(hoverImg, text); }
+  });
+
+  /* ---------- toolbar ---------- */
+  const bar = el('div', 'ed-toolbar'); bar.dataset.edUi = '';
+  bar.innerHTML = '<span class="ed-status" id="edStatus">Edit mode</span>' +
+    '<button class="ed-save" id="edSave" title="Save (Cmd/Ctrl+S). The first save asks you to pick this file once.">Save</button>' +
+    '<button id="edExit">Exit</button>';
+  document.body.appendChild(bar);
+  $('edSave').addEventListener('click', doSave);
+
+  function showExitConfirm() {
+    bar.innerHTML = '<span class="ed-status">Unsaved changes</span>' +
+      '<button id="edDiscard">Discard & Exit</button>' +
+      '<button id="edCancel">Cancel</button>';
+    $('edDiscard').addEventListener('click', () => {
+      structuralChanged = false;
+      deck.querySelectorAll('[data-ed-dirty]').forEach(s => delete s.dataset.edDirty);
+      location.href = location.pathname;
+    });
+    $('edCancel').addEventListener('click', restoreToolbar);
+  }
+
+  function restoreToolbar() {
+    bar.innerHTML = '<span class="ed-status" id="edStatus">Edit mode</span>' +
+      '<button class="ed-save" id="edSave" title="Save (Cmd/Ctrl+S). The first save asks you to pick this file once.">Save</button>' +
+      '<button id="edExit">Exit</button>';
+    $('edSave').addEventListener('click', doSave);
+    $('edExit').addEventListener('click', handleExit);
+    markDirty();
+  }
+
+  // shown when in-place saving is not possible (Safari, or a restricted folder)
+  function offerDownload(msg) {
+    bar.innerHTML = '<span class="ed-status" id="edStatus">' + msg + '</span>' +
+      '<button class="ed-save" id="edDl">Download copy</button>' +
+      '<button id="edBack">Back</button>';
+    $('edDl').addEventListener('click', () => { downloadCopy(); setTimeout(restoreToolbar, 1200); });
+    $('edBack').addEventListener('click', restoreToolbar);
+  }
+
+  function handleExit() {
+    if (!hasChanges()) { location.href = location.pathname; return; }
+    showExitConfirm();
+  }
+  $('edExit').addEventListener('click', handleExit);
+
+  function status(msg) { const s = $('edStatus'); if (s) s.textContent = msg; }
+
+  addEventListener('beforeunload', e => { if (hasChanges()) e.preventDefault(); });
+
+  /* ---------- auto-save (debounced, only when file handle exists) ---------- */
+  async function autoSave() {
+    if (!fileHandle || !hasChanges() || saving) return;
+    saving = true;
+    status('Saving...');
+    try {
+      const src = await (await fileHandle.getFile()).text();
+      const out = splice(src);
+      if (out == null) { status('Auto-save skipped (file changed externally)'); saving = false; return; }
+      const w = await fileHandle.createWritable();
+      await w.write(out); await w.close();
+      liveSlides().forEach((s, i) => { delete s.dataset.edDirty; s.dataset.srcIdx = i; });
+      baseCount = liveSlides().length;
+      structuralChanged = false;
+      markDirty(); renderRail();
+      status('Saved');
+      setTimeout(() => status('Edit mode'), 1500);
+    } catch (err) {
+      console.error('Auto-save failed:', err);
+      status('Auto-save failed');
+      setTimeout(() => status('Edit mode'), 3000);
+    }
+    saving = false;
+  }
+
+  /* ---------- save: File System Access + slide-anchored splice ---------- */
+  const IDB_KEY = 'deckHandle:' + location.pathname;
+  function idb(mode, fn) {
+    return new Promise((res, rej) => {
+      const o = indexedDB.open('deck-edit', 1);
+      o.onupgradeneeded = () => o.result.createObjectStore('kv');
+      o.onerror = () => rej(o.error);
+      o.onsuccess = () => {
+        const tx = o.result.transaction('kv', mode);
+        const r = fn(tx.objectStore('kv'));
+        tx.oncomplete = () => res(r && r.result);
+        tx.onerror = () => rej(tx.error);
+      };
+    });
+  }
+
+  async function getHandle() {
+    if (!fileHandle) fileHandle = await idb('readonly', s => s.get(IDB_KEY)).catch(() => null);
+    if (fileHandle) {
+      let p = await fileHandle.queryPermission({ mode: 'readwrite' });
+      if (p !== 'granted') p = await fileHandle.requestPermission({ mode: 'readwrite' });
+      if (p !== 'granted') fileHandle = null;
+    }
+    if (!fileHandle) {
+      const pageName = decodeURIComponent(location.pathname.split('/').pop());
+      status('One-time: select "' + pageName + '" in the dialog to allow in-place saving');
+      [fileHandle] = await showOpenFilePicker({
+        id: 'deck-edit',
+        types: [{ description: 'HTML deck', accept: { 'text/html': ['.html'] } }]
+      });
+      if (fileHandle.name !== pageName &&
+          !confirm('Picked "' + fileHandle.name + '" but this page is "' + pageName + '". Overwrite it anyway?')) {
+        fileHandle = null; throw Object.assign(new Error('cancelled'), { name: 'AbortError' });
+      }
+      await idb('readwrite', s => s.put(fileHandle, IDB_KEY)).catch(() => {});
+      justPicked = true;
+    }
+    return fileHandle;
+  }
+
+  function serializeClean(section) {
+    const c = section.cloneNode(true);
+    c.querySelectorAll('[data-ed-wrap]').forEach(w => w.replaceWith(document.createTextNode(w.textContent)));
+    for (const n of [c, ...c.querySelectorAll('*')]) {
+      n.removeAttribute('contenteditable');
+      n.removeAttribute('spellcheck');
+      delete n.dataset.edDirty;
+      delete n.dataset.srcIdx;
+      n.classList.remove('active');
+      if (!n.getAttribute('class')) n.removeAttribute('class');
+    }
+    return '  ' + c.outerHTML;
+  }
+
+  function ensureActive(body, isFirst) {
+    return body.replace(/<section([^>]*?)class="([^"]*)"/, (m, pre, cls) => {
+      const list = cls.split(/\s+/).filter(x => x && x !== 'active');
+      if (isFirst) list.splice(1, 0, 'active');
+      return '<section' + pre + 'class="' + list.join(' ') + '"';
+    });
+  }
+
+  // Replace only edited slides in the on-disk source; untouched slides, head
+  // (style) and tail (scripts) pass through byte-identical.
+  function splice(src) {
+    const re = /^([ \t]*)<section class="slide[^>]*>[\s\S]*?\n\1<\/section>/gm;
+    const ms = [...src.matchAll(re)];
+    if (ms.length !== baseCount) return null;
+    const chunks = []; let pos = 0;
+    for (const m of ms) {
+      const prefix = src.slice(pos, m.index);
+      const cm = prefix.match(/\n([ \t]*<!--[^\n]*-->)[ \t]*\n?$/);
+      chunks.push({
+        comment: cm ? cm[1] : null,
+        body: m[0],
+        headFree: pos === 0 ? prefix.slice(0, cm ? cm.index : prefix.length) : null
+      });
+      pos = m.index + m[0].length;
+    }
+    const tail = src.slice(pos);
+    let out = (chunks[0].headFree || '').replace(/\s*$/, '\n');
+    liveSlides().forEach((s, i) => {
+      const ch = s.dataset.srcIdx !== undefined ? chunks[+s.dataset.srcIdx] : null;
+      const comment = ch ? ch.comment : '  <!' + '-- ========== NEW SLIDE ========== --' + '>';
+      let body = (ch && !s.dataset.edDirty) ? ch.body : serializeClean(s);
+      body = ensureActive(body, i === 0);
+      out += '\n' + (comment ? comment + '\n' : '') + body + '\n';
+    });
+    out += tail.replace(/^\s*\n/, '\n');
+    return out;
+  }
+
+  function downloadCopy() {
+    const dc = document.documentElement.cloneNode(true);
+    dc.querySelectorAll('[data-ed-ui]').forEach(n => n.remove());
+    dc.querySelectorAll('[data-ed-wrap]').forEach(w => w.replaceWith(w.textContent));
+    dc.querySelectorAll('[contenteditable]').forEach(n => {
+      n.removeAttribute('contenteditable'); n.removeAttribute('spellcheck');
+    });
+    dc.querySelectorAll('[data-ed-dirty], [data-src-idx]').forEach(n => {
+      delete n.dataset.edDirty; delete n.dataset.srcIdx;
+    });
+    dc.querySelector('body').classList.remove('ed-on', 'ed-dark');
+    const html = '<!DOCTYPE html>\n' + dc.outerHTML;
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+    a.download = decodeURIComponent(location.pathname.split('/').pop() || 'deck.html');
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    status('Downloaded updated copy');
+  }
+
+  async function doSave() {
+    if (saving) return;
+    saving = true;
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+    try {
+      if (!window.showOpenFilePicker) {
+        offerDownload('This browser saves a copy instead of writing in place. In-place saving needs Chrome or Edge.');
+        return;
+      }
+      const h = await getHandle();
+      const src = await (await h.getFile()).text();
+      const out = splice(src);
+      if (out == null) {
+        if (confirm('The file on disk has a different slide count than when this page loaded ' +
+            '(someone else edited it?). In-place merge is unsafe. Download an updated copy instead?')) downloadCopy();
+        return;
+      }
+      const w = await h.createWritable();
+      await w.write(out); await w.close();
+      // re-anchor against the file we just wrote
+      liveSlides().forEach((s, i) => { delete s.dataset.edDirty; s.dataset.srcIdx = i; });
+      baseCount = liveSlides().length;
+      structuralChanged = false;
+      markDirty(); renderRail();
+      status(justPicked ? 'Saved. Auto-save is now active.' : 'Saved');
+      setTimeout(() => status('Edit mode'), justPicked ? 4000 : 1500);
+      justPicked = false;
+    } catch (err) {
+      if (err && err.name === 'AbortError') { offerDownload('Could not save in place here. Download an updated copy instead?'); return; }
+      if (err && err.name === 'SecurityError') { status('Timed out waiting — click Save again'); return; }
+      if (err && /already active/i.test(err.message || '')) { status('A file dialog is already open. Finish it, then save again.'); return; }
+      console.error(err);
+      offerDownload('Save failed: ' + (err && err.message) + '. Download an updated copy instead?');
+    } finally {
+      saving = false;
+    }
+  }
+
+  /* ---------- init ---------- */
+  liveSlides().forEach((s, i) => s.dataset.srcIdx = i);
+  baseCount = liveSlides().length;
+  makeEditable(deck);
+  watchMutations();
+  const coreShow = window.show;
+  window.show = i => { coreShow(i); highlightThumb(); hideImgBar(); };
+  renderRail();
+  edShow(Math.max(0, curIdx()));
+  markDirty();
+})();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+
+<script>
+/* ============================================================
+   Charts  — canvas[data-chart][data-src]
+     data-chart : bar | line | pie | doughnut | scatter
+     data-src   : path to a CSV or XLSX file in data/
+   CSV format  : first row = headers, first col = labels
+   XLSX format : same convention, first sheet used
+   Diagrams — pre.mermaid
+     Write standard Mermaid syntax inside a <pre class="mermaid">
+     block. Theme is auto-synced to the deck's design system.
+   ============================================================ */
+(() => {
+
+  /* ---------- Mermaid ---------- */
+  if (window.mermaid) {
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#ffffff',
+        primaryTextColor: '#1a1a1a',
+        primaryBorderColor: '#d5d5d0',
+        lineColor: '#6b6b65',
+        secondaryColor: '#f5f5f3',
+        tertiaryColor: '#e0e0db',
+        background: 'transparent',
+        mainBkg: '#ffffff',
+        nodeBorder: '#d5d5d0',
+        clusterBkg: '#f5f5f3',
+        edgeLabelBackground: '#f5f5f3',
+        fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+        fontSize: '14px'
+      }
+    });
+    // Don't run eagerly — slides are display:none on load, giving Mermaid zero dimensions.
+    // Lazy render happens in the show() hook below on first activation.
+  }
+
+  /* ---------- Charts ---------- */
+  if (!window.Chart) return;
+
+  Chart.defaults.font.family = 'Inter, -apple-system, BlinkMacSystemFont, sans-serif';
+  Chart.defaults.color = '#6b6b65';
+
+  const PALETTE = ['#AA73FA', '#5FA4FA', '#F8898C', '#FFCD96', '#4C92E9', '#EE686C'];
+
+  /* Lazy-load SheetJS only when an xlsx/xls file is requested */
+  let xlsxPromise = null;
+  function getXLSX() {
+    if (window.XLSX) return Promise.resolve(window.XLSX);
+    if (xlsxPromise) return xlsxPromise;
+    xlsxPromise = new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
+      s.onload = () => resolve(window.XLSX);
+      s.onerror = () => reject(new Error('Failed to load XLSX library'));
+      document.head.appendChild(s);
+    });
+    return xlsxPromise;
+  }
+
+  function parseCSV(text) {
+    const rows = [];
+    for (const line of text.trim().split('\n')) {
+      if (!line.trim()) continue;
+      const row = [];
+      let field = '', inQ = false;
+      for (let i = 0; i < line.length; i++) {
+        const c = line[i];
+        if (c === '"') { inQ = !inQ; continue; }
+        if (c === ',' && !inQ) { row.push(field.trim()); field = ''; continue; }
+        field += c;
+      }
+      row.push(field.trim());
+      rows.push(row);
+    }
+    return rows;
+  }
+
+  async function loadData(src) {
+    /* Inline data: data-src="#my-id" reads from <script type="text/csv" id="my-id"> */
+    if (src.startsWith('#')) {
+      const el = document.querySelector(src);
+      if (!el) throw new Error(`No element found for ${src}`);
+      return parseCSV(el.textContent);
+    }
+    /* Remote/local-server path: fetch() */
+    const ext = src.split('.').pop().toLowerCase();
+    const res = await fetch(src);
+    if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+    if (['xlsx', 'xls'].includes(ext)) {
+      const XLSX = await getXLSX();
+      const buf = await res.arrayBuffer();
+      const wb = XLSX.read(buf, { type: 'array' });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      return XLSX.utils.sheet_to_json(ws, { header: 1 });
+    }
+    return parseCSV(await res.text());
+  }
+
+  async function loadFromFile(file) {
+    const ext = file.name.split('.').pop().toLowerCase();
+    if (['xlsx', 'xls'].includes(ext)) {
+      const XLSX = await getXLSX();
+      const buf = await file.arrayBuffer();
+      const wb = XLSX.read(buf, { type: 'array' });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      return XLSX.utils.sheet_to_json(ws, { header: 1 });
+    }
+    return parseCSV(await file.text());
+  }
+
+  function toChartData(rows, type) {
+    const headers = rows[0];
+    const data = rows.slice(1);
+    const labels = data.map(r => r[0]);
+    const isRound = ['pie', 'doughnut'].includes(type);
+    if (isRound) {
+      return {
+        labels,
+        datasets: [{ data: data.map(r => +r[1]), backgroundColor: PALETTE, borderWidth: 0 }]
+      };
+    }
+    return {
+      labels,
+      datasets: headers.slice(1).map((label, i) => ({
+        label,
+        data: data.map(r => +r[i + 1]),
+        backgroundColor: PALETTE[i % PALETTE.length],
+        borderColor: PALETTE[i % PALETTE.length],
+        borderWidth: type === 'line' ? 2 : 0,
+        fill: false,
+        tension: 0.35,
+        pointRadius: type === 'line' ? 3 : 0,
+        barPercentage: 0.65
+      }))
+    };
+  }
+
+  function chartOptions(type, seriesCount) {
+    const isRound = ['pie', 'doughnut'].includes(type);
+    return {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: isRound || seriesCount > 1,
+          position: 'bottom',
+          labels: { padding: 20, boxWidth: 10, boxHeight: 10, font: { size: 12 } }
+        },
+        tooltip: {
+          backgroundColor: '#1a1a1a',
+          padding: 10,
+          cornerRadius: 6,
+          titleFont: { size: 12, weight: '500' },
+          bodyFont: { size: 12 }
+        }
+      },
+      scales: isRound ? {} : {
+        x: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 12 } } },
+        y: { grid: { color: '#e0e0db' }, border: { display: false }, ticks: { maxTicksLimit: 6, font: { size: 12 } } }
+      }
+    };
+  }
+
+  const instances = new Map();
+
+  async function initChart(canvas) {
+    const type = canvas.dataset.chart;
+    const src = canvas.dataset.src;
+    if (!src) return;
+    try {
+      const rows = await loadData(src);
+      const seriesCount = rows[0].length - 1;
+      const ch = new Chart(canvas, {
+        type,
+        data: toChartData(rows, type),
+        options: chartOptions(type, seriesCount)
+      });
+      instances.set(canvas, ch);
+    } catch (e) {
+      console.warn('[chart]', src, e.message);
+      canvas.closest('.chart-wrap')?.insertAdjacentHTML('afterend',
+        `<p style="color:#a0a09a;font-size:.8rem;margin-top:.5rem">Could not load ${src}: ${e.message}</p>`);
+    }
+  }
+
+  /* Hook show() to resize charts + lazy-render mermaid when a slide activates */
+  const _show = window.show;
+  window.show = (i) => {
+    _show(i);
+    // rAF lets display:flex apply before we measure canvas dimensions
+    requestAnimationFrame(() => {
+      const active = document.querySelector('.slide.active');
+      active?.querySelectorAll('canvas[data-chart]').forEach(c => instances.get(c)?.resize());
+      // Lazy mermaid: only render once, only when the slide is visible
+      const unrendered = [...(active?.querySelectorAll('.mermaid:not([data-processed])') ?? [])];
+      if (unrendered.length && window.mermaid) mermaid.run({ nodes: unrendered });
+    });
+  };
+
+  /* Pre-fetch all chart data; rendering/sizing happens when each slide is shown */
+  const canvases = [...document.querySelectorAll('canvas[data-chart]')];
+  if (canvases.length) Promise.all(canvases.map(initChart));
+
+  /* Drag-and-drop a CSV or XLSX file onto any chart canvas to reload it */
+  canvases.forEach(canvas => {
+    const wrap = canvas.closest('.chart-wrap') ?? canvas;
+    wrap.addEventListener('dragover', e => { e.preventDefault(); wrap.style.outline = '2px dashed #a0a09a'; wrap.style.outlineOffset = '-2px'; });
+    wrap.addEventListener('dragleave', () => { wrap.style.outline = ''; wrap.style.outlineOffset = ''; });
+    wrap.addEventListener('drop', async e => {
+      e.preventDefault();
+      wrap.style.outline = ''; wrap.style.outlineOffset = '';
+      const file = e.dataTransfer.files[0];
+      if (!file) return;
+      try {
+        const rows = await loadFromFile(file);
+        const ch = instances.get(canvas);
+        if (ch) {
+          const newData = toChartData(rows, ch.config.type);
+          ch.data = newData;
+          ch.update();
+        } else {
+          canvas.dataset.src = '';
+          const seriesCount = rows[0].length - 1;
+          const newCh = new Chart(canvas, { type: canvas.dataset.chart, data: toChartData(rows, canvas.dataset.chart), options: chartOptions(canvas.dataset.chart, seriesCount) });
+          instances.set(canvas, newCh);
+        }
+      } catch(e) {
+        console.warn('[chart drop]', e.message);
+      }
+    });
+  });
+
+})();
+</script>
+
+</body>
+</html>
