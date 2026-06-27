@@ -11,7 +11,13 @@ A minimalist HTML slide deck framework. One self-contained HTML file (`deck.html
 ```
 your-deck/
 ├── deck.html              ← the deck (edit this)
-├── ingrid.html            ← Ingrid-branded deck template
+├── ingrid_examples.html   ← Ingrid deck: generic layout/component gallery (thin shell)
+├── ingrid_library.html    ← Ingrid deck: concrete reusable content slides (thin shell)
+├── engine/                ← shared deck engine (styles + JS), reused across all Ingrid decks
+│   ├── engine.css         ← brand tokens, layout/component styles, cover toggles
+│   ├── engine.js          ← core navigation / show()
+│   ├── edit.js            ← in-browser edit mode
+│   └── charts.js          ← Chart.js + Mermaid
 ├── docs/
 │   ├── USING.md           ← usage guide
 │   ├── STORYTELLING.md    ← talk structure and tone
@@ -28,6 +34,8 @@ your-deck/
 ├── data/                  ← CSV and XLSX data files for charts
 └── AGENTS.md              ← this file
 ```
+
+**Editing the Ingrid decks (`ingrid_examples.html`, `ingrid_library.html`):** each is a thin shell — it holds only the `<section class="slide">` markup and links the shared `engine/`. `ingrid_examples.html` is the generic layout/component gallery; `ingrid_library.html` holds concrete reusable Ingrid content (e.g. business models, tech-domain matrix). To change brand styling, layout, navigation, edit mode, or charts, edit the files in `engine/`, not the deck. New decks are made by copying a deck file (they live at repo root, so `engine/...` and `brand/...` paths work as-is). Note CSS `url()` paths in `engine/engine.css` are relative to that file (e.g. `../brand/...`), while image `src` in deck HTML is relative to the deck file. (`deck.html` and the theme variants remain single self-contained files.)
 
 ---
 

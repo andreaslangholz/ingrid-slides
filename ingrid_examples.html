@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ingrid Capacity</title>
+<title>Ingrid — Examples</title>
 <link rel="stylesheet" href="engine/engine.css">
 </head>
 <body>
@@ -30,18 +30,6 @@
     <div class="cppt-date">JUNI 2026</div>
   </section>
 
-  <!-- ========== 2. DARK GRADIENT COVER ========== -->
-  <section class="slide ig-dark-grad-cover">
-    <div class="dgc-logo">
-      <img src="brand/ingrid/logos/color-on-dark.png" alt="ingrid">
-    </div>
-    <div class="dgc-headline">
-      <span class="dgc-line1" contenteditable>making the grid</span>
-      <span class="dgc-line2" contenteditable>intelligent</span>
-    </div>
-    <div class="dgc-date" contenteditable>JUNI 2026</div>
-  </section>
-
   <!-- ========== 3. AGENDA ========== -->
   <section class="slide ig-agenda">
     <div class="agd-header">
@@ -64,118 +52,23 @@
     </div>
   </section>
 
+  <!-- ========== 2. DARK GRADIENT COVER ========== -->
+  <section class="slide ig-dark-grad-cover">
+    <div class="dgc-logo">
+      <img src="brand/ingrid/logos/color-on-dark.png" alt="ingrid">
+    </div>
+    <div class="dgc-headline">
+      <span class="dgc-line1" contenteditable>making the grid</span>
+      <span class="dgc-line2" contenteditable>intelligent</span>
+    </div>
+    <div class="dgc-date" contenteditable>JUNI 2026</div>
+  </section>
+
   <!-- ========== 4. QUOTE — gradient bg ========== -->
   <section class="slide ig-grad-bg ig-quote-slide">
     <div class="eyebrow"><br></div>
     <h1>we make the grid flex, <span class="dim" style="color:rgba(255,255,255,.4)">not break.</span></h1>
     <div class="quote-attr"><br></div>
-  </section>
-
-  <!-- ========== BUSINESS MODELS — grid-debt maturity chart (pptx p.10) ========== -->
-  <section class="slide ig-business-models">
-    <div class="bm-eyebrow">1. INGRID</div>
-
-    <h1 class="bm-title" contenteditable>New business models required to meet current and future energy system needs</h1>
-
-    <div class="bm-legend">
-      <div class="bm-leg-row"><span class="bm-leg-line black"></span>RES generation (GWh)</div>
-      <div class="bm-leg-row"><span class="bm-leg-line orange"></span>Annual grid investments (bn EUR)</div>
-      <div class="bm-leg-idx">Indexed</div>
-    </div>
-
-    <!-- Phase 1 -->
-    <div class="bm-phase" style="top:27%;left:6.5%;width:19.5%">
-      <div class="bm-box" contenteditable>Legacy system</div>
-      <ul class="bm-bul">
-        <li contenteditable>Limited grid and generation investments</li>
-        <li contenteditable>Molecule dependence</li>
-      </ul>
-    </div>
-    <!-- Phase 2 -->
-    <div class="bm-phase" style="top:27%;left:27.5%;width:19.5%">
-      <div class="bm-box" contenteditable>RES build-out</div>
-      <ul class="bm-bul">
-        <li contenteditable>RES<sup>1</sup> investments exponential growth</li>
-        <li contenteditable>Grid investments lagging</li>
-      </ul>
-    </div>
-    <!-- Phase 3 -->
-    <div class="bm-phase" style="top:27%;left:49%;width:21%">
-      <div class="bm-box" contenteditable>Grid investments starts to catch up</div>
-      <ul class="bm-bul">
-        <li contenteditable>RES investments exponential growth continues</li>
-        <li contenteditable>Enter into grid investment super cycle</li>
-        <li contenteditable>Exponential BESS build out</li>
-      </ul>
-    </div>
-    <!-- Phase 4 -->
-    <div class="bm-phase" style="top:27%;left:71%;width:21%">
-      <div class="bm-box" contenteditable>Need for new operating system</div>
-      <ul class="bm-bul">
-        <li contenteditable>RES reaches &gt;30% of generation in most markets</li>
-      </ul>
-    </div>
-
-    <!-- Chart -->
-    <div class="bm-chart">
-      <svg viewBox="0 0 1000 209" preserveAspectRatio="none">
-        <!-- axis -->
-        <line x1="8" y1="175" x2="992" y2="175" stroke="#000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
-        <!-- ticks -->
-        <g stroke="#000" stroke-width="1.5" vector-effect="non-scaling-stroke">
-          <line x1="50"  y1="168" x2="50"  y2="182"/>
-          <line x1="270" y1="168" x2="270" y2="182"/>
-          <line x1="500" y1="168" x2="500" y2="182"/>
-          <line x1="720" y1="168" x2="720" y2="182"/>
-          <line x1="950" y1="168" x2="950" y2="182"/>
-        </g>
-        <!-- orange: annual grid investments -->
-        <path d="M50,167 C160,165 200,162 270,161 C360,160 430,159 500,158" fill="none" stroke="#F0A23C" stroke-width="3" vector-effect="non-scaling-stroke"/>
-        <path d="M500,158 L950,156" fill="none" stroke="#F0A23C" stroke-width="3" stroke-dasharray="9 7" vector-effect="non-scaling-stroke"/>
-        <!-- black: RES generation -->
-        <path d="M50,160 C150,156 190,152 270,148 C360,143 430,131 500,118" fill="none" stroke="#000" stroke-width="3" vector-effect="non-scaling-stroke"/>
-        <path d="M500,118 C640,104 690,55 950,22" fill="none" stroke="#000" stroke-width="3" stroke-dasharray="11 8" vector-effect="non-scaling-stroke"/>
-        <!-- grid-debt gap arrow -->
-        <line x1="950" y1="32" x2="950" y2="148" stroke="#000" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
-        <polygon points="950,20 943,34 957,34" fill="#000"/>
-        <polygon points="950,160 943,146 957,146" fill="#000"/>
-      </svg>
-    </div>
-    <div class="bm-debt" contenteditable>Grid debt<br>1.2 tn EUR until 2040</div>
-
-    <!-- Year axis labels -->
-    <div class="bm-year" style="left:10.45%">2010</div>
-    <div class="bm-year" style="left:30.03%">2020</div>
-    <div class="bm-year" style="left:50.5%">2025</div>
-    <div class="bm-year" style="left:70.08%">2030F</div>
-    <div class="bm-year" style="left:90.55%">2040F</div>
-
-    <!-- Problems to solve -->
-    <div class="bm-rowlabel" style="top:72%">Problems to solve</div>
-    <div class="bm-cell" style="top:72%;left:8%;width:19%"><ul><li contenteditable>Investability of RES</li></ul></div>
-    <div class="bm-cell" style="top:72%;left:27.5%;width:19%"><ul><li contenteditable>Energy security</li></ul></div>
-    <div class="bm-cell" style="top:72%;left:48%;width:19%"><ul>
-      <li contenteditable>Grid constraints</li>
-      <li contenteditable>Curtailment cost</li>
-      <li contenteditable>Negative capture prices</li>
-      <li contenteditable>Missed electrification opportunities</li>
-    </ul></div>
-    <div class="bm-cell" style="top:72%;left:67.5%;width:19%"><ul><li contenteditable>A grid that needs autonomous steering</li></ul></div>
-
-    <!-- Business models -->
-    <div class="bm-rowlabel" style="top:88%">Business models</div>
-    <div class="bm-cell" style="top:88%;left:8%;width:19%"><ul><li contenteditable>Feed-in-tariff dependency</li></ul></div>
-    <div class="bm-cell" style="top:88%;left:27.5%;width:19%"><ul><li contenteditable>IPPs and Corporate PPAs</li></ul></div>
-    <div class="bm-cell" style="top:88%;left:48%;width:19%"><ul>
-      <li contenteditable>Flexibility</li>
-      <li contenteditable>Asset co-optimization</li>
-      <li contenteditable>Hybrid contracting</li>
-    </ul></div>
-    <div class="bm-cell" style="top:88%;left:67.5%;width:19%"><ul><li contenteditable>Grid intelligence</li></ul></div>
-
-    <div class="bm-foot-left">Leading Europe's intelligent grid revolution</div>
-    <div class="bm-foot-right">Sources: IEA; 1. Renewables</div>
-    <div class="bm-page">10</div>
   </section>
 
   <!-- ========== 3. CONTENT — PPT template layout ========== -->
@@ -229,108 +122,6 @@
         <div class="step dim">Fourth step — blocked</div>
         <div class="step dim">Fifth step — never reached</div>
         <div class="step kill">Final outcome — failure</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== 8. DOMAIN MATRIX — tech team domains ========== -->
-  <section class="slide ig-domain-matrix">
-    <div class="dm-header">
-      <h2 class="dm-title">Ingrid trading platform and tech domains</h2>
-      <div class="dm-legend">
-        <span class="dm-legend-label">Teams</span>
-        <div class="dm-legend-items">
-          <div class="dm-legend-item"><span class="dm-color-sq opt"></span>Optimization</div>
-          <div class="dm-legend-item"><span class="dm-color-sq ml"></span>ML</div>
-          <div class="dm-legend-item"><span class="dm-color-sq plat"></span>Platform</div>
-          <div class="dm-legend-item"><span class="dm-color-sq prod"></span>Product</div>
-          <div class="dm-legend-item"><span class="dm-color-sq trad"></span>Trading</div>
-        </div>
-      </div>
-    </div>
-    <div class="dm-grid">
-      <!-- Row 1 -->
-      <div class="dm-row">
-        <div class="dm-row-label">Operations<br>and<br>Processes</div>
-        <div class="dm-cells">
-          <div class="dm-cell trad" style="flex:55">
-            <div class="dm-cell-title">Trading &amp; business</div>
-            <div class="dm-cell-desc">Day to day decision making, reporting and stakeholder mgmt. + business support</div>
-          </div>
-          <div class="dm-cell opt" style="flex:45">
-            <div class="dm-cell-title">Product &amp; ways of working</div>
-            <div class="dm-cell-desc">How we drive tech development and user onboarding</div>
-          </div>
-        </div>
-        <div class="dm-row-note">How we work</div>
-      </div>
-      <!-- Row 2 -->
-      <div class="dm-row">
-        <div class="dm-row-label">User<br>Interfaces<br>&amp; Tools</div>
-        <div class="dm-cells">
-          <div class="dm-cell trad" style="flex:55">
-            <div class="dm-cell-title">Internal</div>
-            <div class="dm-cell-desc">Everything that supports internal insights, reporting and development. Owns trading cockpit and controls</div>
-          </div>
-          <div class="dm-cell opt" style="flex:45">
-            <div class="dm-cell-title">External</div>
-            <div class="dm-cell-desc">All user interfaces and data sharing with Non-Ingrid stakeholders. Owns reporting API and investor portal</div>
-          </div>
-        </div>
-        <div class="dm-row-note">Used by people out­side of tech</div>
-      </div>
-      <!-- Row 3 -->
-      <div class="dm-row">
-        <div class="dm-row-label">Algorithm</div>
-        <div class="dm-cells">
-          <div class="dm-cell ml" style="flex:40">
-            <div class="dm-cell-title">Forecasts and scenarios</div>
-            <div class="dm-cell-desc">Prediction algorithms and scenario generations prior to optimization. Owns Rebase, Montel and other feature sources</div>
-          </div>
-          <div class="dm-cell opt" style="flex:30">
-            <div class="dm-cell-title">Day-ahead trading</div>
-            <div class="dm-cell-desc">Algorithmic engines for Day-ahead markets and schedules. Owns Gurobi</div>
-          </div>
-          <div class="dm-cell opt" style="flex:30">
-            <div class="dm-cell-title">Intraday trading</div>
-            <div class="dm-cell-desc">Live algorithms for intraday markets, including EAM and Imbalances</div>
-          </div>
-        </div>
-        <div class="dm-row-note">Deciding what to bid and when</div>
-      </div>
-      <!-- Row 4 -->
-      <div class="dm-row">
-        <div class="dm-row-label">Trading<br>platform</div>
-        <div class="dm-cells">
-          <div class="dm-cell plat" style="flex:28">
-            <div class="dm-cell-title">Asset Controls &amp; Delivery</div>
-            <div class="dm-cell-desc">Steering and controls of assets. Owns IETV and SCADA interfaces</div>
-          </div>
-          <div class="dm-cell trad" style="flex:40">
-            <div class="dm-cell-title">Governance, settlement and invoicing</div>
-            <div class="dm-cell-desc">Trading compliance checks, data storing and version controls, invoicing summary and generation</div>
-          </div>
-          <div class="dm-cell plat" style="flex:32">
-            <div class="dm-cell-title">Bidding and trading</div>
-            <div class="dm-cell-desc">Bidding, aggregation and validation of trading. Owns Interfaces to Hansen and PowerBot</div>
-          </div>
-        </div>
-        <div class="dm-row-note">Executing end-to-end trading</div>
-      </div>
-      <!-- Row 5 -->
-      <div class="dm-row">
-        <div class="dm-row-label">Foundation</div>
-        <div class="dm-cells">
-          <div class="dm-cell plat" style="flex:45">
-            <div class="dm-cell-title">Data</div>
-            <div class="dm-cell-desc">Data storage and platforms. Owns Airflow pipeline</div>
-          </div>
-          <div class="dm-cell plat" style="flex:55">
-            <div class="dm-cell-title">Cloud, infra and security</div>
-            <div class="dm-cell-desc">Infrastructure provisioning, application security, cloud scalability and cost. Owns Terraform, GCP and Keycloak</div>
-          </div>
-        </div>
-        <div class="dm-row-note">Enabling our use cases</div>
       </div>
     </div>
   </section>
@@ -614,21 +405,16 @@
     <div class="eyebrow">Performance</div>
     <h2>growth over time.</h2>
     <div class="pptc-subhead">PERFORMANCE</div>
-    <div class="chart-wrap"><canvas data-chart="bar" data-src="#ig-chart-data"></canvas></div><p style="color:#a0a09a;font-size:.8rem;margin-top:.5rem">Could not load #ig-chart-data: No element found for #ig-chart-data</p><p style="color:#a0a09a;font-size:.8rem;margin-top:.5rem">Could not load #ig-chart-data: No element found for #ig-chart-data</p><p style="color:#a0a09a;font-size:.8rem;margin-top:.5rem">Could not load #ig-chart-data: No element found for #ig-chart-data</p><p style="color:#a0a09a;font-size:.8rem;margin-top:.5rem">Could not load #ig-chart-data: No element found for #ig-chart-data</p><p style="color:#a0a09a;font-size:.8rem;margin-top:.5rem">Could not load #ig-chart-data: No element found for #ig-chart-data</p><p style="color:#a0a09a;font-size:.8rem;margin-top:.5rem">Could not load #ig-chart-data: No element found for #ig-chart-data</p>
+    <div class="chart-wrap"><canvas data-chart="bar" data-src="#ig-chart-data"></canvas></div><p style="color:#a0a09a;font-size:.8rem;margin-top:.5rem">Could not load #ig-chart-data: No element found for #ig-chart-data</p><p style="color:#a0a09a;font-size:.8rem;margin-top:.5rem">Could not load #ig-chart-data: No element found for #ig-chart-data</p><p style="color:#a0a09a;font-size:.8rem;margin-top:.5rem">Could not load #ig-chart-data: No element found for #ig-chart-data</p><p style="color:#a0a09a;font-size:.8rem;margin-top:.5rem">Could not load #ig-chart-data: No element found for #ig-chart-data</p><p style="color:#a0a09a;font-size:.8rem;margin-top:.5rem">Could not load #ig-chart-data: No element found for #ig-chart-data</p><p style="color:#a0a09a;font-size:.8rem;margin-top:.5rem">Could not load #ig-chart-data: No element found for #ig-chart-data</p><p style="color:#a0a09a;font-size:.8rem;margin-top:.5rem">Could not load #ig-chart-data: No element found for #ig-chart-data</p>
   </section>
 
   <!-- ========== 29. DIAGRAM ========== -->
   <section class="slide">
     <div class="eyebrow">Architecture</div>
     <h2>how it connects. <span class="dim">end to end.</span></h2>
-    <div class="pptc-subhead" contenteditable>ARCHITECTURE</div>
+    <div class="pptc-subhead">ARCHITECTURE</div>
     <div class="mermaid-wrap">
-      <pre class="mermaid">
-graph LR
-  A[Input] --> B{Decision}
-  B -->|Yes| C[Output A]
-  B -->|No| D[Output B]
-      </pre>
+      <pre class="mermaid" data-processed="true"><svg id="mermaid-1782574636222" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="flowchart" style="max-width: 480.640625px;" viewBox="0 0 480.640625 180.125" role="graphics-document document" aria-roledescription="flowchart-v2"><style>#mermaid-1782574636222{font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:14px;fill:#1a1a1a;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#mermaid-1782574636222 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#mermaid-1782574636222 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#mermaid-1782574636222 .error-icon{fill:#e0e0db;}#mermaid-1782574636222 .error-text{fill:#1f1f24;stroke:#1f1f24;}#mermaid-1782574636222 .edge-thickness-normal{stroke-width:1px;}#mermaid-1782574636222 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1782574636222 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1782574636222 .edge-thickness-invisible{stroke-width:0;fill:none;}#mermaid-1782574636222 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1782574636222 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1782574636222 .marker{fill:#6b6b65;stroke:#6b6b65;}#mermaid-1782574636222 .marker.cross{stroke:#6b6b65;}#mermaid-1782574636222 svg{font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:14px;}#mermaid-1782574636222 p{margin:0;}#mermaid-1782574636222 .label{font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;color:#1a1a1a;}#mermaid-1782574636222 .cluster-label text{fill:#1f1f24;}#mermaid-1782574636222 .cluster-label span{color:#1f1f24;}#mermaid-1782574636222 .cluster-label span p{background-color:transparent;}#mermaid-1782574636222 .label text,#mermaid-1782574636222 span{fill:#1a1a1a;color:#1a1a1a;}#mermaid-1782574636222 .node rect,#mermaid-1782574636222 .node circle,#mermaid-1782574636222 .node ellipse,#mermaid-1782574636222 .node polygon,#mermaid-1782574636222 .node path{fill:#ffffff;stroke:#d5d5d0;stroke-width:1px;}#mermaid-1782574636222 .rough-node .label text,#mermaid-1782574636222 .node .label text,#mermaid-1782574636222 .image-shape .label,#mermaid-1782574636222 .icon-shape .label{text-anchor:middle;}#mermaid-1782574636222 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#mermaid-1782574636222 .rough-node .label,#mermaid-1782574636222 .node .label,#mermaid-1782574636222 .image-shape .label,#mermaid-1782574636222 .icon-shape .label{text-align:center;}#mermaid-1782574636222 .node.clickable{cursor:pointer;}#mermaid-1782574636222 .root .anchor path{fill:#6b6b65!important;stroke-width:0;stroke:#6b6b65;}#mermaid-1782574636222 .arrowheadPath{fill:rgba(255, 255, 255, 0);}#mermaid-1782574636222 .edgePath .path{stroke:#6b6b65;stroke-width:1px;}#mermaid-1782574636222 .flowchart-link{stroke:#6b6b65;fill:none;}#mermaid-1782574636222 .edgeLabel{background-color:#f5f5f3;text-align:center;}#mermaid-1782574636222 .edgeLabel p{background-color:#f5f5f3;}#mermaid-1782574636222 .edgeLabel rect{opacity:0.5;background-color:#f5f5f3;fill:#f5f5f3;}#mermaid-1782574636222 .labelBkg{background-color:rgba(245, 245, 243, 0.5);}#mermaid-1782574636222 .cluster rect{fill:#f5f5f3;stroke:hsl(60, 0%, 76.862745098%);stroke-width:1px;}#mermaid-1782574636222 .cluster text{fill:#1f1f24;}#mermaid-1782574636222 .cluster span{color:#1f1f24;}#mermaid-1782574636222 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:12px;background:#e0e0db;border:1px solid hsl(60, 0%, 76.862745098%);border-radius:2px;pointer-events:none;z-index:100;}#mermaid-1782574636222 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#1a1a1a;}#mermaid-1782574636222 rect.text{fill:none;stroke-width:0;}#mermaid-1782574636222 .icon-shape,#mermaid-1782574636222 .image-shape{background-color:#f5f5f3;text-align:center;}#mermaid-1782574636222 .icon-shape p,#mermaid-1782574636222 .image-shape p{background-color:#f5f5f3;padding:2px;}#mermaid-1782574636222 .icon-shape .label rect,#mermaid-1782574636222 .image-shape .label rect{opacity:0.5;background-color:#f5f5f3;fill:#f5f5f3;}#mermaid-1782574636222 .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#mermaid-1782574636222 .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#mermaid-1782574636222 .node .neo-node{stroke:#d5d5d0;}#mermaid-1782574636222 [data-look="neo"].node rect,#mermaid-1782574636222 [data-look="neo"].cluster rect,#mermaid-1782574636222 [data-look="neo"].node polygon{stroke:url(#mermaid-1782574636222-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1782574636222 [data-look="neo"].swimlane.cluster rect{filter:none;}#mermaid-1782574636222 [data-look="neo"].node path{stroke:url(#mermaid-1782574636222-gradient);stroke-width:1px;}#mermaid-1782574636222 [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1782574636222 [data-look="neo"].node .neo-line path{stroke:#d5d5d0;filter:none;}#mermaid-1782574636222 [data-look="neo"].node circle{stroke:url(#mermaid-1782574636222-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1782574636222 [data-look="neo"].node circle .state-start{fill:#000000;}#mermaid-1782574636222 [data-look="neo"].icon-shape .icon{fill:url(#mermaid-1782574636222-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1782574636222 [data-look="neo"].icon-shape .icon-neo path{stroke:url(#mermaid-1782574636222-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1782574636222 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g><marker id="mermaid-1782574636222_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1782574636222_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1782574636222_flowchart-v2-pointEnd-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="11.5" refY="7" markerUnits="userSpaceOnUse" markerWidth="10.5" markerHeight="14" orient="auto"><path d="M 0 0 L 11.5 7 L 0 14 z" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1782574636222_flowchart-v2-pointStart-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="1" refY="7" markerUnits="userSpaceOnUse" markerWidth="11.5" markerHeight="14" orient="auto"><polygon points="0,7 11.5,14 11.5,0" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></polygon></marker><marker id="mermaid-1782574636222_flowchart-v2-circleEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1782574636222_flowchart-v2-circleStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1782574636222_flowchart-v2-circleEnd-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refY="5" refX="12.25" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1782574636222_flowchart-v2-circleStart-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-2" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1782574636222_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1782574636222_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1782574636222_flowchart-v2-crossEnd-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="17.7" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5;"></path></marker><marker id="mermaid-1782574636222_flowchart-v2-crossStart-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="-3.5" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5; stroke-dasharray: 1, 0;"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path d="M104.367,90.063L108.534,90.063C112.701,90.063,121.034,90.063,128.701,90.063C136.367,90.063,143.367,90.063,146.867,90.063L150.367,90.063" id="mermaid-1782574636222-L_A_B_0" class="edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_A_B_0" data-points="W3sieCI6MTA0LjM2NzE4NzUsInkiOjkwLjA2MjV9LHsieCI6MTI5LjM2NzE4NzUsInkiOjkwLjA2MjV9LHsieCI6MTU0LjM2NzE4NzUsInkiOjkwLjA2MjV9XQ==" data-look="classic" marker-end="url(#mermaid-1782574636222_flowchart-v2-pointEnd)"></path><path d="M251.872,68.981L261.675,63.573C271.478,58.165,291.085,47.348,306.511,41.94C321.938,36.531,333.184,36.531,338.807,36.531L344.43,36.531" id="mermaid-1782574636222-L_B_C_0" class="edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_B_C_0" data-points="W3sieCI6MjUxLjg3MjAwMDk5MjM3MjM2LCJ5Ijo2OC45ODEzNzU5OTIzNzIzNX0seyJ4IjozMTAuNjkxNDA2MjUsInkiOjM2LjUzMTI1fSx7IngiOjM0OC40Mjk2ODc1LCJ5IjozNi41MzEyNX1d" data-look="classic" marker-end="url(#mermaid-1782574636222_flowchart-v2-pointEnd)"></path><path d="M251.872,111.144L261.675,116.552C271.478,121.96,291.085,132.777,306.539,138.185C321.992,143.594,333.293,143.594,338.943,143.594L344.594,143.594" id="mermaid-1782574636222-L_B_D_0" class="edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_B_D_0" data-points="W3sieCI6MjUxLjg3MjAwMDk5MjM3MjM2LCJ5IjoxMTEuMTQzNjI0MDA3NjI3NjV9LHsieCI6MzEwLjY5MTQwNjI1LCJ5IjoxNDMuNTkzNzV9LHsieCI6MzQ4LjU5Mzc1LCJ5IjoxNDMuNTkzNzV9XQ==" data-look="classic" marker-end="url(#mermaid-1782574636222_flowchart-v2-pointEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" data-id="L_A_B_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(310.69140625, 36.53125)"><g class="label" data-id="L_B_C_0" transform="translate(-12.73828125, -13.53125)"><foreignObject width="25.4765625" height="27.0625"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>Yes</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(310.69140625, 143.59375)"><g class="label" data-id="L_B_D_0" transform="translate(-10.21875, -13.53125)"><foreignObject width="20.4375" height="27.0625"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>No</p></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default" id="mermaid-1782574636222-flowchart-A-0" data-look="classic" transform="translate(56.18359375, 90.0625)"><rect class="basic label-container" style="" x="-48.18359375" y="-28.53125" width="96.3671875" height="57.0625"></rect><g class="label" style="" transform="translate(-18.18359375, -13.53125)"><rect></rect><foreignObject width="36.3671875" height="27.0625"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p>Input</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1782574636222-flowchart-B-1" data-look="classic" transform="translate(213.66015625, 90.0625)"><polygon points="59.29296875,0 118.5859375,-59.29296875 59.29296875,-118.5859375 0,-59.29296875" class="label-container" transform="translate(-58.79296875, 59.29296875)"></polygon><g class="label" style="" transform="translate(-30.76171875, -13.53125)"><rect></rect><foreignObject width="61.5234375" height="27.0625"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p>Decision</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1782574636222-flowchart-C-3" data-look="classic" transform="translate(410.53515625, 36.53125)"><rect class="basic label-container" style="" x="-62.10546875" y="-28.53125" width="124.2109375" height="57.0625"></rect><g class="label" style="" transform="translate(-32.10546875, -13.53125)"><rect></rect><foreignObject width="64.2109375" height="27.0625"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p>Output A</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1782574636222-flowchart-D-5" data-look="classic" transform="translate(410.53515625, 143.59375)"><rect class="basic label-container" style="" x="-61.94140625" y="-28.53125" width="123.8828125" height="57.0625"></rect><g class="label" style="" transform="translate(-31.94140625, -13.53125)"><rect></rect><foreignObject width="63.8828125" height="27.0625"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p>Output B</p></span></div></foreignObject></g></g></g></g></g><defs><filter id="mermaid-1782574636222-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"></feDropShadow></filter></defs><defs><filter id="mermaid-1782574636222-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"></feDropShadow></filter></defs><linearGradient id="mermaid-1782574636222-gradient" gradientUnits="objectBoundingBox" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#d5d5d0" stop-opacity="1"></stop><stop offset="100%" stop-color="hsl(60, 0%, 85.6862745098%)" stop-opacity="1"></stop></linearGradient></svg></pre>
     </div>
   </section>
 

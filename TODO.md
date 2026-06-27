@@ -2,6 +2,13 @@
 
 ## In progress
 
+- [ ] **Decouple into a multi-deck system** — turn the single-file deck into a shared engine + many decks (local-first now, designed to migrate to a git repo or hosted app; keeps HTML-slides + in-browser editor)
+  - [x] Phase 1 — extract shared `engine/` (css, js, edit, charts); deck is now a thin shell (PR #1, merged)
+  - [x] Phase 2a — first multi-deck use case: split `ingrid.html` into `ingrid_examples.html` (generic gallery) + `ingrid_library.html` (concrete content), both sharing `engine/`
+  - [x] Phase 2b — root launcher `index.html` lists decks (open/edit); old marketing page kept as `landing.html`. Decks come from a one-line-per-deck array (lightweight manifest)
+  - [ ] Phase 2c (optional) — `decks/<name>/` folders + JSON manifest if decks grow media-heavy
+  - [ ] Phase 3 — `templates/gallery.html` + insert-template-in-editor ("＋ Add slide" picker)
+  - [ ] Phase 4 — git-repo / hosted workflow (manifest + file-writes → API later, engine/editor untouched)
 - [ ] **Complete Ingrid MCP integration** — blocked on platform team
   - Get real `env` and `namespace` values (currently placeholders in `.env.example`)
   - Copy `.env.example` → `.env.local` and fill in all four vars

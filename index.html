@@ -3,757 +3,121 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Slides™ · Write slides in HTML. Ship from a single file.</title>
-<meta name="description" content="Slides™ is a minimalist HTML deck framework built for AI. Describe your talk, get a finished deck, then edit it live in the browser. One file. No build step. Open source. A Claude marketplace plugin.">
-<meta property="og:title" content="Slides™ · Story in. Slides out.">
-<meta property="og:description" content="An open-source deck framework built for AI. One HTML file, 30+ components, six storytelling formats. Edit any deck live in the browser. A Claude marketplace plugin.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://noskillish.github.io/slides/">
-<meta property="og:image" content="https://noskillish.github.io/slides/assets/og-image.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Slides™ · Story in. Slides out.">
-<meta name="twitter:description" content="An open-source deck framework built for AI. One HTML file, 30+ components, six storytelling formats. Edit any deck live in the browser.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◼</text></svg>">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Ingrid Decks</title>
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  :root {
-    --bg: #f5f2ec;
-    --bg-card: #faf8f4;
-    --ink: #1a1a1a;
-    --dim: #6a6a66;
-    --muted: #a0a09a;
-    --faint: #b5b0aa;
-    --border: #e0ddd6;
-    --border-strong: #c5c2bb;
-    --accent: #c45a2d;
-    --radius: 10px;
-  }
-  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-  body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,700;0,800&family=Fira+Code:wght@400;500;600&display=swap');
 
-  .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
-  @media (min-width: 768px) { .container { padding: 0 2rem; } }
+:root{
+  --ink:#000; --white:#fff;
+  --violet:#AA73FA; --blue:#5FA4FA;
+  --g1:#F2F2F2; --g2:#D8D8D8; --g3:#999; --g4:#3F3F3F;
+  --ff:'Plus Jakarta Sans',system-ui,sans-serif;
+  --ffm:'Fira Code','Courier New',monospace;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--ff);color:var(--ink);background:var(--white);-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
 
-  /* Header */
-  header { border-bottom: 1px solid var(--border); padding: 1.5rem 0; }
-  header .container { display: flex; justify-content: space-between; align-items: center; }
-  .logo { font-size: 1rem; font-weight: 500; letter-spacing: -0.02em; }
-  nav { display: flex; gap: 1.5rem; }
-  nav a { font-size: 0.85rem; color: var(--dim); text-decoration: none; transition: color 0.2s; }
-  nav a:hover { color: var(--ink); }
+/* ── Hero ── */
+.hero{
+  position:relative; padding:4vw 6vw 3.2vw;
+  background:url('brand/ingrid/gradients/dark.png') center/cover no-repeat; color:var(--white);
+}
+.hero-logo img{height:clamp(22px,3.4vh,36px);width:auto;display:block}
+.hero-title{
+  margin-top:clamp(2.2rem,7vw,5rem);
+  font-weight:500; font-size:clamp(2.6rem,7vw,5.5rem); line-height:1; letter-spacing:-.02em;
+}
+.hero-sub{
+  margin-top:.9rem; max-width:46ch; font-weight:300;
+  font-size:clamp(.9rem,1.4vw,1.1rem); line-height:1.6; color:rgba(255,255,255,.82);
+}
 
-  /* Hero */
-  .hero { padding: 5rem 0 4rem; border-bottom: 1px solid var(--border); }
-  @media (min-width: 768px) { .hero { padding: 7rem 0 5rem; } }
-  .hero h1 {
-    font-size: clamp(2.2rem, 5vw, 3.8rem);
-    font-weight: 400;
-    letter-spacing: -0.04em;
-    line-height: 1.05;
-    max-width: 800px;
-    margin-bottom: 1.5rem;
-  }
-  .hero h1 .dim { color: var(--faint); font-weight: 300; }
-  .hero .subtitle {
-    font-size: clamp(0.95rem, 1.3vw, 1.15rem);
-    color: var(--dim);
-    max-width: 560px;
-    margin-bottom: 2.5rem;
-    line-height: 1.6;
-    font-weight: 300;
-  }
-  .cta-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-  .btn-primary {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    padding: 0.7rem 1.5rem; border-radius: 999px;
-    font-size: 0.85rem; font-weight: 500; text-decoration: none;
-    background: var(--ink); color: #f5f5f3; transition: background 0.2s;
-  }
-  .btn-primary:hover { background: #000; }
-  .btn-secondary {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    padding: 0.7rem 1.5rem; border-radius: 999px;
-    font-size: 0.85rem; font-weight: 500; text-decoration: none;
-    background: transparent; color: var(--ink); border: 1px solid var(--border-strong); transition: border-color 0.2s;
-  }
-  .btn-secondary:hover { border-color: var(--ink); }
+/* ── Deck grid ── */
+main{flex:1; padding:clamp(2rem,4vw,3.5rem) 6vw}
+.section-label{
+  font-family:var(--ffm); font-size:.62rem; font-weight:600; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--g3); margin-bottom:1.2rem;
+}
+.deck-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:1.2rem}
+.deck-card{
+  display:flex; flex-direction:column; gap:.55rem;
+  border:1px solid var(--g2); border-radius:8px; padding:1.4rem 1.5rem;
+  text-decoration:none; color:inherit; background:var(--white);
+  transition:border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+}
+.deck-card:hover{border-color:var(--ink); box-shadow:0 8px 24px rgba(0,0,0,.08); transform:translateY(-2px)}
+.deck-card-top{display:flex; align-items:baseline; justify-content:space-between; gap:1rem}
+.deck-name{font-weight:500; font-size:1.25rem; letter-spacing:-.01em}
+.deck-tag{font-family:var(--ffm); font-size:.58rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--violet); white-space:nowrap}
+.deck-desc{font-weight:300; font-size:.88rem; line-height:1.55; color:var(--g4); flex:1}
+.deck-actions{display:flex; gap:.5rem; margin-top:.5rem}
+.deck-actions a{
+  font-family:var(--ffm); font-size:.6rem; font-weight:500; letter-spacing:.08em; text-transform:uppercase;
+  text-decoration:none; padding:6px 13px; border-radius:5px; border:1px solid var(--g2); color:var(--g4);
+  transition:border-color .15s ease, color .15s ease, background .15s ease;
+}
+.deck-actions a:hover{border-color:var(--ink); color:var(--ink)}
+.deck-actions a.primary{background:var(--ink); color:var(--white); border-color:var(--ink)}
+.deck-actions a.primary:hover{background:var(--violet); border-color:var(--violet)}
 
-  /* Clone block */
-  .clone-block {
-    position: relative;
-    max-width: 520px;
-    margin-bottom: 2rem;
-  }
-  .clone-block pre {
-    background: var(--ink); color: #f5f5f3;
-    padding: 1.25rem 1.5rem;
-    border-radius: var(--radius);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.82rem;
-    line-height: 1.8;
-    overflow-x: auto;
-  }
-  .clone-block .line-dim { color: #666; user-select: none; margin-right: 0.5rem; }
-  .copy-btn {
-    position: absolute; top: 0.65rem; right: 0.65rem;
-    background: rgba(255,255,255,0.06); color: #999; border: 1px solid rgba(255,255,255,0.12);
-    padding: 0.25rem 0.65rem; border-radius: 6px; font-size: 0.65rem; font-weight: 500;
-    cursor: pointer; transition: all 0.2s; font-family: inherit;
-  }
-  .copy-btn:hover { background: rgba(255,255,255,0.12); color: #f5f5f3; }
-  .copy-btn.copied { background: rgba(255,255,255,0.18); color: #f5f5f3; }
-
-  /* Sections */
-  section { padding: 4rem 0; border-bottom: 1px solid var(--border); }
-  @media (min-width: 768px) { section { padding: 5rem 0; } }
-  .eyebrow {
-    font-size: 0.65rem; font-weight: 500; text-transform: uppercase;
-    letter-spacing: 0.1em; color: var(--muted); margin-bottom: 1.5rem;
-  }
-  section h2 {
-    font-size: clamp(1.5rem, 2.8vw, 2.2rem);
-    font-weight: 400;
-    letter-spacing: -0.03em;
-    line-height: 1.15;
-    max-width: 700px;
-    margin-bottom: 1rem;
-  }
-  section h2 .dim { color: var(--faint); font-weight: 300; }
-  section .section-subtitle {
-    font-size: 0.95rem;
-    color: var(--dim);
-    max-width: 560px;
-    font-weight: 300;
-    line-height: 1.6;
-  }
-
-  /* 3-way split */
-  .split-demo {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    margin-top: 2.5rem;
-    width: 100%;
-  }
-  @media (min-width: 768px) {
-    .split-demo { grid-template-columns: 1fr 1fr 1fr; height: 480px; }
-  }
-  .split-panel {
-    border-radius: var(--radius);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    min-height: 280px;
-  }
-  .split-chat { background: #1a1a1a; }
-  .split-code { background: #1e1e1e; }
-  .split-result { background: var(--bg-card); border: 1px solid var(--border); }
-  .split-chrome {
-    display: flex; align-items: center; gap: 6px;
-    padding: 10px 14px; background: rgba(255,255,255,0.06);
-  }
-  .split-result .split-chrome { background: rgba(0,0,0,0.04); }
-  .split-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.12); }
-  .split-result .split-dot { background: rgba(0,0,0,0.08); }
-  .split-filename {
-    font-size: 0.65rem; color: rgba(255,255,255,0.4); margin-left: 6px;
-    font-family: 'JetBrains Mono', monospace;
-  }
-  .split-result .split-filename { color: var(--muted); }
-
-  /* Chat panel */
-  .chat-messages { flex: 1; padding: 1rem; display: flex; flex-direction: column; gap: 0.6rem; overflow: hidden; }
-  .chat-label { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255,255,255,0.25); }
-  .chat-label-right { text-align: right; }
-  .chat-bubble { padding: 0.5rem 0.75rem; border-radius: 8px; font-size: 0.72rem; line-height: 1.5; max-width: 90%; }
-  .chat-user { background: #2a2a2a; color: #e0e0e0; align-self: flex-end; }
-  .chat-agent { background: rgba(255,255,255,0.08); color: #b0b0b0; align-self: flex-start; }
-  .chat-done { color: #6b9e6b; font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; }
-
-  /* Code panel */
-  .code-body {
-    flex: 1; padding: 1.25rem;
-    font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
-    line-height: 1.7; color: #d4d4d4; overflow: hidden; white-space: pre;
-  }
-  .ck { color: #569cd6; }
-  .ca { color: #9cdcfe; }
-  .cs { color: #ce9178; }
-
-  /* Result panel */
-  .result-body {
-    flex: 1; display: flex; flex-direction: column;
-    justify-content: center; padding: 2rem;
-  }
-  .result-eyebrow {
-    font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.12em;
-    color: var(--accent); margin-bottom: 0.6rem; font-weight: 500;
-  }
-  .result-h1 {
-    font-size: clamp(1rem, 1.8vw, 1.5rem);
-    font-weight: 400; letter-spacing: -0.03em; color: var(--ink); line-height: 1.2;
-  }
-  .result-h1 .dim { color: var(--muted); }
-  .result-meta { font-size: 0.6rem; color: var(--dim); font-weight: 300; margin-top: 0.75rem; line-height: 1.5; }
-
-  /* Features grid */
-  .features {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    margin-top: 2.5rem;
-  }
-  @media (min-width: 768px) { .features { grid-template-columns: 1fr 1fr 1fr; } }
-  .feature-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.5rem;
-  }
-  .feature-card h4 {
-    font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem;
-  }
-  .feature-card p {
-    font-size: 0.8rem; color: var(--dim); font-weight: 300; line-height: 1.5;
-  }
-
-  /* Comparison */
-  .compare {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    margin-top: 2.5rem;
-  }
-  @media (min-width: 768px) { .compare { grid-template-columns: 1fr 1fr; } }
-  .compare-card {
-    border-radius: var(--radius);
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-  }
-  .compare-label {
-    font-size: 0.6rem; font-weight: 500; text-transform: uppercase;
-    letter-spacing: 0.08em; color: var(--muted); margin-bottom: 1rem;
-  }
-  .compare-old {
-    background: var(--bg-card); border: 1px dashed var(--border);
-  }
-  .compare-new {
-    background: var(--ink); border: 1px solid var(--ink); color: #f5f5f3;
-  }
-  .compare-new .compare-label { color: #666; }
-  .compare-files {
-    font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; line-height: 1.8;
-    flex: 1;
-  }
-  .compare-old .file { color: var(--faint); text-decoration: line-through; }
-  .compare-new .file { color: #f5f5f3; }
-  .tree { color: #555; }
-  .compare-footer {
-    font-size: 0.78rem; line-height: 1.5; margin-top: 1.25rem;
-    padding-top: 1rem; border-top: 1px solid var(--border);
-    color: var(--muted);
-  }
-  .compare-new .compare-footer { border-top-color: #2a2a2a; color: #999; }
-
-  /* Footer */
-  footer { padding: 3rem 0; border-top: 1px solid var(--border); }
-  footer .container { display: flex; flex-direction: column; gap: 1rem; align-items: center; }
-  @media (min-width: 640px) { footer .container { flex-direction: row; justify-content: space-between; } }
-  footer p { font-size: 0.75rem; color: var(--muted); }
-  footer a { color: var(--dim); text-decoration: none; }
-  footer a:hover { color: var(--ink); }
-
-  /* Plugin section */
-  .commands-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-    margin-top: 2.5rem;
-  }
-  @media (min-width: 768px) { .commands-grid { grid-template-columns: 1fr 1fr; } }
-  .command-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.25rem 1.5rem;
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-  }
-  /* Storytelling grid */
-  .story-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-    margin-top: 2.5rem;
-  }
-  @media (min-width: 768px) { .story-grid { grid-template-columns: 1fr 1fr 1fr; } }
-  .story-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .story-card .story-label {
-    font-size: 0.6rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-  }
-  .story-card h4 {
-    font-size: 0.9rem;
-    font-weight: 500;
-    letter-spacing: -0.01em;
-  }
-  .story-card p {
-    font-size: 0.78rem;
-    color: var(--dim);
-    font-weight: 300;
-    line-height: 1.5;
-  }
-  .story-card .story-beats {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--faint);
-    line-height: 1.7;
-    margin-top: 0.25rem;
-  }
-
-  .command-card code {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.78rem;
-    font-weight: 500;
-    color: var(--ink);
-    white-space: nowrap;
-    background: rgba(0,0,0,0.04);
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-    flex-shrink: 0;
-  }
-  .command-card p {
-    font-size: 0.8rem;
-    color: var(--dim);
-    font-weight: 300;
-    line-height: 1.5;
-  }
-  /* Theme switcher */
-  .theme-btn {
-    padding: 0.4rem 1rem; border-radius: 999px;
-    font-size: 0.75rem; font-weight: 500; font-family: inherit;
-    background: transparent; color: var(--dim); border: 1px solid var(--border);
-    cursor: pointer; transition: all 0.2s;
-  }
-  .theme-btn:hover { border-color: var(--border-strong); color: var(--ink); }
-  .theme-btn.active { background: var(--ink); color: #f5f5f3; border-color: var(--ink); }
-  .demo-section { display: none; }
-  @media (min-width: 768px) { .demo-section { display: block; } }
-
-  /* Edit mode mock */
-  .editor-mock { margin-top: 2.5rem; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
-  .editor-chrome { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: var(--bg-card); border-bottom: 1px solid var(--border); }
-  .editor-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border-strong); }
-  .editor-url { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--muted); margin-left: 6px; }
-  .editor-body { display: flex; min-height: 340px; background: var(--bg); }
-  .editor-rail { width: 128px; flex-shrink: 0; border-right: 1px solid var(--border); background: var(--bg-card); padding: 14px 12px; display: flex; flex-direction: column; gap: 10px; }
-  .editor-thumb { position: relative; aspect-ratio: 16/10; border-radius: 8px; background: #fff; box-shadow: inset 0 0 0 1px var(--border); border: 2px solid transparent; }
-  .editor-thumb.active { border-color: var(--ink); }
-  .editor-tn { position: absolute; top: 5px; left: 5px; font-size: 8px; font-weight: 500; color: var(--dim); background: #fff; border: 1px solid var(--border); border-radius: 4px; padding: 0 4px; line-height: 1.6; }
-  .editor-stage { position: relative; flex: 1; display: flex; align-items: center; justify-content: center; padding: 2.5rem; }
-  .editor-slide { width: 100%; max-width: 360px; }
-  .editor-eyebrow { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); font-weight: 500; margin-bottom: 0.6rem; }
-  .editor-h1 { display: inline-block; font-size: clamp(1.1rem, 2vw, 1.6rem); font-weight: 400; letter-spacing: -0.03em; line-height: 1.2; box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 16%, transparent); border-radius: 4px; padding: 2px 5px; }
-  .editor-h1 .dim { color: var(--muted); }
-  .editor-caret { display: inline-block; width: 2px; height: 1em; background: var(--ink); margin-left: 1px; vertical-align: -2px; animation: editcaret 1s step-end infinite; }
-  @keyframes editcaret { 50% { opacity: 0; } }
-  .editor-card { position: absolute; right: 1.5rem; bottom: 1.5rem; width: 200px; background: rgba(255,255,255,0.95); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 22px rgba(0,0,0,0.12); backdrop-filter: blur(8px); padding: 14px; text-align: center; display: flex; flex-direction: column; gap: 8px; }
-  .editor-card-label { font-size: 8px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
-  .editor-drop { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 16px 12px; border: 1.5px dashed var(--border-strong); border-radius: 10px; color: var(--dim); }
-  .editor-drop svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-  .editor-drop-title { font-size: 11px; font-weight: 500; color: var(--ink); }
-  .editor-drop-sub { font-size: 9px; }
-  .editor-card-link { font-size: 10px; color: var(--dim); text-decoration: underline; text-underline-offset: 2px; }
-  @media (max-width: 767px) { .editor-card { display: none; } .editor-rail { width: 92px; } }
-
-  .edit-features { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1.5rem; }
-  @media (min-width: 768px) { .edit-features { grid-template-columns: repeat(4, 1fr); } }
-  .edit-feature h4 { font-size: 0.8rem; font-weight: 500; margin-bottom: 0.35rem; }
-  .edit-feature p { font-size: 0.76rem; color: var(--dim); font-weight: 300; line-height: 1.5; }
+footer{padding:1.4rem 6vw; border-top:1px solid var(--g2)}
+.foot-note{font-family:var(--ffm); font-size:.58rem; letter-spacing:.1em; text-transform:uppercase; color:var(--g3)}
 </style>
 </head>
 <body>
 
-<!-- Header -->
-<header>
-  <div class="container">
-    <div class="logo">Slides&#8482; <span style="font-size: 0.6rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: #8a8a86; border: 1px solid #e0ddd6; padding: 0.15rem 0.45rem; border-radius: 4px; margin-left: 0.4rem; vertical-align: middle;">Beta</span></div>
-    <nav>
-      <a href="design-system.html">Design system</a>
-      <a href="https://github.com/noskillish/slides/blob/main/docs/USING.md" target="_blank">Docs</a>
-      <a href="https://github.com/noskillish/slides" target="_blank">GitHub</a>
-    </nav>
-  </div>
+<header class="hero">
+  <div class="hero-logo"><img src="brand/ingrid/logos/color-on-dark.png" alt="Ingrid"></div>
+  <h1 class="hero-title">decks</h1>
+  <p class="hero-sub">A shared engine, many presentations. Open a deck to present, or edit it in the browser.</p>
 </header>
 
-<!-- Hero -->
-<div class="hero">
-  <div class="container">
-    <a href="#edit" style="display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem; padding: 0.3rem 0.75rem; border-radius: 999px; border: 1px solid var(--border); background: var(--bg-card); font-size: 0.75rem; color: var(--dim); font-weight: 400; text-decoration: none; transition: border-color 0.2s; cursor: pointer;">
-      <span style="background: var(--accent); color: #fff; font-size: 0.55rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.15rem 0.45rem; border-radius: 999px;">New</span>
-      Edit any deck right in the browser <span style="font-size: 0.7rem;">→</span>
-    </a>
-    <h1>Story in. <span class="dim">Slides out.</span></h1>
-    <p class="subtitle">An open-source deck framework built for AI. One HTML file, no build step. Describe your talk, get a finished deck, then refine it live in the browser.</p>
+<main>
+  <div class="section-label">Presentations</div>
+  <div class="deck-grid" id="deckGrid"></div>
+</main>
 
-    <div class="clone-block">
-      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-      <pre><span class="line-dim">$</span>git clone https://github.com/noskillish/slides.git
-<span class="line-dim">$</span>cd slides</pre>
-    </div>
-
-    <div class="cta-row">
-      <a href="https://github.com/noskillish/slides" class="btn-primary" target="_blank">View on GitHub &rarr;</a>
-      <a href="https://noskillish.github.io/slides/deck.html" class="btn-secondary" target="_blank">See the demo deck &rarr;</a>
-    </div>
-  </div>
-</div>
-
-<!-- How it works -->
-<section>
-  <div class="container">
-    <div class="eyebrow">How it works</div>
-    <h2>Describe it. <span class="dim">AI builds it.</span></h2>
-    <p class="section-subtitle">Clone the repo. Tell an AI agent what your talk is about. It creates your storyline, writes the HTML, and you get a finished deck.</p>
-
-    <div class="split-demo">
-      <!-- Chat -->
-      <div class="split-panel split-chat">
-        <div class="split-chrome">
-          <div class="split-dot"></div><div class="split-dot"></div><div class="split-dot"></div>
-          <span class="split-filename">Agent</span>
-        </div>
-        <div class="chat-messages">
-          <div class="chat-label chat-label-right">You</div>
-          <div class="chat-bubble chat-user">I built 14 things in a year. Side projects no one asked for. I want to talk about the vibe, the speed, the AI stuff. Make it a deck.</div>
-          <div class="chat-label">Agent</div>
-          <div class="chat-bubble chat-agent">I'll structure this using the six-beat framework from STORYTELLING.md. Open with a confession, then build towards the honest part.</div>
-          <div class="chat-bubble chat-agent chat-done">✓ 43 slides generated</div>
-        </div>
-      </div>
-      <!-- Code -->
-      <div class="split-panel split-code">
-        <div class="split-chrome">
-          <div class="split-dot"></div><div class="split-dot"></div><div class="split-dot"></div>
-          <span class="split-filename">deck.html</span>
-        </div>
-        <div class="code-body"><span class="ck">&lt;!-- Open, hook --&gt;</span>
-<span class="ck">&lt;section</span> <span class="ca">class</span>=<span class="cs">"slide"</span><span class="ck">&gt;</span>
-  <span class="ck">&lt;h1&gt;</span>I have a confession.
-  <span class="ck">&lt;/h1&gt;</span>
-<span class="ck">&lt;/section&gt;</span>
-
-<span class="ck">&lt;!-- Act 1, empathy --&gt;</span>
-<span class="ck">&lt;section</span> <span class="ca">class</span>=<span class="cs">"slide"</span><span class="ck">&gt;</span>
-  <span class="ck">&lt;div</span> <span class="ca">class</span>=<span class="cs">"eyebrow"</span><span class="ck">&gt;</span>Act 1<span class="ck">&lt;/div&gt;</span>
-  <span class="ck">&lt;h1&gt;</span>The old way.<span class="ck">&lt;/h1&gt;</span>
-<span class="ck">&lt;/section&gt;</span>
-
-<span class="ck">&lt;!-- Act 3, evidence --&gt;</span>
-<span class="ck">&lt;section</span> <span class="ca">class</span>=<span class="cs">"slide product-slide"</span><span class="ck">&gt;</span>
-  ...14 products
-<span class="ck">&lt;/section&gt;</span></div>
-      </div>
-      <!-- Result -->
-      <div class="split-panel split-result">
-        <div class="split-chrome">
-          <div class="split-dot"></div><div class="split-dot"></div><div class="split-dot"></div>
-          <span class="split-filename">Result</span>
-        </div>
-        <div class="result-body">
-          <div class="result-eyebrow">Morgenbooster · 13 May 2026</div>
-          <div class="result-h1">Designing with a vibe.<br><span class="dim">When AI turns ideas into experiences.</span></div>
-          <div class="result-meta">Speaker name<br>Design conference</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Edit mode -->
-<section id="edit">
-  <div class="container">
-    <div class="eyebrow">New · Edit in the browser</div>
-    <h2>AI builds it. <span class="dim">You finish it.</span></h2>
-    <p class="section-subtitle">Add ?edit to any deck. Rewrite text inline, drag slides to reorder, drop in an image or video, then save straight back to the file. No code. No rebuild.</p>
-
-    <div class="editor-mock">
-      <div class="editor-chrome">
-        <div class="editor-dot"></div><div class="editor-dot"></div><div class="editor-dot"></div>
-        <span class="editor-url">deck.html?edit</span>
-      </div>
-      <div class="editor-body">
-        <div class="editor-rail">
-          <div class="editor-thumb active"><span class="editor-tn">1</span></div>
-          <div class="editor-thumb"><span class="editor-tn">2</span></div>
-          <div class="editor-thumb"><span class="editor-tn">3</span></div>
-        </div>
-        <div class="editor-stage">
-          <div class="editor-slide">
-            <div class="editor-eyebrow">Conference · 2026</div>
-            <div class="editor-h1">Story in. <span class="dim">Slides out.</span><span class="editor-caret"></span></div>
-          </div>
-          <div class="editor-card">
-            <div class="editor-card-label">Replace image</div>
-            <div class="editor-drop">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11"/><path d="M8 10l4 4 4-4"/><path d="M5 16v2a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-2"/></svg>
-              <span class="editor-drop-title">Drag &amp; drop image or video</span>
-              <span class="editor-drop-sub">or click to upload</span>
-            </div>
-            <span class="editor-card-link">Paste a link instead</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="edit-features">
-      <div class="edit-feature">
-        <h4>Inline text</h4>
-        <p>Click any headline or label and type. Plain text editing, no markup to learn.</p>
-      </div>
-      <div class="edit-feature">
-        <h4>Drag to reorder</h4>
-        <p>Grab a thumbnail in the rail and drop it where it belongs. Duplicate or delete in a click.</p>
-      </div>
-      <div class="edit-feature">
-        <h4>Swap media</h4>
-        <p>Drop an image or video onto any slot, paste a link, or upload a file. Pictures embed automatically.</p>
-      </div>
-      <div class="edit-feature">
-        <h4>Save in place</h4>
-        <p>Writes back to the same HTML file and auto-saves as you go. Export to PDF with P.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- What you get -->
-<section>
-  <div class="container">
-    <div class="eyebrow">What you get</div>
-    <h2>One file. <span class="dim">Everything included.</span></h2>
-    <p class="section-subtitle">30+ components, three themes, six storytelling formats, a built-in browser editor, keyboard and touch navigation, embed mode. All in one repo.</p>
-
-    <div class="features">
-      <div class="feature-card">
-        <h4>Design system</h4>
-        <p>25+ components with consistent tokens. Colors, type, spacing. All in CSS variables. Fork and make it yours.</p>
-      </div>
-      <div class="feature-card">
-        <h4>Claude marketplace</h4>
-        <p>Add the marketplace in Cowork, get /slides and five more commands. Storytelling formats, themes, tone rules. All driven by markdown files.</p>
-      </div>
-      <div class="feature-card">
-        <h4>Zero dependencies</h4>
-        <p>No npm. No build step. No React. One HTML file with inline CSS and JS. Open it in a browser.</p>
-      </div>
-      <div class="feature-card">
-        <h4>Touch & keyboard</h4>
-        <p>Arrow keys, swipe gestures, progress bar. Works on phones, tablets, projectors. Responsive out of the box.</p>
-      </div>
-      <div class="feature-card">
-        <h4>Embeddable</h4>
-        <p>Add ?embed to any deck URL. Drop it in an iframe. Blog posts, Notion pages, documentation sites.</p>
-      </div>
-      <div class="feature-card">
-        <h4>Open source</h4>
-        <p>MIT licensed. Fork it, theme it, ship it. Your slides live in a git repo. Version controlled forever.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Plugin -->
-<section id="plugin">
-  <div class="container">
-    <div class="eyebrow">Claude plugin</div>
-    <h2>Type /slides. <span class="dim">Get a deck.</span></h2>
-    <p class="section-subtitle">Slides is a Claude marketplace plugin. Add it in Cowork, get six commands. Storytelling formats, themes, and tone rules are built in.</p>
-
-    <div class="commands-grid">
-      <div class="command-card">
-        <code>/slides</code>
-        <p>Generate a full deck from a description. Picks the storytelling format, applies the theme, outputs one HTML file.</p>
-      </div>
-      <div class="command-card">
-        <code>/slides-outline</code>
-        <p>Draft the structure first. Review the beat-by-beat plan before any HTML is written.</p>
-      </div>
-      <div class="command-card">
-        <code>/slides-theme</code>
-        <p>Swap the visual style. Three built-in themes, or describe your own in plain language.</p>
-      </div>
-      <div class="command-card">
-        <code>/add-slide</code>
-        <p>Drop new slides into an existing deck. Matches the theme and component style automatically.</p>
-      </div>
-      <div class="command-card">
-        <code>/slides-new-component</code>
-        <p>Build a slide type that does not exist yet. Describe it, the agent builds it on-token.</p>
-      </div>
-      <div class="command-card">
-        <code>/slides-review</code>
-        <p>Check tone, component diversity, and structure against the design system rules.</p>
-      </div>
-    </div>
-
-    <p style="font-size: 0.85rem; color: var(--dim); font-weight: 300; margin-top: 2rem; line-height: 1.6;">Open Cowork. Go to Add Marketplace. Paste <code style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; background: rgba(0,0,0,0.04); padding: 0.15rem 0.4rem; border-radius: 4px;">https://github.com/noskillish/slides</code> and type <code style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; background: rgba(0,0,0,0.04); padding: 0.15rem 0.4rem; border-radius: 4px;">/slides</code> to get started.</p>
-  </div>
-</section>
-
-<!-- Storytelling -->
-<section>
-  <div class="container">
-    <div class="eyebrow">Storytelling formats</div>
-    <h2>Six structures. <span class="dim">Pick the right one.</span></h2>
-    <p class="section-subtitle">Every deck follows a proven narrative structure. The agent selects the format based on your description, or you choose it yourself.</p>
-
-    <div class="story-grid">
-      <div class="story-card">
-        <div class="story-label">Conference talk</div>
-        <h4>TED Talk six-beat</h4>
-        <p>Hook the audience, build empathy, introduce the insight, show evidence, expand the vision, close with a callback.</p>
-        <div class="story-beats">Hook &rarr; Empathy &rarr; Insight &rarr; Evidence &rarr; Vision &rarr; Close</div>
-      </div>
-      <div class="story-card">
-        <div class="story-label">Fundraising</div>
-        <h4>VC pitch deck</h4>
-        <p>The format investors expect. Problem, solution, market size, product, traction, team, financials, the ask.</p>
-        <div class="story-beats">Problem &rarr; Solution &rarr; Market &rarr; Product &rarr; Traction &rarr; Ask</div>
-      </div>
-      <div class="story-card">
-        <div class="story-label">Strategy</div>
-        <h4>MBB strategy</h4>
-        <p>Situation, complication, resolution. The pyramid principle for executive audiences who want the answer first.</p>
-        <div class="story-beats">Situation &rarr; Complication &rarr; Resolution &rarr; Evidence</div>
-      </div>
-      <div class="story-card">
-        <div class="story-label">Product</div>
-        <h4>Product launch</h4>
-        <p>Set the stage, reveal the product, demo the features, prove the impact, make the call to action.</p>
-        <div class="story-beats">Stage &rarr; Reveal &rarr; Demo &rarr; Impact &rarr; CTA</div>
-      </div>
-      <div class="story-card">
-        <div class="story-label">Reporting</div>
-        <h4>Board update</h4>
-        <p>Executive summary, KPIs, progress against plan, risks, decisions needed. Clear and scannable.</p>
-        <div class="story-beats">Summary &rarr; KPIs &rarr; Progress &rarr; Risks &rarr; Decisions</div>
-      </div>
-      <div class="story-card">
-        <div class="story-label">Revenue</div>
-        <h4>Sales deck</h4>
-        <p>Identify the pain, agitate the cost of inaction, present the solution, prove it with evidence, close.</p>
-        <div class="story-beats">Pain &rarr; Cost &rarr; Solution &rarr; Proof &rarr; Close</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Live demo -->
-<section class="demo-section" style="border-bottom: 1px solid var(--border);">
-  <div class="container">
-    <div class="eyebrow">Built with Slides™</div>
-    <h2>A real deck. <span class="dim">Made like this.</span></h2>
-    <p class="section-subtitle">Templates and components included. Switch between them. Or create your own.</p>
-    <div class="theme-switcher" style="display: flex; gap: 0.5rem; margin-top: 1.5rem;">
-      <button class="theme-btn active" onclick="switchTheme('', this)">Default</button>
-      <button class="theme-btn" onclick="switchTheme('craft', this)">Craft</button>
-      <button class="theme-btn" onclick="switchTheme('solid', this)">Solid</button>
-      <button class="theme-btn" style="border-style: dashed;" disabled title="Describe your own style in /slides-theme">Custom</button>
-    </div>
-    <div style="margin-top: 1rem; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); aspect-ratio: 16/9;">
-      <iframe id="demo-frame" src="deck.html?embed" style="width: 100%; height: 100%; border: none;"></iframe>
-    </div>
-    <div style="margin-top: 1rem; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
-      <code style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; background: var(--bg-card); border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; color: var(--ink);">&lt;iframe src="deck.html?embed" style="width:100%; aspect-ratio:16/9; border:none"&gt;</code>
-    </div>
-  </div>
-</section>
-
-<!-- PowerPoint vs Slides -->
-<section>
-  <div class="container">
-    <div class="eyebrow">Why plain text matters</div>
-    <h2>Your slides should be <span class="dim">readable.</span></h2>
-    <p class="section-subtitle">.pptx is a binary format. You can't search it. You can't diff it. AI agents can't read it. Plain text fixes all of that.</p>
-
-    <div class="compare">
-      <div class="compare-card compare-old">
-        <div class="compare-label">Today · .pptx</div>
-        <div class="compare-files">
-          <div class="file">Q3-strategy-FINAL.pptx</div>
-          <div class="file">townhall-v3.pptx</div>
-          <div class="file">investor-deck-v7.pptx</div>
-          <div class="file">roadmap-FINAL-v2.pptx</div>
-        </div>
-        <div class="compare-footer">Binary blobs. Lost in inboxes. No version control. No search. No AI.</div>
-      </div>
-      <div class="compare-card compare-new">
-        <div class="compare-label">With Slides&#8482;</div>
-        <div class="compare-files">
-          <div class="file"><span class="tree">└─</span> slides/</div>
-          <div class="file"><span class="tree">&nbsp;&nbsp;&nbsp;├─</span> deck.html</div>
-          <div class="file"><span class="tree">&nbsp;&nbsp;&nbsp;├─</span> docs/</div>
-          <div class="file"><span class="tree">&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;├─</span> STORYTELLING.md</div>
-          <div class="file"><span class="tree">&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;└─</span> DESIGN.md</div>
-          <div class="file"><span class="tree">&nbsp;&nbsp;&nbsp;├─</span> plugins/</div>
-          <div class="file"><span class="tree">&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;└─</span> skills, commands</div>
-          <div class="file"><span class="tree">&nbsp;&nbsp;&nbsp;└─</span> media/</div>
-        </div>
-        <div class="compare-footer">Plain text in a git repo. Readable by humans and every AI agent. Forever.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Footer -->
 <footer>
-  <div class="container">
-    <p>MIT License · Open source</p>
-    <p>
-      <a href="https://github.com/noskillish/slides">GitHub</a> ·
-      <a href="https://github.com/noskillish/slides/blob/main/docs/USING.md">Docs</a> ·
-      <a href="https://github.com/noskillish/slides/blob/main/docs/STORYTELLING.md">Storytelling</a> ·
-      <a href="https://github.com/noskillish/slides/blob/main/docs/DESIGN.md">Design</a>
-    </p>
-  </div>
+  <div class="foot-note">Ingrid Capacity · built on the shared deck engine</div>
 </footer>
 
 <script>
-function switchTheme(theme, btn) {
-  var file = theme ? 'deck-' + theme + '.html' : 'deck.html';
-  document.getElementById('demo-frame').src = file + '?embed';
-  document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-}
+  /* Add a deck = add a line here. Each deck is a thin shell that links engine/. */
+  const decks = [
+    {
+      file: 'ingrid_examples.html',
+      name: 'Examples',
+      tag: 'Gallery',
+      desc: 'Generic layout & component gallery — every slide type with placeholder content. Start here to pick a layout.'
+    },
+    {
+      file: 'ingrid_library.html',
+      name: 'Content Library',
+      tag: 'Reusable',
+      desc: 'Concrete, reusable Ingrid slides — business models and the tech-domain matrix — ready to drop into a deck.'
+    },
+  ];
 
-function copyCode(btn) {
-  const pre = btn.parentElement.querySelector('pre');
-  const text = pre.textContent
-    .split('\n')
-    .map(line => line.replace(/^\$\s*/, ''))
-    .filter(line => line.length > 0)
-    .join('\n');
-  navigator.clipboard.writeText(text).then(() => {
-    btn.textContent = 'Copied';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
-  });
-}
+  const grid = document.getElementById('deckGrid');
+  for (const d of decks) {
+    const card = document.createElement('a');
+    card.className = 'deck-card';
+    card.href = d.file;
+    card.innerHTML =
+      '<div class="deck-card-top"><span class="deck-name"></span><span class="deck-tag"></span></div>' +
+      '<p class="deck-desc"></p>' +
+      '<div class="deck-actions">' +
+        '<a class="primary" href="' + d.file + '">Open</a>' +
+        '<a href="' + d.file + '?edit">Edit</a>' +
+      '</div>';
+    card.querySelector('.deck-name').textContent = d.name;
+    card.querySelector('.deck-tag').textContent = d.tag;
+    card.querySelector('.deck-desc').textContent = d.desc;
+    // let the inner buttons handle their own navigation
+    card.querySelectorAll('.deck-actions a').forEach(a =>
+      a.addEventListener('click', e => e.stopPropagation()));
+    grid.appendChild(card);
+  }
 </script>
 
 </body>

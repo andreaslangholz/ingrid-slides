@@ -4,7 +4,8 @@ A minimalist, AI-friendly slide deck framework. One HTML file. No build step. Pa
 
 ```
 slides/
-├── ingrid.html            Ingrid Capacity deck. Thin shell — loads the shared engine.
+├── ingrid_examples.html   Ingrid deck — generic layout/component gallery (thin shell).
+├── ingrid_library.html    Ingrid deck — concrete reusable content slides (thin shell).
 ├── engine/                Shared, reusable deck engine (decoupled from any one deck).
 │   ├── engine.css         Brand tokens, layout/component styles, full-bleed cover toggles.
 │   ├── engine.js          Core navigation / show().
@@ -14,7 +15,8 @@ slides/
 ├── deck-craft.html        Craft theme variant.
 ├── deck-solid.html        Solid theme variant.
 ├── design-system.html     Visual showcase of every component.
-├── index.html             Landing page (uses Tailwind CDN).
+├── index.html             Deck launcher — lists the Ingrid decks (open / edit).
+├── landing.html           Upstream framework marketing page (was index.html; Tailwind CDN).
 ├── AGENTS.md              AI agent instructions. Design system + components + storytelling.
 ├── media/                 Drop your images and videos here.
 ├── assets/                Screenshots and banners for the README.
@@ -113,14 +115,14 @@ See [docs/USING.md](docs/USING.md) for details.
 
 ## Modular engine
 
-`ingrid.html` is being decoupled from the single-file model into a thin shell that loads a shared `engine/`, so one engine can power many decks. The split (no behavior change):
+The Ingrid decks are decoupled from the single-file model into thin shells that load a shared `engine/`, so one engine powers many decks. Two decks already share it — `ingrid_examples.html` (generic layout/component gallery) and `ingrid_library.html` (concrete reusable content). The split (no behavior change):
 
 - `engine/engine.css` — brand tokens, layout/component styles, full-bleed cover toggles
 - `engine/engine.js` — core navigation / `show()`
 - `engine/edit.js` — in-browser edit mode
 - `engine/charts.js` — Chart.js + Mermaid
 
-A deck file now just links the engine and holds its own `<section class="slide">` markup. Brand and behavior changes happen once in `engine/`; each deck stays a small, self-contained content file.
+A deck file now just links the engine and holds its own `<section class="slide">` markup. Brand and behavior changes happen once in `engine/`; each deck stays a small content file. New decks are made by copying a deck file (they live at repo root, so engine/brand paths work unchanged).
 
 **Path note:** CSS `url()` references resolve relative to the stylesheet, so gradient/image paths inside `engine/engine.css` are `../brand/...`. Image `src` in deck HTML still resolves relative to the deck file.
 
@@ -251,7 +253,7 @@ Switch themes with the `/slides-theme` command, or start from whichever HTML fil
 - **Self-contained.** Each deck file has zero external dependencies beyond Google Fonts (Inter).
 - **Three themes.** Default, Craft, and Solid. Same components, different visual tone.
 - **In-browser editing.** Add `?edit` to the URL for a full slide editor with in-place saving.
-- **`index.html` is the landing page.** It uses the Tailwind CDN for responsive layout. It's a marketing page for the project. The product files stay dependency-free.
+- **`index.html` is the deck launcher.** A lightweight, self-contained page that lists the Ingrid decks (open or edit in the browser); add a deck by adding one line to its `decks` array. The original upstream marketing page is preserved as `landing.html` (Tailwind CDN). The product files stay dependency-free.
 - **Works in any modern browser.** Present, share, embed.
 - **PDF export** via `window.print()` with print-optimized CSS (`@page` set to 16:9).
 - **Auto-deploy** to GitHub Pages on push to `main` via the included GitHub Action.
