@@ -5,6 +5,9 @@
 .idea/
 node_modules/
 
+# Build artifacts — bundled single-file decks (regenerate with scripts/bundle.mjs)
+dist/
+
 # Office temporary lock files
 ~$*.pptx
 ~$*.xlsx
@@ -13,6 +16,7 @@ node_modules/
 # Large binary brand assets — store locally, not in git
 brand/ingrid/templates/
 brand/ingrid/video/
+brand/**/*.pdf
 media/*.pptx
 media/*.pdf
 ingrid assets/

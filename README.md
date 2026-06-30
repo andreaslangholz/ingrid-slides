@@ -1,271 +1,135 @@
-# slides
+# Ingrid Presentation System
 
-A minimalist, AI-friendly slide deck framework. One HTML file. No build step. Pair it with any AI coding assistant and write decks like prose.
+An Ingrid Capacity slide system you can write like a document and ship as a single HTML
+file. Decks are plain HTML on a shared engine, on-brand by default, editable in the browser,
+and built for an agent + human to produce together.
 
 ```
-slides/
-├── ingrid_examples.html   Ingrid deck — generic layout/component gallery (thin shell).
-├── ingrid_library.html    Ingrid deck — concrete reusable content slides (thin shell).
-├── engine/                Shared, reusable deck engine (decoupled from any one deck).
-│   ├── engine.css         Brand tokens, layout/component styles, full-bleed cover toggles.
-│   ├── engine.js          Core navigation / show().
-│   ├── edit.js            In-browser edit mode.
-│   └── charts.js          Chart.js + Mermaid integration.
-├── deck.html              The default template deck. Edit this.
-├── deck-craft.html        Craft theme variant.
-├── deck-solid.html        Solid theme variant.
-├── design-system.html     Ingrid brand & design system (logo, color, type, gradient, photography, icons, visual system, tokens).
-├── index.html             Deck launcher — lists the Ingrid decks (open / edit).
-├── landing.html           Upstream framework marketing page (was index.html; Tailwind CDN).
-├── AGENTS.md              AI agent instructions. Design system + components + storytelling.
-├── media/                 Drop your images and videos here.
-├── assets/                Screenshots and banners for the README.
-├── docs/
-│   ├── USING.md           How to use the template.
-│   ├── STORYTELLING.md    How to structure any presentation (+ format variants).
-│   └── DESIGN.md          Design tokens, components, and tone rules.
-├── plugins/
-│   └── slides/            Claude plugin (commands + skills).
-├── .github/
-│   └── workflows/
-│       └── deploy.yml     Auto-deploy to GitHub Pages on push.
+ingrid-slides/
+├── index.html             Launcher — lists the decks (open / edit).
+├── ingrid_examples.html   Deck: generic layout & component gallery (thin shell).
+├── ingrid_library.html    Deck: concrete reusable Ingrid content (thin shell).
+├── design-system.html     The Ingrid brand & design system, rendered.
+├── engine/                Shared engine — one engine powers every deck.
+│   ├── engine.css         Brand tokens, layout & component styles, cover toggles.
+│   ├── engine.js          Navigation, progress bar, PDF export.
+│   ├── edit.js            In-browser editor (?edit) + ＋Add-slide picker.
+│   └── charts.js          Chart.js + Mermaid.
+├── templates/
+│   ├── templates.js       Component source of truth — 23 on-brand templates.
+│   └── gallery.html       Browse every template (filters + Copy HTML).
+├── brand/ingrid/          BRAND.md + logos, gradients, photos, video.
+├── docs/                  COMPONENTS · DESIGN · STORYTELLING · USING.
+├── scripts/
+│   ├── bundle.mjs         Export a deck to one self-contained file.
+│   └── gen-components-doc.mjs  Regenerate docs/COMPONENTS.md from templates.js.
+├── dist/                  Built single-file decks (build artifact, gitignored).
+├── reference/             Upstream fork artifacts — not used, do not edit.
+├── AGENTS.md              Agent entry point.
 └── LICENSE                MIT.
 ```
 
 ---
 
-## Why this exists
+## Start here
 
-Slides are usually built in PowerPoint, Keynote, or Google Slides. Those tools are great if you like dragging text boxes. They're terrible if you want to:
-
-- Treat your deck like a document you can *write*
-- Pair with an AI assistant to draft, edit, and iterate
-- Keep your slides in version control
-- Embed your deck anywhere with a single iframe
-- Print to PDF without losing fidelity
-- Stop fighting auto-formatting
-
-This framework is a single HTML file with a library of 31 components, three themes, and in-browser editing. You edit it like a webpage. You present it in a browser. You pair with an AI assistant to write slides through conversation.
+| If you are… | Read |
+|---|---|
+| An agent building a deck | [`AGENTS.md`](AGENTS.md) |
+| Setting the brand | [`brand/ingrid/BRAND.md`](brand/ingrid/BRAND.md) |
+| Looking for a component | [`docs/COMPONENTS.md`](docs/COMPONENTS.md) |
+| Composing a slide well | [`docs/DESIGN.md`](docs/DESIGN.md) |
+| Structuring the story | [`docs/STORYTELLING.md`](docs/STORYTELLING.md) |
+| Operating the system | [`docs/USING.md`](docs/USING.md) |
 
 ---
 
 ## Quick start
 
-1. **Clone the repo:**
-   ```bash
-   git clone https://github.com/noskillish/slides.git
-   cd slides
-   ```
-
-2. **Open `deck.html` in your browser.** You'll see the template with examples of every component.
-
-3. **Open the file in your editor** (with Claude Code, Cursor, or whatever you like).
-
-4. **Edit the slides.** Each slide is a `<section class="slide">`. Copy any one to make a new one.
-
-5. **Drop media** into `media/` and reference with relative paths.
-
-6. **Present** in full-screen (F11). Navigate with arrow keys or swipe on touch devices.
-
-7. **Export to PDF** by clicking the button or pressing `P`.
-
----
-
-## AI workflow
-
-This template was made with AI assistance in mind. The workflow:
-
-1. Open the repo in your editor with your AI assistant running.
-2. Tell it what slide you want: *"Add a quote slide that says 'Coding is solved' as the opening."*
-3. The AI inserts a slide using the right component.
-4. Iterate by feedback: *"Make it dark."* *"Move it to slide 3."* *"Shorten the headline."*
-5. Drop in media as you go: *"Wire `media/demo.mp4` to the collage on slide 8 with controls."*
-
-The AI reads `AGENTS.md` to understand the design system, all 31 components, the storytelling framework, and the tone rules. It can also freestyle new components as long as they stay on-token.
-
-See [docs/USING.md](docs/USING.md) for the full workflow.
-
----
-
-## Embedding
-
-Add `?embed` to any deck URL and drop it in an iframe. The PDF button hides; navigation stays.
-
-```html
-<iframe src="your-deck.html?embed" style="width:100%; aspect-ratio:16/9; border:none;"></iframe>
+```bash
+git clone https://github.com/andreaslangholz/ingrid-slides.git
+cd ingrid-slides
 ```
 
-Works in blog posts, Notion, documentation sites, or anywhere that renders HTML.
+1. **Open `index.html`** (or a deck directly) in a modern browser.
+2. **Edit** by adding/removing `<section class="slide">` blocks, or click **Edit** for the
+   in-browser editor.
+3. **Drop media** into `media/`, data into `data/`.
+4. **Present** full-screen (F11 in Chrome, Cmd+Ctrl+F in Safari); export PDF with `P`.
+5. **Ship** a single self-contained file with the bundler (below).
+
+No build step to author. The only build is the optional export.
+
+---
+
+## How it works
+
+A **deck is a thin shell** — `<section class="slide">` blocks plus links to the shared
+`engine/`. Brand styling, layout, navigation, the editor, and charts all live in `engine/`,
+so one engine powers every deck and content files stay small. Change the brand once in
+`engine/engine.css` (driven by `brand/ingrid/BRAND.md`) and every deck updates.
+
+CSS `url()` paths in `engine/engine.css` resolve relative to the stylesheet (`../brand/...`);
+image `src` in deck HTML resolves relative to the deck file (`brand/...`).
 
 ---
 
 ## In-browser editing
 
-Click the **Edit** button next to **Download PDF** (or add `?edit` to the URL) and the deck becomes its own editor. No install, no build step:
+Click **Edit** (next to Download PDF) or add `?edit` to the URL — the deck becomes its own
+editor, no install:
 
-- **Click any text to edit it in place.** Plain text only — the markup stays intact.
-- **Reorder, duplicate, or delete slides** from a thumbnail rail.
-- **Replace images and video.** Hover any image to upload, drag-and-drop, or paste a link. Files embed (images downscaled); links stay as URLs; dropping a video swaps the slot to a `<video>`.
-- **Save writes back to the HTML file.** Chromium browsers save in place after a one-time file pick, then auto-save as you go; other browsers download an updated copy.
-- **Diffs stay clean.** Saving rewrites only the slides that changed; everything else passes through byte-for-byte.
+- **Click any text to edit it** in place (plain text; markup stays intact).
+- **＋ Add slide** picks from the 23 templates and drops one in after the current slide.
+- **Reorder, duplicate, delete** from the thumbnail rail.
+- **Replace images/video** — hover to upload, drag-and-drop, or paste a link.
+- **Save** writes back to the file (Chromium: in place after a one-time pick, then auto-saves;
+  others download an updated copy). Diffs stay clean — only changed slides are rewritten.
 
-See [docs/USING.md](docs/USING.md) for details.
-
----
-
-## Modular engine
-
-The Ingrid decks are decoupled from the single-file model into thin shells that load a shared `engine/`, so one engine powers many decks. Two decks already share it — `ingrid_examples.html` (generic layout/component gallery) and `ingrid_library.html` (concrete reusable content). The split (no behavior change):
-
-- `engine/engine.css` — brand tokens, layout/component styles, full-bleed cover toggles
-- `engine/engine.js` — core navigation / `show()`
-- `engine/edit.js` — in-browser edit mode
-- `engine/charts.js` — Chart.js + Mermaid
-
-A deck file now just links the engine and holds its own `<section class="slide">` markup. Brand and behavior changes happen once in `engine/`; each deck stays a small content file. New decks are made by copying a deck file (they live at repo root, so engine/brand paths work unchanged).
-
-**Path note:** CSS `url()` references resolve relative to the stylesheet, so gradient/image paths inside `engine/engine.css` are `../brand/...`. Image `src` in deck HTML still resolves relative to the deck file.
-
-Roadmap: multi-deck folders (`decks/<name>/`) + a launcher, a template gallery, and insert-template-in-editor. The on-disk format (a deck = a folder of HTML + media) is designed to migrate to a git-repo or hosted workflow without an engine rewrite.
-
----
-
-## Claude Plugin
-
-This repo is a Claude plugin marketplace. Install in Claude Code or Claude for Work:
-
-```
-/plugin marketplace add noskillish/slides
-/plugin install slides@slides
-```
-
-Then use the commands:
-
-| Command | What it does |
-|---------|-------------|
-| `/slides` | Generate a complete deck from a description |
-| `/slides-outline` | Draft the structure without writing HTML |
-| `/add-slide` | Add slides to an existing deck |
-| `/slides-theme` | Switch between themes (default, craft, solid) |
-| `/slides-review` | Review a deck for storytelling, design, and tone |
-| `/slides-new-component` | Build a custom component that follows the design system |
-| `/slides-image` | Add an image slide sourced from the image library |
-| `/slides-visual` | Generate a visually-rich deck with auto-sourced images |
-| `/slides-gallery` | Browse and preview images from the image library |
-
-The plugin auto-detects the best storytelling format from your description:
-
-| Format | Trigger |
-|--------|---------|
-| TED Talk (six-beat) | "conference talk", "keynote", "audience" |
-| Sequoia pitch deck | "pitch", "investors", "funding", "Series A" |
-| McKinsey SCR | "strategy", "board", "executive", "consulting" |
-| Product launch | "launch", "product", "release", "unveil" |
-| Board update | "board update", "quarterly", "KPIs", "status" |
-| Sales deck | "sales", "prospect", "customer", "pipeline" |
-
----
-
-## Documentation
-
-- **[docs/USING.md](docs/USING.md):** How to use the template, components, keyboard shortcuts, PDF export, troubleshooting.
-- **[docs/STORYTELLING.md](docs/STORYTELLING.md):** TED Talk / six-beat narrative structure.
-- **[docs/STORYTELLING-sequoia.md](docs/STORYTELLING-sequoia.md):** Sequoia pitch deck format.
-- **[docs/STORYTELLING-mbb.md](docs/STORYTELLING-mbb.md):** McKinsey SCR / pyramid principle.
-- **[docs/STORYTELLING-product-launch.md](docs/STORYTELLING-product-launch.md):** Apple-style product launch.
-- **[docs/STORYTELLING-board.md](docs/STORYTELLING-board.md):** Board and strategy updates.
-- **[docs/STORYTELLING-sales.md](docs/STORYTELLING-sales.md):** Sales presentations.
-- **[docs/DESIGN.md](docs/DESIGN.md):** Design tokens, components, tone & voice rules.
-- **[design-system.html](design-system.html):** Ingrid Capacity brand & design system — the full visual identity from the brand guidelines (logo system, color, typography, the signature gradient, photography, iconography, the Fluid Intelligence visual system, and design tokens), rendered.
-- **[AGENTS.md](AGENTS.md):** AI agent context file. Everything an AI needs to produce correct, on-brand slides.
+See [`docs/USING.md`](docs/USING.md) for the full mechanics, and the human/agent division of
+labor in [`AGENTS.md`](AGENTS.md).
 
 ---
 
 ## Components
 
-31 components covering text, data, media, and layout patterns.
-
-| Component | Use it for |
-|---|---|
-| Cover | Title slide |
-| Quote slide | One bold statement, no other elements |
-| Eyebrow + headline + subtitle | Default text slide |
-| Two-column | Problem/fix, before/after, any side-by-side |
-| Step stack | Sequential steps with status markers |
-| Three-column | Why/how/what or any structural breakdown |
-| Capability list | Q&A rows for "what it solves" |
-| Dark callout | One-per-deck emphasis |
-| Dot flow | Process diagram, pipeline |
-| Stack grid | Categorized tools/items/partners |
-| Spec block + outputs | Input → process → outputs |
-| Product slide | Showcase style: big name right, story left |
-| Collage slide | Full-bleed image or video |
-| JEDUF three-column | Two extremes vs the middle path |
-| Timeline | Vertical year-based progression |
-| Stat grid | Big numbers with context |
-| Quote pair | Two perspectives side by side |
-| Logo grid | Partners, clients, team members |
-| Code slide | Syntax-highlighted code block |
-| Dark slide | Pivot moment |
-| Closing | Mic-drop line + thanks |
-| Testimonial grid | Social proof with avatars and quotes |
-| Logo bar | Compact row of partner/client names |
-| Feature card row | Three cards with title, description, and mock UI |
-| Update row | Changelog cards with version badges |
-| Art overlay | Classical painting with floating UI mockup |
-| Split slide | Text + image side by side |
-| Hero image | Cinematic image with gradient overlay and caption |
-| Image cards | Three images with descriptions |
-| Caption slide | Single showcase image with annotation bar |
-| Photo grid | 2×2 image mosaic with labels |
+23 on-brand components covering covers, text, data, media, and quotes. The source of truth is
+`templates/templates.js`; the full markup is generated into [`docs/COMPONENTS.md`](docs/COMPONENTS.md)
+and browsable in [`templates/gallery.html`](templates/gallery.html). Add a component by editing
+`templates.js` and running `node scripts/gen-components-doc.mjs` — the doc, gallery, and picker
+all derive from that one list, so they can't drift.
 
 ---
 
-## Navigation
+## Shipping a single file
 
-| Input | Action |
-|---|---|
-| `→` `Space` `PageDown` | Next slide |
-| `←` `PageUp` | Previous slide |
-| `Home` / `End` | First / last slide |
-| `P` | Download PDF |
-| Swipe left / right | Next / previous (touch devices) |
+Source decks stay thin (they link `engine/` + `brand/`). To produce a shareable single file,
+run the bundler — it inlines the engine and base64-embeds every brand image:
 
----
+```bash
+node scripts/bundle.mjs ingrid_examples.html            # → dist/ingrid_examples.html (editor kept)
+node scripts/bundle.mjs ingrid_examples.html --no-edit   # view-only, smaller (external/client)
+node scripts/bundle.mjs ingrid_examples.html --offline   # also inline Chart.js, Mermaid, fonts
+```
 
-## Themes
-
-Three built-in themes. Each is a self-contained HTML file with the same 31 components styled differently.
-
-| Theme | File | Character |
-|-------|------|-----------|
-| Default | `deck.html` | Clean, warm neutrals, editorial feel |
-| Craft | `deck-craft.html` | Richer textures, more visual weight |
-| Solid | `deck-solid.html` | Bolder colors, higher contrast |
-
-Switch themes with the `/slides-theme` command, or start from whichever HTML file fits.
+By default the output keeps the editor and leaves CDN libs + Google Fonts as links
+(self-contained assuming internet). `dist/` is a build artifact (gitignored). Iterate on the
+thin source deck and re-bundle; don't edit a bundle back into source.
 
 ---
 
-## Tech
+## Embedding
 
-- **One HTML file per deck.** No JavaScript framework. No build step. No npm install.
-- **Self-contained.** Each deck file has zero external dependencies beyond Google Fonts (Inter).
-- **Three themes.** Default, Craft, and Solid. Same components, different visual tone.
-- **In-browser editing.** Add `?edit` to the URL for a full slide editor with in-place saving.
-- **`index.html` is the deck launcher.** A lightweight, self-contained page that lists the Ingrid decks (open or edit in the browser); add a deck by adding one line to its `decks` array. The original upstream marketing page is preserved as `landing.html` (Tailwind CDN). The product files stay dependency-free.
-- **Works in any modern browser.** Present, share, embed.
-- **PDF export** via `window.print()` with print-optimized CSS (`@page` set to 16:9).
-- **Auto-deploy** to GitHub Pages on push to `main` via the included GitHub Action.
+```html
+<iframe src="ingrid_examples.html?embed" style="width:100%; aspect-ratio:16/9; border:none;"></iframe>
+```
+
+`?embed` hides the PDF button; navigation stays. For sharing inside another page, embed a
+bundled deck so it carries its own assets.
 
 ---
 
 ## License
 
-[MIT](LICENSE). Use it, fork it, change it.
-
----
-
-## Credits
-
-Built originally for a specific talk and generalized for anyone who wants to present with less friction. Inspired by editorial layouts and the broader minimalist tradition in tech writing.
+[MIT](LICENSE). Forked from [noskillish/slides](https://github.com/noskillish/slides) and
+specialized for Ingrid Capacity; the original framework artifacts are kept in `reference/`.

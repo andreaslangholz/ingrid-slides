@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ingrid — Slide Templates</title>
+<!-- Resolve engine/, templates/ and brand/ paths from the repo root, not templates/. -->
+<base href="../">
+<link rel="stylesheet" href="engine/engine.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,700;0,800&family=Fira+Code:wght@400;500;600&display=swap');
+
+/* Override engine's fixed full-screen model — the gallery scrolls. */
+html, body { overflow:auto !important; height:auto !important; background:#fff; }
+body { font-family:'Plus Jakarta Sans',system-ui,sans-serif; color:#000; -webkit-font-smoothing:antialiased; }
+:root{ --violet:#AA73FA; --g2:#D8D8D8; --g3:#999; --g4:#3F3F3F; --ffm:'Fira Code','Courier New',monospace; }
+
+.g-hero{ position:relative; padding:4vw 6vw 3vw; background:url('brand/ingrid/gradients/dark.png') center/cover no-repeat; color:#fff; }
+.g-hero-logo img{ height:clamp(22px,3.4vh,34px); width:auto; display:block; }
+.g-hero h1{ margin-top:clamp(2rem,6vw,4rem); font-weight:500; font-size:clamp(2.2rem,6vw,4.4rem); line-height:1; letter-spacing:-.02em; }
+.g-hero p{ margin-top:.8rem; max-width:52ch; font-weight:300; font-size:clamp(.9rem,1.4vw,1.05rem); line-height:1.6; color:rgba(255,255,255,.82); }
+
+.g-bar{ position:sticky; top:0; z-index:5; display:flex; flex-wrap:wrap; gap:.5rem; align-items:center;
+  padding:1rem 6vw; background:rgba(255,255,255,.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--g2); }
+.g-chip{ font-family:var(--ffm); font-size:.6rem; font-weight:500; letter-spacing:.08em; text-transform:uppercase;
+  padding:6px 13px; border-radius:6px; border:1px solid var(--g2); color:var(--g4); background:#fff; cursor:pointer; }
+.g-chip:hover{ border-color:#000; color:#000; }
+.g-chip.on{ background:#000; color:#fff; border-color:#000; }
+
+main{ padding:clamp(1.6rem,3vw,2.6rem) 6vw 4rem; }
+.g-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:1.4rem; }
+.g-card{ border:1px solid var(--g2); border-radius:10px; overflow:hidden; background:#fff;
+  transition:border-color .15s ease, box-shadow .15s ease; }
+.g-card:hover{ border-color:#000; box-shadow:0 8px 24px rgba(0,0,0,.08); }
+.g-thumb{ position:relative; width:100%; overflow:hidden; background:#fff; border-bottom:1px solid var(--g2); }
+.g-stage{ position:relative; width:1280px; height:720px; transform-origin:0 0; }
+.g-stage > .slide{ display:flex !important; }
+.g-meta{ display:flex; align-items:baseline; justify-content:space-between; gap:1rem; padding:.85rem 1.1rem .4rem; }
+.g-name{ font-weight:500; font-size:1.02rem; letter-spacing:-.01em; }
+.g-tag{ font-family:var(--ffm); font-size:.56rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--violet); white-space:nowrap; }
+.g-actions{ display:flex; gap:.5rem; padding:0 1.1rem 1rem; }
+.g-copy{ font-family:var(--ffm); font-size:.6rem; font-weight:500; letter-spacing:.07em; text-transform:uppercase;
+  padding:6px 13px; border-radius:6px; border:1px solid var(--g2); color:var(--g4); background:#fff; cursor:pointer; }
+.g-copy:hover{ border-color:#000; color:#000; }
+.g-copy.done{ background:#000; color:#fff; border-color:#000; }
+
+footer{ padding:1.4rem 6vw; border-top:1px solid var(--g2); }
+.g-foot{ font-family:var(--ffm); font-size:.58rem; letter-spacing:.1em; text-transform:uppercase; color:var(--g3); }
+</style>
+</head>
+<body>
+
+<header class="g-hero">
+  <div class="g-hero-logo"><img src="brand/ingrid/logos/color-on-dark.png" alt="Ingrid"></div>
+  <h1>slide templates</h1>
+  <p>Every reusable slide type, on-brand. Copy the HTML into any deck — or open a deck with <code>?edit</code> and use “＋ Add slide” to drop one in.</p>
+</header>
+
+<div class="g-bar" id="filterBar"></div>
+
+<main><div class="g-grid" id="grid"></div></main>
+
+<footer><div class="g-foot">Ingrid Capacity · slide template library · single source: templates/templates.js</div></footer>
+
+<!-- Same library the editor's "＋ Add slide" picker uses. -->
+<script src="templates/templates.js"></script>
+<!-- Chart.js + Mermaid + the engine's chart/diagram renderer, so the Chart and
+     Diagram cards show real previews (not a blank canvas / raw mermaid source). -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script src="engine/charts.js"></script>
+<script>
+  const STAGE_W = 1280, STAGE_H = 720;
+  const templates = window.SLIDE_TEMPLATES || [];
+  const grid = document.getElementById('grid');
+  const stages = []; // {thumb, stage}
+
+  function makeCard(tpl) {
+    const card = document.createElement('div');
+    card.className = 'g-card';
+    card.dataset.tag = tpl.tag;
+
+    const thumb = document.createElement('div');
+    thumb.className = 'g-thumb';
+    const stage = document.createElement('div');
+    stage.className = 'g-stage';
+    stage.innerHTML = tpl.html;
+    const slide = stage.querySelector('.slide');
+    if (slide) slide.classList.add('active');
+    thumb.appendChild(stage);
+    stages.push({ thumb, stage });
+
+    const meta = document.createElement('div');
+    meta.className = 'g-meta';
+    meta.innerHTML = '<span class="g-name"></span><span class="g-tag"></span>';
+    meta.querySelector('.g-name').textContent = tpl.name;
+    meta.querySelector('.g-tag').textContent = tpl.tag;
+
+    const actions = document.createElement('div');
+    actions.className = 'g-actions';
+    const copy = document.createElement('button');
+    copy.className = 'g-copy';
+    copy.textContent = 'Copy HTML';
+    copy.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(tpl.html); }
+      catch { const t = document.createElement('textarea'); t.value = tpl.html; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); }
+      copy.textContent = 'Copied'; copy.classList.add('done');
+      setTimeout(() => { copy.textContent = 'Copy HTML'; copy.classList.remove('done'); }, 1400);
+    });
+    actions.appendChild(copy);
+
+    card.append(thumb, meta, actions);
+    return card;
+  }
+
+  // Scale each 1280×720 stage down to its card's width.
+  function fit() {
+    for (const { thumb, stage } of stages) {
+      const w = thumb.clientWidth;
+      const sc = w / STAGE_W;
+      stage.style.transform = 'scale(' + sc + ')';
+      thumb.style.height = (STAGE_H * sc) + 'px';
+    }
+  }
+
+  // Filter chips (All + each unique tag, in first-seen order).
+  function buildFilters() {
+    const bar = document.getElementById('filterBar');
+    const tags = ['All', ...[...new Set(templates.map(t => t.tag))]];
+    tags.forEach((tag, i) => {
+      const chip = document.createElement('button');
+      chip.className = 'g-chip' + (i === 0 ? ' on' : '');
+      chip.textContent = tag;
+      chip.addEventListener('click', () => {
+        bar.querySelectorAll('.g-chip').forEach(c => c.classList.toggle('on', c === chip));
+        grid.querySelectorAll('.g-card').forEach(c => {
+          c.style.display = (tag === 'All' || c.dataset.tag === tag) ? '' : 'none';
+        });
+        fit();
+      });
+      bar.appendChild(chip);
+    });
+  }
+
+  templates.forEach(t => grid.appendChild(makeCard(t)));
+  buildFilters();
+  fit();
+  window.addEventListener('resize', fit);
+
+  // Cards exist now — render the live chart + diagram previews.
+  if (window.renderCharts) window.renderCharts();
+  if (window.mermaid) mermaid.run({ nodes: document.querySelectorAll('.mermaid:not([data-processed])') });
+</script>
+
+</body>
+</html>

@@ -103,6 +103,34 @@
     .ed-imgbar-input { font-family: inherit; font-size: 12px; color: var(--ed-ink); width: 220px; max-width: 50vw;
       padding: 7px 10px; border-radius: 7px; border: 1px solid var(--ed-line); background: var(--ed-view-bg); outline: none; }
     .ed-imgbar-input:focus { border-color: var(--ed-ink); }
+    .ed-add { position: fixed; left: 12px; bottom: 14px; width: ${RAIL_W - 24}px; z-index: 1000;
+      font-family: inherit; font-size: 12px; font-weight: 500; cursor: pointer; text-align: center;
+      background: var(--ed-ink); color: var(--ed-inv); border: 1px solid var(--ed-ink);
+      border-radius: 8px; padding: 9px 12px; box-shadow: 0 4px 16px rgba(0,0,0,.18); }
+    .ed-add:hover { opacity: .9; }
+    .ed-picker { position: fixed; inset: 0; z-index: 1100; display: none; align-items: center; justify-content: center;
+      background: rgba(0,0,0,.45); backdrop-filter: blur(3px); }
+    .ed-picker.ed-open { display: flex; }
+    .ed-picker-panel { width: min(980px, 92vw); max-height: 86vh; display: flex; flex-direction: column;
+      background: var(--ed-panel); color: var(--ed-ink); border: 1px solid var(--ed-line);
+      border-radius: 14px; box-shadow: 0 16px 50px rgba(0,0,0,.4); overflow: hidden; }
+    .ed-picker-head { display: flex; align-items: center; justify-content: space-between;
+      padding: 13px 18px; border-bottom: 1px solid var(--ed-line); }
+    .ed-picker-title { font-size: 13px; font-weight: 600; }
+    .ed-picker-x { border: none; background: none; cursor: pointer; font-size: 14px; line-height: 1;
+      color: var(--ed-dim); padding: 5px 8px; border-radius: 6px; }
+    .ed-picker-x:hover { color: var(--ed-ink); background: color-mix(in srgb, var(--ed-ink) 8%, transparent); }
+    .ed-picker-grid { padding: 16px 18px 20px; overflow-y: auto;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; }
+    .ed-tpl { cursor: pointer; border: 1px solid var(--ed-line); border-radius: 10px; overflow: hidden;
+      background: var(--ed-view-bg); transition: border-color .12s ease, transform .12s ease; }
+    .ed-tpl:hover { border-color: var(--ed-ink); transform: translateY(-2px); }
+    .ed-tpl-thumb { position: relative; width: 100%; overflow: hidden; border-bottom: 1px solid var(--ed-line); }
+    .ed-tpl-stage { position: relative; transform-origin: 0 0; pointer-events: none; }
+    .ed-tpl-stage > .slide { display: flex !important; }
+    .ed-tpl-name { padding: 8px 10px; font-size: 11px; font-weight: 500; display: flex; justify-content: space-between; gap: 8px; }
+    .ed-tpl-tag { color: var(--ed-dim); font-size: 9px; text-transform: uppercase; letter-spacing: .07em; align-self: center; }
+    .ed-picker-empty { padding: 30px; text-align: center; color: var(--ed-dim); font-size: 12px; }
     @media print { .ed-rail, .ed-toolbar, [data-ed-ui] { display: none !important; }
       body.ed-on .deck { width: auto; margin-left: 0; } }
   `;
@@ -333,6 +361,114 @@
     if (old) old.replaceWith(makeThumb(slide, i));
     highlightThumb();
   });
+
+  /* ---------- add-slide picker (insert from the template library) ----------
+     Loads templates/templates.js on first open (lazily, so decks that never
+     open the picker pay nothing). Clicking a template inserts a new slide
+     after the current one — same path as duplicate, so save/serialise just
+     work and the new slide gets a "NEW SLIDE" comment in the file. */
+  const TPL_SRC = 'templates/templates.js';
+  let tplPromise = null;
+  function loadTemplates() {
+    if (Array.isArray(window.SLIDE_TEMPLATES)) return Promise.resolve(window.SLIDE_TEMPLATES);
+    if (tplPromise) return tplPromise;
+    tplPromise = new Promise(resolve => {
+      const s = document.createElement('script');
+      s.src = TPL_SRC; s.dataset.edUi = '';
+      s.onload = () => resolve(window.SLIDE_TEMPLATES || []);
+      s.onerror = () => resolve(null);
+      document.head.appendChild(s);
+    });
+    return tplPromise;
+  }
+
+  // Keep ids unique when the same template (e.g. a chart's CSV) is inserted twice.
+  let uidc = 0;
+  function uniquifyIds(node) {
+    node.querySelectorAll('[id]').forEach(elx => {
+      const old = elx.id, neu = old + '-' + Date.now().toString(36) + (uidc++);
+      elx.id = neu;
+      node.querySelectorAll('[data-src="#' + old + '"]').forEach(c => c.setAttribute('data-src', '#' + neu));
+    });
+  }
+
+  function insertTemplate(tpl) {
+    const tmp = el('div'); tmp.innerHTML = (tpl.html || '').trim();
+    const node = tmp.firstElementChild;
+    if (!node) return;
+    if (!node.classList.contains('slide')) node.classList.add('slide');
+    node.classList.remove('active');
+    uniquifyIds(node);
+    pushUndo();
+    const cur = curIdx();
+    const s = liveSlides();
+    if (s[cur]) s[cur].after(node); else deck.appendChild(node);
+    node.dataset.edDirty = '1';
+    makeEditable(node);
+    structural();
+    edShow(cur < 0 ? liveSlides().length - 1 : cur + 1);
+    closePicker();
+  }
+
+  const addBtn = el('button', 'ed-add'); addBtn.dataset.edUi = ''; addBtn.type = 'button';
+  addBtn.textContent = '＋ Add slide';
+  document.body.appendChild(addBtn);
+
+  const picker = el('div', 'ed-picker'); picker.dataset.edUi = '';
+  picker.innerHTML =
+    '<div class="ed-picker-panel">' +
+      '<div class="ed-picker-head"><span class="ed-picker-title">Add a slide</span>' +
+      '<button class="ed-picker-x" title="Close (Esc)">&#10005;</button></div>' +
+      '<div class="ed-picker-grid" id="edPickerGrid"></div>' +
+    '</div>';
+  document.body.appendChild(picker);
+  const pickerGrid = picker.querySelector('#edPickerGrid');
+
+  function tplCard(tpl) {
+    const card = el('div', 'ed-tpl');
+    const thumb = el('div', 'ed-tpl-thumb');
+    const stage = el('div', 'ed-tpl-stage');
+    const dw = deck.clientWidth || innerWidth, dh = deck.clientHeight || innerHeight;
+    stage.style.width = dw + 'px'; stage.style.height = dh + 'px';
+    stage.innerHTML = tpl.html;
+    const slide = stage.querySelector('.slide');
+    if (slide) { slide.classList.add('active'); slide.querySelectorAll('[contenteditable]').forEach(n => n.removeAttribute('contenteditable')); }
+    thumb.appendChild(stage);
+    const name = el('div', 'ed-tpl-name');
+    name.innerHTML = '<span></span><span class="ed-tpl-tag"></span>';
+    name.firstElementChild.textContent = tpl.name;
+    name.querySelector('.ed-tpl-tag').textContent = tpl.tag;
+    card.append(thumb, name);
+    card.addEventListener('click', () => insertTemplate(tpl));
+    card._fit = () => { const w = thumb.clientWidth, sc = w / dw; stage.style.transform = 'scale(' + sc + ')'; thumb.style.height = (dh * sc) + 'px'; };
+    return card;
+  }
+
+  let pickerBuilt = false;
+  function openPicker() {
+    picker.classList.add('ed-open');
+    loadTemplates().then(list => {
+      if (!pickerBuilt) {
+        pickerGrid.textContent = '';
+        if (!list || !list.length) {
+          pickerGrid.innerHTML = '<div class="ed-picker-empty">Could not load templates/templates.js.</div>';
+          return;
+        }
+        const cards = list.map(tplCard);
+        cards.forEach(c => pickerGrid.appendChild(c));
+        pickerBuilt = true;
+      }
+      requestAnimationFrame(() => pickerGrid.querySelectorAll('.ed-tpl').forEach(c => c._fit && c._fit()));
+    });
+  }
+  function closePicker() { picker.classList.remove('ed-open'); }
+
+  addBtn.addEventListener('click', openPicker);
+  picker.querySelector('.ed-picker-x').addEventListener('click', closePicker);
+  picker.addEventListener('click', e => { if (e.target === picker) closePicker(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && picker.classList.contains('ed-open')) { e.preventDefault(); e.stopPropagation(); closePicker(); }
+  }, true);
 
   /* ---------- image replace (file / drop / paste / link, one affordance) ---------- */
   const MAX_IMG_DIM = 1600;
@@ -654,7 +790,11 @@
       n.classList.remove('active');
       if (!n.getAttribute('class')) n.removeAttribute('class');
     }
-    return '  ' + c.outerHTML;
+    // Re-indent the closing tag to the section's 2-space level so splice()'s
+    // anchor regex (open indent must equal close indent) still matches on the
+    // next save. Template-library slides close </section> at column 0;
+    // hand-written / previously-saved slides already close at 2 spaces (no-op).
+    return '  ' + c.outerHTML.replace(/\n[ \t]*<\/section>$/, '\n  </section>');
   }
 
   function ensureActive(body, isFirst) {

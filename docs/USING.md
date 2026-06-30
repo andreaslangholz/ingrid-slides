@@ -1,160 +1,150 @@
-# Using the deck
+# Using the system
 
-A guide to making slides with this template.
+How to operate the Ingrid presentation system: the engine, the decks, the in-browser
+editor, charts, diagrams, presenting, and shipping a single-file deck.
+
+Brand rules live in `brand/ingrid/BRAND.md`. Components live in `docs/COMPONENTS.md`.
+Design judgement lives in `docs/DESIGN.md`. This file is the mechanics.
+
+---
+
+## What's in the repo
+
+```
+index.html              ← launcher: starters + example decks (open / edit)
+starter-*.html          ← starter decks: copy one to begin (blank, market-update, pitch)
+ingrid_examples.html    ← deck: generic layout & component gallery (thin shell)
+ingrid_library.html     ← deck: concrete reusable Ingrid content (thin shell)
+engine/                 ← shared engine, reused by every deck
+  engine.css            ← brand tokens, layout, component styles
+  engine.js             ← navigation, progress bar, PDF export
+  edit.js               ← in-browser editor (?edit) + ＋Add-slide picker
+  charts.js             ← Chart.js + Mermaid
+templates/              ← templates.js (component source) + gallery.html (browse)
+knowledge/              ← institutional facts: COMPANY/MESSAGING/PRODUCTS/MARKET/PROOF/GLOSSARY
+brand/ingrid/           ← BRAND.md + logos, gradients, photos, video
+docs/                   ← BRAND/COMPONENTS/DESIGN/STORYTELLING + this file
+scripts/                ← bundle.mjs (export) + gen-components-doc.mjs
+dist/                   ← generated single-file decks (build artifact, gitignored)
+reference/              ← upstream fork artifacts (not used; do not edit)
+```
+
+A **deck is a thin shell**: just `<section class="slide">` blocks plus links to `engine/`.
+That keeps decks small and diffs clean. The price is that a raw deck needs its sibling
+files to run — which is what the bundler (below) resolves for sharing.
 
 ---
 
 ## Quick start
 
-1. **Clone or download** this repo.
-2. **Open `deck.html`** in any modern browser. That's it. No build step. No dependencies.
-3. **Edit the HTML** to add your content. Each slide is a `<section class="slide">`.
-4. **Drop your media** into `media/` and reference it with relative paths.
-5. **Drop data files** into `data/` and reference them in chart slides (or embed data inline — see Charts below).
-6. **Present** in full-screen (F11 in Chrome, or Cmd+Ctrl+F on Mac).
+1. **Open `index.html`** in a modern browser. **Start a new deck** by copying a starter
+   (`starter-blank.html`, `starter-market-update.html`, `starter-pitch.html`) to a new file,
+   or open `ingrid_examples.html` to browse every component.
+2. **Edit content** by adding/removing `<section class="slide">` blocks, or use edit mode (below).
+3. **Drop media** into `media/` and reference it with relative paths; data files go in `data/`.
+4. **Present** full-screen (F11 in Chrome, Cmd+Ctrl+F in Safari).
+5. **Ship** a self-contained copy with the bundler when the deck is ready.
 
-The file is fully self-contained except for fonts (Inter from Google Fonts) and the Chart.js / Mermaid libraries (loaded from jsDelivr CDN when slides with charts or diagrams are used). If you'll present somewhere without wifi, download those libraries in advance — links are in the script tags at the bottom of `deck.html`.
+No build step is needed to *author* — the build step only produces the shareable single file.
 
 ---
 
 ## Editing in the browser
 
-For quick changes — fixing a typo, rewording a headline, reordering slides — you don't need to touch the HTML. Click the **Edit** button next to **Download PDF**, or open the deck with `?edit` appended to the URL.
+For quick changes — typos, rewording, reordering — you don't need to touch HTML. Click the
+**Edit** button (next to Download PDF) or add `?edit` to the URL.
 
-**Text.** Click any text to edit it in place. Enter or Escape commits, Cmd/Ctrl+Z undoes within a field. Editing is plain-text only, so pasted formatting is stripped and the underlying markup stays intact.
+**Text.** Click any text to edit in place. Enter/Escape commits, Cmd/Ctrl+Z undoes within a
+field. Editing is plain-text only — pasted formatting is stripped, the underlying markup stays intact.
 
-**Slides.** The rail on the left shows live thumbnails. Click to jump, drag to reorder, or use the per-slide buttons to move, duplicate, and delete. Cmd/Ctrl+Z (outside a text field) undoes structural changes.
+**Slides.** The rail on the left shows live thumbnails. Click to jump, drag to reorder, or
+use the per-slide buttons to move, duplicate, and delete. Cmd/Ctrl+Z (outside a text field)
+undoes structural changes.
 
-**Images and video.** Hover any image and a card appears. Drag an image or video file onto it, click to upload, or paste a link. Uploaded files embed in the deck (images are downscaled, so the file stays reasonable); pasted links stay as URLs. Dropping a video swaps that slot to a `<video>` automatically, so any image slot can hold video.
+**＋ Add slide.** The picker offers every component from `templates/templates.js`. Inserting
+one adds a new on-brand slide after the current one.
+
+**Images and video.** Hover any image for a card. Drag a file onto it, click to upload, or
+paste a link. Uploaded files embed in the deck (images are downscaled); pasted links stay as
+URLs. Dropping a video swaps that slot to a `<video>` automatically.
 
 **Saving.** Press Cmd/Ctrl+S or click **Save**.
+- In Chromium (Chrome, Edge) the first save asks you to select the deck's own file once
+  (granting write access); after that, saves write straight back, and edits auto-save
+  (debounced) as you go.
+- Other browsers can't write local files, so they download an updated copy — replace the original.
 
-- In Chromium browsers (Chrome, Edge), the first save asks you to select the deck's own file once — that's the browser's way of granting write access. Every save after that writes straight back to the file, silently. Choose "Allow on every visit" when the browser asks after a reload and it stays silent permanently.
-- Once write access is granted, edits **auto-save** as you go (debounced), so you rarely need to press Save yourself.
-- Other browsers can't write to local files, so they download an updated copy instead. Replace the original with it.
+Saves are **surgical**: only changed slides are rewritten; styles and scripts pass through
+byte-for-byte, so git diffs show only real edits. The HTML comment above each `<section>` is
+the save anchor — keep one per slide.
 
-Saves are surgical: only the slides you actually changed are rewritten. Untouched slides, the styles, and the scripts pass through byte-for-byte, so if the deck lives in git, diffs show only real edits.
-
-**Good to know.**
-
-- Edit mode changes text, slide order, and images or video. New layouts, components, and styling are still HTML work.
-- In slides you edited, HTML character entities (like `&amp;trade;`) are written back as their literal characters. Same rendering, just a different spelling in the source.
-- The comment line above each `<section>` is the anchor that in-place saving uses. Keep one per slide.
-- Exit edit mode with the **Exit** button. Without `?edit`, the deck behaves exactly as before.
+**Boundary.** Edit mode covers text, order, and images/video. New layouts, components, and
+styling stay HTML/CSS work (in the deck and `engine/`). See the division of labor in `AGENTS.md`.
 
 ---
 
-## Using with Claude Code
+## Working with an AI agent
 
-This template was made for collaboration with Claude Code (or any AI coding assistant). The workflow that works:
+The system is built for an agent + human pairing (any agent — see `AGENTS.md`). The workflow:
 
-1. **Open the repo in your editor** with Claude Code running.
-2. **Tell Claude what slide you want.** Example: *"Add a quote slide after slide 4 that says 'But isn't this just chaos?' as a question."*
-3. Claude inserts the slide using the existing components.
-4. **Iterate by feedback.** *"Make it dark."* *"Move it before slide 5."* *"Shorten the headline."*
-5. **Drop in media** as you go: *"Wire `media/demo.mp4` to the collage on slide 8."*
+1. Tell the agent the story and the beat you want: *"Add a quote slide after slide 4 asking 'but isn't this just chaos?'"*
+2. The agent inserts a slide using the real components, anchored in real facts.
+3. Iterate by feedback: *"Make it dark." "Move it before 5." "Shorten the headline."*
+4. Hand wording, image, and reorder tweaks to yourself via edit mode.
 
-The key is treating the deck as **a document**. You write it like prose. The components are just the vocabulary.
-
-### Tips for prompting
-
-- **Say what you want.** "Add a comparison slide" beats "use a three-column grid."
-- **Reference existing slides.** "Make slide 5 quieter, like slide 2." Claude will copy the pattern.
-- **Iterate small.** Don't ask for 10 changes at once. One thing, see it, next thing.
+Treat the deck as a document you write like prose; the components are the vocabulary.
+Tips: say what you want ("add a comparison") not the class name; reference existing slides
+("quieter, like slide 2"); iterate one change at a time.
 
 ---
 
 ## Components
 
-Every component is in `deck.html` as a working example. Copy any `<section class="slide">` and edit the content.
+Every component is documented with copy-paste markup in **`docs/COMPONENTS.md`**, generated
+from `templates/templates.js`. Browse them rendered in `templates/gallery.html`, or insert
+them live with ＋ Add slide. To add a new component, edit `templates/templates.js` and run:
 
-| Component | What it's for |
-|---|---|
-| **Cover** | Title, speaker, date. First slide. |
-| **Quote slide** | A single bold statement. Used for openings, transitions, mic-drops. |
-| **Eyebrow + headline + subtitle** | The default text slide. Use for setup, explanation, framing. |
-| **Two-column** | Side-by-side comparison. Problem/fix, before/after, today/tomorrow. |
-| **Step stack** *(in two-column)* | The "old way of building" pattern. Cumulative steps, dimmed blockers, kill marker at the end. |
-| **Three-column** | Why/how/what or any structural breakdown. |
-| **Capability list** | Q&A rows. "What it solves" sections. |
-| **Dark callout** | One-per-deck emphasis block. Black background, white text. |
-| **Dot flow** | Process diagram. Five steps connected by a thin line. |
-| **Stack grid** | Four cards of categorized tools/items with simple marks. |
-| **Spec block + outputs** | Input → process → outputs vertical flow. |
-| **Product slide** | Showcase style. Big name on the right, description on the left. |
-| **Collage slide** | Full-bleed image or video. Used after a product slide for impact. |
-| **JEDUF three-column** | Two extremes vs the middle path. Hero column is dark. |
-| **Dark slide** | A pivot moment. Marks the turn in the talk. |
-| **Closing** | Mic-drop line. Often dark. |
-| **Chart slide** | Bar, line, pie, or doughnut chart from CSV or XLSX data. |
-| **Diagram slide** | Flowchart, sequence, ER, or any Mermaid diagram type. |
+```
+node scripts/gen-components-doc.mjs
+```
+
+That regenerates `docs/COMPONENTS.md` so the doc, the gallery, and the picker stay in sync.
 
 ---
 
 ## Charts
 
-Charts are powered by Chart.js. The library loads from CDN automatically when the deck has a `<canvas data-chart="...">` element.
+Charts use Chart.js, loaded from CDN when a deck has a `<canvas data-chart="…">`.
 
-### Data format
-
-CSV and XLSX follow the same convention:
-
-- **First row:** column headers. First cell is the label name; remaining cells are series names.
-- **Remaining rows:** one row per data point. First cell is the label (x-axis value or pie segment name); remaining cells are numeric values.
+**Data format** (CSV and XLSX alike): first row = headers (first cell = label name, rest =
+series names); each later row = one data point (first cell = label, rest = numbers).
 
 ```csv
 Quarter,Revenue,Costs
 Q1,120,80
 Q2,145,95
-Q3,160,100
-Q4,190,110
 ```
 
-### Three ways to load data
+**Three ways to load data:**
 
-**1. Inline (works everywhere, including double-clicking the file)**
+1. **Inline (recommended, works on `file://`).** Put the CSV in a `<script type="text/csv" id="…">`
+   right after the chart's `</section>`, and reference it: `<canvas data-chart="bar" data-src="#that-id">`.
+2. **Drag-and-drop.** Drop a `.csv`/`.xlsx` onto a canvas to re-render instantly.
+3. **File path (HTTP only).** `<canvas data-chart="bar" data-src="data/revenue.csv">` — works
+   when served (`python3 -m http.server`), not on `file://`. XLSX uses SheetJS, loaded lazily.
 
-Embed the CSV directly in the HTML in a `<script type="text/csv">` tag and reference it with `data-src="#that-id"`. This is the recommended default — no server, no fetch, no CORS issue.
+**Types:** `bar` (categories), `line` (trends), `pie`/`doughnut` (part-to-whole, ≤5), `scatter`
+(correlation, rows are `Label,X,Y`). Charts use the deck's palette automatically.
 
-```html
-<canvas data-chart="bar" data-src="#my-data"></canvas>
-
-<script type="text/csv" id="my-data">
-Quarter,Revenue,Costs
-Q1,120,80
-Q2,145,95
-</script>
-```
-
-Place the `<script>` tag right after the `</section>` that contains the chart.
-
-**2. Drag-and-drop**
-
-Drop any `.csv` or `.xlsx` file directly onto a chart canvas. The chart re-renders immediately with the new data. This is the ThinkCell-equivalent workflow — no code change needed.
-
-**3. File path (HTTP server only)**
-
-```html
-<canvas data-chart="bar" data-src="data/revenue.csv"></canvas>
-```
-
-Drop the file in `data/` and reference it. Works when the deck is served over HTTP (`python3 -m http.server`), not when opened as a local file. XLSX files use SheetJS, which loads lazily on first use.
-
-### Chart types
-
-| `data-chart` | Chart type |
-|---|---|
-| `bar` | Grouped bars — comparisons across categories |
-| `line` | Connected line — trends over time |
-| `pie` | Filled circle — part-to-whole (≤5 segments) |
-| `doughnut` | Ring — part-to-whole with visual breathing room |
-| `scatter` | X/Y dots — correlation (data format: `Label,X,Y`) |
+For live Ingrid data, pull it via the `ingrid` MCP server, write it to `data/`, and reference
+it from a chart slide (see `AGENTS.md`).
 
 ---
 
 ## Diagrams
 
-Diagrams are powered by Mermaid.js (loaded from CDN). Write diagram syntax in a `<pre class="mermaid">` block inside a `.mermaid-wrap` div.
+Diagrams use Mermaid.js (CDN). Write the syntax in a `<pre class="mermaid">` inside a
+`.mermaid-wrap` div:
 
 ```html
 <div class="mermaid-wrap">
@@ -167,24 +157,10 @@ graph LR
 </div>
 ```
 
-Diagrams render lazily when their slide first becomes visible — this avoids sizing errors that occur when Mermaid tries to render inside a hidden slide.
-
-### Common diagram types
-
-```
-graph TD          top-down flowchart
-graph LR          left-to-right flowchart
-sequenceDiagram   interaction/timing diagram
-erDiagram         entity-relationship
-gantt             project timeline
-classDiagram      UML class diagram
-```
-
-See [mermaid.js.org](https://mermaid.js.org) for full syntax reference.
-
-### Theme
-
-Diagrams automatically inherit the deck's visual style: Inter font, near-black text, light gray borders, transparent background.
+Common types: `graph TD` / `graph LR` (flowcharts), `sequenceDiagram`, `erDiagram`, `gantt`,
+`classDiagram`. Full syntax at [mermaid.js.org](https://mermaid.js.org). Diagrams render
+lazily on first slide visit (so they size correctly), and inherit the deck's visual style
+(near-black text, light borders, transparent background).
 
 ---
 
@@ -194,91 +170,95 @@ Diagrams automatically inherit the deck's visual style: Inter font, near-black t
 |---|---|
 | `→` `Space` `PageDown` | Next slide |
 | `←` `PageUp` | Previous slide |
-| `Home` | Jump to first slide |
-| `End` | Jump to last slide |
+| `Home` / `End` | First / last slide |
 | `P` | Download PDF |
-| Swipe left/right | Next / previous slide (touch devices) |
+| Swipe left/right | Next / previous (touch) |
+
+---
+
+## Presenting & PDF
+
+**Full-screen:** F11 (Chrome/Edge) or Cmd+Ctrl+F (Safari). Test on the real screen — the deck
+is responsive but feels best at 16:9.
+
+**PDF:** click **Download PDF** or press `P`. In the print dialog: Destination *Save as PDF*,
+Margins *None*, and **Background graphics ON** (critical, or dark/gradient slides print white).
+Chrome has the best print engine. Always export a PDF backup before a talk. If a chart or
+diagram slide hasn't been visited, navigate to it once before printing (they render lazily).
 
 ---
 
 ## Embedding
 
-Add `?embed` to any deck URL to get an embeddable version. The PDF button hides; navigation arrows, slide counter, and progress bar stay visible.
+Add `?embed` to a deck URL for an embeddable version (PDF button hides; nav stays):
 
 ```html
-<iframe src="your-deck.html?embed" style="width:100%; aspect-ratio:16/9; border:none;"></iframe>
+<iframe src="ingrid_examples.html?embed" style="width:100%; aspect-ratio:16/9; border:none;"></iframe>
 ```
 
-Works in blog posts, Notion, documentation sites, or anywhere that renders HTML. The deck is fully interactive inside the iframe. Arrow keys, swipe, and click navigation all work.
+For sharing a single file inside another page, embed the **bundled** deck (next section) so it
+carries its own assets.
 
 ---
 
-## Presenting
+## Shipping: bundle to a single file
 
-**Full-screen:** F11 (Chrome/Edge) or Cmd+Ctrl+F (Safari).
+Author thin; ship flat. `scripts/bundle.mjs` flattens a deck into one self-contained file in
+`dist/` by inlining the engine (CSS + JS + the template library) and base64-embedding every
+brand image the deck uses. Large photos are downscaled on the way in (needs `sips`, built into
+macOS), so the output stays a sensible size.
 
-**Tip:** Test the deck on the actual screen you'll present from. Aspect ratios matter. The deck is responsive but feels best at 16:9.
+```
+node scripts/bundle.mjs ingrid_examples.html              # → dist/ingrid_examples.html
+node scripts/bundle.mjs ingrid_examples.html --no-edit     # view-only, smaller (external/client)
+node scripts/bundle.mjs ingrid_examples.html --offline     # also inline Chart.js, Mermaid, fonts
+node scripts/bundle.mjs ingrid_examples.html --out path.html
+```
 
-**Backup plan:** Always download a PDF before the talk. If the laptop dies, you can present from the PDF on a phone or borrowed machine.
+**Defaults:** the editor stays in (recipients can edit their copy), and CDN libraries + Google
+Fonts stay as links — self-contained *assuming internet*. `--offline` inlines those too for
+airgapped sharing; `--no-edit` strips the editor for a smaller, locked share. `--no-optimize`
+embeds images at full size.
 
----
+**Discipline.** `dist/<deck>.html` is a build artifact (gitignored). Keep iterating on the
+thin **source** deck and re-bundle. Don't edit a bundle back into source — its inlined engine
+and base64 images would diverge from the thin original. Source = author; dist = share.
 
-## PDF export
-
-Click **Download PDF** (bottom center) or press `P`. In the browser print dialog:
-
-- **Destination:** Save as PDF
-- **Layout:** auto-detected from `@page` (16:9, 13.333in × 7.5in, matches PowerPoint widescreen)
-- **Margins:** None / Default
-- **Background graphics: ON** *(critical, otherwise dark slides print white)*
-
-This works best in Chrome. Safari and Firefox sometimes mangle backgrounds.
-
----
-
-## Adding a slide
-
-1. Find the slide that comes before yours in `deck.html`.
-2. Copy any existing `<section class="slide">…</section>` block.
-3. Paste it after the previous slide.
-4. Edit the content.
-
-The slide counter and progress bar update automatically. No JS changes needed.
-
----
-
-## Customizing the design
-
-**To change colors, type, or spacing:** edit the `<style>` block at the top of `deck.html`.
-
-**To stay on-brand:** see `docs/DESIGN.md` for the design tokens and rules. The design is opinionated: bold-then-dim headlines, no em-dashes in body copy, monochrome with one accent color (black). Lean into it or fork it.
-
-**To use your own fonts:** replace the Inter import line at the top with your own. Update `font-family` in the `body` rule.
+A bundled file (default mode) is still fully editable: text edits, image swaps, reorder, and
+＋ Add slide all work, and Save rewrites only changed slides while passing the inlined engine
+through untouched.
 
 ---
 
 ## Troubleshooting
 
-**Images don't load.** You're probably opening the file from a different folder than `media/`. Make sure `deck.html` and `media/` sit next to each other.
+**Images don't load.** A raw deck needs its sibling `engine/` and `brand/` folders. To share
+a deck where those won't travel, bundle it. Within the repo, keep the deck at the repo root so
+`engine/…` and `brand/…` paths resolve.
 
-**Videos won't autoplay with sound.** Browsers block this by default. Use `controls` (let the user click play) or `autoplay muted loop` (silent background).
+**Videos won't autoplay with sound.** Browsers block this. Use `controls`, or `autoplay muted loop`.
 
-**PDF export looks wrong.** Make sure "Background graphics" is enabled in the print dialog. Use Chrome. It has the best print engine.
+**Chart shows "Failed to fetch".** You opened the file as `file://` with `data-src="data/…csv"`.
+Use the inline pattern (`<script type="text/csv" id="…">` + `data-src="#id"`) or drag the CSV
+onto the canvas.
 
-**Fonts look wrong offline.** Inter is loaded from Google Fonts via the `@import` line. If you need offline support, download Inter and reference it locally instead.
+**Chart blank on a slide.** It initialized while hidden; the deck resizes on slide activation.
+Arrow left then right to re-trigger.
 
-**Chart shows "Could not load …: Failed to fetch".** You're opening the file directly (`file://`) and using `data-src="data/file.csv"`. Switch to the inline pattern: put your CSV in a `<script type="text/csv" id="my-id">` block and use `data-src="#my-id"`. Or drag your CSV file directly onto the chart canvas.
+**Mermaid diagram missing.** Confirm `<pre class="mermaid">` inside `.mermaid-wrap`. Diagrams
+render on first visit, not page load. Invalid syntax shows an error — check the console.
 
-**Chart is blank when navigating to the slide.** This usually means the chart was initialized before the slide was visible. The deck resizes charts on every slide activation via `requestAnimationFrame` — if the chart is still blank, try pressing the left arrow and right arrow to re-trigger the resize.
+**Fonts/charts/diagrams look wrong offline.** Fonts and the chart/diagram libraries load from
+CDN by default. For offline use, bundle with `--offline`.
 
-**Mermaid diagram does not appear.** Check that the `<pre>` has `class="mermaid"` and that it's wrapped in `<div class="mermaid-wrap">`. Diagrams render on first slide activation, not on page load. If the diagram syntax is invalid, Mermaid replaces it with an error message — check the browser console for details.
-
-**Charts or diagrams missing in PDF export.** Chart.js canvases export correctly via the browser print engine. Mermaid SVGs also print. Make sure "Background graphics" is enabled in the print dialog. If a diagram is on a slide you never navigated to before printing, do so once before exporting — diagrams render lazily on first visit.
+**Customizing the design.** Colors, type, and spacing live in `engine/engine.css` (driven by
+the tokens in `brand/ingrid/BRAND.md`) — not in the deck. Edit the engine to restyle every deck
+at once.
 
 ---
 
 ## Scope
 
-Plain HTML and CSS. No transitions, no themes, no build steps. That's the point.
-
-For animation, fragments, speaker notes, or a presenter view, use Reveal.js. For editing in PowerPoint, use PowerPoint. This template is for people who want to write their deck like a website.
+Plain HTML, CSS, and a small JS engine. Authoring needs no build step; the bundler is a single
+optional export script. For animation, fragments, or a presenter view, use Reveal.js. This
+system is for writing an on-brand Ingrid deck like a document and shipping it as one file.

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ingrid — Blank starter</title>
+<link rel="stylesheet" href="engine/engine.css">
+</head>
+<body>
+
+<header class="ig-header">
+  <div class="ig-header-brand">INGRID</div>
+  <div class="ig-header-right"></div>
+</header>
+
+<div class="progress" id="progress"></div>
+
+<div class="deck">
+
+  <!-- ========== 1. COVER ========== -->
+  <section class="slide active ig-cover-ppt">
+    <div class="cppt-hline"></div>
+    <div class="cppt-vline-top"></div>
+    <div class="cppt-vline-right"></div>
+    <div class="cppt-logo"><img src="brand/ingrid/logos/mono-on-dark.png" alt="Ingrid"></div>
+    <h1 class="cppt-title">presentation title</h1>
+    <p class="cppt-subtitle">SUB-HEADLINE</p>
+    <div class="cppt-date">JUNI 2026</div>
+  </section>
+
+  <!-- ========== 2. AGENDA ========== -->
+  <section class="slide ig-agenda">
+    <div class="agd-header"><div class="agd-header-brand">INGRID</div><div class="agd-header-right"></div></div>
+    <div class="agd-body">
+      <div class="agd-title"><h1>Agenda</h1></div>
+      <div class="agd-items">
+        <div class="agd-item"><span class="agd-num">01</span><span class="agd-name">Topic 1</span></div>
+        <div class="agd-item"><span class="agd-num">02</span><span class="agd-name">Topic 2</span></div>
+        <div class="agd-item"><span class="agd-num">03</span><span class="agd-name">Topic 3</span></div>
+        <div class="agd-item"><span class="agd-num">04</span><span class="agd-name">Topic 4</span></div>
+      </div>
+    </div>
+    <div class="agd-footer">
+      <div class="agd-footer-mark"><img src="brand/ingrid/logos/mark-on-dark.png" alt="Ingrid"></div>
+      <div class="agd-footnote">JUNI 2026</div>
+      <div class="agd-page">2</div>
+    </div>
+  </section>
+
+  <!-- ========== 3. CONTENT ========== -->
+  <section class="slide ig-ppt-content">
+    <div class="pptc-body">
+      <h1 class="pptc-headline">insert headline here</h1>
+      <div class="pptc-subhead">INSERT SUBHEADLINE HERE</div>
+      <ul class="pptc-list">
+        <li>Click here to edit text</li>
+        <li class="l2">Second level</li>
+        <li class="l3">Third level</li>
+        <li class="l4">Fourth level</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ========== 4. CLOSING ========== -->
+  <section class="slide ig-grad-bg ig-closing">
+    <div class="cppt-hline"></div>
+    <div class="cppt-vline-top"></div>
+    <div class="cppt-vline-right"></div>
+    <div style="margin:auto 0;">
+      <div class="eyebrow">Thank you</div>
+      <h1 style="color:var(--white)">let's get<br>to work.</h1>
+      <p class="subtitle" style="color:rgba(255,255,255,.8);margin-top:1rem">contact@ingridcapacity.com</p>
+    </div>
+  </section>
+
+</div>
+
+<footer class="ig-footer">
+  <img src="brand/ingrid/logos/mark-on-light.png" alt="Ingrid" style="height:clamp(20px,4.5vh,40px);width:auto;flex-shrink:0;object-fit:contain;">
+  <div class="ig-footnote">FOOTNOTE</div>
+  <div class="ig-counter" id="counter">1 / 4</div>
+</footer>
+
+<div class="btn-row">
+  <button class="pdf-btn edit-btn" onclick="location.href = location.pathname + '?edit'">Edit</button>
+  <button class="pdf-btn" onclick="downloadPDF()">Download PDF</button>
+</div>
+<div class="nav" id="nav-hidden" style="display:none"><span></span><div class="nav-buttons"><button class="nav-btn" onclick="prev()">‹</button><button class="nav-btn" onclick="next()">›</button></div></div>
+
+<script src="engine/engine.js"></script>
+<script src="engine/edit.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script src="engine/charts.js"></script>
+
+</body>
+</html>
