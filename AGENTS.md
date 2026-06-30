@@ -1,951 +1,226 @@
-# Slides: Agent Instructions
+# Ingrid Presentation System — Agent Guide
 
-You are helping a human build a slide deck using the Slides framework. This file is everything you need to produce correct, on-brand slides.
+You are helping a human build an **Ingrid Capacity** slide deck. This file is the entry
+point for any agent. It is short on purpose: it orients you and points you at the one
+correct source for each kind of decision. Read the source before you act — don't work
+from memory.
 
-## What this is
-
-A minimalist HTML slide deck framework. One self-contained HTML file (`deck.html`), no build step, no dependencies beyond Google Fonts (Inter). Navigate with arrow keys, space, swipe, or on-screen buttons. Export to PDF with `P`.
-
-## File structure
-
-```
-your-deck/
-├── deck.html              ← the deck (edit this)
-├── ingrid_examples.html   ← Ingrid deck: generic layout/component gallery (thin shell)
-├── ingrid_library.html    ← Ingrid deck: concrete reusable content slides (thin shell)
-├── engine/                ← shared deck engine (styles + JS), reused across all Ingrid decks
-│   ├── engine.css         ← brand tokens, layout/component styles, cover toggles
-│   ├── engine.js          ← core navigation / show()
-│   ├── edit.js            ← in-browser edit mode
-│   └── charts.js          ← Chart.js + Mermaid
-├── docs/
-│   ├── USING.md           ← usage guide
-│   ├── STORYTELLING.md    ← talk structure and tone
-│   └── DESIGN.md          ← visual tokens and rules
-├── brand/
-│   └── ingrid/
-│       ├── BRAND.md       ← Ingrid brand reference (READ THIS for Ingrid decks)
-│       ├── logos/         ← logo PNGs, named by background context
-│       ├── gradients/     ← gradient PNGs (pastel, dark, cover variants)
-│       ├── photos/        ← company photography
-│       └── video/         ← demo and brand video
-├── media/                 ← deck-specific images and videos
-│   └── art/               ← classical paintings for art-overlay component
-├── data/                  ← CSV and XLSX data files for charts
-└── AGENTS.md              ← this file
-```
-
-**Editing the Ingrid decks (`ingrid_examples.html`, `ingrid_library.html`):** each is a thin shell — it holds only the `<section class="slide">` markup and links the shared `engine/`. `ingrid_examples.html` is the generic layout/component gallery; `ingrid_library.html` holds concrete reusable Ingrid content (e.g. business models, tech-domain matrix). To change brand styling, layout, navigation, edit mode, or charts, edit the files in `engine/`, not the deck. New decks are made by copying a deck file (they live at repo root, so `engine/...` and `brand/...` paths work as-is). Note CSS `url()` paths in `engine/engine.css` are relative to that file (e.g. `../brand/...`), while image `src` in deck HTML is relative to the deck file. (`deck.html` and the theme variants remain single self-contained files.)
+This is an Ingrid-only system. The upstream framework it was forked from lives in
+`reference/` and is not used here.
 
 ---
 
-## Ingrid brand assets
+## North star (the 7 qualities)
 
-When building an Ingrid Capacity deck, read `brand/ingrid/BRAND.md` first. It contains exact hex colors, typography, logo usage rules, photography guidance, and a full index of every asset.
+A self-contained Ingrid presentation system. "Done" = an agent and a human can pair to
+produce on-brand, knowledge-anchored decks that ship as a single file.
 
-**Quick reference:**
+1. A final deck is **one self-contained HTML file** — shareable, opens in any browser.
+2. Every deck follows the **Ingrid brand & design**.
+3. All generated text is **anchored in real Ingrid knowledge and wording** — never fabricated.
+4. The system is **usable by multiple agents** (this file is the agnostic entry point).
+5. There is a clear **human-editable vs agent-generated** boundary.
+6. There are **shared components and starter decks** to build from.
+7. It is **collaboration / version-control ready** (clean diffs, source vs build split).
 
-| Asset type | Path pattern | Notes |
+---
+
+## Where everything lives (read the right source)
+
+| You need… | Go to | It is the source of truth for |
 |---|---|---|
-| Logo (light bg) | `brand/ingrid/logos/color-on-light.png` | Color logo, black wordmark + purple dot |
-| Logo (dark bg) | `brand/ingrid/logos/color-on-dark.png` | Color logo, white wordmark + purple dot |
-| Gradient bg | `brand/ingrid/gradients/pastel.png` | Bare texture, no text or logo |
-| Dark gradient | `brand/ingrid/gradients/dark.png` | Moody dark variant |
-| Cover slide | `brand/ingrid/gradients/cover-centered.png` | Pre-composed cover with logo+tagline |
-| Company photos | `brand/ingrid/photos/*.jpg` | See BRAND.md for subjects and categories |
+| Brand tokens & assets — colors, type, logos, gradient, photos | `brand/ingrid/BRAND.md` | *what is on-brand* |
+| The slide components — exact on-brand markup | `docs/COMPONENTS.md` (generated) | *what to build with* |
+| How to compose a good slide — hierarchy, density, do/don'ts | `docs/DESIGN.md` | *how to make it good* |
+| Deck structure — the arc / beats | `docs/STORYTELLING.md` (+ variants) | *what story* |
+| Operating the system — engine, editor, charts, PDF, **bundle/export** | `docs/USING.md` | *how to run it* |
+| The component source (machine-readable) | `templates/templates.js` | feeds COMPONENTS.md + the ＋Add-slide picker + the gallery |
+| Browse components rendered | `templates/gallery.html` | a view of `templates.js` |
+| Ingrid facts — company, products, market, proof, wording | `knowledge/*.md` | *what is true about Ingrid* |
+| Live Ingrid data | the `ingrid` MCP server (see below) | sites, telemetry, market prices |
 
-**Logo files are transparent PNGs.** Pick `*-on-light` for light backgrounds and `*-on-dark` for dark/gradient/photo backgrounds, and place them directly. Do NOT apply `filter:invert(1)` or `mix-blend-mode:screen` — those corrupt the current assets. Standalone Arc marks: `logos/mark-on-light.png` / `logos/mark-on-dark.png`.
+**Decks you build from / edit:** `ingrid_examples.html` (generic layout & component
+gallery) and `ingrid_library.html` (concrete reusable Ingrid content). Both are thin
+shells over the shared `engine/`. The launcher `index.html` lists them.
 
-**Typography quick ref:**
-- Headlines: Plus Jakarta Sans **Medium (500)**, **lowercase** in marketing comms, 100% leading
-- Sub-headers: Plus Jakarta Sans **Bold (700)**, ALL CAPS, 110% leading
-- Body: Plus Jakarta Sans **Light (300)**, Sentence case, 120% leading
-- Captions/eyebrows: **Fira Code**, ALL CAPS, 40% body size, 140% leading
-
-**Key colors:** Flux Violet `#AA73FA` (primary), Current Blue `#5FA4FA`, Ember Orange `#F8898C`, Solar Yellow `#FFCD96`. Alert colors: success `#4BE696`, error `#FF6464`, warning `#FA9B4D`, caution `#FFE77D`.
-
-**Photography categories:** Energy Landscape (grid infrastructure, dramatic angles), People/Society/Business (authentic diverse individuals mid-task), Intelligent Expert (precision, data environments, experts in interfaces).
-
-**Classical paintings** (for art-overlay component, component #25): `media/art/heathland-landscape.jpg`, `media/art/forest-with-figures.jpg`, `media/art/rocky-waterfall.jpg`.
+**Do not edit** anything in `reference/` (upstream fork artifacts) — and never copy their
+tokens (Inter, `#f5f5f3`, `.slide-inner`) into Ingrid work. Ingrid decks use Plus Jakarta
+Sans / Fira Code and the engine's `.slide` structure, not the upstream ones.
 
 ---
 
-## How slides work
+## How a deck works
 
-Each slide is a `<section class="slide">` inside the `.deck` div. The first slide gets the class `active`. The JS handles navigation, counter, and progress bar automatically. Just add or remove `<section>` blocks.
+Each deck is a **thin shell**: `<section class="slide">` blocks plus links to the shared
+engine. To change brand styling, layout, navigation, edit mode, or charts, edit the files
+in `engine/` — not the deck.
+
+```
+engine/
+  engine.css   ← brand tokens, layout, component styles, cover toggles
+  engine.js    ← navigation, progress bar, PDF export
+  edit.js      ← in-browser editor (?edit) + ＋Add-slide picker
+  charts.js    ← Chart.js + Mermaid
+```
+
+A slide is a `<section class="slide">` directly inside `.deck`; content sits **directly
+inside** the section (there is no inner wrapper). The first slide also has `active`.
 
 ```html
+<!-- ========== 4. HEADLINE ========== -->
 <section class="slide">
-  <div class="slide-inner">
-    <!-- content here -->
-  </div>
+  <div class="eyebrow">Section label</div>
+  <h2>The point. <span class="dim">The extension that fades.</span></h2>
+  <div class="pptc-subhead">SECTION LABEL</div>
+  <p class="subtitle">One or two sentences of nuance.</p>
 </section>
 ```
 
-Dark slides add the `.dark` class to `<section>`:
+Rules that keep a deck working:
+- **Keep one HTML comment line directly above each `<section>`** (e.g. `<!-- ===== 3. AGENDA ===== -->`). The editor uses these as save anchors and they keep the file scannable.
+- **Keep the full script tail and the `.btn-row`** (Edit + Download PDF) exactly as the existing decks have them. The engine and editor are loaded there; dropping them breaks the deck.
+- Dark slides use `class="slide ig-dark"`; gradient-background slides use `ig-grad-bg`. Pick logo variants by background (see BRAND.md) — never recolor a logo with CSS filters.
 
-```html
-<section class="slide dark">
-```
+---
 
-**CRITICAL: Every deck must include BOTH `<script>` blocks from the template.** The first handles navigation, progress bar, and PDF export. The second is the edit-mode script (`?edit`) that turns any deck into a live editor. Copy both verbatim into every deck you produce. Also copy the `.btn-row` with the Edit and Download PDF buttons. Never rewrite, shorten, or drop any of these. If you produce a deck without the edit-mode script, it is broken.
+## Components
 
-Keep one HTML comment line directly above each `<section>` (e.g. `<!-- ========== 3. QUOTE ========== -->`). Edit mode uses these comments as anchors when saving in-place edits back to the file, and they keep the file scannable.
+The building blocks are defined once in `templates/templates.js` and documented in
+`docs/COMPONENTS.md`. Use those exact patterns — copy the markup, change the text.
+
+- To **add a slide** the human can use the **＋ Add slide** picker in edit mode; you can
+  paste a component's markup from `docs/COMPONENTS.md`.
+- **Use the range.** For a deck over ~10 slides use at least 5 different component types;
+  include at least one visual-heavy slide (full-bleed image, split, photo grid).
+- If a beat needs a component that doesn't exist, **propose it on-brand** (describe it,
+  ask), then add it to `templates/templates.js` and regenerate the doc
+  (`node scripts/gen-components-doc.mjs`) so the picker, gallery, and doc stay in sync.
 
 ---
 
 ## The headline pattern (use everywhere)
 
-Bold anchor + dim extension. This is the visual identity of the system.
+Bold anchor + dim extension — the visual signature of the system.
 
 ```html
-<h1>Anchor. <span class="dim">Extension that fades.</span></h1>
+<h2>Anchor. <span class="dim">Extension that fades.</span></h2>
 ```
 
-- First phrase: weight 500, full color
-- Second phrase: weight 300, color `#b5b5b0` (or `#888` on dark slides)
-- Use on every headline that has the room
-
----
-
-## Design tokens
-
-### Colors
-
-| Token              | Hex       | Use                              |
-|--------------------|-----------|----------------------------------|
-| Background         | `#f5f5f3` | Page/slide background            |
-| Surface            | `#fafaf8` | Card backgrounds                 |
-| Surface (white)    | `#ffffff` | Cards that need more contrast    |
-| Ink / Hero         | `#1a1a1a` | Text primary, dark slides        |
-| Border soft        | `#e0e0db` | Default borders                  |
-| Border medium      | `#d5d5d0` | Emphasized borders               |
-| Pill background    | `#eeeee9` | Context pills                    |
-| Text dim           | `#a0a09a` | Subtitles, body copy             |
-| Text very dim      | `#b5b5b0` | Dim spans in headlines, meta     |
-| Text faint         | `#c5c5c0` | Labels, very low priority text   |
-| On-dark text       | `#f5f5f3` | Primary text on dark backgrounds |
-| On-dark dim        | `#ccc`    | Body text on dark backgrounds    |
-| On-dark very dim   | `#888`    | Labels on dark backgrounds       |
-
-### Typography
-
-- **Font:** Inter (weights 300, 400, 500, 600)
-- **H1 display:** `clamp(2.5rem, 6vw, 5rem)`, weight 500, tracking `-0.035em`
-- **H2 section:** `clamp(1.75rem, 3.5vw, 2.6rem)`, weight 500, tracking `-0.025em`
-- **H3 column:** ~1rem, weight 500
-- **Body/subtitle:** 0.85–1rem, weight 400, line-height 1.5–1.6
-- **Eyebrow:** 0.65–0.75rem, uppercase, weight 500, tracking `0.08–0.1em`, color `#a0a09a`
-
-### Spacing
-
-- Slide padding: `6vh 8vw`
-- Max content width: `1100px`
-- Card padding: `1rem–1.5rem`
-- Border radius: `10px` cards, `4px` small elements
-- Section gaps: `2–4rem`
-
----
-
-## Component reference
-
-Use these exact patterns. Copy the HTML structure. Change only the text content.
-
-### 1. Cover slide
-
-```html
-<section class="slide active">
-  <div class="slide-inner">
-    <div class="eyebrow">Conference · Date</div>
-    <h1>Your headline.<br><span class="dim">Continuation.</span></h1>
-    <div class="meta">Speaker name · 20 minutes</div>
-  </div>
-</section>
-```
-
-### 2. Quote slide
-
-A single bold statement. No subtitle. No supporting text.
-
-```html
-<section class="slide quote-slide">
-  <div class="slide-inner">
-    <h1>A bold statement <span class="dim">that opens the talk.</span></h1>
-  </div>
-</section>
-```
-
-For a dark quote (closing slide, mic-drop):
-
-```html
-<section class="slide dark quote-slide">
-```
-
-### 3. Eyebrow + Headline + Subtitle
-
-The default text slide.
-
-```html
-<section class="slide">
-  <div class="slide-inner">
-    <div class="eyebrow">Section label</div>
-    <h1>Headline. <span class="dim">One line that lands.</span></h1>
-    <p class="subtitle">One or two sentences of nuance. Keep it short.</p>
-  </div>
-</section>
-```
-
-### 4. Two-column (problem / fix)
-
-```html
-<section class="slide">
-  <div class="slide-inner">
-    <div class="two-col">
-      <div>
-        <div class="eyebrow">The problem</div>
-        <h2>What's broken.</h2>
-        <p>Description of the pain.</p>
-      </div>
-      <div>
-        <div class="eyebrow">The fix</div>
-        <h2>What we built.</h2>
-        <p>Description of the solution.</p>
-      </div>
-    </div>
-  </div>
-</section>
-```
-
-### 4b. Two-column with step stack
-
-Steps with optional `.dim` (blocker), `.kill` (negative outcome), `.live` (positive outcome):
-
-```html
-<div class="col-stack">
-  <div class="step">First step</div>
-  <div class="step">Second step</div>
-  <div class="step dim">Blocked step</div>
-  <div class="step kill">Negative outcome</div>
-  <div class="step live">Positive outcome</div>
-</div>
-```
-
-### 5. Three-column
-
-```html
-<div class="three-col" style="margin-top: 2rem;">
-  <div><h3>Why</h3><p>The motivation.</p></div>
-  <div><h3>How</h3><p>The mechanism.</p></div>
-  <div><h3>What</h3><p>The outcome.</p></div>
-</div>
-```
-
-### 6. Capability list (Q&A rows)
-
-```html
-<div class="cap-list" style="margin-top: 2rem;">
-  <div class="cap-row">
-    <div class="cap-q">Question?</div>
-    <div class="cap-a">Clear, specific answer.</div>
-  </div>
-</div>
-```
-
-### 7. Dark callout
-
-**One per deck max.** More than one and the emphasis stops working.
-
-```html
-<div class="callout">
-  <h3>Why now</h3>
-  <p>The moment. <strong>Key insight in bold.</strong> Then context.</p>
-</div>
-```
-
-### 8. Dot flow (process)
-
-```html
-<div class="dot-flow">
-  <div class="dot-step"><div class="dot"></div><h4>Step 1</h4><p>Caption</p></div>
-  <div class="dot-step"><div class="dot"></div><h4>Step 2</h4><p>Caption</p></div>
-  <!-- up to 5 steps -->
-</div>
-```
-
-### 9. Stack grid
-
-```html
-<div class="stack-grid">
-  <div class="stack-card">
-    <div class="stack-card-label">Category</div>
-    <div class="stack-tool"><span class="mark"></span>Tool name</div>
-  </div>
-  <!-- 4 cards total -->
-</div>
-```
-
-### 10. Spec block + context + outputs
-
-```html
-<div class="spec-flow">
-  <div class="spec-block"><h4>The Input</h4><p>What goes in</p></div>
-  <div class="ctx-row">
-    <span class="ctx-label">draws from</span>
-    <span class="ctx-pill">Source 1</span>
-    <span class="ctx-pill">Source 2</span>
-  </div>
-  <div class="ai-divider">
-    <div class="line"></div>
-    <span class="ai-pill">Process</span>
-    <div class="line"></div>
-  </div>
-  <div class="outputs-row">
-    <div class="output-card"><h5>Output A</h5><p>What it produces.</p></div>
-    <div class="output-card"><h5>Output B</h5><p>What it produces.</p></div>
-    <div class="output-card"><h5>Output C</h5><p>What it produces.</p></div>
-  </div>
-</div>
-```
-
-### 11. Product slide (showcase)
-
-```html
-<div class="product-row">
-  <div class="product-meta">
-    <div class="product-num">/01</div>
-    <div class="product-tag">A short, punchy hook.</div>
-    <h3 class="product-headline">One-line description.</h3>
-    <p class="product-desc">Two or three sentences. Personal and concrete.</p>
-    <div class="product-stat">Build time or metric</div>
-  </div>
-  <div class="product-name">Name<sup>™</sup></div>
-</div>
-```
-
-### 12. Collage slide (full media)
-
-```html
-<section class="slide collage-slide">
-  <div class="collage">
-    <img src="media/your-image.png" alt="">
-    <!-- or: <video src="media/your-video.mp4" controls loop playsinline></video> -->
-  </div>
-</section>
-```
-
-Use after a product slide for maximum impact. No text overlay.
-
-### 13. JEDUF three-column comparison
-
-Two extremes flanking a dark hero (the middle path):
-
-```html
-<div class="jeduf">
-  <div class="jeduf-col">
-    <div class="jeduf-label">Too much</div>
-    <div class="jeduf-title">Extreme A</div>
-    <div class="jeduf-philosophy">"Philosophy quote."</div>
-    <div class="jeduf-step">Step 1</div>
-  </div>
-  <div class="jeduf-col hero">
-    <div class="jeduf-label">Just right</div>
-    <div class="jeduf-title">The middle path</div>
-    <div class="jeduf-philosophy">"Balanced philosophy."</div>
-    <div class="jeduf-step">Step 1</div>
-  </div>
-  <div class="jeduf-col">
-    <div class="jeduf-label">Too little</div>
-    <div class="jeduf-title">Extreme B</div>
-    <div class="jeduf-philosophy">"Other extreme."</div>
-    <div class="jeduf-step">Step 1</div>
-  </div>
-</div>
-```
-
-### 14. Dark slide
-
-```html
-<section class="slide dark">
-  <div class="slide-inner">
-    <div class="eyebrow">Section label</div>
-    <h1>The pivot moment. <span class="dim">Lands harder in dark.</span></h1>
-    <p class="subtitle">Use sparingly. Two or three per deck max.</p>
-  </div>
-</section>
-```
-
-### 15. Timeline
-
-Vertical timeline with year/label on the left, connecting dots, content on the right.
-
-```html
-<div class="timeline">
-  <div class="timeline-row">
-    <div class="timeline-year">Year 1</div>
-    <div class="timeline-track"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
-    <div class="timeline-content"><h4>Title</h4><p>Description of this period.</p></div>
-  </div>
-  <!-- add more rows; the line hides on the last row automatically -->
-</div>
-```
-
-### 16. Stat grid
-
-Big numbers with context. Use `.stat-dark` on one card to highlight the hero metric.
-
-```html
-<div class="stat-grid">
-  <div class="stat-card">
-    <div class="stat-label">Metric</div>
-    <div class="stat-number">7×</div>
-    <div class="stat-desc">What this number means.</div>
-  </div>
-  <div class="stat-card stat-dark">
-    <div class="stat-label">Hero metric</div>
-    <div class="stat-number">42</div>
-    <div class="stat-desc">The key number, highlighted.</div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-label">Metric</div>
-    <div class="stat-number">91%</div>
-    <div class="stat-desc">Another measurement with context.</div>
-  </div>
-</div>
-```
-
-### 17. Quote pair
-
-Two perspectives side by side. One light, one dark.
-
-```html
-<div class="quote-pair">
-  <div class="quote-card">
-    <div class="quote-text">"The first perspective."</div>
-    <div class="quote-attr">Speaker or label</div>
-  </div>
-  <div class="quote-card quote-dark">
-    <div class="quote-text">"The counterpoint."</div>
-    <div class="quote-attr">Speaker or label</div>
-  </div>
-</div>
-```
-
-### 18. Logo grid
-
-Four-column grid for partners, clients, or team members. Swap `.logo-mark` div for `<img>` with real logos.
-
-```html
-<div class="logo-grid">
-  <div class="logo-cell">
-    <div class="logo-mark"></div>
-    <div class="logo-name">Partner name</div>
-    <div class="logo-role">Role or team</div>
-  </div>
-  <!-- repeat for each partner -->
-</div>
-```
-
-### 19. Code slide
-
-Dark code block with macOS-style header. Use `.code-comment`, `.code-keyword`, `.code-string`, `.code-dim` for syntax highlighting.
-
-```html
-<div class="code-frame">
-  <div class="code-frame-header">
-    <div class="code-frame-dot"></div>
-    <div class="code-frame-dot"></div>
-    <div class="code-frame-dot"></div>
-    <div class="code-frame-title">filename.ext</div>
-  </div>
-  <pre><span class="code-comment">// comment</span>
-<span class="code-keyword">function</span> <span class="code-string">example</span>() {}</pre>
-</div>
-```
-
-### 20. Closing / Thanks
-
-```html
-<section class="slide">
-  <div class="slide-inner">
-    <h1 style="font-size: clamp(2.5rem, 5vw, 4rem);">Thanks.</h1>
-    <p class="subtitle">Questions?</p>
-    <div class="meta">Speaker name · Affiliation</div>
-  </div>
-</section>
-```
-
-### 21. Testimonial grid
-
-3×2 grid of quote cards with avatar, name, and title. For social proof.
-
-```html
-<div class="testimonial-grid">
-  <div class="testimonial-card">
-    <div class="testimonial-quote">"Quote text here."</div>
-    <div class="testimonial-author">
-      <div class="testimonial-avatar"></div>
-      <div>
-        <div class="testimonial-name">Name</div>
-        <div class="testimonial-title">Role, Company</div>
-      </div>
-    </div>
-  </div>
-  <!-- repeat for each testimonial, up to 6 -->
-</div>
-```
-
-### 22. Logo bar
-
-Horizontal row of partner/client names between hairline borders. Compact social proof.
-
-```html
-<div class="logo-bar">
-  <div class="logo-bar-item">Partner A</div>
-  <div class="logo-bar-item">Partner B</div>
-  <div class="logo-bar-item">Partner C</div>
-</div>
-```
-
-### 23. Feature card row
-
-Three cards with title, description, and inner mock element. For feature breakdowns.
-
-```html
-<div class="feature-cards">
-  <div class="feature-card">
-    <div>
-      <div class="feature-card-title">Feature name</div>
-      <div class="feature-card-desc">Short description of what this feature does.</div>
-    </div>
-    <div class="feature-card-inner">
-      <!-- mock UI lines or content -->
-    </div>
-  </div>
-  <!-- repeat for 3 cards -->
-</div>
-```
-
-### 24. Update row (changelog)
-
-Four changelog cards with version badges and dates. For shipping cadence slides.
-
-```html
-<div class="update-row">
-  <div class="update-card">
-    <div class="update-header">
-      <span class="update-badge">3.3</span>
-      <span class="update-date">May 7, 2026</span>
-    </div>
-    <div class="update-title">Feature or fix description</div>
-  </div>
-  <!-- repeat for each update -->
-</div>
-```
-
-### 25. Art overlay
-
-Classical painting background with UI mockup floating on top. The "craft meets code" visual. Swap the gradient for a real painting via `background-image` on `.art-overlay-bg`.
-
-```html
-<div class="art-overlay">
-  <div class="art-overlay-bg"></div>
-  <div class="art-overlay-ui">
-    <div class="art-overlay-titlebar">
-      <div class="art-overlay-dot"></div>
-      <div class="art-overlay-dot"></div>
-      <div class="art-overlay-dot"></div>
-    </div>
-    <div class="art-overlay-content">
-      <!-- sidebar + main mock content -->
-    </div>
-  </div>
-  <div class="art-overlay-caption">
-    <h3>Caption title</h3>
-    <p>Caption description.</p>
-  </div>
-</div>
-```
-
-### 26. Split slide (text + image)
-
-Two-column grid inside `.slide-inner`: text on one side, rounded image on the other. Eyebrow + headline sit above the grid. Add `.split-reverse` to the `.split` div to put the image on the left.
-
-```html
-<section class="slide">
-  <div class="slide-inner">
-    <div class="eyebrow">Feature highlight</div>
-    <h2>Headline. <span class="dim">Extension.</span></h2>
-    <div class="split">
-      <div class="split-text">
-        <h3>Sub-headline</h3>
-        <p>Description of the feature or concept shown in the image.</p>
-      </div>
-      <div class="split-image">
-        <img src="your-image-url-or-base64" alt="">
-      </div>
-    </div>
-  </div>
-</section>
-```
-
-### 27. Hero image slide
-
-Rounded 16:9 image frame with gradient overlay and caption at the bottom. Lives inside `.slide-inner` like every other component. For cinematic moments that need a short headline.
-
-```html
-<section class="slide">
-  <div class="slide-inner">
-    <div class="eyebrow">Section label</div>
-    <h2>Headline. <span class="dim">Extension.</span></h2>
-    <div class="hero-frame">
-      <img src="your-image-url-or-base64" alt="">
-      <div class="hero-frame-overlay"></div>
-      <div class="hero-frame-caption">
-        <h3>Caption headline</h3>
-        <p>One line of context below.</p>
-      </div>
-    </div>
-  </div>
-</section>
-```
-
-### 28. Image card row
-
-Three cards with 4:3 images and text descriptions below. For feature highlights, portfolios, or visual comparisons.
-
-```html
-<div class="image-cards">
-  <div class="image-card">
-    <div class="image-card-frame"><img src="image-url" alt=""></div>
-    <div class="image-card-body">
-      <div class="image-card-title">Card title</div>
-      <div class="image-card-desc">Short description of this item.</div>
-    </div>
-  </div>
-  <!-- repeat for 3 cards -->
-</div>
-```
-
-### 29. Caption slide
-
-Single large image with a slim annotation bar below. For showcasing one image with context.
-
-```html
-<section class="slide caption-slide">
-  <div class="caption-frame">
-    <img src="your-image-url-or-base64" alt="">
-  </div>
-  <div class="caption-bar">
-    <div class="caption-title">Image title</div>
-    <div class="caption-text">One line of context about the image.</div>
-  </div>
-</section>
-```
-
-### 30. Image + quote
-
-Portrait image paired with a pull quote. For testimonials, interviews, or moments where a face adds weight. Add `.image-quote-reverse` to swap sides.
-
-```html
-<div class="image-quote">
-  <div class="image-quote-frame">
-    <img src="portrait-image-url" alt="">
-  </div>
-  <div class="image-quote-content">
-    <div class="image-quote-text">"A powerful statement paired with a portrait."</div>
-    <div class="image-quote-attr">Speaker name, role</div>
-  </div>
-</div>
-```
-
-### 31. Photo grid
-
-2×2 image mosaic with optional gradient-overlay labels. For portfolios, team photos, or showing multiple visual items.
-
-```html
-<div class="photo-grid">
-  <div class="photo-grid-cell">
-    <img src="image-1-url" alt="">
-    <div class="photo-grid-label">Label text</div>
-  </div>
-  <div class="photo-grid-cell">
-    <img src="image-2-url" alt="">
-    <div class="photo-grid-label">Label text</div>
-  </div>
-  <div class="photo-grid-cell">
-    <img src="image-3-url" alt="">
-    <div class="photo-grid-label">Label text</div>
-  </div>
-  <div class="photo-grid-cell">
-    <img src="image-4-url" alt="">
-    <div class="photo-grid-label">Label text</div>
-  </div>
-</div>
-```
-
-### 32. Chart slide (bar / line / pie / doughnut)
-
-Renders a Chart.js chart from inline CSV data or a fetched file. Supports bar, line, pie, doughnut, and scatter chart types.
-
-**Data format:** First row = column headers. First column = labels (x-axis or pie segments). Remaining columns = data series.
-
-**Pattern A — inline data (works when opening the file directly, no server needed):**
-
-Put the CSV in a `<script type="text/csv">` tag anywhere in the document, give it an `id`, and reference it with `data-src="#that-id"`. The script tag should sit right after the `</section>` it belongs to.
-
-```html
-<!-- ========== 32. CHART SLIDE ========== -->
-<section class="slide">
-  <div class="slide-inner">
-    <div class="eyebrow">Performance</div>
-    <h2>Revenue by quarter. <span class="dim">Four periods.</span></h2>
-    <div class="chart-wrap">
-      <canvas data-chart="bar" data-src="#chart-revenue"></canvas>
-    </div>
-  </div>
-</section>
-<script type="text/csv" id="chart-revenue">
-Quarter,Revenue,Costs
-Q1,120,80
-Q2,145,95
-Q3,160,100
-Q4,190,110
-</script>
-```
-
-**Pattern B — file path (works when serving over HTTP):**
-
-Drop a `.csv` or `.xlsx` file into `data/` and reference it directly.
-
-```html
-<canvas data-chart="line" data-src="data/monthly-users.csv"></canvas>
-```
-
-**Drag-and-drop:** Drop any `.csv` or `.xlsx` file directly onto a chart canvas to reload it with new data — no code change needed.
-
-**Chart types:**
-
-| `data-chart` value | Use for |
-|---|---|
-| `bar` | Comparisons across categories (default) |
-| `line` | Trends over time |
-| `pie` | Part-to-whole (≤5 segments) |
-| `doughnut` | Part-to-whole with a label in the hole |
-| `scatter` | X/Y correlation (data format: `Label,X,Y` per row) |
-
-**XLSX support:** The SheetJS library loads lazily the first time an `.xlsx` or `.xls` file is requested. First sheet is used; same row/column format as CSV.
-
-**Color palette:** Charts use the deck's monochrome palette automatically (`#1a1a1a`, `#6b6b65`, `#a0a09a`, `#4a4a44`, `#d5d5d0`). No extra styling needed.
-
-### 33. Diagram slide (Mermaid flowchart / sequence / architecture)
-
-Renders a Mermaid.js diagram from code written directly in the slide. Supports flowcharts, sequence diagrams, entity-relationship diagrams, Gantt charts, and all other Mermaid diagram types.
-
-Write the Mermaid syntax inside a `<pre class="mermaid">` block. The diagram renders as SVG when the slide first becomes visible (lazy, to avoid zero-dimension errors on hidden slides).
-
-```html
-<!-- ========== 33. DIAGRAM SLIDE ========== -->
-<section class="slide">
-  <div class="slide-inner">
-    <div class="eyebrow">Architecture</div>
-    <h2>How it connects. <span class="dim">End to end.</span></h2>
-    <div class="mermaid-wrap">
-      <pre class="mermaid">
-graph LR
-  A[Input] --> B{Decision}
-  B -->|Yes| C[Output A]
-  B -->|No| D[Output B]
-      </pre>
-    </div>
-  </div>
-</section>
-```
-
-**Common diagram types:**
-
-```
-graph LR          ← left-to-right flowchart
-graph TD          ← top-down flowchart
-sequenceDiagram   ← sequence/timing diagram
-erDiagram         ← entity-relationship
-gantt             ← project timeline
-```
-
-**Theme:** Automatically styled to match the deck: Inter font, `#1a1a1a` text, `#d5d5d0` borders, transparent background. No extra configuration needed.
-
----
-
-## Storytelling structure
-
-Every presentation follows six beats. The timing scales to your format.
-
-| Beat | ~Share | Purpose |
-|------|--------|---------|
-| Open | 10% | Hook the room. A confession, a contradiction, a surprising fact. Not your bio. |
-| Act 1. The World Before | 15% | The status quo. The old way. Build empathy. |
-| Act 2. The Turn | 15% | Something changed. State it cleanly. |
-| Act 3. The Evidence | 40% | 3–5 concrete examples. Before → action → after. |
-| Act 4. The Honest Part | 15% | Doubt, risk, what you're still figuring out. |
-| Close | 5% | The closing line. Slow down. Stop talking. |
-
-### Show, don't tell
-
-When you have a story to tell, use the **setup slide → evidence slide** pair. Text first (product slide, stat grid, or any text component), then full-bleed image/video (collage slide). The visual punch lands harder after the setup.
-
-### Punctuation slides
-
-- **Quote slides:** Bold statement, no other text. Use to open, close, and mark turning points.
-- **Dark slides:** Reserved for moments that matter. 2–3 per deck max.
-- **Breakers:** A quiet line between acts. *"That felt normal. Until it wasn't."*
-
----
-
-## Embed mode
-
-Adding `?embed` to the deck URL produces an embeddable version. The PDF button hides; navigation stays. Use this when the human wants to share a deck inside another page.
-
-```html
-<iframe src="deck.html?embed" style="width:100%; aspect-ratio:16/9; border:none;"></iframe>
-```
-
----
-
-## Ingrid data
-
-When the `ingrid` MCP server is configured (`.mcp.json` + `MCP_SERVER_URL` + `INGRID_JWT` env vars set), you can pull live Ingrid data directly into slides.
-
-### Tool namespaces
-
-| Prefix | What it covers |
-|---|---|
-| `site-config__list_*` / `get_*` / `search_*` | Sites, configuration, availability |
-| `analytics-mcp__get_*` | Telemetry, P&L, market prices |
-
-All read tools (`list_`, `get_`, `search_`) use the code-execution sandbox. Write tools are not needed for slides.
-
-### Workflow: pulling data into a chart slide
-
-1. Call the relevant read tool(s) to fetch the data (e.g. `analytics-mcp__get_market_prices`, `site-config__list_sites`).
-2. Shape the result into CSV format (first row = headers, first column = labels).
-3. Write the CSV to `data/ingrid-{topic}.csv`.
-4. Reference it in a chart slide with `<canvas data-chart="bar" data-src="data/ingrid-{topic}.csv">`.
-
-### Critical rules
-
-- **Never call `site-config__list_sites` if the user's site list is already in context** — it returns ~190 KB.
-- **Batch independent reads** together where possible — each extra tool call is a full model round-trip.
-- **Never fabricate site names or IDs.** Only use data the tools actually returned.
-- A 401/403 from a tool means the JWT expired — ask the user to refresh `INGRID_JWT`.
-
-### Example: market price chart
-
-```html
-<!-- ========== MARKET PRICES ========== -->
-<section class="slide">
-  <div class="slide-inner">
-    <div class="eyebrow">Market</div>
-    <h2>Price trends. <span class="dim">Last 30 days.</span></h2>
-    <div class="chart-wrap">
-      <canvas data-chart="line" data-src="data/ingrid-market-prices.csv"></canvas>
-    </div>
-  </div>
-</section>
-```
-
----
-
-## Images
-
-Images can come from three sources:
-
-1. **User-provided files.** Embed as base64 data URI: `<img src="data:image/jpeg;base64,..." alt="description">`
-2. **User-provided URLs.** Use directly: `<img src="https://example.com/photo.jpg" alt="description">`
-3. **Image search.** If an `img` MCP server is configured (`.mcp.json`), use it to search for images by description. If no MCP server is configured, search the web for Unsplash images and use their URLs directly (`https://images.unsplash.com/photo-{id}?w=800&q=80`).
-
-For images the user provides as files, always embed as base64 to keep the deck self-contained. For URLs, MCP results, and Unsplash images, use the URL directly.
-
-Use the new image components (26–31) to integrate images into slides. Choose the component based on the content:
-- **Split slide (26)**: Feature highlight with explanation text
-- **Hero image (27)**: Dramatic visual moment with headline overlay
-- **Image cards (28)**: Three visual items with descriptions
-- **Caption slide (29)**: Single showcase image with annotation
-- **Image + quote (30)**: Testimonial or interview with portrait
-- **Photo grid (31)**: Four related images in a mosaic
+First phrase carries weight; the `.dim` span recedes. Use it on every headline with room.
 
 ---
 
 ## Tone rules (follow strictly)
 
-1. **Bold the keyword. Dim the rest.** Every headline.
-2. **No em-dashes.** Anywhere: headlines, body copy, meta text. Use periods, commas, or colons instead.
-3. **No contrast framing.** Never write "Not X. Y." or "X, not Y." Say what it IS. Lead with the positive statement. Rewrite "Three capabilities, not thirty features" as "Three capabilities. Keep it tight."
-4. **No fluff.** If a sentence doesn't add information, delete it.
-5. **Specific numbers.** "7x" beats "huge gains." "35 use cases per week" beats "much faster."
+1. **Bold the keyword, dim the rest** — every headline.
+2. **No em-dashes** anywhere. Use periods, commas, or colons.
+3. **No contrast framing.** Don't write "Not X. Y." Say what it *is*, lead with the positive.
+4. **No fluff.** If a sentence adds no information, delete it.
+5. **Specific numbers.** "7×" beats "huge gains."
 6. **Headlines are statements.** Exception: Q&A rows.
-7. **Use names.** Say the product or feature name. Avoid generic pronouns like "it."
-8. **Pick one term and stick with it.** Do not paraphrase your own product.
+7. **Use names.** Say the product or feature by name, not "it."
+8. **Pick one term and stick with it.** Don't paraphrase your own product.
+
+Marketing headlines are **lowercase** ("we make the grid flex, not break") — intentional
+Ingrid voice. Sub-headers (`.pptc-subhead`) are ALL CAPS. See BRAND.md for the full type hierarchy.
 
 ---
 
-## Component diversity
+## Never fabricate facts (quality 3)
 
-Use the full component library. Do not default to the same five component types.
+Every factual claim — numbers, site names, customer names, metrics, quotes, dates — must
+come from something real: **`knowledge/*.md`** (the company fact base), the user, provided
+data, the `ingrid` MCP server, or another file in this repo. Never invent Ingrid facts.
 
-- For decks over 10 slides: use at least 5 different component types.
-- For decks over 20 slides: use at least 8 different component types.
-- Every deck should have at least one visual-heavy slide (Collage, Art overlay, or Product slide).
-- Before finalizing, check: did you use any of these components? Timeline, Product slide, JEDUF, Quote pair, Spec block, Stack grid, Art overlay, Testimonial grid, Feature card row, Update row, Code slide, Logo bar, Logo grid, Step stack, Collage slide, Split slide, Hero image, Image cards, Caption slide, Image + quote, Photo grid, Chart slide, Diagram slide.
-- If a beat would benefit from a component that does not exist yet, suggest it. Describe what it would look like and ask the user: "This slide would work better with a [description]. Want me to build it?" If yes, create it on-token before continuing.
+**Read `knowledge/` before writing factual copy.** `COMPANY` · `MESSAGING` · `PRODUCTS` ·
+`MARKET` · `PROOF` · `GLOSSARY` are the source of truth for Ingrid wording and facts. If a
+fact you need isn't there, get it from the user or the MCP server, then add it back to the
+right `knowledge/` file so the next deck inherits it.
 
----
-
-## Common mistakes to avoid
-
-- **Too many dark slides.** Emphasis needs contrast. 2–3 max.
-- **More than one callout.** The dark callout block is a one-per-deck component.
-- **Index as key.** Don't number slides manually in content. The nav counter handles it.
-- **Reading the slide.** The slide is the punchline. The speaker is the setup.
-- **Overstuffing Act 3.** Three solid build stories beat ten thin ones.
-- **Skipping Act 4 (the honest part).** This is where the audience trusts you.
+When you lack a fact, use an obvious placeholder (`[metric]`, `Add name · Role`) and ask
+the user for the real value. It is always better to leave a marked gap than to guess.
 
 ---
 
-## Freestyle: creating new components
+## Division of labor (quality 5)
 
-The 31 components above are the starting library. You are encouraged to invent new slide layouts when the content demands it. Follow these rules when freestyling:
+The in-browser editor enforces this split — don't fight it.
 
-1. **Stay on-token.** Use only the colors, fonts, weights, and spacing from the design tokens table. No new colors, no new fonts.
-2. **Use the headline pattern.** Any new layout with a headline should use bold-then-dim (`<span class="dim">`).
-3. **Match existing craft.** Study how the existing components handle border radius (10px cards, 4px small elements), padding (1–1.5rem internal), and text hierarchy (eyebrow → headline → body).
-4. **Name the class.** Give your new component a descriptive class name that fits the existing naming style (lowercase, hyphenated: `timeline-row`, `stat-grid`, `quote-pair`).
-5. **Keep the CSS inline** in the `<style>` block at the top of `deck.html`, grouped with a comment like `/* --- Timeline --- */`.
-6. **One new idea per slide.** Don't combine two novel layouts on the same slide. Pair a new component with familiar elements (eyebrow, subtitle) so it feels native.
+| Agents generate (in the HTML) | Humans edit directly (in-browser, no code) |
+|---|---|
+| Deck structure & narrative arc | Specific wording / copy (click to edit) |
+| Component selection per beat | Swap / upload images & video (hover an image) |
+| First-draft copy, anchored in real facts | Reorder / duplicate / delete slides (the rail) |
+| Data → chart slides; Mermaid diagrams | Add a slide from the library (＋ Add slide) |
+| New on-brand components when a beat needs one | Diagram / flowchart label text |
 
-Examples of good freestyle components:
-- A **timeline** with years on the left and events on the right
-- A **big number + caption** stat card for impact slides
-- A **side-by-side quote** comparing two speakers or perspectives
-- A **logo grid** for partner/client slides
-- A **code block** slide for technical talks
+In-browser text editing is plain-text only (your markup stays intact); structure changes
+go through the rail; inserts come from the template library; saves are surgical (clean
+diffs). New layouts, components, and styling remain HTML/CSS work. See `docs/USING.md`.
 
-If it looks like it belongs next to the existing components, it's a good freestyle. If it needs a new color or a different font to work, rethink it.
+---
+
+## Storytelling structure
+
+Decks follow six beats (timing scales to format). Full guidance in `docs/STORYTELLING.md`.
+
+| Beat | ~Share | Purpose |
+|---|---|---|
+| Open | 10% | Hook the room. A confession, a contradiction, a surprising fact. |
+| Act 1 — The world before | 15% | The status quo / the old way. Build empathy. |
+| Act 2 — The turn | 15% | Something changed. State it cleanly. |
+| Act 3 — The evidence | 40% | 3–5 concrete examples. Before → action → after. |
+| Act 4 — The honest part | 15% | Doubt, risk, what's still being figured out. |
+| Close | 5% | The closing line. Slow down. Stop. |
 
 ---
 
 ## When the human asks you to build a deck
 
-1. **Ask for the story first.** What's the talk about? What's the arc? What's the closing line?
-2. **Draft the structure** using the six-beat model above.
-3. **Pick components** from the reference. Match component to content type.
-4. **Write the HTML** using exact class names from this file.
-5. **Iterate small.** One change at a time. Show the change, get feedback.
+1. **Ask for the story first.** What's it about, what's the arc, what's the closing line.
+2. **Anchor the facts.** Read `knowledge/` first; fill gaps from the user or the `ingrid` MCP server. Mark anything you don't have.
+3. **Draft the structure** with the six beats.
+4. **Pick components** from `docs/COMPONENTS.md`, matching component to content type.
+5. **Write the HTML** into a thin-shell deck using the exact class names. Keep comment anchors and the script tail.
+6. **Iterate small.** One change at a time; show it, get feedback. Hand wording/image/order tweaks to the human via edit mode.
+7. **Ship it.** When the deck is ready, bundle it to a single self-contained file (next section).
 
-When the human says things like:
-- "Add a quote slide" → use component 2
-- "Make it dark" → add `.dark` to the `<section>`
-- "Add a comparison" → use component 4 (two-column) or 13 (JEDUF)
-- "Show the process" → use component 8 (dot flow) or 10 (spec block)
-- "Add an image" → use component 12 (collage slide), 26 (split slide), 27 (hero image), 28 (image cards), 29 (caption slide), 30 (image + quote), or 31 (photo grid)
-- "Add a chart" / "visualize data" / "show the numbers" → use component 32 (chart slide). Ask the human for the data if not provided, or use a `<script type="text/csv">` block with placeholder numbers they can replace.
-- "Add a diagram" / "show the flow" / "system architecture" / "decision tree" → use component 33 (diagram slide). Write Mermaid syntax based on what the human describes.
-- "Shorten the headline" → keep the bold-then-dim pattern, just use fewer words
+---
+
+## Shipping a deck (self-contained, quality 1)
+
+Source decks stay thin (they link `engine/` + `brand/`). To produce a shareable single
+file, run the bundler — it inlines the engine and base64-embeds every brand image:
+
+```
+node scripts/bundle.mjs ingrid_examples.html            # → dist/ingrid_examples.html (editor kept)
+node scripts/bundle.mjs ingrid_examples.html --no-edit   # view-only, smaller (for external/client)
+node scripts/bundle.mjs ingrid_examples.html --offline   # also inline Chart.js, Mermaid, fonts (airgapped)
+```
+
+By default the output keeps the in-browser editor and leaves CDN libs + Google Fonts as
+links (self-contained assuming internet). `dist/` is a build artifact (gitignored).
+**Keep iterating on the thin source deck and re-bundle** — don't edit a bundle back into
+source. Details in `docs/USING.md`.
+
+---
+
+## Ingrid data (MCP)
+
+When the `ingrid` MCP server is configured (`.mcp.json` + `MCP_SERVER_URL` + `INGRID_JWT`),
+you can pull live data into slides.
+
+| Prefix | Covers |
+|---|---|
+| `site-config__list_*` / `get_*` / `search_*` | Sites, configuration, availability |
+| `analytics-mcp__get_*` | Telemetry, P&L, market prices |
+
+**Workflow:** call the read tool(s) → shape the result into CSV (first row = headers,
+first column = labels) → write `data/ingrid-{topic}.csv` → reference it from a chart slide
+(`<canvas data-chart="bar" data-src="data/ingrid-{topic}.csv">`).
+
+Rules:
+- **Never** call `site-config__list_sites` if the site list is already in context (it returns ~190 KB).
+- **Batch** independent reads; each call is a full round-trip.
+- **Never fabricate** site names or IDs — only use what the tools returned.
+- A 401/403 means the JWT expired — ask the user to refresh `INGRID_JWT`.

@@ -27,7 +27,7 @@
         nodeBorder: '#d5d5d0',
         clusterBkg: '#f5f5f3',
         edgeLabelBackground: '#f5f5f3',
-        fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+        fontFamily: "'Plus Jakarta Sans', Aptos, system-ui, sans-serif",
         fontSize: '14px'
       }
     });
@@ -38,7 +38,7 @@
   /* ---------- Charts ---------- */
   if (!window.Chart) return;
 
-  Chart.defaults.font.family = 'Inter, -apple-system, BlinkMacSystemFont, sans-serif';
+  Chart.defaults.font.family = "'Plus Jakarta Sans', Aptos, system-ui, sans-serif";
   Chart.defaults.color = '#6b6b65';
 
   const PALETTE = ['#AA73FA', '#5FA4FA', '#F8898C', '#FFCD96', '#4C92E9', '#EE686C'];
@@ -184,14 +184,30 @@
     }
   }
 
+  /* Initialise any chart canvas that has no instance yet — e.g. a slide
+     inserted via the editor's ＋Add-slide picker, or a gallery preview built
+     after page load. Exposed so non-deck pages (the template gallery) can
+     render their dynamically-built canvases too. */
+  function renderPending(root) {
+    (root || document).querySelectorAll('canvas[data-chart]').forEach(c => {
+      if (!instances.get(c) && c.dataset.src) initChart(c);
+    });
+  }
+  window.renderCharts = renderPending;
+
   /* Hook show() to resize charts + lazy-render mermaid when a slide activates */
   const _show = window.show;
   window.show = (i) => {
-    _show(i);
+    if (_show) _show(i);
     // rAF lets display:flex apply before we measure canvas dimensions
     requestAnimationFrame(() => {
       const active = document.querySelector('.slide.active');
-      active?.querySelectorAll('canvas[data-chart]').forEach(c => instances.get(c)?.resize());
+      // Resize charts that already exist; init ones inserted after load.
+      active?.querySelectorAll('canvas[data-chart]').forEach(c => {
+        const inst = instances.get(c);
+        if (inst) inst.resize();
+        else if (c.dataset.src) initChart(c);
+      });
       // Lazy mermaid: only render once, only when the slide is visible
       const unrendered = [...(active?.querySelectorAll('.mermaid:not([data-processed])') ?? [])];
       if (unrendered.length && window.mermaid) mermaid.run({ nodes: unrendered });

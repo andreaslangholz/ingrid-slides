@@ -1,146 +1,139 @@
-# Design
+# Design craft
 
-The visual system. Tokens, components, rules.
+How to compose a good Ingrid slide. This is the judgement layer: hierarchy, spacing,
+density, and when to reach for which component.
 
-Light, minimal, type-led. Inspired by editorial layouts and product showcase pages.
+It does **not** define tokens. Colors, typography, logos, the gradient, photography, and
+the grid all live in **`brand/ingrid/BRAND.md`** — that is the single source of truth for
+*what is on-brand*. The exact component markup lives in **`docs/COMPONENTS.md`**. This file
+is *how to arrange those well*.
 
-The principle: most pages are a headline, two columns, and breathing room. Anything more should earn its place.
-
----
-
-## Colors
-
-```
-Background          #f5f5f3   warm off-white
-Surface (subtle)    #fafaf8   slightly lighter than background, for cards
-Surface (white)     #ffffff   for cards that should pop more
-Hero / dark slide   #1a1a1a   inverted callouts, dark slides
-
-Border (soft)       #e0e0db
-Border (medium)     #d5d5d0
-Pill background     #eeeee9
-
-Text primary        #1a1a1a
-Text dim            #a0a09a   subtitles, body that recedes
-Text very dim       #b5b5b0   meta info, decorative
-Text faint          #c5c5c0   labels next to pills
-
-On-dark text        #f5f5f3
-On-dark dim         #ccc
-On-dark very dim    #888
-```
-
-Two grays do most of the work. Use color for hierarchy.
+The principle: most slides are an eyebrow, a headline, and breathing room. Anything more
+should earn its place.
 
 ---
 
-## Typography
+## The spine of every slide
 
-**Font:** Inter (Google Fonts). Weights 300, 400, 500, 600.
+Ingrid content slides read top to bottom in one consistent order:
 
-```
-H1 (display)         clamp(2rem, 4.5vw, 3.2rem)   weight 500  letter-spacing -0.03em  line-height 1.2
-H1 (slide cover)     clamp(2.5rem, 6vw, 5rem)     weight 500  letter-spacing -0.035em line-height 1.1
-H2                   clamp(1.75rem, 3.5vw, 2.6rem) weight 500  letter-spacing -0.025em
-H3 (section)         9.5pt–1rem                   weight 500  letter-spacing -0.01em
-Body / subtitle      0.78–0.88rem                 weight 400  line-height 1.5–1.6
-Eyebrow / label      0.65–0.75rem  uppercase   weight 500  letter-spacing 0.08em  color #a0a09a
-Big number           clamp(2.4rem, 4.5vw, 3.5rem) weight 600  letter-spacing -0.035em
-```
+1. **Eyebrow** (`.eyebrow`) — a short Fira Code label that tags the context.
+2. **Headline** (`h2`, with a `.dim` span) — the message, in the bold-then-dim pattern.
+3. **Sub-head** (`.pptc-subhead`) — the ALL-CAPS restatement / section marker.
+4. **Content** — body, columns, data, or media.
+
+Lead with the headline's point. The slide is the punchline; the speaker is the setup.
+Don't write a slide you'd have to read aloud word for word.
 
 ---
 
 ## The headline pattern
 
-Headlines use a bold-then-dim split. The first phrase carries weight (500). The continuation fades to gray (300, color `#b5b5b0`). This gives every headline a built-in narrative: anchor + extension.
+Bold anchor + dim extension. The first phrase carries weight; the `.dim` span recedes.
 
 ```html
-<h1>Anchor. <span class="dim">Extension.</span></h1>
-<h1>One spec. <span class="dim">Full transparency.</span></h1>
-<h1>The tools changed. <span class="dim">The instinct is still yours.</span></h1>
+<h2>Anchor. <span class="dim">Extension that fades.</span></h2>
 ```
 
-```css
-h1 span.dim {
-  color: #b5b5b0;
-  font-weight: 300;
-}
-```
-
-This is the most consistent visual identity in the system. Use it.
+This is the most consistent visual identity in the system. Use it on every headline that
+has the room. Marketing headlines are lowercase (Ingrid voice); see BRAND.md for the type
+hierarchy and weights.
 
 ---
 
-## Spacing & rhythm
+## Hierarchy & density
 
-- **Slides:** 6vh top/bottom, 8vw sides. Max content width 1100px.
-- **Cards/callouts:** 1rem–1.5rem padding internal.
-- **Border radius:** 6–10pt for cards, 4pt for small buttons/steps.
-- **Gaps between sections within a slide:** 2–4rem typically. Err toward more space.
-
----
-
-## Components
-
-31 components. Full HTML reference in `AGENTS.md`.
-
-### Text & structure
-- **Cover slide.** Title + eyebrow + meta.
-- **Quote slide.** Single bold statement, no other elements. Openings, transitions, mic-drops.
-- **Eyebrow + Headline + Subtitle.** The default text slide. Eyebrow tags context, headline carries the message, subtitle adds nuance.
-- **Two-column.** Equal columns for contrast: before/after, problem/solution.
-- **Step stack.** Sequential steps with `.dim`, `.kill`, `.live` markers. Lives inside two-column.
-- **Three-column.** Structural breakdowns. Each column: 1-word title + 1–2 sentence body.
-- **Capability list (Q&A).** Rows with thin borders. Left = question, right = answer.
-- **Dark callout.** Black background, white text, rounded. One per deck max.
-- **Dark slide.** Light text on black. Pivot moments. Two or three per deck max.
-- **Closing.** Mic-drop line + thanks + meta.
-
-### Data & process
-- **Dot flow.** Horizontal steps connected by a thin line. Each step: dot + label + caption.
-- **Stack grid.** Four-column category cards. Uppercase label + list of items with marks.
-- **Spec block + outputs.** Vertical flow: dark spec block → context pills → divider → output cards.
-- **Timeline.** Vertical year-based progression with connecting dots and lines.
-- **Stat grid.** Big numbers with context. One `.stat-dark` card highlights the hero metric.
-- **Update row.** Changelog cards with version badges and dates. Four columns.
-
-### Showcase & media
-- **Product slide.** Big product name on the right, story on the left with number, tag, headline, body, stat.
-- **Collage slide.** Full-bleed image or video. No text. The image is the slide.
-- **Split slide.** Text + image side by side. Add `.split-reverse` to swap.
-- **Hero image.** Rounded 16:9 frame with gradient overlay and caption.
-- **Image card row.** Three 4:3 images with titles and descriptions.
-- **Caption slide.** Single large image with annotation bar below.
-- **Image + quote.** Portrait paired with a pull quote. Add `.image-quote-reverse` to swap.
-- **Photo grid.** 2×2 mosaic with gradient-overlay labels.
-- **Art overlay.** Classical painting background with floating UI mockup.
-
-### Comparison & social proof
-- **JEDUF three-column.** Two extremes flanking a dark hero (the middle path).
-- **Quote pair.** Two perspectives side by side. One light, one dark.
-- **Logo grid.** Four-column grid for partners, clients, team members.
-- **Logo bar.** Compact horizontal row of names between hairline borders.
-- **Testimonial grid.** 3×2 quote cards with avatars. Social proof.
-- **Feature card row.** Three cards with title, description, and inner mock UI.
-
-### Code
-- **Code slide.** Dark code block with macOS-style header. Syntax highlighting via `.code-comment`, `.code-keyword`, `.code-string`, `.code-dim`.
+- **One idea per slide.** If you're making two points, make two slides.
+- **Three, not ten.** Three solid columns/stats/steps beat ten thin ones. For Act 3, three
+  strong build stories beat a long list.
+- **Let the eye rest.** Negative space is part of the design. The engine already pads
+  slides generously — don't fight it by cramming.
+- **Match the lengths.** In two- and three-column layouts, keep each column's copy roughly
+  parallel in length and tone. Asymmetry reads as a mistake.
+- **Numbers earn their size.** Big numbers (stat grid) are for figures that actually carry
+  the story. Don't inflate a soft metric into a hero number.
 
 ---
 
-## Tone & voice rules
+## Color, used sparingly
 
-- **Bold the keyword. Dim the rest.** That's the rhythm of every headline.
-- **No em-dashes in body copy.** Use periods or split into shorter sentences.
-- **No fluff.** If a sentence doesn't add information, delete it.
-- **Numbers should be specific.** "7×" beats "huge gains." "35 use cases per week" beats "much faster."
-- **Headlines are statements.** Q&A rows are the exception: the question is the format.
-- **Use names.** The product, feature, or concept by name beats "it" or "this thing."
+Follow the BRAND.md proportion rule: ~50% core black/white, ~30% the Ingrid gradient
+(reserved for covers, dividers, key moments), ~20% the accent energies (violet, blue,
+orange, yellow) in data, icons, and fine detail. Flux Violet `--violet` is the primary
+accent — dots, highlights, the progress bar. Color carries hierarchy; it is not decoration.
+
+The gradient is a **signature expression**, not a background default. Use it on covers,
+section dividers, and closings (`ig-grad-bg`), not on ordinary content slides.
 
 ---
 
-## Scope
+## Rhythm: punctuation slides
 
-- A visual system, self-contained. No NPM package, no CSS variables file, no build step. Each deck is a single HTML file with inline styles.
-- Made for content pages: decks, one-pagers, overviews. If you build an app, use a real component library.
-- The voice is opinionated. Lean into it.
+- **Dark slides** (`ig-dark`) mark turning points. Two or three per deck, max — emphasis
+  needs contrast to work.
+- **One callout** per deck. The dark callout block stops landing if it repeats.
+- **Quote / gradient-quote slides** open, close, and mark the pivot. One bold line, nothing else.
+- **Show, don't tell.** Pair a setup slide (text, stat, product) with an evidence slide
+  (full-bleed image / collage). The visual lands harder after the setup.
+
+---
+
+## Choosing a component
+
+Match the component to the content type. Full markup in `docs/COMPONENTS.md`.
+
+| The content is… | Reach for |
+|---|---|
+| A single bold statement | Gradient quote |
+| A point with nuance | Eyebrow + headline + sub-head + subtitle |
+| Two ideas in tension (problem/fix, before/after) | Two column |
+| A structural breakdown (why / how / what) | Three column |
+| One key insight to spotlight | Callout (one per deck) |
+| Questions and answers | Q&A list |
+| A turning point | Section divider (dark) |
+| Measurable impact | Stat grid (one hero card) |
+| A sequence of events over time | Timeline |
+| A repeatable process | Process flow |
+| Categorised building blocks | Stack grid |
+| Quantitative data | Chart (Chart.js, inline CSV or `data/`) |
+| A system / decision / architecture | Diagram (Mermaid) |
+| A cinematic visual moment | Full-bleed image |
+| A feature with explanation | Split (text + image) |
+| Several visual items | Image cards / Photo grid |
+| A human voice | Image + quote |
+| Two perspectives | Quote pair |
+| Opening / closing | Cover / Dark gradient cover / Closing |
+
+---
+
+## Do / don't
+
+**Do**
+- Keep the eyebrow → headline → sub-head spine.
+- Use the bold-then-dim headline everywhere it fits.
+- Reserve the gradient and dark slides for moments that matter.
+- Keep copy specific: real numbers, real names, one term per concept.
+
+**Don't**
+- Don't stack two novel layouts on one slide. Pair a new idea with familiar elements.
+- Don't number slides manually in content — the nav counter handles it.
+- Don't introduce a color or font that isn't in BRAND.md. If a layout needs one to work,
+  the layout is wrong.
+- Don't overstuff Act 3 or skip Act 4 (the honest part) — that's where trust is built.
+
+---
+
+## Freestyling a new component
+
+You can invent layouts when the content demands it, as long as they look native:
+
+1. **Stay on-token.** Only BRAND.md colors, fonts, weights, spacing. No new colors/fonts.
+2. **Use the headline pattern** for any headline.
+3. **Match the craft** — the radius, padding, and hierarchy of existing components.
+4. **Name the class** in the existing style (lowercase, hyphenated): `timeline-row`, `quote-pair`.
+5. **Put the CSS in `engine/engine.css`**, grouped with a comment.
+6. **One new idea per slide.** Surround it with familiar elements so it feels at home.
+
+If a freestyle would need a new color or a different font to work, rethink it. If it looks
+like it belongs next to the existing components, it's a good freestyle — and if it'll
+recur, add it to `templates/templates.js` and regenerate `docs/COMPONENTS.md`.

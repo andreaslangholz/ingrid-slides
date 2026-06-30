@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ingrid — Pitch starter</title>
+<link rel="stylesheet" href="engine/engine.css">
+</head>
+<body>
+
+<header class="ig-header">
+  <div class="ig-header-brand">INGRID</div>
+  <div class="ig-header-right"></div>
+</header>
+
+<div class="progress" id="progress"></div>
+
+<div class="deck">
+
+  <!-- ========== 1. COVER ========== -->
+  <section class="slide active ig-dark-grad-cover">
+    <div class="dgc-logo"><img src="brand/ingrid/logos/color-on-dark.png" alt="ingrid"></div>
+    <div class="dgc-headline">
+      <span class="dgc-line1">the pitch</span>
+      <span class="dgc-line2">in one line</span>
+    </div>
+    <div class="dgc-date">JUNI 2026</div>
+  </section>
+
+  <!-- ========== 2. OPEN — hook (10%) ========== -->
+  <section class="slide">
+    <div class="eyebrow">The hook</div>
+    <h2>the surprising fact. <span class="dim">that opens the room.</span></h2>
+    <div class="pptc-subhead">THE HOOK</div>
+    <div class="callout">
+      <h3>Start here</h3>
+      <p>Open with a confession, a contradiction, or a surprising fact. <strong>One sharp idea, sourced from knowledge/.</strong> Earn the next five minutes.</p>
+    </div>
+  </section>
+
+  <!-- ========== 3. ACT 1 — the world before (15%) ========== -->
+  <section class="slide">
+    <div class="eyebrow">The world before</div>
+    <h2>the old way. <span class="dim">and why it held.</span></h2>
+    <div class="pptc-subhead">THE WORLD BEFORE</div>
+    <ul class="pptc-list">
+      <li>Describe the status quo. Make the reader recognise their own situation.</li>
+      <li class="l2">Why it was a reasonable way to operate.</li>
+      <li class="l3">The cost that was quietly building up.</li>
+    </ul>
+  </section>
+
+  <!-- ========== 4. ACT 2 — the turn (15%) ========== -->
+  <section class="slide ig-dark">
+    <div class="eyebrow">The turn</div>
+    <h2>then something changed.</h2>
+    <div class="pptc-subhead" style="color:rgba(255,255,255,.5)">THE TURN</div>
+    <span class="accent-line" style="background:var(--violet)"></span>
+    <p class="subtitle">State the shift cleanly, in one sentence. This is the pivot the whole deck turns on.</p>
+  </section>
+
+  <!-- ========== 5. ACT 3 — the evidence (40%) ========== -->
+  <section class="slide">
+    <div class="eyebrow">The evidence</div>
+    <h2>what it changes. <span class="dim">in numbers.</span></h2>
+    <div class="pptc-subhead">THE EVIDENCE</div>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-label">Proof one</div><div class="stat-number">N×</div><div class="stat-desc">Before → action → after. Pull the real figure from knowledge/PROOF.md.</div></div>
+      <div class="stat-card stat-hero"><div class="stat-label">Headline proof</div><div class="stat-number">00k</div><div class="stat-desc">The strongest piece of evidence you have. Specific beats impressive.</div></div>
+      <div class="stat-card"><div class="stat-label">Proof three</div><div class="stat-number">00%</div><div class="stat-desc">A third concrete result that builds the case. Add 3–5 examples here.</div></div>
+    </div>
+  </section>
+
+  <!-- ========== 6. ACT 4 — the honest part (15%) ========== -->
+  <section class="slide">
+    <div class="eyebrow">The honest part</div>
+    <h2>what we're still figuring out.</h2>
+    <div class="pptc-subhead">THE HONEST PART</div>
+    <div class="callout">
+      <h3>The doubt</h3>
+      <p>Name the real risk or the open question. <strong>Credibility comes from honesty here.</strong> Say what isn't solved yet, and how you're approaching it.</p>
+    </div>
+  </section>
+
+  <!-- ========== 7. CLOSE (5%) ========== -->
+  <section class="slide ig-grad-bg ig-closing">
+    <div class="cppt-hline"></div>
+    <div class="cppt-vline-top"></div>
+    <div class="cppt-vline-right"></div>
+    <div style="margin:auto 0;">
+      <div class="eyebrow">The close</div>
+      <h1 style="color:var(--white)">the closing line.<br>slow down. stop.</h1>
+      <p class="subtitle" style="color:rgba(255,255,255,.8);margin-top:1rem">contact@ingridcapacity.com</p>
+    </div>
+  </section>
+
+</div>
+
+<footer class="ig-footer">
+  <img src="brand/ingrid/logos/mark-on-light.png" alt="Ingrid" style="height:clamp(20px,4.5vh,40px);width:auto;flex-shrink:0;object-fit:contain;">
+  <div class="ig-footnote">FOOTNOTE</div>
+  <div class="ig-counter" id="counter">1 / 7</div>
+</footer>
+
+<div class="btn-row">
+  <button class="pdf-btn edit-btn" onclick="location.href = location.pathname + '?edit'">Edit</button>
+  <button class="pdf-btn" onclick="downloadPDF()">Download PDF</button>
+</div>
+<div class="nav" id="nav-hidden" style="display:none"><span></span><div class="nav-buttons"><button class="nav-btn" onclick="prev()">‹</button><button class="nav-btn" onclick="next()">›</button></div></div>
+
+<script src="engine/engine.js"></script>
+<script src="engine/edit.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script src="engine/charts.js"></script>
+
+</body>
+</html>

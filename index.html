@@ -73,7 +73,9 @@ footer{padding:1.4rem 6vw; border-top:1px solid var(--g2)}
 </header>
 
 <main>
-  <div class="section-label">Presentations</div>
+  <div class="section-label">Start a new deck</div>
+  <div class="deck-grid" id="starterGrid"></div>
+  <div class="section-label" style="margin-top:2.6rem">Examples &amp; reference</div>
   <div class="deck-grid" id="deckGrid"></div>
 </main>
 
@@ -83,6 +85,30 @@ footer{padding:1.4rem 6vw; border-top:1px solid var(--g2)}
 
 <script>
   /* Add a deck = add a line here. Each deck is a thin shell that links engine/. */
+
+  /* Starters: copy one, fill it in. Pick-a-start templates. */
+  const starters = [
+    {
+      file: 'starter-blank.html',
+      name: 'Blank Ingrid',
+      tag: 'Starter',
+      desc: 'The neutral skeleton — cover, agenda, content, closing. Copy it and build your deck on top.'
+    },
+    {
+      file: 'starter-market-update.html',
+      name: 'Market update',
+      tag: 'Starter',
+      desc: 'A data deck — headline stats and a chart. Wire it to live Ingrid data via the MCP server.'
+    },
+    {
+      file: 'starter-pitch.html',
+      name: 'Pitch',
+      tag: 'Starter',
+      desc: 'The six-beat story arc — hook, world, turn, evidence, the honest part, close. Fill in the narrative.'
+    },
+  ];
+
+  /* Examples & reference decks. */
   const decks = [
     {
       file: 'ingrid_examples.html',
@@ -98,26 +124,31 @@ footer{padding:1.4rem 6vw; border-top:1px solid var(--g2)}
     },
   ];
 
-  const grid = document.getElementById('deckGrid');
-  for (const d of decks) {
-    const card = document.createElement('a');
-    card.className = 'deck-card';
-    card.href = d.file;
-    card.innerHTML =
-      '<div class="deck-card-top"><span class="deck-name"></span><span class="deck-tag"></span></div>' +
-      '<p class="deck-desc"></p>' +
-      '<div class="deck-actions">' +
-        '<a class="primary" href="' + d.file + '">Open</a>' +
-        '<a href="' + d.file + '?edit">Edit</a>' +
-      '</div>';
-    card.querySelector('.deck-name').textContent = d.name;
-    card.querySelector('.deck-tag').textContent = d.tag;
-    card.querySelector('.deck-desc').textContent = d.desc;
-    // let the inner buttons handle their own navigation
-    card.querySelectorAll('.deck-actions a').forEach(a =>
-      a.addEventListener('click', e => e.stopPropagation()));
-    grid.appendChild(card);
+  function renderInto(gridId, list) {
+    const grid = document.getElementById(gridId);
+    for (const d of list) {
+      const card = document.createElement('a');
+      card.className = 'deck-card';
+      card.href = d.file;
+      card.innerHTML =
+        '<div class="deck-card-top"><span class="deck-name"></span><span class="deck-tag"></span></div>' +
+        '<p class="deck-desc"></p>' +
+        '<div class="deck-actions">' +
+          '<a class="primary" href="' + d.file + '">Open</a>' +
+          '<a href="' + d.file + '?edit">Edit</a>' +
+        '</div>';
+      card.querySelector('.deck-name').textContent = d.name;
+      card.querySelector('.deck-tag').textContent = d.tag;
+      card.querySelector('.deck-desc').textContent = d.desc;
+      // let the inner buttons handle their own navigation
+      card.querySelectorAll('.deck-actions a').forEach(a =>
+        a.addEventListener('click', e => e.stopPropagation()));
+      grid.appendChild(card);
+    }
   }
+
+  renderInto('starterGrid', starters);
+  renderInto('deckGrid', decks);
 </script>
 
 </body>
